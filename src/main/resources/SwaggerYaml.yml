@@ -1,0 +1,194 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
+    For this sample, you can use the api key `special-key` to test the authorization
+    filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+    - name: Student
+      description: "Everything about your Student"
+    - name: Books
+      description: "Everything about your Books"
+schemes:
+- "http"
+paths:
+   /Student:
+     post:
+       tags:
+       - "Student"
+       summary: "Add a new Student object"
+       description: "Add a new Student object value."
+       operationId: "addStudent"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/Student"
+       responses:
+         405:
+          description: "Invalid input"
+   /Student/{name}:
+     get:
+       tags:
+       - "Student"
+       summary: "Find Student by name"
+       description: "Returns a single Student"
+       operationId: "getStudentByname"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "name"
+         in: "path"
+         description: "ID of Student to return"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/Student"
+         400:
+           description: "Invalid name supplied"
+         404:
+           description: "Student not found"
+     delete:
+       tags:
+       - "Student"
+       summary: "Deletes a Student"
+       description: ""
+       operationId: "deleteStudent"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "name"
+         in: "path"
+         description: "Pet Student to delete"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid Student value"
+   /Books:
+     post:
+       tags:
+       - "Books"
+       summary: "Add a new Books object"
+       description: "Add a new Books object value."
+       operationId: "addBooks"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/Books"
+       responses:
+         405:
+          description: "Invalid input"
+   /Books/{bookid}:
+     get:
+       tags:
+       - "Books"
+       summary: "Find Books by bookid"
+       description: "Returns a single Books"
+       operationId: "getBooksBybookid"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "bookid"
+         in: "path"
+         description: "ID of Books to return"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/Books"
+         400:
+           description: "Invalid bookid supplied"
+         404:
+           description: "Books not found"
+     delete:
+       tags:
+       - "Books"
+       summary: "Deletes a Books"
+       description: ""
+       operationId: "deleteBooks"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "bookid"
+         in: "path"
+         description: "Pet Books to delete"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid Books value"
+definitions:
+  Student:
+    type: "object"
+    required:
+    - "name"
+    - "id"
+    properties:
+      name:
+        type: "string"
+        format: "int64"
+      id:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Student"
+  Books:
+    type: "object"
+    required:
+    - "bookid"
+    - "name"
+    - "id"
+    properties:
+      bookid:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        format: "int64"
+      id:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Books"
+
+

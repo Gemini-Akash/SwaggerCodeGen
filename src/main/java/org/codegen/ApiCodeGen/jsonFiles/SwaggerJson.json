@@ -1,0 +1,1 @@
+{"classes":[{"variable":[{"format":"int64","datatype":"string","fieldName":"name"},{"format":"int64","datatype":"integer","fieldName":"id"}],"className":"Student"},{"variable":[{"format":"int64","datatype":"integer","fieldName":"bookid"},{"format":"int64","datatype":"string","fieldName":"name"},{"format":"int64","datatype":"integer","fieldName":"id"}],"className":"Books"}]}
