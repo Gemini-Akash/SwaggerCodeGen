@@ -134,8 +134,8 @@ public class Classloader {
     public static Set<String> readClassName() {
         Reflections reflections =
                 new Reflections(new ConfigurationBuilder()
-                        .filterInputsBy(new FilterBuilder().includePackage("org.codegen.ApiCodeGen.entity"))
-                        .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity"))
+                        .filterInputsBy(new FilterBuilder().includePackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
+                        .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
                         .setScanners(new SubTypesScanner(false)));
 
         Set<String> fullyQualifiedClassName = reflections.getAllTypes();

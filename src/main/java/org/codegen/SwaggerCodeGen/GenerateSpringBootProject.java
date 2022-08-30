@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.SwaggerCodeGen;
+package org.codegen.SwaggerCodeGen;
 
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.DefaultGenerator;

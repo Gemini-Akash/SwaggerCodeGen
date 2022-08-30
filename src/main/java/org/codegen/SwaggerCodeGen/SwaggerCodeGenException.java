@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.SwaggerCodeGen;
+package org.codegen.SwaggerCodeGen;
 
 public class SwaggerCodeGenException extends Exception {
 
