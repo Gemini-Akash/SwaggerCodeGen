@@ -6,10 +6,8 @@ import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.reflections.Reflections;
+//import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,16 +129,31 @@ public class Classloader {
      *
      * @return
      */
-    public static Set<String> readClassName() {
-        Reflections reflections =
-                new Reflections(new ConfigurationBuilder()
-                        .filterInputsBy(new FilterBuilder().includePackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
-                        .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
-                        .setScanners(new SubTypesScanner(false)));
 
-        Set<String> fullyQualifiedClassName = reflections.getAllTypes();
-        return fullyQualifiedClassName;
-    }
+        public static Set<String> readClassName() {
+            Set<String> fullyQualifiedClassName =null;
+            try {
+//                Reflections reflections =
+//                        new Reflections(new ConfigurationBuilder()
+//                                .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")).getClassLoaders();
+//                Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")).setScanners(new SubTypesScanner(), new TypeAnnotationsScanner()).setExecutorService(Executors.newFixedThreadPool(4)));
+//                        Reflections reflections =
+//                        new Reflections(new ConfigurationBuilder()
+//                                .filterInputsBy(new FilterBuilder().includePackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
+//                                .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")));
+//                      .setScanners(Scanners.SubTypes));
+//                Set<String> fullyQualifiedClassName = reflections.getAll(Scanners.SubTypes);
+
+                Reflections reflections = new Reflections("org/codegen.apicodegen.entity.tables.pojos",new SubTypesScanner(false));
+                fullyQualifiedClassName = reflections.getAllTypes();
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return fullyQualifiedClassName;
+        }
+
 
     /**
      * service method is used to load class from fully qualified classname
