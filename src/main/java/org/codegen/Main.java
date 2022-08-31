@@ -18,13 +18,6 @@ public class Main {
     static EntityClassGen entityClassGen =new EntityClassGen();
     static GenerateSpringBootProject gs=new GenerateSpringBootProject();
 
-    public static void classloaderMethod()
-    {
-        Set<String> s=readClassName();
-        System.out.println(s);
-        cl.loadClass(s);
-
-    }
     public static void main(String[] args) throws Exception {
 
         log.info("<------ CodeGen FrameWork Started ------>");
@@ -49,7 +42,10 @@ public class Main {
 //        File file=new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\entity\\Tables.java");
 //        File[] files = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\entity").listFiles();
 //        System.out.println(files.length);
-            classloaderMethod();
+
+            Set<String> s=readClassName();
+            System.out.println(s);
+            cl.loadClass(s);
             cl.convertIntoAPIJson();
             hl.SwaggerYaml();
             gs.generateProject("src/main/resources/SwaggerYaml.yml",
