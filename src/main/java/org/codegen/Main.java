@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         log.info("<------ CodeGen FrameWork Started ------>");
-//        entityClassGen.EntityGenerator("src/main/resources/Script.sql","org.codegen.ApiCodeGen.entity","src/main/java");
+//       entityClassGen.EntityGenerator("src/main/resources/Script.sql","org.codegen.ApiCodeGen.entity","src/main/java");
 
         cl.loadClass(readClassName());
         cl.convertIntoAPIJson();
