@@ -25,7 +25,7 @@ public class Main {
 //       entityClassGen.EntityGenerator("src/main/resources/Script.sql","org.codegen.ApiCodeGen.entity","src/main/java");
 
         System.out.println("Start Time"+System.currentTimeMillis());
-        entityClassGen.EntityGenerator("src/main/resources/Script.sql","org.codegen.ApiCodeGen.entity","src/main/java");
+        entityClassGen.EntityGenerator("src/main/resources/DummyScript.sql","org.codegen.ApiCodeGen.entity","src/main/java");
         System.out.println("End Time"+System.currentTimeMillis());
 //        try
 //        {

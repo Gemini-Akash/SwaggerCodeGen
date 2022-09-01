@@ -1,12 +1,4 @@
 
-The jOOQ User Manual : Getting started with jOOQ : The sample database used in this manual	previous : next
-Available in versions: Dev (3.18) | Latest (3.17) | 3.16 | 3.15 | 3.14 | 3.13 | 3.12 | 3.11 | 3.10 | 3.9 | 3.8
-
-The sample database used in this manual
-Applies to ✅ Open Source Edition   ✅ Express Edition   ✅ Professional Edition   ✅ Enterprise Edition
-
-For the examples in this manual, the same database will always be referred to. It essentially consists of these entities created using the Oracle dialect
-
 CREATE TABLE language (
   id              NUMBER(7)     NOT NULL PRIMARY KEY,
   cd              CHAR(2)       NOT NULL,
