@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 public class Classloader {
 
+
     private static final Logger log = LoggerFactory.getLogger(Classloader.class);
 
     /**
@@ -144,7 +145,7 @@ public class Classloader {
 //                      .setScanners(Scanners.SubTypes));
 //                Set<String> fullyQualifiedClassName = reflections.getAll(Scanners.SubTypes);
 
-                Reflections reflections = new Reflections("org/codegen.apicodegen.entity.tables.pojos",new SubTypesScanner(false));
+                Reflections reflections = new Reflections("org.codegen.ApiCodeGen.entity.tables.pojos",new SubTypesScanner(false));
                 fullyQualifiedClassName = reflections.getAllTypes();
 
             }
@@ -223,14 +224,14 @@ public class Classloader {
     }
 
 
-    public static void main(String[] args) {
-
-
-        loadClass(readClassName());
-
-
-        convertIntoAPIJson();
-    }
+//    public static void main(String[] args) {
+//
+//
+//        loadClass(readClassName(path));
+//
+//
+//        convertIntoAPIJson();
+//    }
 
 }
 
