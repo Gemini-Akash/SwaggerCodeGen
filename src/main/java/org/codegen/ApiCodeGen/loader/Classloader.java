@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 
 
 import javax.persistence.Id;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.*;
 //import java.util.logging.Logger;
@@ -126,52 +124,21 @@ public class Classloader {
     }
 
     /**
-     * service method to fetch fully qualified classname from package
-     *
-     * @return
-     */
-
-        public static Set<String> readClassName() {
-            Set<String> fullyQualifiedClassName =null;
-            try {
-//                Reflections reflections =
-//                        new Reflections(new ConfigurationBuilder()
-//                                .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")).getClassLoaders();
-//                Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")).setScanners(new SubTypesScanner(), new TypeAnnotationsScanner()).setExecutorService(Executors.newFixedThreadPool(4)));
-//                        Reflections reflections =
-//                        new Reflections(new ConfigurationBuilder()
-//                                .filterInputsBy(new FilterBuilder().includePackage("org.codegen.ApiCodeGen.entity.tables.pojos"))
-//                                .setUrls(ClasspathHelper.forPackage("org.codegen.ApiCodeGen.entity.tables.pojos")));
-//                      .setScanners(Scanners.SubTypes));
-//                Set<String> fullyQualifiedClassName = reflections.getAll(Scanners.SubTypes);
-
-                Reflections reflections = new Reflections("org.codegen.ApiCodeGen.entity.tables.pojos",new SubTypesScanner(false));
-                fullyQualifiedClassName = reflections.getAllTypes();
-
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return fullyQualifiedClassName;
-        }
-
-
-    /**
      * service method is used to load class from fully qualified classname
      *
-     * @param fullyQualifiedClassName
+     * @param classObject
      */
 
-    public static void loadClass(Set<String> fullyQualifiedClassName) {
-
+    public static void loadClass(Set<Class> classObject) {
 
         JSONObject jsonBody = null;
         try {
             jsonBody = new JSONObject();
 
-            for (String classtype : fullyQualifiedClassName) {
-                String classname = Class.forName(classtype).getSimpleName();
-                JSONObject object = getJsonBody(classtype);
+            for (Class classContent : classObject) {
+                String classname = classContent.getSimpleName();
+                System.out.println(classname);
+                JSONObject object = getJsonBody(classContent);
                 jsonBody.put(classname, object);
             }
 
@@ -192,15 +159,15 @@ public class Classloader {
     /**
      * service method to get json object
      *
-     * @param classType
+     * @param classContent
      * @return
      */
-    public static JSONObject getJsonBody(String classType) {
+    public static JSONObject getJsonBody(Class classContent) {
 
         JSONObject object = null;
         try {
             object = new JSONObject();
-            Field[] fields = Class.forName(classType).getDeclaredFields();
+            Field[] fields = classContent.getDeclaredFields();
 
             List<Field> fieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) != null).collect(Collectors.toList());
 
@@ -208,9 +175,7 @@ public class Classloader {
                 if (!fieldlist.contains(field)) {
                     fieldlist.add(field);
                 }
-
             }
-
             for (Field field : fieldlist) {
                 String fieldName = field.getName();
                 String fieldType = field.getType().getSimpleName();
@@ -223,15 +188,6 @@ public class Classloader {
         return object;
     }
 
-
-//    public static void main(String[] args) {
-//
-//
-//        loadClass(readClassName(path));
-//
-//
-//        convertIntoAPIJson();
-//    }
 
 }
 

@@ -1,5 +1,6 @@
 package org.codegen;
 
+import org.apache.commons.io.FileUtils;
 import org.codegen.ApiCodeGen.loader.Classloader;
 import org.codegen.ApiCodeGen.templateHandler.Handlebar;
 import org.codegen.JOOQ.PojosGen.EntityClassGen;
@@ -7,73 +8,96 @@ import org.codegen.SwaggerCodeGen.GenerateSpringBootProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.security.RunAs;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.Set;
 
-import static org.codegen.ApiCodeGen.loader.Classloader.readClassName;
-
-
-public class Main  {
+public class Main extends ClassLoader {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
-    static Classloader cl = new Classloader();
-    static Handlebar hl = new Handlebar();
-    static EntityClassGen entityClassGen = new EntityClassGen();
-    static GenerateSpringBootProject gs = new GenerateSpringBootProject();
+    static GenerateSpringBootProject generateSpringBootProject = new GenerateSpringBootProject();
 
 
-    public static void main(String[] args) throws Exception {
+    public static int countClasses() {
+        int count = 0;
+        try {
+            File f1 = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources\\DummyScript.sql");
+            BufferedReader reader = new BufferedReader(new FileReader(f1));
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.contains("CREATE TABLE"))
+                    count++;
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (Exception e) {
+            log.error("Exception in countClasses {}", e.getMessage());
+        }
+        return count;
+    }
+
+
+    public static void main(String[] args) {
+
 
         log.info("<------ CodeGen FrameWork Started ------>");
+        try {
+            EntityClassGen.EntityGenerator("src/main/resources/DummyScript.sql", "C:\\Users\\di.garg1\\Desktop\\POJOS\\entity", "C:\\Users\\di.garg1\\Desktop\\POJOS");
+        } catch (Exception e) {
+            log.error("Exception in generating POJO classes {}", e.getMessage());
+        }
 
 
-//       entityClassGen.EntityGenerator("src/main/resources/Script.sql","org.codegen.ApiCodeGen.entity","src/main/java");
+        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
+        Set<Class> classes = new HashSet<>();
+        File directoryPath = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\");
+        try {
+            if (files.length == countClasses()) {
+                for (File file : files) {
+                    if (file.exists() && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty())) {
+                        String s = "C_3a_5cUsers_5cdi.garg1_5cDesktop_5cPOJOS_5centity.tables.pojos." + file.getName().replaceAll(".java", "");
+                        log.info("Full qualified name" + s);
+                        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+                        int compilationResult = compiler.run(null, null, null, file.getAbsolutePath());
+                        if (compilationResult == 0) {
+                            log.info("Compilation is successful");
+                        } else {
+                            log.info("Compilation Failed at "+file.getName());
+                            break;
+                        }
+                        URL url = directoryPath.toURI().toURL();
+                        URL[] urls = new URL[]{url};
+                        ClassLoader cl = new URLClassLoader(urls);
+                        Class cls = cl.loadClass(s);
+                        classes.add(cls);
+                    }
+                }
 
-        System.out.println("Start Time" + System.currentTimeMillis());
-        entityClassGen.EntityGenerator("src/main/resources/DummyScript.sql", "org.codegen.ApiCodeGen.entity", "src/main/java");
-        System.out.println("End Time" + System.currentTimeMillis());
-
-//        try
-//        {
-//            System.out.println("hi");
-//            Thread.sleep(2982);
-//            System.out.println("End"+Thread.currentThread());
-//        }
-//        catch(InterruptedException e)
-//        {
-//            System.out.println(e);
-//        }
-
-
-//        File file=new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\entity\\Tables.java");
-//        File[] files = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\entity").listFiles();
-//        System.out.println(files.length);
-
-        Set<String> s = readClassName();
-        System.out.println(s);
-        cl.loadClass(s);
-        cl.convertIntoAPIJson();
-        hl.SwaggerYaml();
-        gs.generateProject("src/main/resources/SwaggerYaml.yml",
-                "spring",
-                "io.codejournal.maven.swagger2java.api",
-                "io.codejournal.maven.swagger2java.model",
-                "io.codejournal.maven.swagger2java.handler",
-                "src/main/java/org/Autogenerated");
+            }
+        } catch (Exception e) {
+            log.error("Exception in ClassLoader Method {}", e.getMessage());
+        }
+        Classloader.loadClass(classes);
+        Classloader.convertIntoAPIJson();
+        Handlebar.SwaggerYaml();
+        try {
+            generateSpringBootProject.generateProject("src/main/resources/SwaggerYaml.yml",
+                    "spring",
+                    "io.codejournal.maven.swagger2java.api",
+                    "io.codejournal.maven.swagger2java.model",
+                    "io.codejournal.maven.swagger2java.handler",
+                    "src/main/java/org/Autogenerated");
+        } catch (Exception e) {
+            log.error("Exception in generating SpringBoot Project {}", e.getMessage());
+        }
 
 
     }
-
-//    @Override
-//    public void run() {
-//        Thread t1 = null;
-//        try {
-//            t1 = new Thread(EntityGenerator("src/main/resources/DummyScript.sql", "org.codegen.ApiCodeGen.entity", "src/main/java"))
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        t1.start();
-//    }
-
-
 
 }
