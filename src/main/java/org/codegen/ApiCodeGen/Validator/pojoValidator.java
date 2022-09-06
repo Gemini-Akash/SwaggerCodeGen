@@ -1,7 +1,6 @@
 package org.codegen.ApiCodeGen.Validator;
 
 import org.apache.commons.io.FileUtils;
-import org.codegen.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +31,9 @@ public class pojoValidator {
         return count;
     }
 
-    public static Boolean validatePojoClassContent(File filePath)
-    {
-        int count1 = 0,count2=0;
-        File f1=new File(String.valueOf(filePath));
+    public static Boolean validatePojoClassContent(File filePath) {
+        int count1 = 0, count2 = 0;
+        File f1 = new File(String.valueOf(filePath));
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
@@ -47,45 +45,37 @@ public class pojoValidator {
                 line = reader.readLine();
             }
             reader.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("Exception in contentValidator {}", e.getMessage());
         }
-        if(count1==count2) {
-            System.out.println("count1: "+count1+" count2: "+count2+" filename: "+f1.getName());
+        if (count1 == count2) {
+            System.out.println("count1: " + count1 + " count2: " + count2 + " filename: " + f1.getName());
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public static Boolean validatePojoClasses()
-    {
-        int count=0;
+    public static Boolean validatePojoClasses() {
+        int count = 0;
         File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
         try {
             if (files.length == countClasses()) {
                 for (File file : files) {
-                    if(file.exists() && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty()) && validatePojoClassContent(file)==true) {
+                    if (file.exists() && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty()) && validatePojoClassContent(file) == true) {
                         count++;
-                    }
-                    else {
+                    } else {
                         validatePojoClasses();
                     }
                 }
             }
+        } catch (Exception e) {
+            log.error("Exception in pojoValidator {}", e.getMessage());
         }
-        catch (Exception e)
-        {
-            log.error("Exception in pojoValidator {}",e.getMessage());
-        }
-        if (count==files.length) {
+        if (count == files.length) {
             System.out.println("Hi I am in if statement of pojoValidator()");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Hi I am in else statement of pojoValidator()");
             return false;
         }
