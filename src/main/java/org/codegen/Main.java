@@ -34,35 +34,7 @@ public class Main extends ClassLoader {
             log.error("Exception in generating POJO classes {}", e.getMessage());
         }
 
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
-        Set<Class> classes = new HashSet<>();
-        File directoryPath = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\");
-        try {
-            if (validatePojoClasses() == true) {
-                for (File file : files) {
-                    String s = "C_3a_5cUsers_5cdi.garg1_5cDesktop_5cPOJOS_5centity.tables.pojos." + file.getName().replaceAll(".java", "");
-                    log.info("Full qualified name" + s);
-                    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-                    int compilationResult = compiler.run(null, null, null, file.getAbsolutePath());
-                    if (compilationResult == 0) {
-                        log.info("Compilation is successful");
-                    } else {
-                        log.info("Compilation Failed at " + file.getName());
-                        break;
-                    }
-                    URL url = directoryPath.toURI().toURL();
-                    URL[] urls = new URL[]{url};
-                    ClassLoader cl = new URLClassLoader(urls);
-                    Class cls = cl.loadClass(s);
-                    classes.add(cls);
-                }
-            } else
-                System.out.println("Any of your pojoClass is Empty");
-        } catch (Exception e) {
-            log.error("Exception in ClassLoader Method {}", e.getMessage());
-        }
-
-        Classloader.loadClass(classes);
+        Classloader.loadClass(Classloader.readClass());
         Classloader.convertIntoAPIJson();
         Handlebar.SwaggerYaml();
         try {
