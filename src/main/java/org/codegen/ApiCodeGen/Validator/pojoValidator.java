@@ -58,7 +58,7 @@ public class pojoValidator {
 
     public static Boolean validatePojoClasses() {
         int count = 0;
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
+        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
         try {
             if (files.length == countClasses()) {
                 for (File file : files) {

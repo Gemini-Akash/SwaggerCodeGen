@@ -2,25 +2,22 @@ package org.codegen.ApiCodeGen.loader;
 
 
 import org.json.JSONArray;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.reflections.Reflections;
-//import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import javax.persistence.Id;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
-//import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
@@ -120,9 +117,10 @@ public class Classloader {
         }
 
         try {
-            FileWriter file = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
-            file.write(json1.toJSONString());
-            file.close();
+            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(json1.toJSONString());
+            fileWriter.close();
         } catch (IOException e) {
             log.error("Exception in writing into JSON file" + e.getMessage());
         }
@@ -154,9 +152,10 @@ public class Classloader {
         }
 
         try {
-            FileWriter file = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
-            file.write(jsonBody.toJSONString());
-            file.close();
+            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(jsonBody.toJSONString());
+            fileWriter.close();
         } catch (IOException e) {
             log.error("Exception in writing into JSON file" + e.getMessage());
         }
@@ -174,9 +173,7 @@ public class Classloader {
         try {
             object = new JSONObject();
             Field[] fields = classContent.getDeclaredFields();
-
             List<Field> fieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) != null).collect(Collectors.toList());
-
             for (Field field : Arrays.stream(fields).skip(1).collect(Collectors.toList())) {
                 if (!fieldlist.contains(field)) {
                     fieldlist.add(field);
@@ -194,38 +191,46 @@ public class Classloader {
         return object;
     }
 
-    public static Set<Class> readClass()
-    {
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
-        Set<Class> classes = new HashSet<>();
+    public static void javaCompileClass(File filePath) {
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        int compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());
+        if (compilationResult == 0) {
+            log.info("Compilation is successful");
+        } else {
+            log.info("Compilation Failed at " + filePath.getName());
+        }
+    }
+
+    public static Class fullyQualifiedClassName(File filePath) {
         File directoryPath = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\");
+        Class cls = null;
+        try {
+            String s = "entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
+            URL url = directoryPath.toURI().toURL();
+            URL[] urls = new URL[]{url};
+            ClassLoader cl = new URLClassLoader(urls);
+            cls = cl.loadClass(s);
+        } catch (Exception e) {
+            log.error("Exception in fullyQualifiedClassName {}", e.getMessage());
+        }
+        return cls;
+    }
+
+    public static Set<Class> readClass() {
+        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+        Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses() == true) {
                 for (File file : files) {
-                    String s = "C_3a_5cUsers_5cdi.garg1_5cDesktop_5cPOJOS_5centity.tables.pojos." + file.getName().replaceAll(".java", "");
-                    log.info("Full qualified name" + s);
-                    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-                    int compilationResult = compiler.run(null, null, null, file.getAbsolutePath());
-                    if (compilationResult == 0) {
-                        log.info("Compilation is successful");
-                    } else {
-                        log.info("Compilation Failed at " + file.getName());
-                        break;
-                    }
-                    URL url = directoryPath.toURI().toURL();
-                    URL[] urls = new URL[]{url};
-                    ClassLoader cl = new URLClassLoader(urls);
-                    Class cls = cl.loadClass(s);
-                    classes.add(cls);
+                    javaCompileClass(file);
+                    classes.add(fullyQualifiedClassName(file));
                 }
             } else
-                System.out.println("Any of your pojoClass is Empty");
+                log.info("Any of your pojoClass is Empty");
         } catch (Exception e) {
             log.error("Exception in ClassLoader Method {}", e.getMessage());
         }
         return classes;
     }
-
-
 }
 
