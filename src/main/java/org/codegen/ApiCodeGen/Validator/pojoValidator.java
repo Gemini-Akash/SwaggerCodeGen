@@ -20,8 +20,7 @@ public class pojoValidator {
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {
-                if (line.contains("CREATE TABLE"))
-                    count++;
+                if (line.contains("CREATE TABLE")) count++;
                 line = reader.readLine();
             }
             reader.close();
@@ -38,10 +37,8 @@ public class pojoValidator {
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {
-                if (line.contains("{"))
-                    count1++;
-                if (line.contains("}"))
-                    count2++;
+                if (line.contains("{")) count1++;
+                if (line.contains("}")) count2++;
                 line = reader.readLine();
             }
             reader.close();

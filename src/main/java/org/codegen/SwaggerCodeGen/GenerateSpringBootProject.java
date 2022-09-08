@@ -6,7 +6,7 @@ import io.swagger.codegen.config.CodegenConfigurator;
 
 public class GenerateSpringBootProject  {
 
-    public void generateProject(String YamlPath, String lang, String ApiPackage, String ModelPackage, String InvokerPackage, String OutputDir) throws SwaggerCodeGenException {
+    public static void generateProject(String YamlPath, String lang, String ApiPackage, String ModelPackage, String InvokerPackage, String OutputDir) throws SwaggerCodeGenException {
 
         DefaultGenerator defaultGenerator =new DefaultGenerator();
 

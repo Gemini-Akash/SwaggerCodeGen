@@ -25,11 +25,11 @@
             <version>0.9.10</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.reflections</groupId>-->
-<!--            <artifactId>reflections</artifactId>-->
-<!--            <version>0.9.11</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.reflections</groupId>-->
+        <!--            <artifactId>reflections</artifactId>-->
+        <!--            <version>0.9.11</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
@@ -66,21 +66,24 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api --><dependency>
-        <groupId>javax.persistence</groupId>
-        <artifactId>javax.persistence-api</artifactId>
-        <version>2.2</version>
-    </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api --><dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version>
-    </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jooq/jooq-codegen-maven --><dependency>
-        <groupId>org.jooq</groupId>
-        <artifactId>jooq</artifactId>
-        <version>3.14.15</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jooq/jooq-codegen-maven -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.14.15</version>
+        </dependency>
         <!-- These may not be required, unless you use the GenerationTool manually for code generation -->
         <dependency>
             <groupId>org.jooq</groupId>
