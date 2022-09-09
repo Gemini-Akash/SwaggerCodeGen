@@ -20,13 +20,13 @@ public class Handlebar {
         {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile("\\HandlebarTemplates\\swaggerTemplate");
-            Path path1 = Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources");
-            String filename = "SwaggerYaml" + ".yml";
-            String path = path1 + File.separator + filename;
+            Path path1 = Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources\\SwaggerYaml.yml");
+//            String filename = "SwaggerYaml.yml";
+//            String path = path1 + File.separator + filename;
             FileReader fileReader = new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             JSONParser jsonParser = new JSONParser();
             Object obj = jsonParser.parse(fileReader);
-            FileWriter fileWriter =new FileWriter(path);
+            FileWriter fileWriter =new FileWriter(String.valueOf(path1));
             fileWriter.write(template.apply(obj));
             fileWriter.close();
         }

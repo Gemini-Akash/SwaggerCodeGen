@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -117,8 +119,8 @@ public class Classloader {
         }
 
         try {
-            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
-            FileWriter fileWriter = new FileWriter(file);
+//            Path path = Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
+            FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             fileWriter.write(json1.toJSONString());
             fileWriter.close();
         } catch (IOException e) {
@@ -152,8 +154,11 @@ public class Classloader {
         }
 
         try {
-            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
-            FileWriter fileWriter = new FileWriter(file);
+//            Path path= Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+//            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+//            file.createNewFile();
+//            FileReader file=new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+            FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
             fileWriter.write(jsonBody.toJSONString());
             fileWriter.close();
         } catch (IOException e) {
