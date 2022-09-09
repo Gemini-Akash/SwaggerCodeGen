@@ -1,1 +1,1 @@
-{"Book":{"ID":"Integer","AUTHOR_ID":"Integer","TITLE":"String","PUBLISHED_IN":"Integer","LANGUAGE_ID":"Integer"},"BookStore":{"NAME":"String"},"BookToBookStore":{"NAME":"String","BOOK_ID":"Integer","STOCK":"Integer"},"Author":{"ID":"Integer","FIRST_NAME":"String","LAST_NAME":"String","DATE_OF_BIRTH":"LocalDate","YEAR_OF_BIRTH":"Integer","DISTINGUISHED":"Byte"},"Language":{"ID":"Integer","CD":"String","DESCRIPTION":"String"}}
+{}

@@ -72,7 +72,7 @@ public class Classloader {
 
 
         try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json"));
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json"));
 
             for (Object classname : jsonObject.keySet()) {
                 JSONObject json2 = new JSONObject();
@@ -117,7 +117,7 @@ public class Classloader {
         }
 
         try {
-            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
+            File file = new File("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(json1.toJSONString());
             fileWriter.close();
@@ -152,7 +152,7 @@ public class Classloader {
         }
 
         try {
-            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+            File file = new File("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(jsonBody.toJSONString());
             fileWriter.close();
@@ -202,7 +202,7 @@ public class Classloader {
     }
 
     public static Class fullyQualifiedClassName(File filePath) {
-        File directoryPath = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\");
+        File directoryPath = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\");
         Class cls = null;
         try {
             String s = "entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
@@ -217,7 +217,7 @@ public class Classloader {
     }
 
     public static Set<Class> readClass() {
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+        File[] files = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
         Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses() == true) {
