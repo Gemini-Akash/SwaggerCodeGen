@@ -16,7 +16,7 @@ public class pojoValidator {
     public static int countClasses() {
         int count = 0;
         try {
-            File f1 = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources\\DummyScript.sql");
+            File f1 = new File("D:\\Internal\\SwaggerCodeGen\\src\\main\\resources\\DummyScript.sql");
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {
@@ -58,7 +58,8 @@ public class pojoValidator {
 
     public static Boolean validatePojoClasses() {
         int count = 0;
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\C_3a_5cUsers_5cdi\\garg1_5cDesktop_5cPOJOS_5centity\\tables\\pojos").listFiles();
+        File[] files = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+//        System.out.println(files.toString());
         try {
             if (files.length == countClasses()) {
                 for (File file : files) {

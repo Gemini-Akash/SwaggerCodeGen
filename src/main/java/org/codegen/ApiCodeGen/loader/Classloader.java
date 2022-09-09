@@ -2,22 +2,25 @@ package org.codegen.ApiCodeGen.loader;
 
 
 import org.json.JSONArray;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.reflections.Reflections;
-//import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import javax.persistence.Id;
-import java.io.*;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.*;
-//import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static org.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
 
 
 public class Classloader {
@@ -69,7 +72,7 @@ public class Classloader {
 
 
         try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json"));
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json"));
 
             for (Object classname : jsonObject.keySet()) {
                 JSONObject json2 = new JSONObject();
@@ -114,7 +117,7 @@ public class Classloader {
         }
 
         try {
-            FileWriter file = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
+            FileWriter file = new FileWriter("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             file.write(json1.toJSONString());
             file.close();
         } catch (IOException e) {
@@ -148,7 +151,7 @@ public class Classloader {
         }
 
         try {
-            FileWriter file = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+            FileWriter file = new FileWriter("D:\\Internal\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
             file.write(jsonBody.toJSONString());
             file.close();
         } catch (IOException e) {
@@ -186,6 +189,38 @@ public class Classloader {
             log.error("Exception in getJsonBody():{}" + e.getMessage());
         }
         return object;
+    }
+
+    public static Set<Class> readClass(){
+        File[] files = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+        Set<Class> classes = new HashSet<>();
+        File directoryPath = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\");
+        try {
+            if (validatePojoClasses() == true) {
+                for (File file : files) {
+                    String s = "entity.tables.pojos." + file.getName().replaceAll(".java", "");
+                    log.info("Full qualified name" + s);
+                    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+                    int compilationResult = compiler.run(null, null, null, file.getAbsolutePath());
+                    if (compilationResult == 0) {
+                        log.info("Compilation is successful");
+                    } else {
+                        log.info("Compilation Failed at " + file.getName());
+                        break;
+                    }
+                    URL url = directoryPath.toURI().toURL();
+                    URL[] urls = new URL[]{url};
+                    System.out.println(urls);
+                    ClassLoader cl = new URLClassLoader(urls);
+                    Class cls = cl.loadClass(s);
+                    classes.add(cls);
+                }
+            } else
+                System.out.println("Any of your pojoClass is Empty");
+        } catch (Exception e) {
+            log.error("Exception in ClassLoader Method {}", e.getMessage());
+        }
+        return classes;
     }
 
 
