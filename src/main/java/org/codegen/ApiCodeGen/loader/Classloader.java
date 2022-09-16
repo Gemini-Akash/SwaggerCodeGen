@@ -119,7 +119,6 @@ public class Classloader {
         }
 
         try {
-//            Path path = Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
             fileWriter.write(json1.toJSONString());
             fileWriter.close();
@@ -154,10 +153,6 @@ public class Classloader {
         }
 
         try {
-//            Path path= Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
-//            File file = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
-//            file.createNewFile();
-//            FileReader file=new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
             FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
             fileWriter.write(jsonBody.toJSONString());
             fileWriter.close();
