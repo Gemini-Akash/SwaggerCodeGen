@@ -16,7 +16,7 @@ public class pojoValidator {
     public static int countClasses() {
         int count = 0;
         try {
-            File f1 = new File("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources\\DummyScript.sql");
+            File f1 = new File("src/main/resources/DummyScript.sql");
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {

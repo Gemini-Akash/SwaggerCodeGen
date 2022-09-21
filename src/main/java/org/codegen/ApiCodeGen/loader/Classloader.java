@@ -74,7 +74,7 @@ public class Classloader {
 
 
         try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json"));
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json"));
 
             for (Object classname : jsonObject.keySet()) {
                 JSONObject json2 = new JSONObject();
@@ -119,7 +119,7 @@ public class Classloader {
         }
 
         try {
-            FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
+            FileWriter fileWriter = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/SwaggerJson.json");
             fileWriter.write(json1.toJSONString());
             fileWriter.close();
         } catch (IOException e) {
@@ -153,7 +153,7 @@ public class Classloader {
         }
 
         try {
-            FileWriter fileWriter = new FileWriter("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\Loader.json");
+            FileWriter fileWriter = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json");
             fileWriter.write(jsonBody.toJSONString());
             fileWriter.close();
         } catch (IOException e) {
