@@ -45,10 +45,18 @@ public class ClassLoaderTests {
 //            e.printStackTrace();
 //        }
     }
+
     @Test
     public void testToLoaderJsonFileIsEmpty() throws IOException {
         File file = new File("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json");
         Assertions.assertTrue(file.exists()  && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty()),"Loader.json file do not exists");
+    }
+    @Test
+    public void testForLoaderJsonNotFound()  {
+        File file = new File("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loaderr.json");
+        boolean expected = false;
+        boolean actual = file.exists();
+        Assertions.assertEquals(expected,actual);
     }
 
     @Test
