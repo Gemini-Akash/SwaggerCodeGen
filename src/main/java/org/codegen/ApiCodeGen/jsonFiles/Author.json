@@ -1,0 +1,1 @@
+{"classes":[{"variable":[{"datatype":"Integer","fieldName":"ID"},{"datatype":"String","fieldName":"FIRST_NAME"},{"datatype":"String","fieldName":"LAST_NAME"},{"datatype":"LocalDate","fieldName":"DATE_OF_BIRTH"},{"datatype":"Integer","fieldName":"YEAR_OF_BIRTH"},{"datatype":"Byte","fieldName":"DISTINGUISHED"}],"className":"Author"}]}

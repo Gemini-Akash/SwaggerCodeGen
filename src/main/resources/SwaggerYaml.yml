@@ -1,0 +1,474 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
+    For this sample, you can use the api key `special-key` to test the authorization
+    filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+    - name: BookToBookStore
+      description: "Everything about your BookToBookStore"
+    - name: Author
+      description: "Everything about your Author"
+    - name: Book
+      description: "Everything about your Book"
+    - name: BookStore
+      description: "Everything about your BookStore"
+    - name: Language
+      description: "Everything about your Language"
+schemes:
+- "http"
+paths:
+   /BookToBookStore:
+     post:
+       tags:
+       - "BookToBookStore"
+       summary: "Add a new BookToBookStore object"
+       description: "Add a new BookToBookStore object value."
+       operationId: "addBookToBookStore"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/BookToBookStore"
+       responses:
+         405:
+          description: "Invalid input"
+   /BookToBookStore/{NAME}:
+     get:
+       tags:
+       - "BookToBookStore"
+       summary: "Find BookToBookStore by NAME"
+       description: "Returns a single BookToBookStore"
+       operationId: "getBookToBookStoreByNAME"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "NAME"
+         in: "path"
+         description: "ID of BookToBookStore to return"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/BookToBookStore"
+         400:
+           description: "Invalid NAME supplied"
+         404:
+           description: "BookToBookStore not found"
+     delete:
+       tags:
+       - "BookToBookStore"
+       summary: "Deletes a BookToBookStore"
+       description: ""
+       operationId: "deleteBookToBookStore"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "NAME"
+         in: "path"
+         description: "Pet BookToBookStore to delete"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid BookToBookStore value"
+   /Author:
+     post:
+       tags:
+       - "Author"
+       summary: "Add a new Author object"
+       description: "Add a new Author object value."
+       operationId: "addAuthor"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/Author"
+       responses:
+         405:
+          description: "Invalid input"
+   /Author/{ID}:
+     get:
+       tags:
+       - "Author"
+       summary: "Find Author by ID"
+       description: "Returns a single Author"
+       operationId: "getAuthorByID"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "ID of Author to return"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/Author"
+         400:
+           description: "Invalid ID supplied"
+         404:
+           description: "Author not found"
+     delete:
+       tags:
+       - "Author"
+       summary: "Deletes a Author"
+       description: ""
+       operationId: "deleteAuthor"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "Pet Author to delete"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid Author value"
+   /Book:
+     post:
+       tags:
+       - "Book"
+       summary: "Add a new Book object"
+       description: "Add a new Book object value."
+       operationId: "addBook"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/Book"
+       responses:
+         405:
+          description: "Invalid input"
+   /Book/{ID}:
+     get:
+       tags:
+       - "Book"
+       summary: "Find Book by ID"
+       description: "Returns a single Book"
+       operationId: "getBookByID"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "ID of Book to return"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/Book"
+         400:
+           description: "Invalid ID supplied"
+         404:
+           description: "Book not found"
+     delete:
+       tags:
+       - "Book"
+       summary: "Deletes a Book"
+       description: ""
+       operationId: "deleteBook"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "Pet Book to delete"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid Book value"
+   /BookStore:
+     post:
+       tags:
+       - "BookStore"
+       summary: "Add a new BookStore object"
+       description: "Add a new BookStore object value."
+       operationId: "addBookStore"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/BookStore"
+       responses:
+         405:
+          description: "Invalid input"
+   /BookStore/{NAME}:
+     get:
+       tags:
+       - "BookStore"
+       summary: "Find BookStore by NAME"
+       description: "Returns a single BookStore"
+       operationId: "getBookStoreByNAME"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "NAME"
+         in: "path"
+         description: "ID of BookStore to return"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/BookStore"
+         400:
+           description: "Invalid NAME supplied"
+         404:
+           description: "BookStore not found"
+     delete:
+       tags:
+       - "BookStore"
+       summary: "Deletes a BookStore"
+       description: ""
+       operationId: "deleteBookStore"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "NAME"
+         in: "path"
+         description: "Pet BookStore to delete"
+         required: true
+         type: "string"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid BookStore value"
+   /Language:
+     post:
+       tags:
+       - "Language"
+       summary: "Add a new Language object"
+       description: "Add a new Language object value."
+       operationId: "addLanguage"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/Language"
+       responses:
+         405:
+          description: "Invalid input"
+   /Language/{ID}:
+     get:
+       tags:
+       - "Language"
+       summary: "Find Language by ID"
+       description: "Returns a single Language"
+       operationId: "getLanguageByID"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "ID of Language to return"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/Language"
+         400:
+           description: "Invalid ID supplied"
+         404:
+           description: "Language not found"
+     delete:
+       tags:
+       - "Language"
+       summary: "Deletes a Language"
+       description: ""
+       operationId: "deleteLanguage"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "ID"
+         in: "path"
+         description: "Pet Language to delete"
+         required: true
+         type: "integer"
+         format: "int64"
+       responses:
+         400:
+           description: "Invalid Language value"
+definitions:
+  BookToBookStore:
+    type: "object"
+    required:
+    - "NAME"
+    - "BOOK_ID"
+    - "STOCK"
+    properties:
+      NAME:
+        type: "string"
+        format: "int64"
+      BOOK_ID:
+        type: "integer"
+        format: "int64"
+      STOCK:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "BookToBookStore"
+  Author:
+    type: "object"
+    required:
+    - "ID"
+    - "FIRST_NAME"
+    - "LAST_NAME"
+    - "DATE_OF_BIRTH"
+    - "YEAR_OF_BIRTH"
+    - "DISTINGUISHED"
+    properties:
+      ID:
+        type: "integer"
+        format: "int64"
+      FIRST_NAME:
+        type: "string"
+        format: "int64"
+      LAST_NAME:
+        type: "string"
+        format: "int64"
+      DATE_OF_BIRTH:
+        type: "string"
+        format: "int64"
+      YEAR_OF_BIRTH:
+        type: "integer"
+        format: "int64"
+      DISTINGUISHED:
+        type: "string"
+        format: "int64"
+    xml:
+      name: "Author"
+  Book:
+    type: "object"
+    required:
+    - "ID"
+    - "AUTHOR_ID"
+    - "TITLE"
+    - "PUBLISHED_IN"
+    - "LANGUAGE_ID"
+    properties:
+      ID:
+        type: "integer"
+        format: "int64"
+      AUTHOR_ID:
+        type: "integer"
+        format: "int64"
+      TITLE:
+        type: "string"
+        format: "int64"
+      PUBLISHED_IN:
+        type: "integer"
+        format: "int64"
+      LANGUAGE_ID:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Book"
+  BookStore:
+    type: "object"
+    required:
+    - "NAME"
+    properties:
+      NAME:
+        type: "string"
+        format: "int64"
+    xml:
+      name: "BookStore"
+  Language:
+    type: "object"
+    required:
+    - "ID"
+    - "CD"
+    - "DESCRIPTION"
+    properties:
+      ID:
+        type: "integer"
+        format: "int64"
+      CD:
+        type: "string"
+        format: "int64"
+      DESCRIPTION:
+        type: "string"
+        format: "int64"
+    xml:
+      name: "Language"
+
+

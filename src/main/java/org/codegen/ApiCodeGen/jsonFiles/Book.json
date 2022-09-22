@@ -1,0 +1,1 @@
+{"classes":[{"variable":[{"datatype":"Integer","fieldName":"ID"},{"datatype":"Integer","fieldName":"AUTHOR_ID"},{"datatype":"String","fieldName":"TITLE"},{"datatype":"Integer","fieldName":"PUBLISHED_IN"},{"datatype":"Integer","fieldName":"LANGUAGE_ID"}],"className":"Book"}]}

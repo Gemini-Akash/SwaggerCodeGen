@@ -1,0 +1,1 @@
+{"classes":[{"variable":[{"datatype":"String","fieldName":"NAME"},{"datatype":"Integer","fieldName":"BOOK_ID"},{"datatype":"Integer","fieldName":"STOCK"}],"className":"BookToBookStore"}]}
