@@ -16,7 +16,7 @@ public class Main extends ClassLoader {
 
         log.info("<------ CodeGen FrameWork Started ------>");
         try {
-            EntityClassGen.EntityGenerator("src/main/resources/DummyScript.sql", "entity", "C:\\Users\\di.garg1\\Desktop\\POJOS");
+            EntityClassGen.EntityGenerator("src/main/resources/DummyScript.sql", "entity", "C:\\Users\\ad.shrivastava\\Desktop\\POJOS");
         } catch (Exception e) {
             log.error("Exception in generating POJO classes {}", e.getMessage());
         }
