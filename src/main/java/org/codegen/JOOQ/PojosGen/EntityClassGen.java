@@ -41,13 +41,13 @@ public class EntityClassGen {
         Configuration configuration =new Configuration();
 
         configuration.withGenerator(new Generator()
-                        .withName(MyAutoGenerator.class.getCanonicalName())
+                        .withName(org.example.MyAutoGenerator.class.getCanonicalName())
                         .withStrategy(new Strategy()
                                 .withMatchers(new Matchers()
                                         .withFields(
                                                 new MatchersFieldType()
                                                         .withFieldMember(new MatcherRule()
-                                                                .withTransform(MatcherTransformType.UPPER))
+                                                                .withTransform(MatcherTransformType.PASCAL))
 
                                         )))
                 .withDatabase(new Database()

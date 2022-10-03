@@ -2,23 +2,22 @@ package org.codegen.ApiCodeGen.loader;
 
 
 import org.json.JSONArray;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-//import org.reflections.scanners.Scanners;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import javax.persistence.Id;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
-//import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
@@ -38,15 +37,8 @@ public class ClassLoaderTest {
     public static void convertIntoAPIJson() {
 
 
-
-
-
-
-
         try {
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json"));
-            System.out.println("to convert json file is found"+jsonObject);
-
             for (Object classname : jsonObject.keySet()) {
                 JSONObject json1 = new JSONObject();
                 JSONArray jsonArray1 = new JSONArray();
@@ -58,49 +50,38 @@ public class ClassLoaderTest {
 
                 JSONObject jsonBody = (JSONObject) new JSONParser().parse(jsonObject.get(classname).toString());
 
-
                 fieldTypes.addAll(jsonBody.values());
 
 
                 fields.addAll(jsonBody.keySet());
 
 
-
                 json2.put("className", classname);
+                json2.put("packageName",getPackageName());
 
                 int count = 0;
 
                 while (count != fields.size()) {
                     JSONObject json3 = new JSONObject();
-
                     json3.put("fieldName", fields.get(count));
                     json3.put("datatype", fieldTypes.get(count));
-
-
                     json2.put("variable", jsonArray2.put(json3));
-
                     count++;
-
                 }
-
                 json1.put("classes", jsonArray1.put(json2));
-
-                System.out.println("Required json"+json1);
-
+                log.info("Required json :{}", json1);
                 try {
-                    FileWriter file = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/"+classname+".json");
+                    FileWriter file = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/" + classname + ".json");
                     file.write(json1.toJSONString());
                     file.close();
                 } catch (IOException e) {
                     log.error("Exception in writing into JSON file" + e.getMessage());
                 }
-
             }
 
         } catch (Exception e) {
             log.error("Exception in convertIntoApiJson() : {}", e.getMessage());
         }
-
     }
 
     /**
@@ -109,20 +90,20 @@ public class ClassLoaderTest {
      * @param classObject
      */
 
-    public static void loadClass(Set<Class> classObject) {
+    public static List<String> loadClass(Set<Class> classObject) {
 
         JSONObject jsonBody = null;
+        List<String> classnames = new ArrayList<>();
         try {
             jsonBody = new JSONObject();
-
             for (Class classContent : classObject) {
                 String classname = classContent.getSimpleName();
-                System.out.println(classname);
+                classnames.add(classname);
+                log.info("Pojo Classname : {}", classname);
                 JSONObject object = getJsonBody(classContent);
                 jsonBody.put(classname, object);
             }
-
-            System.out.println("load class json body"+jsonBody);
+            log.info("load class json body : {}", jsonBody);
         } catch (Exception e) {
             log.error("Exception in loadClass():{}" + e.getMessage());
         }
@@ -134,6 +115,7 @@ public class ClassLoaderTest {
         } catch (IOException e) {
             log.error("Exception in writing into JSON file" + e.getMessage());
         }
+        return classnames;
     }
 
     /**
@@ -167,6 +149,7 @@ public class ClassLoaderTest {
         }
         return object;
     }
+
     public static void javaCompileClass(File filePath) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());
@@ -210,6 +193,11 @@ public class ClassLoaderTest {
     }
 
 
+    public static String getPackageName()
+    {
+        File packageName= new File("src/main/resources/DummyScript.sql");
+        return packageName.getName().replace(".sql","");
+    }
 
 }
 
