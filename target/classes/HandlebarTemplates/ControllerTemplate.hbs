@@ -25,7 +25,7 @@ public class {{className}}Controller {
 
    @GetMapping({"/{{className}}/{ {{~#each variable~}}{{#if @first}}{{fieldName}}{{/if}}{{~/each~}}}"})
     public ResponseEntity<com.gemini.{{packageName}}.model.{{className}}> get{{className}}(@PathVariable {{#each variable}}{{#if @first}}{{datatype}}{{/if}}{{/each}} {{#each variable}}{{#if @first}}{{fieldName}}{{/if}}{{/each}}) {
-        com.gemini.{{packageName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each variable}}{{#if @first}}{{fieldName}}{{/if}}{{/each}}), com.gemini.{{packageName}}.model.Book.class);
+        com.gemini.{{packageName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each variable}}{{#if @first}}{{fieldName}}{{/if}}{{/each}}), com.gemini.{{packageName}}.model.{{className}}.class);
         com.gemini.{{packageName}}.model.{{className}} dummyBody = null;
             if(result!=null){
                 log.info("Data fetched successfully");
@@ -46,7 +46,7 @@ public class {{className}}Controller {
                 return new ResponseEntity<>(body, HttpStatus.OK);
            }
            else{
-                log.info("Data to be updated does not exist : {}", body.getId());
+                log.info("Data to be updated does not exist : {}", body.get{{#each variable}}{{#if @first}}{{fieldName}}{{/if}}{{/each}}());
                 return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
            }
     }

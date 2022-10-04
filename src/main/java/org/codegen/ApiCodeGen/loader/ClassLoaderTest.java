@@ -92,13 +92,14 @@ public class ClassLoaderTest {
      */
 
     public static List<String> loadClass(Set<Class> classObject) {
-
+        System.out.println("hi in loadclass"+classObject);
         JSONObject jsonBody = null;
         List<String> classnames = new ArrayList<>();
         try {
             jsonBody = new JSONObject();
             for (Class classContent : classObject) {
                 String classname = classContent.getSimpleName();
+                System.out.println(classname);
                 classnames.add(classname);
                 log.info("Pojo Classname : {}", classname);
                 JSONObject object = getJsonBody(classContent);
@@ -163,14 +164,16 @@ public class ClassLoaderTest {
     }
 
     public static Class fullyQualifiedClassName(File filePath) {
-        File directoryPath = new File(directoryHandler.generatedDirectoryPath());
+        File directoryPath = new File(directoryHandler.outerDirectoryPath+"\\src\\main\\java\\");
         Class cls = null;
         try {
-            String s = "entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
+            String s = "com.gemini."+directoryHandler.getScriptName()+".entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
+            System.out.println(s);
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
             ClassLoader cl = new URLClassLoader(urls);
             cls = cl.loadClass(s);
+
         } catch (Exception e) {
             log.error("Exception in fullyQualifiedClassName {}", e.getMessage());
         }
@@ -179,10 +182,12 @@ public class ClassLoaderTest {
 
     public static Set<Class> readClass() {
         File[] files = new File(directoryHandler.generatedDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
+        System.out.println("hi files array"+files);
         Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses() == true) {
                 for (File file : files) {
+                    System.out.println(file);
                     javaCompileClass(file);
                     classes.add(fullyQualifiedClassName(file));
                 }
@@ -191,6 +196,7 @@ public class ClassLoaderTest {
         } catch (Exception e) {
             log.error("Exception in ClassLoader Method {}", e.getMessage());
         }
+        System.out.println("hi classes"+classes);
         return classes;
     }
 
