@@ -1,0 +1,14 @@
+{
+  "packageName": "DummyScript",
+  "codeMapping":
+    [
+      {
+        "statusCode1": 2000,
+        "responseCode1": "HttpStatus.INTERNAL_SERVER_ERROR"
+      },
+      {
+        "statusCode2": 3000,
+        "responseCode2": "HttpStatus.INTERNAL_SERVER_ERROR"
+      }
+    ]
+}

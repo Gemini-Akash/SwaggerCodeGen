@@ -516,7 +516,7 @@ public class MyAutoGenerator extends JavaGenerator {
         // -------------------
         out.javadoc("Create a new %s without any configuration", className);
 
-        out.println("DefaultConfiguration defaultConfiguration = new DefaultConfiguration();");
+
 
         out.println("public %s() {", className);
         out.println("super(%s, %s.class);", tableIdentifier, pType);
@@ -527,12 +527,12 @@ public class MyAutoGenerator extends JavaGenerator {
         // ------------------------
 
 
-//        out.javadoc("Create a new %s with an attached configuration", className);
-//
-//        printDaoConstructorAnnotations(table, out);
-//        out.println("public %s(%s configuration) {", className, Configuration.class);
-//        out.println("super(%s, %s.class, configuration);", tableIdentifier, pType);
-//        out.println("}");
+        out.javadoc("Create a new %s with an attached configuration", className);
+
+        printDaoConstructorAnnotations(table, out);
+        out.println("public %s(%s configuration) {", className, Configuration.class);
+        out.println("super(%s, %s.class, configuration);", tableIdentifier, pType);
+        out.println("}");
 
 
         // Template method implementations
@@ -621,7 +621,7 @@ public class MyAutoGenerator extends JavaGenerator {
         //For Insert Method
         out.javadoc("Created custom Insert records Method");
         out.println("public %s insertRecord(%s classObject) {", pType, pType);
-        out.println("%s record=defaultConfiguration.dsl().newRecord(%s);", tableRecord, tableIdentifier);
+        out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass = getStrategy().getJavaClassName(column);
             if (key != column.getPrimaryKey()) {
@@ -644,13 +644,13 @@ public class MyAutoGenerator extends JavaGenerator {
                 out.javadoc("Created custom Delete record Method");
                 //for Delete
                 out.println("public int deleteRecordById(%s %s){", colType, colClass);
-                out.println("int result=defaultConfiguration.dsl().deleteFrom(%s).where(%s.eq(%s)).execute();", tableIdentifier, colIdentifier, colClass);
+                out.println("int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();", tableIdentifier, colIdentifier, colClass);
                 out.println("return result;");
                 out.println("}");
                 out.javadoc("Created custom Update record Method");
                 //for update
                 out.println("public int updateRecord(%s classObject){", pType);
-                out.println("int result=defaultConfiguration.dsl().update(%s)", tableIdentifier);
+                out.println("int result=this.ctx().update(%s)", tableIdentifier);
                 for (ColumnDefinition column1 : table.getColumns()) {
                     final String colClass1 = getStrategy().getJavaClassName(column1);
                     final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));

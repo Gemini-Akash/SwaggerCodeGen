@@ -41,7 +41,7 @@ public class EntityClassGen {
         Configuration configuration =new Configuration();
 
         configuration.withGenerator(new Generator()
-                        .withName(org.example.MyAutoGenerator.class.getCanonicalName())
+                        .withName(MyAutoGenerator.class.getCanonicalName())
                         .withStrategy(new Strategy()
                                 .withMatchers(new Matchers()
                                         .withFields(

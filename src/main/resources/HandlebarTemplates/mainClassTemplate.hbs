@@ -1,0 +1,12 @@
+package com.gemini.{{#each classes}}{{packageName}};
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class {{packageName}} {
+
+    public static void main(String[] args) {
+        SpringApplication.run({{packageName}}{{/each}}.class, args);
+
+    }
+}

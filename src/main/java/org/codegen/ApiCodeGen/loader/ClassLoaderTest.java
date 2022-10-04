@@ -1,6 +1,7 @@
 package org.codegen.ApiCodeGen.loader;
 
 
+import org.codegen.Handler.directoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,7 +39,7 @@ public class ClassLoaderTest {
 
 
         try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json"));
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\Loader.json"));
             for (Object classname : jsonObject.keySet()) {
                 JSONObject json1 = new JSONObject();
                 JSONArray jsonArray1 = new JSONArray();
@@ -57,7 +58,7 @@ public class ClassLoaderTest {
 
 
                 json2.put("className", classname);
-                json2.put("packageName",getPackageName());
+                json2.put("packageName", directoryHandler.getScriptName());
 
                 int count = 0;
 
@@ -71,7 +72,7 @@ public class ClassLoaderTest {
                 json1.put("classes", jsonArray1.put(json2));
                 log.info("Required json :{}", json1);
                 try {
-                    FileWriter file = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/" + classname + ".json");
+                    FileWriter file = new FileWriter(directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+ classname + ".json");
                     file.write(json1.toJSONString());
                     file.close();
                 } catch (IOException e) {
@@ -109,7 +110,8 @@ public class ClassLoaderTest {
         }
 
         try {
-            FileWriter file = new FileWriter("src/main/java/org/codegen/ApiCodeGen/jsonFiles/Loader.json");
+            directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\jsonFiles");
+            FileWriter file = new FileWriter(directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\Loader.json");
             file.write(jsonBody.toJSONString());
             file.close();
         } catch (IOException e) {
@@ -161,7 +163,7 @@ public class ClassLoaderTest {
     }
 
     public static Class fullyQualifiedClassName(File filePath) {
-        File directoryPath = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\");
+        File directoryPath = new File(directoryHandler.generatedDirectoryPath());
         Class cls = null;
         try {
             String s = "entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
@@ -176,7 +178,7 @@ public class ClassLoaderTest {
     }
 
     public static Set<Class> readClass() {
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+        File[] files = new File(directoryHandler.generatedDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
         Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses() == true) {
@@ -193,11 +195,6 @@ public class ClassLoaderTest {
     }
 
 
-    public static String getPackageName()
-    {
-        File packageName= new File("src/main/resources/DummyScript.sql");
-        return packageName.getName().replace(".sql","");
-    }
 
 }
 

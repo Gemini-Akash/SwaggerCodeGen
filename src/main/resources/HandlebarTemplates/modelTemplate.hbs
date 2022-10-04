@@ -1,0 +1,26 @@
+package com.gemini.{{#each classes}}{{packageName}}.model;
+import java.time.LocalDate;
+
+public class {{className}} {
+
+    {{#each variable}}private {{datatype}} {{fieldName}};
+    {{/each}}
+
+    {{#each variable}}public {{datatype}} get{{fieldName}}() {
+        return {{fieldName}};
+    }
+    {{/each}}
+
+    {{#each variable}}public void set{{fieldName}}({{datatype}} {{fieldName}}) {
+        this.{{fieldName}} = {{fieldName}};
+    }
+    {{/each}}
+
+    @Override
+    public String toString() {
+        return "{{className}}{" +
+                {{#each variable}}"{{fieldName}}=" + {{fieldName}} +{{/each}}
+                '}';
+    }
+    {{/each}}
+}

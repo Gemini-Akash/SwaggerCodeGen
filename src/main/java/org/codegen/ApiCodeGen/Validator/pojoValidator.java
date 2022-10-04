@@ -1,6 +1,7 @@
 package org.codegen.ApiCodeGen.Validator;
 
 import org.apache.commons.io.FileUtils;
+import org.codegen.Handler.directoryHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,7 @@ public class pojoValidator {
     public static int countClasses() {
         int count = 0;
         try {
-            File f1 = new File("src/main/resources/DummyScript.sql");
+            File f1 = new File(directoryHandler.outerScriptDirectoryPath);
             BufferedReader reader = new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {
@@ -55,7 +56,7 @@ public class pojoValidator {
 
     public static Boolean validatePojoClasses() {
         int count = 0;
-        File[] files = new File("C:\\Users\\di.garg1\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
+        File[] files = new File(directoryHandler.generatedDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
         try {
             if (files.length == countClasses()) {
                 for (File file : files) {
