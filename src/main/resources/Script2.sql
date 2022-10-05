@@ -22,7 +22,7 @@ CREATE TABLE author (
   date_of_birth   DATE,
   year_of_birth   NUMBER(7),
   distinguished   NUMBER(1)
-      PRIMARY KEY( id )
+  PRIMARY KEY( id )
 );
 
 --CREATE TABLE [dbo].[AllocationTypeMaster](

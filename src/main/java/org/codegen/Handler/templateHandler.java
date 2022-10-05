@@ -70,7 +70,7 @@ public class templateHandler {
         }
     }
 
-    public static void generateSpringBootProject(List<String> classnames) {
+    public static void generateSpringBootProject(List<String> classNames) {
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\service");
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\controller");
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\model");
@@ -84,14 +84,14 @@ public class templateHandler {
         catch (Exception e){
             log.info(e.getMessage(),e.getCause());
         }
-        for (String classname:classnames) {
-            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate",directoryHandler.generatedDirectoryPath()+"\\"+directoryHandler.getScriptName()+".java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/pomTemplate",directoryHandler.outerDirectoryPath+"\\pom.xml",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate",directoryHandler.generatedDirectoryPath()+"\\Exception\\ServiceException.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate",directoryHandler.generatedDirectoryPath()+"\\Exception\\ErrorMessage.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
+        for (String className:classNames) {
+            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate",directoryHandler.generatedDirectoryPath()+"\\"+directoryHandler.getScriptName()+".java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/pomTemplate",directoryHandler.outerDirectoryPath+"\\pom.xml",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate",directoryHandler.generatedDirectoryPath()+"\\Exception\\ServiceException.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate",directoryHandler.generatedDirectoryPath()+"\\Exception\\ErrorMessage.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+className+".json");
             break;
         }
-        for (String classname:classnames) {
+        for (String classname:classNames) {
             generateClassFromTemplates("HandlebarTemplates/servicesTemplate",directoryHandler.generatedDirectoryPath()+"\\service\\"+classname+"Service.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
             generateClassFromTemplates("HandlebarTemplates/ControllerTemplate",directoryHandler.generatedDirectoryPath()+"\\controller\\"+classname+"Controller.java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");
             generateClassFromTemplates("HandlebarTemplates/modelTemplate",directoryHandler.generatedDirectoryPath()+"\\model\\"+classname+".java",directoryHandler.generatedDirectoryPath()+"\\jsonFiles\\"+classname+".json");

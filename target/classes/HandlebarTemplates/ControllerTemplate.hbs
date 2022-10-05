@@ -38,7 +38,7 @@ public class {{className}}Controller {
     }
 
     @PutMapping({"/{{className}}/"})
-    public ResponseEntity<{{className}}> updateBook(@Valid @RequestBody {{className}} body){
+    public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body){
        {{className}} dummyBody = null;
        int result=objectService.update{{className}}(body);
        if(result == 1){
