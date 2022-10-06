@@ -1,0 +1,65 @@
+package com.gemini.{{#each classes}}{{packageName}}.Exception;{{/each}}
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import java.io.FileReader;
+import java.util.Date;
+
+@ControllerAdvice
+public class ControllerExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+    public static JSONObject getJsonObject(){
+        JSONObject jsonObject=null;
+       try {
+           jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/controllerExceptionHandlerJson.json"));
+       }
+       catch (Exception e) {
+           log.info(e.getMessage(),e.getCause());
+       }
+       return jsonObject;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorMessage> exceptionHandler(Exception ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                (Integer)((JSONObject)getJsonObject().get("Exception")).get("statusCode"),
+                new Date(),
+                request.getDescription(false), ex.getMessage());
+        return new ResponseEntity<ErrorMessage>(message, (HttpStatus) ((JSONObject)getJsonObject().get("Exception")).get("responseCode"));
+    }
+
+    @ExceptionHandler(ServiceException.class)
+    public ResponseEntity<ErrorMessage> serviceException(ServiceException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                (Integer)((JSONObject)getJsonObject().get("serviceException")).get("statusCode"),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false),
+                ex.getErrorMessage());
+        return new ResponseEntity<ErrorMessage>(message,(HttpStatus) ((JSONObject)getJsonObject().get("serviceException")).get("responseCode"));
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
