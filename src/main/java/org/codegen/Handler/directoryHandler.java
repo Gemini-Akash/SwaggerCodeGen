@@ -3,7 +3,6 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class directoryHandler {
@@ -48,9 +47,11 @@ public class directoryHandler {
         File file =new File(filePath);
         try {
             if (file.isDirectory()) {
-                FileUtils.deleteDirectory(file);
+                FileUtils.deleteQuietly(file);
+                System.out.println("Deleted");
                 log.info("Directory deleted successfully : {}", file);
             } else {
+                System.out.println("not deleted");
                 log.info("Directory does not exist");
             }
         }
@@ -58,6 +59,7 @@ public class directoryHandler {
             log.info(e.getMessage(),e.getCause());
         }
     }
+
 
     public static void deleteFiles(List<String> classNames, String filePath){
         for (String className:classNames) {

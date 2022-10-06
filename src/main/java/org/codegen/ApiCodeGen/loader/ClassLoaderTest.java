@@ -164,10 +164,10 @@ public class ClassLoaderTest {
     }
 
     public static Class fullyQualifiedClassName(File filePath) {
-        File directoryPath = new File(directoryHandler.outerDirectoryPath+"\\src\\main\\java\\");
+        File directoryPath = new File(directoryHandler.outerDirectoryPath+"\\src\\main\\java");
         Class cls = null;
         try {
-            String s = "com.gemini."+directoryHandler.getScriptName()+".entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
+            String s =  "com.gemini."+directoryHandler.getScriptName()+".entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
             System.out.println(s);
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};

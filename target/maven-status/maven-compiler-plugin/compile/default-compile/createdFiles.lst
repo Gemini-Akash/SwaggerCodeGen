@@ -1,0 +1,15 @@
+org\codegen\Handler\templateHandler.class
+org\jooq\codegen\GeneratorWriter$CloseResult.class
+org\codegen\ApiCodeGen\Validator\pojoValidator.class
+org\codegen\JOOQ\PojosGen\EntityClassGen.class
+org\codegen\Handler\directoryHandler.class
+org\jooq\codegen\GeneratorWriter.class
+org\codegen\ApiCodeGen\loader\ClassLoaderTest.class
+org\codegen\Main.class
+org\codegen\JOOQ\PojosGen\PathValidator.class
+org\codegen\SwaggerCodeGen\SwaggerCodeGenException.class
+org\codegen\JOOQ\PojosGen\FileNotFoundException.class
+org\codegen\ApiCodeGen\loader\Classloader.class
+org\json\simple\JSONObject.class
+org\codegen\JOOQ\PojosGen\MyAutoGenerator.class
+org\codegen\SwaggerCodeGen\GenerateSpringBootProject.class

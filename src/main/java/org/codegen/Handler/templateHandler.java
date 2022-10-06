@@ -75,10 +75,10 @@ public class templateHandler {
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\controller");
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\model");
         directoryHandler.directoryCreation(directoryHandler.generatedDirectoryPath()+"\\Exception");
-        directoryHandler.directoryCreation(directoryHandler.outerDirectoryPath+"\\src\\main\\java\\resources");
+        directoryHandler.directoryCreation(directoryHandler.outerDirectoryPath+"\\src\\main\\resources");
 
         try{
-            File file =new File(directoryHandler.outerDirectoryPath+"\\src\\main\\java\\resources\\application.properties");
+            File file =new File(directoryHandler.outerDirectoryPath+"\\src\\main\\resources\\application.properties");
             file.createNewFile();
         }
         catch (Exception e){
@@ -98,11 +98,6 @@ public class templateHandler {
         }
 
         generateClassFromTemplates("HandlebarTemplates/ControllerExceptionHandlerTemplate",directoryHandler.generatedDirectoryPath()+"\\Exception\\ControllerExceptionHandler.java","src/main/java/org/codegen/ApiCodeGen/jsonFiles/controllerExceptionHandlerJsonTemplate.json");
-
-
-
-
-
 
     }
 //    public static void main(String[] args) {
