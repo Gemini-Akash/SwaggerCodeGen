@@ -1,0 +1,20 @@
+1.MULTIPLE JSON:-
+	For the Generation of the Service and Controller layer files we are using the json file to fill the templates
+	and as of now we are creating the multiple json from the pojos class so the total number of json file is equal
+	to the number of pojos classes.
+
+	Solution:
+		we have to reduce the json file to one so we can use the only one json to fill the multiple templates or we should use YAML.
+
+2.Patch Operations:-
+	Our current version is not supported the patch operation we only go with the put. when we are using the patch it is updating the
+	changed fields and the unchanged fields become the null. 
+	(for ex: If we have one Student table and fields are SName,Rollno,id, address and we want to perform the update operation 
+	and want  to  update the only rollno and addresss in this case when we update only with two fields the rest of the fields become null) 
+
+	Solution:
+		
+3. Our current version is not supporting the batch operations means batch insertion or deletion.
+
+4. Dialect should be configurable 
+	 
