@@ -1,22 +1,25 @@
 package org.codegen;
 
+//import org.apache.log4j.BasicConfigurator;
 import org.codegen.ApiCodeGen.loader.ClassLoaderTest;
 import org.codegen.Handler.DirectoryHandler;
 import org.codegen.Handler.TemplateHandler;
 import org.codegen.JOOQ.PojosGen.EntityClassGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 
 import static java.nio.file.Paths.get;
 
 public class Main {
+
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 
     public static void main(String[] args) throws IOException {
+
+//        BasicConfigurator.configure();
 
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         log.info("<------ CodeGen FrameWork Started ------>");
