@@ -17,4 +17,8 @@
 3. Our current version is not supporting the batch operations means batch insertion or deletion.
 
 4. Dialect should be configurable 
+
+5. OS Independent (Backward slashes '\\' work only in windows)
+
+6. Schema should be there in the package name if schema is present in the script. 
 	 
