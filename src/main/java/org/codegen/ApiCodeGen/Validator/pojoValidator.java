@@ -56,7 +56,7 @@ public class pojoValidator {
 
     public static Boolean validatePojoClasses() {
         int count = 0;
-        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
+        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
         try {
             if (files.length == countClasses()) {
                 for (File file : files) {

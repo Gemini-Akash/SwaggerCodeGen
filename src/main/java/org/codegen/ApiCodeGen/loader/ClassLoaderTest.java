@@ -58,7 +58,8 @@ public class ClassLoaderTest {
 
 
                 json2.put("className", classname);
-                json2.put("packageName", DirectoryHandler.getScriptName());
+                json2.put("scriptName", DirectoryHandler.getScriptName());
+                json2.put("schemaName",DirectoryHandler.getSchemaName());
 
                 int count = 0;
 
@@ -167,7 +168,7 @@ public class ClassLoaderTest {
         File directoryPath = new File(DirectoryHandler.outerDirectoryPath+"\\src\\main\\java");
         Class cls = null;
         try {
-            String s =  "com.gemini."+ DirectoryHandler.getScriptName()+".entity.tables.pojos." + filePath.getName().replaceAll(".java", "");
+            String s =  "com.gemini."+ DirectoryHandler.getScriptName()+".entity."+DirectoryHandler.getSchemaName()+".tables.pojos." + filePath.getName().replaceAll(".java", "");
             System.out.println(s);
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
@@ -181,7 +182,7 @@ public class ClassLoaderTest {
     }
 
     public static Set<Class> readClass() {
-        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
+        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
         System.out.println("hi files array"+files);
         Set<Class> classes = new HashSet<>();
         try {
