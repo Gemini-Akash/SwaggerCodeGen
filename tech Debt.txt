@@ -22,3 +22,5 @@
 
 6. Schema should be there in the package name if schema is present in the script. 
 	 
+7. Multiple schema is not supported in this version.
+
