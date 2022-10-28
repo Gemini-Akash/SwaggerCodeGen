@@ -24,3 +24,8 @@
 	 
 7. Multiple schema is not supported in this version.
 
+8. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
+
+9. Composite primary key. (Working on it)
+
+10. Mapping annotations between two tables(i.e @OneToOne, @OneToMany, @ManyToMany)
