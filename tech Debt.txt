@@ -22,3 +22,10 @@
 
 6. Schema should be there in the package name if schema is present in the script. 
 	 
+7. Multiple schema is not supported in this version.
+
+8. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
+
+9. Composite primary key. (Working on it)
+
+10. Mapping annotations between two tables as of now JOOQ is not able to put the mapping annotations on the generated POJOS(i.e @OneToOne, @OneToMany, @ManyToMany).
