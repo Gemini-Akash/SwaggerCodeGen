@@ -1,0 +1,24 @@
+{
+    "className":"Author",
+    "primarykeys": [{
+      "datatype": "Integer",
+      "fieldName": "Id"
+    },
+      {
+        "datatype": "Integer",
+        "fieldName": "Id"
+      }
+    ],
+    "variables":[
+      {
+        "datatype": "Integer",
+        "fieldName": "Id"
+      },
+      {
+        "datatype": "Integer",
+        "fieldName": "Id"
+      }
+    ],
+    "schemaName": "XyZ",
+    "scriptName": "XyZ"
+  }

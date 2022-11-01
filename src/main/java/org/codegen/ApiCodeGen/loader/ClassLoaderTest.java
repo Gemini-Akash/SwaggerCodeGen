@@ -9,12 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.awt.print.Book;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -35,51 +39,56 @@ public class ClassLoaderTest {
      * @param
      * @return
      */
-    public static void convertIntoAPIJson() {
+    public static void convertIntoAPIJson(String className, JSONArray primaryKeyObject,JSONArray nonPrimaryKeyObject ) {
 
 
         try {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\Loader.json"));
-            for (Object classname : jsonObject.keySet()) {
-                JSONObject json1 = new JSONObject();
-                JSONArray jsonArray1 = new JSONArray();
-                JSONObject json2 = new JSONObject();
-                JSONArray jsonArray2 = new JSONArray();
-                ArrayList<Object> fields = new ArrayList<>();
-                ArrayList<Object> fieldTypes = new ArrayList<>();
+
+//            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\Loader.json"));
+//            for (Object classname : jsonObject.keySet()) {
+//                JSONObject json1 = new JSONObject();
+//                JSONArray jsonArray1 = new JSONArray();
+//                JSONObject json2 = new JSONObject();
+//                JSONArray jsonArray2 = new JSONArray();
+//                ArrayList<Object> fields = new ArrayList<>();
+//                ArrayList<Object> fieldTypes = new ArrayList<>();
 
 
-                JSONObject jsonBody = (JSONObject) new JSONParser().parse(jsonObject.get(classname).toString());
+//                JSONObject jsonBody = (JSONObject) new JSONParser().parse(jsonObject.get(classname).toString());
+//
+//                fieldTypes.addAll(jsonBody.values());
+//
+//
+//                fields.addAll(jsonBody.keySet());
 
-                fieldTypes.addAll(jsonBody.values());
+                JSONObject jsonObject1=new JSONObject();
+                jsonObject1.put("className", className);
+                jsonObject1.put("scriptName", DirectoryHandler.getScriptName());
+                jsonObject1.put("schemaName",DirectoryHandler.getSchemaName());
+                jsonObject1.put("variable",nonPrimaryKeyObject);
+                jsonObject1.put("primarykeys",primaryKeyObject);
 
 
-                fields.addAll(jsonBody.keySet());
 
-
-                json2.put("className", classname);
-                json2.put("scriptName", DirectoryHandler.getScriptName());
-                json2.put("schemaName",DirectoryHandler.getSchemaName());
-
-                int count = 0;
-
-                while (count != fields.size()) {
-                    JSONObject json3 = new JSONObject();
-                    json3.put("fieldName", fields.get(count));
-                    json3.put("datatype", fieldTypes.get(count));
-                    json2.put("variable", jsonArray2.put(json3));
-                    count++;
-                }
-                json1.put("classes", jsonArray1.put(json2));
-                log.info("Required json :{}", json1);
+//                int count = 0;
+//
+//                while (count != fields.size()) {
+//                    JSONObject json3 = new JSONObject();
+//                    json3.put("fieldName", fields.get(count));
+//                    json3.put("datatype", fieldTypes.get(count));
+//                    json2.put("variable", jsonArray2.put(json3));
+//                    count++;
+//                }
+//                json1.put("classes", jsonArray1.put(json2));
+                log.info("Required json :{}", jsonObject1);
                 try {
-                    FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+ classname + ".json");
-                    file.write(json1.toJSONString());
+                    FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+ className + ".json");
+                    file.write(jsonObject1.toJSONString());
                     file.close();
                 } catch (IOException e) {
                     log.error("Exception in writing into JSON file" + e.getMessage());
                 }
-            }
+//            }
 
         } catch (Exception e) {
             log.error("Exception in convertIntoApiJson() : {}", e.getMessage());
@@ -93,33 +102,33 @@ public class ClassLoaderTest {
      */
 
     public static List<String> loadClass(Set<Class> classObject) {
-        System.out.println("hi in loadclass"+classObject);
-        JSONObject jsonBody = null;
-        List<String> classnames = new ArrayList<>();
+//        JSONObject jsonBody = null;
+        List<String> classNames = new ArrayList<>();
         try {
-            jsonBody = new JSONObject();
+//            jsonBody = new JSONObject();
             for (Class classContent : classObject) {
-                String classname = classContent.getSimpleName();
-                System.out.println(classname);
-                classnames.add(classname);
-                log.info("Pojo Classname : {}", classname);
-                JSONObject object = getJsonBody(classContent);
-                jsonBody.put(classname, object);
+                String className = classContent.getSimpleName();
+//                System.out.println(className);
+                classNames.add(className);
+                log.info("Pojo ClassName : {}", className);
+                getJsonBody(classContent);
+//                JSONObject object = getJsonBody(classContent);
+//                jsonBody.put(className, object);
             }
-            log.info("load class json body : {}", jsonBody);
+//            log.info("load class json body : {}", jsonBody);
         } catch (Exception e) {
             log.error("Exception in loadClass():{}" + e.getMessage());
         }
 
-        try {
-            DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
-            FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\Loader.json");
-            file.write(jsonBody.toJSONString());
-            file.close();
-        } catch (IOException e) {
-            log.error("Exception in writing into JSON file" + e.getMessage());
-        }
-        return classnames;
+//        try {
+//            DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
+//            FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\Loader.json");
+//            file.write(jsonBody.toJSONString());
+//            file.close();
+//        } catch (IOException e) {
+//            log.error("Exception in writing into JSON file" + e.getMessage());
+//        }
+        return classNames;
     }
 
     /**
@@ -128,30 +137,53 @@ public class ClassLoaderTest {
      * @param classContent
      * @return
      */
-    public static JSONObject getJsonBody(Class classContent) {
+    public static void getJsonBody(Class classContent) {
 
-        JSONObject object = null;
+        JSONArray primaryKeyObject = null;
+        JSONArray nonPrimaryKeyObject = null;
         try {
-            object = new JSONObject();
+            primaryKeyObject = new JSONArray();
+            nonPrimaryKeyObject = new JSONArray();
+            JSONObject jsonObject1=new JSONObject();
             Field[] fields = classContent.getDeclaredFields();
 
-            List<Field> fieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) != null).collect(Collectors.toList());
+            List<Field> primaryKeyFieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) != null).collect(Collectors.toList());
+            List<Field> nonPrimaryKeyFieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) == null).skip(1).collect(Collectors.toList());
 
-            for (Field field : Arrays.stream(fields).skip(1).collect(Collectors.toList())) {
-                if (!fieldlist.contains(field)) {
-                    fieldlist.add(field);
-                }
-            }
-            for (Field field : fieldlist) {
+            System.out.println(classContent.getSimpleName());
+
+            for (Field field : nonPrimaryKeyFieldlist) {
                 String fieldName = field.getName();
                 String fieldType = field.getType().getSimpleName();
-                object.put(fieldName, fieldType);
-            }
-        } catch (Exception e) {
+                jsonObject1.put("fieldName",fieldName);
+                jsonObject1.put("datatype",fieldType);
+                nonPrimaryKeyObject.put(jsonObject1);
 
+            }
+            System.out.println(nonPrimaryKeyObject);
+
+            for (Field field : primaryKeyFieldlist) {
+                String fieldName = field.getName();
+                String fieldType = field.getType().getSimpleName();
+                jsonObject1.put("fieldName",fieldName);
+                jsonObject1.put("datatype",fieldType);
+                primaryKeyObject.put(jsonObject1);
+            }
+            System.out.println(primaryKeyObject);
+
+
+//            for (Field field : Arrays.stream(fields).skip(1).collect(Collectors.toList())) {
+//                if (!fieldlist.contains(field)) {
+//                    fieldlist.add(field);
+//                }
+//            }
+
+
+        } catch (Exception e) {
             log.error("Exception in getJsonBody():{}" + e.getMessage());
         }
-        return object;
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
+        convertIntoAPIJson(classContent.getSimpleName(),primaryKeyObject,nonPrimaryKeyObject);
     }
 
     public static void javaCompileClass(File filePath) {
@@ -174,7 +206,6 @@ public class ClassLoaderTest {
             URL[] urls = new URL[]{url};
             ClassLoader cl = new URLClassLoader(urls);
             cls = cl.loadClass(s);
-
         } catch (Exception e) {
             log.error("Exception in fullyQualifiedClassName {}", e.getMessage());
         }
@@ -188,7 +219,7 @@ public class ClassLoaderTest {
         try {
             if (validatePojoClasses() == true) {
                 for (File file : files) {
-                    System.out.println(file);
+                    System.out.println(file.getName());
                     javaCompileClass(file);
                     classes.add(fullyQualifiedClassName(file));
                 }
@@ -200,6 +231,8 @@ public class ClassLoaderTest {
         System.out.println("hi classes"+classes);
         return classes;
     }
+
+
 
 
 

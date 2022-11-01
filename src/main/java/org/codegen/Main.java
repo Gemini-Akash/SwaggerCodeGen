@@ -7,6 +7,9 @@ import org.codegen.Handler.TemplateHandler;
 import org.codegen.JOOQ.PojosGen.EntityClassGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.persistence.UniqueConstraint;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +22,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-//        BasicConfigurator.configure();
 
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         log.info("<------ CodeGen FrameWork Started ------>");
@@ -33,12 +35,12 @@ public class Main {
 
         List<String> classNames= ClassLoaderTest.loadClass(ClassLoaderTest.readClass());
         System.out.println(classNames);
-        ClassLoaderTest.convertIntoAPIJson();
+//        ClassLoaderTest.convertIntoAPIJson();
         TemplateHandler.generateSpringBootProject(classNames);
-
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
-        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos");
+//
+//        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
+//        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
+//        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos");
 
 
 //        Handlebar.SwaggerYaml();
