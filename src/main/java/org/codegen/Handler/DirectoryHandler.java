@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DirectoryHandler {
+    /**
+     * TODO outerDirectoryPath and outerScriptDirectoryPath checking is left
+     */
     private static final Logger log = LoggerFactory.getLogger(DirectoryHandler.class);
 //   public static String outerDirectoryPath= System.getProperty("directoryPath");
 //   public static String outerScriptDirectoryPath=System.getProperty("scriptPath");

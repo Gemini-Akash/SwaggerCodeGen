@@ -880,7 +880,7 @@ public class MyAutoGenerator extends JavaGenerator {
             }
         }
 
-        out.print("return (%s) this.ctx().selectFrom(%s).where(", pType, tableIdentifier);
+        out.print("return this.ctx().selectFrom(%s).where(",  tableIdentifier);
         int flag2 = 0;
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass1 = getStrategy().getJavaClassName(column);
@@ -898,10 +898,10 @@ public class MyAutoGenerator extends JavaGenerator {
                     flag2++;
                 } else {
                     if (size == 1) {
-                        out.println("%s.eq(%s)).fetchInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
                         out.println("}");
                     } else {
-                        out.println("%s.eq(%s))).fetchInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
                         out.println("}");
                     }
                 }
