@@ -26,6 +26,7 @@
 
 8. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
 
-9. Composite primary key. (Working on it)
+9. Composite primary key. (Working on it) (i.e CRUD operation from Single composite key is not allowed)
 
 10. Mapping annotations between two tables as of now JOOQ is not able to put the mapping annotations on the generated POJOS(i.e @OneToOne, @OneToMany, @ManyToMany).
+
