@@ -37,10 +37,10 @@ public class Main {
         System.out.println(classNames);
 //        ClassLoaderTest.convertIntoAPIJson();
         TemplateHandler.generateSpringBootProject(classNames);
-//
-//        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
-//        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
-//        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos");
+
+        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
+        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
+        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos");
 
 
 //        Handlebar.SwaggerYaml();

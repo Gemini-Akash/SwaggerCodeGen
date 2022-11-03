@@ -23,22 +23,7 @@ public class {{className}}Controller {
     @Autowired
     ObjectMapper objectMapper;
 
-    {{#each primaryKeys}} {{#if {{../primaryKeys.length}}==1}}
-    @GetMapping({"/{{className}}/{ {{~#each primaryKeys~}}{{fieldName}}/{{~/each~}}}"})
-        public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}(@PathVariable {{#each primaryKeys}}{{datatype}}{{fieldName}}) {
-            com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each primaryKeys}}{{fieldName}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
-            com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
-                if(result!=null){
-                    log.info("Data fetched successfully");
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-                }
-                else{
-                     log.info("Data not found : {}",{{#each primaryKeys}}{{fieldName}}{{/each}});
-                     return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-                }
-        }
-    {{else}}
-    @GetMapping({"/{{className}}/{ {{~#each primaryKeys~}}{{fieldName}}/{{~/each~}}}"})
+    @GetMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
         public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}(@PathVariable {{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
             com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
             com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
@@ -47,14 +32,14 @@ public class {{className}}Controller {
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 }
                 else{
-                     log.info("Data not found : {}",{{#each primaryKeys}}{{fieldName}}{{/each}});
+                     log.info("Data not found : {}",{{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
                      return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
                 }
     }
-    {{/if}}{{/each}}
 
 
-    @PutMapping({"/{{className}}/{ {{~#each primaryKeys~}}{{fieldName}}{{~/each~}}}"})
+
+    @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body){
        {{className}} dummyBody = null;
        int result=objectService.update{{className}}(body);
@@ -63,7 +48,7 @@ public class {{className}}Controller {
                 return new ResponseEntity<>(body, HttpStatus.OK);
            }
            else{
-                log.info("Data to be updated does not exist : {}", body.get{{#each primaryKeys}}{{fieldName}}{{/each}}());
+                log.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
                 return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
            }
     }
@@ -75,15 +60,15 @@ public class {{className}}Controller {
         return new ResponseEntity<>(objectService.add{{className}}(body), HttpStatus.CREATED);
     }
 
-    @DeleteMapping({"/{{className}}/{ {{~#each primaryKeys~}}{{fieldName}}/{{~/each~}}}"})
+    @DeleteMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity delete{{className}}(@PathVariable {{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
         int result=objectService.delete{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
         if(result==1){
-            log.info("Deleted successfully : {}",{{#each primaryKeys}}{{fieldName}}{{/each}});
+            log.info("Deleted successfully : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
         }
         else{
-            log.info("Data to be deleted does not exist : {}", {{#each primaryKeys}}{{fieldName}}{{/each}});
+            log.info("Data to be deleted does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data to be deleted does not exist");
         }
     }

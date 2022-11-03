@@ -48,6 +48,7 @@ public class TemplateHandler {
             FileWriter fileWriter =new FileWriter(String.valueOf(path1));
             fileWriter.write(template.apply(obj));
             fileWriter.close();
+            fileReader.close();
         }
         catch (Exception e)
         {

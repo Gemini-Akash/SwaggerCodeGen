@@ -15,28 +15,15 @@ public class {{className}}Service {
     @Autowired
     {{className}}Dao objectDao ;
 
-    {{#each primaryKeys}}{{#if {{../primaryKeys.length}} }}
-    {{#each primaryKeys}}
-        public {{className}} get{{className}}({{datatype}} {{fieldName}}){
-            try {
-                 return objectDao.findById({{fieldName}});
-            }
-            catch (Exception e){
-                 log.info(e.getMessage());
-                 throw new ServiceException(e.getMessage(),"problem in fetching data");
-            }
-        }{{/each}}
-    {{else}}
     public {{className}} get{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
             try {
-                return objectDao.find({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+                return objectDao.fetchRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             }
             catch (Exception e){
                 log.info(e.getMessage());
                 throw new ServiceException(e.getMessage(),"problem in fetching data");
             }
     }
-    {{/if}}{{/each}}
 
     public int update{{className}}({{className}} classObject){
         try {
@@ -60,7 +47,7 @@ public class {{className}}Service {
 
     public int delete{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
         try {
-                return objectDao.deleteRecordById({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+                return objectDao.deleteRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             }
         catch (Exception e) {
             log.error(e.getMessage(),e.getCause());

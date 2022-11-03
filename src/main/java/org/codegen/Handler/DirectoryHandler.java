@@ -65,7 +65,7 @@ public class DirectoryHandler {
         File file =new File(filePath);
         try {
             if (file.isDirectory()) {
-                FileUtils.deleteQuietly(file);
+                FileUtils.deleteDirectory(file);
                 log.info("Directory deleted successfully : {}", file);
             } else {
                 log.info("Directory does not exist");

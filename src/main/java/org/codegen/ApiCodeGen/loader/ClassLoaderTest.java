@@ -66,7 +66,7 @@ public class ClassLoaderTest {
                 jsonObject1.put("scriptName", DirectoryHandler.getScriptName());
                 jsonObject1.put("schemaName",DirectoryHandler.getSchemaName());
                 jsonObject1.put("variable",nonPrimaryKeyObject);
-                jsonObject1.put("primarykeys",primaryKeyObject);
+                jsonObject1.put("primaryKeys",primaryKeyObject);
 
 
 
