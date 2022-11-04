@@ -47,7 +47,6 @@ public class pojoValidator {
             log.error("Exception in contentValidator {}", e.getMessage());
         }
         if (count1 == count2) {
-            System.out.println("count1: " + count1 + " count2: " + count2 + " filename: " + f1.getName());
             return true;
         } else {
             return false;
@@ -71,10 +70,10 @@ public class pojoValidator {
             log.error("Exception in pojoValidator {}", e.getMessage());
         }
         if (count == files.length) {
-            System.out.println("Hi I am in if statement of pojoValidator()");
+            log.info("<---------If block of pojoValidator()---------->");
             return true;
         } else {
-            System.out.println("Hi I am in else statement of pojoValidator()");
+            log.info("<-----------Else block of pojoValidator()--------->");
             return false;
         }
 

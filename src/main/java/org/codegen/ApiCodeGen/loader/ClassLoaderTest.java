@@ -108,7 +108,6 @@ public class ClassLoaderTest {
 //            jsonBody = new JSONObject();
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();
-//                System.out.println(className);
                 classNames.add(className);
                 log.info("Pojo ClassName : {}", className);
                 getJsonBody(classContent);
@@ -149,19 +148,13 @@ public class ClassLoaderTest {
 
             List<Field> primaryKeyFieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) != null).collect(Collectors.toList());
             List<Field> nonPrimaryKeyFieldlist = Arrays.stream(fields).filter(field -> field.getAnnotation(Id.class) == null).skip(1).collect(Collectors.toList());
-
-            System.out.println(classContent.getSimpleName());
-
             for (Field field : nonPrimaryKeyFieldlist) {
                 String fieldName = field.getName();
                 String fieldType = field.getType().getSimpleName();
                 jsonObject1.put("fieldName",fieldName);
                 jsonObject1.put("datatype",fieldType);
                 nonPrimaryKeyObject.put(jsonObject1);
-
             }
-            System.out.println(nonPrimaryKeyObject);
-
             for (Field field : primaryKeyFieldlist) {
                 String fieldName = field.getName();
                 String fieldType = field.getType().getSimpleName();
@@ -169,7 +162,6 @@ public class ClassLoaderTest {
                 jsonObject1.put("datatype",fieldType);
                 primaryKeyObject.put(jsonObject1);
             }
-            System.out.println(primaryKeyObject);
 
 
 //            for (Field field : Arrays.stream(fields).skip(1).collect(Collectors.toList())) {
@@ -177,8 +169,6 @@ public class ClassLoaderTest {
 //                    fieldlist.add(field);
 //                }
 //            }
-
-
         } catch (Exception e) {
             log.error("Exception in getJsonBody():{}" + e.getMessage());
         }
@@ -197,11 +187,10 @@ public class ClassLoaderTest {
     }
 
     public static Class fullyQualifiedClassName(File filePath) {
-        File directoryPath = new File(DirectoryHandler.outerDirectoryPath+"\\src\\main\\java");
+        File directoryPath = new File(DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\java");
         Class cls = null;
         try {
             String s =  "com.gemini."+ DirectoryHandler.getScriptName()+".entity."+DirectoryHandler.getSchemaName()+".tables.pojos." + filePath.getName().replaceAll(".java", "");
-            System.out.println(s);
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
             ClassLoader cl = new URLClassLoader(urls);
@@ -209,17 +198,16 @@ public class ClassLoaderTest {
         } catch (Exception e) {
             log.error("Exception in fullyQualifiedClassName {}", e.getMessage());
         }
+        log.info("fullyQualifiedClassName----->{}",cls);
         return cls;
     }
 
     public static Set<Class> readClass() {
         File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
-        System.out.println("hi files array"+files);
         Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses() == true) {
                 for (File file : files) {
-                    System.out.println(file.getName());
                     javaCompileClass(file);
                     classes.add(fullyQualifiedClassName(file));
                 }
@@ -228,12 +216,8 @@ public class ClassLoaderTest {
         } catch (Exception e) {
             log.error("Exception in ClassLoader Method {}", e.getMessage());
         }
-        System.out.println("hi classes"+classes);
         return classes;
     }
-
-
-
 
 
 }

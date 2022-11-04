@@ -34,14 +34,13 @@ public class Main {
         DirectoryHandler.renameDirectory(DirectoryHandler.generateDirectoryPath()+"\\com\\gemini\\"+ DirectoryHandler.getScriptName()+"\\entity");
 
         List<String> classNames= ClassLoaderTest.loadClass(ClassLoaderTest.readClass());
-        System.out.println(classNames);
-//        ClassLoaderTest.convertIntoAPIJson();
+        log.info(" ClassNames------>{}",classNames);
         TemplateHandler.generateSpringBootProject(classNames);
 
         DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
         DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
         DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos");
-
+        log.info("<------ CodeGen FrameWork Successfully Generated------>");
 
 //        Handlebar.SwaggerYaml();
 //        try {

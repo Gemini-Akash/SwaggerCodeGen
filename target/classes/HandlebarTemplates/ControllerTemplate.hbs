@@ -24,7 +24,7 @@ public class {{className}}Controller {
     ObjectMapper objectMapper;
 
     @GetMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-        public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}(@PathVariable {{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
+        public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}({{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
             com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
             com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
                 if(result!=null){
@@ -61,7 +61,7 @@ public class {{className}}Controller {
     }
 
     @DeleteMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity delete{{className}}(@PathVariable {{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
+    public ResponseEntity delete{{className}}({{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
         int result=objectService.delete{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
         if(result==1){
             log.info("Deleted successfully : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});

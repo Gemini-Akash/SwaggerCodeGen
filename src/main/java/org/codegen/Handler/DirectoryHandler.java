@@ -29,28 +29,24 @@ public class DirectoryHandler {
     public static String getScriptName()
     {
         File scriptName= new File(outerScriptDirectoryPath);
-        log.info("Fetching Script name");
         return scriptName.getName().replace(".sql","");
     }
 
     public static String getSchemaName() {
-        log.info("Fetching Schema name");
-        File schemaName= new File(outerDirectoryPath+"\\src\\main\\java\\com\\gemini\\"+getScriptName()+"\\entity");
+        File schemaName= new File(DirectoryHandler.generateDirectoryPath()+"\\entity");
         String[] directories = schemaName.list(new FilenameFilter() {
             @Override
             public boolean accept(File current, String name) {
                 return new File(current, name).isDirectory();
             }
         });
-        System.out.println(directories[0]);
         return directories[0];
     }
 
 
     public static String generateDirectoryPath()
     {
-        log.info("Generated outer Directory Path");
-        return outerDirectoryPath+"\\src\\main\\java\\com\\gemini\\"+getScriptName();
+        return outerDirectoryPath+"\\"+getScriptName()+"SpringBootApp\\src\\main\\java\\com\\gemini\\"+getScriptName();
     }
 
     public static void renameDirectory(String filePath ){

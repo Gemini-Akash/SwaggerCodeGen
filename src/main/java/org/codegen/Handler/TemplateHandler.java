@@ -76,7 +76,7 @@ public class TemplateHandler {
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\controller");
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\model");
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\Exception");
-        DirectoryHandler.createDirectory(DirectoryHandler.outerDirectoryPath+"\\src\\main\\resources");
+        DirectoryHandler.createDirectory(DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources");
 
 //        try{
 //            File file =new File(DirectoryHandler.outerDirectoryPath+"\\src\\main\\resources\\application.properties");
@@ -87,7 +87,7 @@ public class TemplateHandler {
 //        }
         for (String className:classNames) {
             generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", DirectoryHandler.generateDirectoryPath()+"\\"+ DirectoryHandler.getScriptName()+".java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/pomTemplate", DirectoryHandler.outerDirectoryPath+"\\pom.xml", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/pomTemplate", DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\pom.xml", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
             generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ServiceException.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
             generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ErrorMessage.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
             generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ControllerExceptionHandler.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
@@ -98,8 +98,8 @@ public class TemplateHandler {
             generateClassFromTemplates("HandlebarTemplates/ControllerTemplate", DirectoryHandler.generateDirectoryPath()+"\\controller\\"+classname+"Controller.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+classname+".json");
             generateClassFromTemplates("HandlebarTemplates/modelTemplate", DirectoryHandler.generateDirectoryPath()+"\\model\\"+classname+".java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+classname+".json");
         }
-        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"\\src\\main\\resources\\controllerExceptionHandlerJson.json");
-        generateFileFromTemplate("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"\\src\\main\\resources\\application.properties");
+        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources\\controllerExceptionHandlerJson.json");
+        generateFileFromTemplate("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources\\application.properties");
 
     }
 

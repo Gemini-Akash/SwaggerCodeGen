@@ -85,7 +85,6 @@ public class MyAutoGenerator extends JavaGenerator {
 
         }
 
-
         // Constructors
         // ---------------------------------------------------------------------
 
@@ -148,19 +147,18 @@ public class MyAutoGenerator extends JavaGenerator {
         out.println("}");
         closeJavaWriter(out);
     }
-
     protected void printColumnJPAAnnotation(JavaWriter out, ColumnDefinition column) {
         int indent = out.indent();
         if (this.generateJPAAnnotations()) {
-            String prefix = "";
+            String prefix ="";
             UniqueKeyDefinition pk = column.getPrimaryKey();
             if (pk != null) {
                 out.println("@%s%s", new Object[]{prefix, out.ref("javax.persistence.Id")});
                 for (ColumnDefinition s:pk.getKeyColumns()) {
-                   if(s.isIdentity())
-                   {
-                       out.println("@%s%s(strategy = %s.IDENTITY)", new Object[]{prefix, out.ref("javax.persistence.GeneratedValue"), out.ref("javax.persistence.GenerationType")});
-                   }
+                    if(s.isIdentity())
+                    {
+                        out.println("@%s%s(strategy = %s.IDENTITY)", new Object[]{prefix, out.ref("javax.persistence.GeneratedValue"), out.ref("javax.persistence.GenerationType")});
+                    }
                 }
             }
 
@@ -193,7 +191,6 @@ public class MyAutoGenerator extends JavaGenerator {
 
         out.indent(indent);
     }
-
     protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);
         final List<String> properties = new ArrayList<>();
@@ -510,6 +507,7 @@ public class MyAutoGenerator extends JavaGenerator {
 
     protected void generateDao(TableDefinition table, JavaWriter out) {
         UniqueKeyDefinition key = table.getPrimaryKey();
+        int size = key.getKeyColumns().size();
         if (key == null) {
             log.info("Skipping DAO generation", out.file().getName());
             return;
@@ -664,70 +662,63 @@ public class MyAutoGenerator extends JavaGenerator {
                 }
             }
         }
-//        //For Insert Method
-//        out.javadoc("Created custom Insert records Method");
-//        out.println("public %s insertRecord(%s classObject) {", pType, pType);
-//        out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
-//        for (ColumnDefinition column : table.getColumns()) {
-//            final String colClass = getStrategy().getJavaClassName(column);
-//            if (key != column.getPrimaryKey()) {
-//                out.println("record.set%s(classObject.get%s());", colClass, colClass);
-//            }
-//        }
-//        out.println("record.store();");
-//        out.println("%s result=record.into(%s.class);", pType, pType);
-//        out.println("return result;");
-//        out.println("}");
-//
-//
-//        for (ColumnDefinition column : table.getColumns()) {
-//            final String colClass = getStrategy().getJavaClassName(column);
-//            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-//            final String colType = out.ref(colTypeFull);
-//            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-//
-//            if(key==column.getPrimaryKey()) {
-//                out.javadoc("Created custom Delete record Method");
-//                //for Delete
-//                out.println("public int deleteRecordById(%s %s){", colType, colClass);
-//                out.println("int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();", tableIdentifier, colIdentifier, colClass);
-//                out.println("return result;");
-//                out.println("}");
-//                out.javadoc("Created custom Update record Method");
-//                //for update
-//                out.println("public int updateRecord(%s classObject){", pType);
-//                out.println("int result=this.ctx().update(%s)", tableIdentifier);
-//                for (ColumnDefinition column1 : table.getColumns()) {
-//                    final String colClass1 = getStrategy().getJavaClassName(column1);
-//                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));
-//                    if (key == column1.getPrimaryKey()) {
-//                        continue;
-//                    } else {
-//                        out.println(".set(%s,classObject.get%s())", colIdentifier1, colClass1);
-//                    }
-//                }
-//                out.println(".where(%s.eq(classObject.get%s())).execute();", colIdentifier, colClass);
-//                out.println("return result;");
-//                out.println("}");
-//            }
-//        }
-//        generateDaoClassFooter(table, out);
-//        out.println("}");
-//    }
+
+        //For GET method for composite primary key.
+        out.javadoc("Created custom fetchRecord Method");
+        out.print("public %s fetchRecord(", pType);
+        int flag = 0;
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colType1 = out.ref(colTypeFull);
+            if (key == column.getPrimaryKey()) {
+                if (flag != (size - 1)) {
+                    out.print("%s %s,", colType1, colClass);
+                    flag++;
+                } else {
+                    out.println("%s %s){", colType1, colClass);
+                }
+            }
+        }
+        out.print("return this.ctx().selectFrom(%s).where(",  tableIdentifier);
+        int flag2 = 0;
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass1 = getStrategy().getJavaClassName(column);
+            final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
+            final String colType1 = out.ref(colTypeFull1);
+            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            if (key == column.getPrimaryKey()) {
+                if (flag2 != (size - 1)) {
+                    if (flag2 == 0) {
+                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+                    } else {
+                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                    }
+                    flag2++;
+                } else {
+                    if (size == 1) {
+                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("}");
+                    } else {
+                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("}");
+                    }
+                }
+            }
+        }
 
         //For Insert Method
         out.javadoc("Created custom Insert records Method");
         out.println("public %s insertRecord(%s classObject) {", pType, pType);
         out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
-        UniqueKeyDefinition pk = table.getPrimaryKey();
-        int size = pk.getKeyColumns().size();
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass = getStrategy().getJavaClassName(column);
             if (size == 1) {
                 if (key != column.getPrimaryKey()) {
                     out.println("record.set%s(classObject.get%s());", colClass, colClass);
                 }
-            } else {
+            }
+            else {
                 out.println("record.set%s(classObject.get%s());", colClass, colClass);
             }
         }
@@ -736,69 +727,9 @@ public class MyAutoGenerator extends JavaGenerator {
         out.println("return result;");
         out.println("}");
 
-        //DELETE METHOD FOR COMPOSITE KEYS
+
         if (size > 1) {
-            out.javadoc("Created custom Delete method for the composite key");
-            out.print("public int deleteRecord(");
-            int flag = 0;
-            for (ColumnDefinition column : table.getColumns()) {
-                final String colClass = getStrategy().getJavaClassName(column);
-                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull);
-
-                if (key == column.getPrimaryKey()) {
-                    if (flag != (size - 1)) {
-                        out.print("%s %s,", colType1, colClass);
-                        flag++;
-                    } else {
-                        out.println("%s %s){", colType1, colClass);
-                    }
-                }
-            }
-
-            out.print("return this.ctx().deleteFrom(%s).where(", tableIdentifier);
-            int flag2 = 0;
-            for (ColumnDefinition column : table.getColumns()) {
-                final String colClass1 = getStrategy().getJavaClassName(column);
-                final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull1);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-
-                if (key == column.getPrimaryKey()) {
-                    if (flag2 != (size - 1)) {
-                        if (flag2 == 0) {
-                            out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
-                        } else {
-                            out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
-                        }
-                        flag2++;
-                    } else {
-                        out.println("%s.eq(%s))).execute();", colIdentifier1, colClass1, pType);
-                        out.println("}");
-                    }
-                }
-            }
-        } else {
-            //For Delete single primary key
-            for (ColumnDefinition column : table.getColumns()) {
-                final String colClass = getStrategy().getJavaClassName(column);
-                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-                final String colType = out.ref(colTypeFull);
-                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-
-                if (key == column.getPrimaryKey()) {
-                    out.javadoc("Created custom Delete record Method");
-                    //for Delete
-                    out.println("public int deleteRecord(%s %s){", colType, colClass);
-                    out.println("int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();", tableIdentifier, colIdentifier, colClass);
-                    out.println("return result;");
-                    out.println("}");
-                }
-            }
-        }
-
-        //for update
-        if (size > 1) {
+            //For Update COMPOSITE KEYS
             out.javadoc("Created custom Update record Method");
             out.println("public int updateRecord(%s classObject){", pType);
             out.println("int result=this.ctx().update(%s)", tableIdentifier);
@@ -832,17 +763,69 @@ public class MyAutoGenerator extends JavaGenerator {
                     }
                 }
             }
+            //For Delete COMPOSITE KEYS
+            out.javadoc("Created custom Delete method ");
+            out.print("public int deleteRecord(");
+            int flag5 = 0;
+            for (ColumnDefinition column : table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+                final String colType1 = out.ref(colTypeFull);
+                if (key == column.getPrimaryKey()) {
+                    if (flag5 != (size - 1)) {
+                        out.print("%s %s,", colType1, colClass);
+                        flag5++;
+                    } else {
+                        out.println("%s %s){", colType1, colClass);
+                    }
+                }
+            }
+            out.print("return this.ctx().deleteFrom(%s).where(", tableIdentifier);
+            int flag6 = 0;
+            for (ColumnDefinition column : table.getColumns()) {
+                final String colClass1 = getStrategy().getJavaClassName(column);
+                final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
+                final String colType1 = out.ref(colTypeFull1);
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+
+                if (key == column.getPrimaryKey()) {
+                    if (flag6 != (size - 1)) {
+                        if (flag6 == 0) {
+                            out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+                        } else {
+                            out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                        }
+                        flag6++;
+                    }
+                    else {
+                        out.println("%s.eq(%s))).execute();", colIdentifier1, colClass1, pType);
+                        out.println("}");
+                    }
+                }
+            }
         }
-        // For update for single primary key
         else {
+            //For Delete single primary key
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass = getStrategy().getJavaClassName(column);
                 final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
                 final String colType = out.ref(colTypeFull);
                 final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-
+                if (key == column.getPrimaryKey()) {
+                    out.javadoc("Created custom Delete record Method");
+                    out.println("public int deleteRecord(%s %s){", colType, colClass);
+                    out.println("int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();", tableIdentifier, colIdentifier, colClass);
+                    out.println("return result;");
+                    out.println("}");
+                }
+            }
+            for (ColumnDefinition column : table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+                final String colType = out.ref(colTypeFull);
+                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                //For update single primary key
                 out.javadoc("Created custom Update record Method");
-                //for update
                 out.println("public int updateRecord(%s classObject){", pType);
                 out.println("int result=this.ctx().update(%s)", tableIdentifier);
                 for (ColumnDefinition column1 : table.getColumns()) {
@@ -858,57 +841,6 @@ public class MyAutoGenerator extends JavaGenerator {
                 break;
             }
         }
-
-        //GET method for composite primary key.
-//        if (size > 1){
-        out.javadoc("Created custom Get method for fetching composite key records");
-        out.print("public %s fetchRecord(", pType);
-
-        int flag = 0;
-        for (ColumnDefinition column : table.getColumns()) {
-            final String colClass = getStrategy().getJavaClassName(column);
-            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-            final String colType1 = out.ref(colTypeFull);
-
-            if (key == column.getPrimaryKey()) {
-                if (flag != (size - 1)) {
-                    out.print("%s %s,", colType1, colClass);
-                    flag++;
-                } else {
-                    out.println("%s %s){", colType1, colClass);
-                }
-            }
-        }
-
-        out.print("return this.ctx().selectFrom(%s).where(",  tableIdentifier);
-        int flag2 = 0;
-        for (ColumnDefinition column : table.getColumns()) {
-            final String colClass1 = getStrategy().getJavaClassName(column);
-            final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
-            final String colType1 = out.ref(colTypeFull1);
-            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-
-            if (key == column.getPrimaryKey()) {
-                if (flag2 != (size - 1)) {
-                    if (flag2 == 0) {
-                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
-                    } else {
-                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
-                    }
-                    flag2++;
-                } else {
-                    if (size == 1) {
-                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
-                        out.println("}");
-                    } else {
-                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
-                        out.println("}");
-                    }
-                }
-            }
-        }
-
-
         generateDaoClassFooter(table, out);
         out.println("}");
     }
@@ -929,11 +861,6 @@ public class MyAutoGenerator extends JavaGenerator {
         if (generateSpringAnnotations())
             out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
     }
-
-
-
-
-
 
 
     private int colRefSegments(Definition column) {
