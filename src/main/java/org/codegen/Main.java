@@ -1,6 +1,7 @@
 package org.codegen;
 
 //import org.apache.log4j.BasicConfigurator;
+import org.codegen.ApiCodeGen.Validator.JsonValidator;
 import org.codegen.ApiCodeGen.loader.ClassLoaderTest;
 import org.codegen.Handler.DirectoryHandler;
 import org.codegen.Handler.TemplateHandler;
@@ -35,6 +36,7 @@ public class Main {
 
         List<String> classNames= ClassLoaderTest.loadClass(ClassLoaderTest.readClass());
         log.info(" ClassNames------>{}",classNames);
+        JsonValidator.validateJsonFiles(classNames);
         TemplateHandler.generateSpringBootProject(classNames);
 
         DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");

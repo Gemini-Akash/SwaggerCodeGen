@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.Charset;
 
-public class pojoValidator {
+public class PojoValidator {
 
-    private static final Logger log = LoggerFactory.getLogger(pojoValidator.class);
+    private static final Logger log = LoggerFactory.getLogger(PojoValidator.class);
 
     public static int countClasses() {
         int count = 0;
@@ -54,7 +54,7 @@ public class pojoValidator {
     }
 
     public static Boolean validatePojoClasses() {
-        int count = 0;
+        int count = 0,flag=0;
         File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
         try {
             if (files.length == countClasses()) {
@@ -62,7 +62,14 @@ public class pojoValidator {
                     if (file.exists() && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty()) && validatePojoClassContent(file) == true) {
                         count++;
                     } else {
-                        validatePojoClasses();
+                        flag++;
+                        if (flag==2) {
+                            log.info("Time exceeds for running Code  Generator.");
+                            throw new RuntimeException("Time out of bound to run code generator.");
+                        }
+                        else {
+                            validatePojoClasses();
+                        }
                     }
                 }
             }

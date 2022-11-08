@@ -4,28 +4,22 @@ package org.codegen.ApiCodeGen.loader;
 import org.codegen.Handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
-import java.awt.print.Book;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
+import static org.codegen.ApiCodeGen.Validator.PojoValidator.validatePojoClasses;
 
 
 public class ClassLoaderTest {
