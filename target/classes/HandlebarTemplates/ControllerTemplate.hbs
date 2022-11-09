@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RestController
 public class {{className}}Controller {
 
-    private static final Logger log = LoggerFactory.getLogger(BookController.class);
+    private static final Logger log = LoggerFactory.getLogger({{className}}Controller.class);
 
     @Autowired
     {{className}}Service objectService;
@@ -37,13 +37,25 @@ public class {{className}}Controller {
                 }
     }
 
-
-
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body){
        {{className}} dummyBody = null;
        int result=objectService.update{{className}}(body);
        if(result == 1){
+                log.info("Updated successfully");
+                return new ResponseEntity<>(body, HttpStatus.OK);
+           }
+           else{
+                log.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+           }
+    }
+
+    @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
+    public ResponseEntity<{{className}}> patchUpdate{{className}}(@Valid @RequestBody {{className}} body){
+       {{className}} dummyBody = null;
+       {{className}} result=objectService.patchUpdate{{className}}(body);
+       if(result!=null){
                 log.info("Updated successfully");
                 return new ResponseEntity<>(body, HttpStatus.OK);
            }

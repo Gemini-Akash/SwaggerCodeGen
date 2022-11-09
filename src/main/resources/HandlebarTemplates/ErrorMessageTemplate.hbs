@@ -1,61 +1,50 @@
 package com.gemini.{{scriptName}}.Exception;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class ErrorMessage {
 
-private int statusCode;
-private Date timestamp;
-private String cause;
-private String description;
-private String errorMessage;
+private final int statusCode;
+private final String timestamp;
+private  final String description;
+
+private List<String> errorMessage;
 
 
-
-    public ErrorMessage(int statusCode, Date timestamp, String description, String errorMessage) {
+    public ErrorMessage(int statusCode, String timestamp, String description, String errorMessage) {
+        super();
+        this.statusCode = statusCode;
+        this.timestamp = timestamp;
+        this.description = description;
+        this.errorMessage = Arrays.asList(errorMessage);
+    }
+    public ErrorMessage(int statusCode, String timestamp, String description, List<String> errorMessage) {
+        super();
         this.statusCode = statusCode;
         this.timestamp = timestamp;
         this.description = description;
         this.errorMessage = errorMessage;
     }
-    public ErrorMessage(int statusCode, Date timestamp, String cause, String description, String errorMessage) {
-        this.statusCode = statusCode;
-        this.timestamp = timestamp;
-        this.cause = cause;
-        this.description = description;
-        this.errorMessage = errorMessage;
-    }
-
-
 
     public int getStatusCode() {
-    return statusCode;
+        return statusCode;
     }
 
-    public Date getTimestamp() {
-    return timestamp;
-    }
-
-    public String getCause() {
-    return cause;
-    }
-
-    public void setCause(String cause) {
-    this.cause = cause;
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public String getDescription() {
-    return description;
+        return description;
     }
 
-
-    public String getErrorMessage() {
-    return errorMessage;
+    public List<String> getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
-    this.errorMessage = errorMessage;
+    public void setErrorMessage(List<String> errorMessage) {
+        this.errorMessage = errorMessage;
     }
-
-
 }

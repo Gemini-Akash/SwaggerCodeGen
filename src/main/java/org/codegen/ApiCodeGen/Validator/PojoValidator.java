@@ -56,12 +56,19 @@ public class PojoValidator {
     public static Boolean validatePojoClasses() {
         int count = 0,flag=0;
         File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
-        try {
             if (files.length == countClasses()) {
                 for (File file : files) {
-                    if (file.exists() && !(FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty()) && validatePojoClassContent(file) == true) {
+                    Boolean emptyFileCheck=null;
+                    try {
+                         emptyFileCheck = FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty();
+                    }
+                    catch (Exception e) {
+                            log.error("Exception in pojoValidator {}", e.getMessage());
+                    }
+                    if (file.exists() && !emptyFileCheck && validatePojoClassContent(file) == true) {
                         count++;
-                    } else {
+                    }
+                    else {
                         flag++;
                         if (flag==2) {
                             log.info("Time exceeds for running Code  Generator.");
@@ -73,9 +80,6 @@ public class PojoValidator {
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error("Exception in pojoValidator {}", e.getMessage());
-        }
         if (count == files.length) {
             log.info("<---------If block of pojoValidator()---------->");
             return true;

@@ -10,50 +10,32 @@ import com.gemini.{{scriptName}}.Exception.ServiceException;
 @Service
 public class {{className}}Service {
 
-    private static final Logger log = LoggerFactory.getLogger(BookService.class);
+    private static final Logger log = LoggerFactory.getLogger({{className}}Service.class);
 
     @Autowired
     {{className}}Dao objectDao ;
 
     public {{className}} get{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
-            try {
-                return objectDao.fetchRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
-            }
-            catch (Exception e){
-                log.info(e.getMessage());
-                throw new ServiceException(e.getMessage(),"problem in fetching data");
-            }
+         return objectDao.fetchRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
 
     public int update{{className}}({{className}} classObject){
-        try {
-            return objectDao.updateRecord(classObject);
-        }
-        catch (Exception e) {
-            log.error(e.getMessage(),e.getCause());
-            throw new ServiceException(e.getMessage(),"problem in updating data");
-        }
+         return objectDao.updateRecord(classObject);
+    }
+
+    public {{className}} patchUpdate{{className}}({{className}} classObject){
+        objectDao.update(classObject);
+        return objectDao.fetchRecord({{#each primaryKeys}}classObject.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
     }
 
     public {{className}} add{{className}}({{className}} classObject){
-        try {
-            return objectDao.insertRecord(classObject);
-        }
-        catch (Exception e){
-            log.error(e.getMessage());
-            throw new ServiceException(e.getMessage(),"problem in adding data");
-        }
+         return objectDao.insertRecord(classObject);
     }
 
     public int delete{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
-        try {
-                return objectDao.deleteRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
-            }
-        catch (Exception e) {
-            log.error(e.getMessage(),e.getCause());
-            throw new ServiceException(e.getMessage(), "problem in deleting data");
-        }
+          return objectDao.deleteRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
+
 
 }
 

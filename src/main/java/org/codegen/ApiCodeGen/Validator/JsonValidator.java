@@ -13,16 +13,19 @@ public class JsonValidator {
     private static final Logger log = LoggerFactory.getLogger(JsonValidator.class);
     public static void validateJsonFiles(List<String> classNames){
         for (String className:classNames) {
+            JSONObject jsonObject=null;
+            FileReader fileReader;
             try {
-                FileReader fileReader=new FileReader(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+ className + ".json");
-                JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
-                if (jsonObject.get("primaryKeys").equals("{[]}")){
-                    log.info("Empty Jso File: {}.json",className);
-                    throw new RuntimeException("Json File not created.");
-                }
+                fileReader=new FileReader(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+ className + ".json");
+                jsonObject= (JSONObject) new JSONParser().parse(fileReader);
+                fileReader.close();
             }
             catch (Exception e){
-                log.info("{}",e.getMessage());
+                 log.info("{}",e.getMessage());
+            }
+            if (jsonObject.get("primaryKeys").equals("{[]}")){
+                log.info("Empty Jso File: {}.json",className);
+                throw new RuntimeException("Json File not created.");
             }
         }
     }
