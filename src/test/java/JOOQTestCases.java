@@ -33,7 +33,6 @@ public class JOOQTestCases {
             EntityClassGen entityClassGen =new EntityClassGen();
             entityClassGen.EntityGenerator("src/main/resources/Scrpt.sql","Entity.Generated","D:\\JooqCodeGen\\src\\main\\java");
         });
-        System.out.println(exception.getMessage());
         assertEquals("Script Not found", exception.message);
     }
 
@@ -45,7 +44,6 @@ public class JOOQTestCases {
             EntityClassGen entityClassGen =new EntityClassGen();
             entityClassGen.EntityGenerator("src/main/resources/Script.sql","Entity.Generated","D:\\JoGen\\src\\main\\java");
         });
-        System.out.println(exception.getMessage());
         assertEquals("Directory Not found", exception.message);
     }
 
