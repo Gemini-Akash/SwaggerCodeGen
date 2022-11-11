@@ -1,4 +1,5 @@
-import org.codegen.ApiCodeGen.Validator.pojoValidator;
+import org.codegen.ApiCodeGen.Validator.PojoValidator;
+//import org.codegen.ApiCodeGen.Validator.pojoValidator;
 import org.codegen.Handler.DirectoryHandler;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +16,7 @@ public class PojoValidatorTest {
     @Test
     public void testCountClasses(){
 
-        int expectedPojosCount = pojoValidator.countClasses();
+        int expectedPojosCount = PojoValidator.countClasses();
         int actualPojosCount = 5;
 //        Assertions.assertTrue(expectedPojoCount == actualPojosCount,"Equal Number of pojos are not generated");
         Assertions.assertEquals(expectedPojosCount,actualPojosCount,"Equal No of pojos are not generated");
@@ -39,7 +40,7 @@ public class PojoValidatorTest {
 //        File[] files = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
         File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
         for(File filePath: files){
-            Boolean actualResult = pojoValidator.validatePojoClassContent(filePath);
+            Boolean actualResult = PojoValidator.validatePojoClassContent(filePath);
             Assertions.assertEquals(expectedResult,actualResult,"file is not written properly");
         }
     }

@@ -58,33 +58,33 @@ public class ClassLoaderTests {
 ////        }
 //    }
 
-    @Test
-    public void testForJsonBody() throws ClassNotFoundException {
-        JSONObject realjsonObject = new JSONObject();
-
-        realjsonObject.put("ID","Integer");
-        realjsonObject.put("FIRST_NAME","String");
-        realjsonObject.put("LAST_NAME","String");
-        realjsonObject.put("DATE_OF_BIRTH","LocalDate");
-        realjsonObject.put("YEAR_OF_BIRTH","Integer");
-        realjsonObject.put("DISTINGUISHED","Byte");
-
-        Class classContent = Class.forName("test.entity.Author");
-
-        JSONObject expectedJSONObject = ClassLoaderTest.getJsonBody(classContent);
-        System.out.println(expectedJSONObject);
-        Assertions.assertEquals(expectedJSONObject,realjsonObject,"mapping not done correctly");
-
-    }
-
-    @Test
-    public void testForEmptyJsonObjectFromJsonBody() throws ClassNotFoundException {
-        Class classContent = Class.forName("test.entity.Author");
-        JSONObject expectedJSONObject = ClassLoaderTest.getJsonBody(classContent);
+//    @Test
+//    public void testForJsonBody() throws ClassNotFoundException {
+//        JSONObject realjsonObject = new JSONObject();
+//
+//        realjsonObject.put("ID","Integer");
+//        realjsonObject.put("FIRST_NAME","String");
+//        realjsonObject.put("LAST_NAME","String");
+//        realjsonObject.put("DATE_OF_BIRTH","LocalDate");
+//        realjsonObject.put("YEAR_OF_BIRTH","Integer");
+//        realjsonObject.put("DISTINGUISHED","Byte");
+//
+//        Class classContent = Class.forName("test.entity.Author");
+//
+//        JSONObject expectedJSONObject = ClassLoaderTest.getJsonBody(classContent);
 //        System.out.println(expectedJSONObject);
-        Assertions.assertFalse(expectedJSONObject.isEmpty(), "JSONObject is  empty");
+//        Assertions.assertEquals(expectedJSONObject,realjsonObject,"mapping not done correctly");
+//
+//    }
 
-    }
+//    @Test
+//    public void testForEmptyJsonObjectFromJsonBody() throws ClassNotFoundException {
+//        Class classContent = Class.forName("test.entity.Author");
+//        JSONObject expectedJSONObject = ClassLoaderTest.getJsonBody(classContent);
+////        System.out.println(expectedJSONObject);
+//        Assertions.assertFalse(expectedJSONObject.isEmpty(), "JSONObject is  empty");
+//
+//    }
 
 
     @Test
