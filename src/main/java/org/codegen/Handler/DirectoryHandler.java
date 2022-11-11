@@ -46,7 +46,7 @@ public class DirectoryHandler {
 
     public static String generateDirectoryPath()
     {
-        return outerDirectoryPath+"\\"+getScriptName()+"SpringBootApp\\src\\main\\java\\com\\gemini\\"+getScriptName();
+        return outerDirectoryPath+"/"+getScriptName()+"SpringBootApp/src/main/java/com/gemini/"+getScriptName();
     }
 
     public static void renameDirectory(String filePath ){
