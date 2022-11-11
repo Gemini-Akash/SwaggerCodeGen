@@ -1,0 +1,14 @@
+org\codegen\Handler\TemplateHandler.class
+org\jooq\codegen\GeneratorWriter$CloseResult.class
+org\codegen\ApiCodeGen\Validator\JsonValidator.class
+org\codegen\JOOQ\PojosGen\EntityClassGen.class
+org\jooq\codegen\GeneratorWriter.class
+org\codegen\Main.class
+org\codegen\JOOQ\PojosGen\PathValidator.class
+org\codegen\JOOQ\PojosGen\FileNotFoundException.class
+org\codegen\ApiCodeGen\Validator\PojoValidator.class
+org\codegen\ApiCodeGen\loader\Classloader.class
+org\codegen\Handler\DirectoryHandler.class
+org\json\simple\JSONObject.class
+org\codegen\JOOQ\PojosGen\MyAutoGenerator.class
+org\codegen\Handler\DirectoryHandler$1.class

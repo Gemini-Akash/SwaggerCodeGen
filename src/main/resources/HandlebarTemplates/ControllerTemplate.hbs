@@ -38,8 +38,9 @@ public class {{className}}Controller {
     }
 
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body){
+    public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
        {{className}} dummyBody = null;
+       {{#each primaryKeys}}body.set{{fieldName}}({{fieldName}});{{/each}}
        int result=objectService.update{{className}}(body);
        if(result == 1){
                 log.info("Updated successfully");
@@ -52,8 +53,9 @@ public class {{className}}Controller {
     }
 
     @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity<{{className}}> patchUpdate{{className}}(@Valid @RequestBody {{className}} body){
+    public ResponseEntity<{{className}}> patchUpdate{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
        {{className}} dummyBody = null;
+       {{#each primaryKeys}}body.set{{fieldName}}({{fieldName}});{{/each}}
        {{className}} result=objectService.patchUpdate{{className}}(body);
        if(result!=null){
                 log.info("Updated successfully");

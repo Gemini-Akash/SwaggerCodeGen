@@ -1,27 +1,21 @@
 package org.codegen;
 
-//import org.apache.log4j.BasicConfigurator;
 import org.codegen.ApiCodeGen.Validator.JsonValidator;
-import org.codegen.ApiCodeGen.loader.ClassLoaderTest;
+import org.codegen.ApiCodeGen.loader.Classloader;
 import org.codegen.Handler.DirectoryHandler;
 import org.codegen.Handler.TemplateHandler;
+
 import org.codegen.JOOQ.PojosGen.EntityClassGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.UniqueConstraint;
-
-import java.io.IOException;
 import java.util.List;
-
-import static java.nio.file.Paths.get;
 
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
 
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
@@ -32,16 +26,16 @@ public class Main {
             log.error("Exception in generating POJO classes {}", e.getMessage());
         }
 
-        DirectoryHandler.renameDirectory(DirectoryHandler.generateDirectoryPath()+"\\com\\gemini\\"+ DirectoryHandler.getScriptName()+"\\entity");
+        DirectoryHandler.renameDirectory(DirectoryHandler.generateDirectoryPath()+"/com/gemini/"+ DirectoryHandler.getScriptName()+"/entity");
 
-        List<String> classNames= ClassLoaderTest.loadClass(ClassLoaderTest.readClass());
+        List<String> classNames= Classloader.loadClass(Classloader.readClass());
         log.info(" ClassNames------>{}",classNames);
         JsonValidator.validateJsonFiles(classNames);
         TemplateHandler.generateSpringBootProject(classNames);
 
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\com");
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"\\jsonFiles");
-        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos");
+        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"/com");
+        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"/jsonFiles");
+        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"/entity/"+DirectoryHandler.getSchemaName()+"/tables/pojos");
         log.info("<------ CodeGen FrameWork Successfully Generated------>");
 
 //        Handlebar.SwaggerYaml();

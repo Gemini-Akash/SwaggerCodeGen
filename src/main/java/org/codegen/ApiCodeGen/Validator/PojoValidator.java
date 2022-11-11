@@ -14,7 +14,12 @@ public class PojoValidator {
 
     private static final Logger log = LoggerFactory.getLogger(PojoValidator.class);
 
-    public static int countClasses() {
+    /**
+     * countTables() method is used for counting no. of tables in script.
+     *
+     * @return count
+     */
+    public static int countTables() {
         int count = 0;
         try {
             File f1 = new File(DirectoryHandler.outerScriptDirectoryPath);
@@ -26,10 +31,16 @@ public class PojoValidator {
             }
             reader.close();
         } catch (Exception e) {
-            log.error("Exception in countClasses {}", e.getMessage());
+            log.error("Exception in countTables {}", e.getMessage());
         }
         return count;
     }
+
+    /**
+     *validatePojoClassContent() method is used for validating a class is java file or not.
+     *
+     * @return boolean value
+     */
 
     public static Boolean validatePojoClassContent(File filePath) {
         int count1 = 0, count2 = 0;
@@ -53,10 +64,15 @@ public class PojoValidator {
         }
     }
 
+    /**
+     *validatePojoClasses() method is used for validating all pojo classes are generated or not.
+     *
+     * @return boolean value
+     */
     public static Boolean validatePojoClasses() {
         int count = 0,flag=0;
-        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\"+DirectoryHandler.getSchemaName()+"\\tables\\pojos").listFiles();
-            if (files.length == countClasses()) {
+        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"/entity/"+DirectoryHandler.getSchemaName()+"/tables/pojos").listFiles();
+            if (files.length == countTables()) {
                 for (File file : files) {
                     Boolean emptyFileCheck=null;
                     try {
@@ -71,7 +87,7 @@ public class PojoValidator {
                     else {
                         flag++;
                         if (flag==2) {
-                            log.info("Time exceeds for running Code  Generator.");
+                            log.info("Time exceeds for running Code Generator.");
                             throw new RuntimeException("Time out of bound to run code generator.");
                         }
                         else {

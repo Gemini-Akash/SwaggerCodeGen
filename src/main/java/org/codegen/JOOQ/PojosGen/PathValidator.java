@@ -1,7 +1,6 @@
 package org.codegen.JOOQ.PojosGen;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 
 /**

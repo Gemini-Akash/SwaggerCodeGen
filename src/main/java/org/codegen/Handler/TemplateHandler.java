@@ -13,28 +13,14 @@ import java.util.List;
 
 public class TemplateHandler {
     private static final Logger log = LoggerFactory.getLogger(TemplateHandler.class);
-//    public static void SwaggerYaml()
-//    {
-//        try
-//        {
-//            Handlebars handlebars = new Handlebars();
-//            Template template = handlebars.compile("\\HandlebarTemplates\\swaggerTemplate");
-//            Path path1 = Paths.get("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\resources\\SwaggerYaml.yml");
-////            String filename = "SwaggerYaml.yml";
-////            String path = path1 + File.separator + filename;
-//            FileReader fileReader = new FileReader("D:\\Intellj Projects\\SwaggerCodeGen\\src\\main\\java\\org\\codegen\\ApiCodeGen\\jsonFiles\\SwaggerJson.json");
-//            JSONParser jsonParser = new JSONParser();
-//            Object obj = jsonParser.parse(fileReader);
-//            FileWriter fileWriter =new FileWriter(String.valueOf(path1));
-//            fileWriter.write(template.apply(obj));
-//            fileWriter.close();
-//        }
-//        catch (Exception e)
-//        {
-//            log.error("Exception in SwaggerYaml() :{}", e.getMessage());
-//        }
-//    }
 
+    /**
+     *generateClassFromTemplates() method is used for generating class from templates.
+     *
+     * @param filePath
+     * @param jsonPath
+     * @param templatePath
+     */
     public static void generateClassFromTemplates(String templatePath, String filePath, String jsonPath)
     {
         try
@@ -52,9 +38,16 @@ public class TemplateHandler {
         }
         catch (Exception e)
         {
-            log.error("Exception in SwaggerYaml1() :{}", e.getMessage());
+            log.error("Exception in generateClassFromTemplates() :{}", e.getMessage());
         }
     }
+
+    /**
+     *generateFileFromTemplate() method is used for generating file from templates.
+     *
+     * @param filePath
+     * @param templatePath
+     */
     public static void generateFileFromTemplate(String templatePath,String filePath)
     {
         try {
@@ -67,39 +60,37 @@ public class TemplateHandler {
         }
         catch (Exception e)
         {
-            log.error("Exception in SwaggerYaml2() :{}", e.getMessage());
+            log.error("Exception in generateFileFromTemplate() :{}", e.getMessage());
         }
     }
 
+    /**
+     *generateSpringBootProject() method is used for generating output in outerDirectoryPath.
+     *
+     * @param classNames
+     */
     public static void generateSpringBootProject(List<String> classNames) {
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\service");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\controller");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\model");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"\\Exception");
-        DirectoryHandler.createDirectory(DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources");
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/service");
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/controller");
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/model");
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/Exception");
+        DirectoryHandler.createDirectory(DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources");
 
-//        try{
-//            File file =new File(DirectoryHandler.outerDirectoryPath+"\\src\\main\\resources\\application.properties");
-//            file.createNewFile();
-//        }
-//        catch (Exception e){
-//            log.info(e.getMessage(),e.getCause());
-//        }
         for (String className:classNames) {
-            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", DirectoryHandler.generateDirectoryPath()+"\\"+ DirectoryHandler.getScriptName()+".java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/pomTemplate", DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\pom.xml", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ServiceException.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ErrorMessage.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", DirectoryHandler.generateDirectoryPath()+"\\Exception\\ControllerExceptionHandler.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", DirectoryHandler.generateDirectoryPath()+"/"+ DirectoryHandler.getScriptName()+".java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/pomTemplate", DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/pom.xml", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ServiceException.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ErrorMessage.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
+            generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ControllerExceptionHandler.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
             break;
         }
         for (String classname:classNames) {
-            generateClassFromTemplates("HandlebarTemplates/servicesTemplate", DirectoryHandler.generateDirectoryPath()+"\\service\\"+classname+"Service.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/ControllerTemplate", DirectoryHandler.generateDirectoryPath()+"\\controller\\"+classname+"Controller.java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/modelTemplate", DirectoryHandler.generateDirectoryPath()+"\\model\\"+classname+".java", DirectoryHandler.generateDirectoryPath()+"\\jsonFiles\\"+classname+".json");
+            generateClassFromTemplates("HandlebarTemplates/servicesTemplate", DirectoryHandler.generateDirectoryPath()+"/service/"+classname+"Service.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
+            generateClassFromTemplates("HandlebarTemplates/ControllerTemplate", DirectoryHandler.generateDirectoryPath()+"/controller/"+classname+"Controller.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
+            generateClassFromTemplates("HandlebarTemplates/modelTemplate", DirectoryHandler.generateDirectoryPath()+"/model/"+classname+".java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
         }
-        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources\\controllerExceptionHandlerJson.json");
-        generateFileFromTemplate("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"\\"+DirectoryHandler.getScriptName()+"SpringBootApp\\src\\main\\resources\\application.properties");
+        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json");
+        generateFileFromTemplate("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/application.properties");
 
     }
 
