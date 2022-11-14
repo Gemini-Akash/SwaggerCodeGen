@@ -7,26 +7,23 @@
 		we have to reduce the json file to one so we can use the only one json to fill the multiple templates or we should use YAML.
 
 2.Patch Operations:-
-	Our current version is not supported the patch operation we only go with the put. when we are using the patch it is updating the
-	changed fields and the unchanged fields become the null. 
-	(for ex: If we have one Student table and fields are SName,Rollno,id, address and we want to perform the update operation 
-	and want  to  update the only rollno and addresss in this case when we update only with two fields the rest of the fields become null) 
-
-	Solution:
+	For the Patch operation we are using two queries, so can user hit the patch operation we will hit the database
+	two times which is costly operation.
+	
 		
 3. Our current version is not supporting the batch operations means batch insertion or deletion.
-
-4. Dialect should be configurable 
-
-5. OS Independent (Backward slashes '\\' work only in windows)
-
-6. Schema should be there in the package name if schema is present in the script. 
 	 
-7. Multiple schema is not supported in this version.
+4. Multiple schema is not supported in this version.
 
-8. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
+5. There should be no same table name in different multiple schema.
 
-9. Composite primary key. (Working on it) (i.e CRUD operation from Single composite key is not allowed)
+6. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
 
-10. Mapping annotations between two tables as of now JOOQ is not able to put the mapping annotations on the generated POJOS(i.e @OneToOne, @OneToMany, @ManyToMany).
+7. Composite primary key. (i.e CRUD operation from single primary key is not allowed in case of composite primary keys).
 
+8. Mapping annotations between two tables as of now JOOQ is not able to put the mapping annotations on the generated POJOS(i.e @OneToOne, @OneToMany, @ManyToMany).
+
+9. Issues raise to JOOQ team (Github).
+	https://github.com/jOOQ/jOOQ/issues/14012 (For returning void in insert() and update()).
+	
+	
