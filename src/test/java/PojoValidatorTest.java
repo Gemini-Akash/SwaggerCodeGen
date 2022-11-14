@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PipedOutputStream;
 
 
 public class PojoValidatorTest {
@@ -15,34 +16,26 @@ public class PojoValidatorTest {
     private static final Logger log =  LoggerFactory.getLogger(PojoValidatorTest.class);
     @Test
     public void testCountClasses(){
-
-        int expectedPojosCount = PojoValidator.countClasses();
-        int actualPojosCount = 5;
-//        Assertions.assertTrue(expectedPojoCount == actualPojosCount,"Equal Number of pojos are not generated");
+        int expectedPojosCount = 3;
+        int actualPojosCount = PojoValidator.countClasses();
         Assertions.assertEquals(expectedPojosCount,actualPojosCount,"Equal No of pojos are not generated");
     }
     @Test
     public void testValidatePojoClasses(){
 //        File file = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos");
-        File file = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos");
-        Assertions.assertTrue(file.isDirectory(),"Directory Path is not valid ");
+        File[] file = new File("src/test/resources/validatePojo").listFiles();
+        Assertions.assertTrue(PojoValidator.validatePojoClasses(file));
     }
-    @Test(expected = FileNotFoundException.class)
-   public void testCaseIfDirectoryNotFound() throws FileNotFoundException {
-       File file = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojoss");
-       if (file.isDirectory() == false) {
-           throw new FileNotFoundException();
-       }
-   }
     @Test
     public void testValidatePojoClassContent(){
         Boolean expectedResult = true;
-//        File[] files = new File("C:\\Users\\ad.shrivastava\\Desktop\\POJOS\\entity\\tables\\pojos").listFiles();
-        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"\\entity\\tables\\pojos").listFiles();
-        for(File filePath: files){
-            Boolean actualResult = PojoValidator.validatePojoClassContent(filePath);
-            Assertions.assertEquals(expectedResult,actualResult,"file is not written properly");
-        }
+        File file = new File("src/test/resources/validatepojoclasscontent.txt");
+            Assertions.assertTrue(PojoValidator.validatePojoClassContent(file));
+    }
+    @Test
+    public void negTestValidatePojoClassContent(){
+        File file = new File("src/test/resources/NegValidatePojoClassContent.txt");
+        Assertions.assertFalse(PojoValidator.validatePojoClassContent(file));
     }
 
 
