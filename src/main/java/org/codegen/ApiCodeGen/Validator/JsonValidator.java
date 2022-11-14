@@ -11,6 +11,7 @@ import java.util.List;
 
 public class JsonValidator {
     private static final Logger log = LoggerFactory.getLogger(JsonValidator.class);
+
     /**
      * validateJsonFiles method is used for validating generated Json Files.
      *

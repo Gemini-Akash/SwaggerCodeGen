@@ -157,13 +157,11 @@ public class Classloader {
      *
      * @return set of classes
      */
-
-
     public static Set<Class> readClass() {
         File[] files = new File(DirectoryHandler.generateDirectoryPath() + "/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos").listFiles();
         Set<Class> classes = new HashSet<>();
         try {
-            if (validatePojoClasses()) {
+            if (validatePojoClasses(files)) {
                 for (File file : files) {
                     javaCompileClass(file);
                     classes.add(fullyQualifiedClassName(file));

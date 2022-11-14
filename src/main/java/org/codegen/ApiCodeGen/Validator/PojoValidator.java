@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 public class PojoValidator {
 
     private static final Logger log = LoggerFactory.getLogger(PojoValidator.class);
+    static int flag=0;
 
     /**
      * countTables() method is used for counting no. of tables in script.
@@ -69,9 +70,8 @@ public class PojoValidator {
      *
      * @return boolean value
      */
-    public static Boolean validatePojoClasses() {
-        int count = 0,flag=0;
-        File[] files = new File(DirectoryHandler.generateDirectoryPath()+"/entity/"+DirectoryHandler.getSchemaName()+"/tables/pojos").listFiles();
+    public static Boolean validatePojoClasses(File[] files) {
+        int count = 0;
             if (files.length == countTables()) {
                 for (File file : files) {
                     Boolean emptyFileCheck=null;
@@ -81,7 +81,7 @@ public class PojoValidator {
                     catch (Exception e) {
                             log.error("Exception in pojoValidator {}", e.getMessage());
                     }
-                    if (file.exists() && !emptyFileCheck && validatePojoClassContent(file) == true) {
+                    if (file.exists() && !emptyFileCheck && validatePojoClassContent(file)) {
                         count++;
                     }
                     else {
@@ -91,7 +91,7 @@ public class PojoValidator {
                             throw new RuntimeException("Time out of bound to run code generator.");
                         }
                         else {
-                            validatePojoClasses();
+                            validatePojoClasses(files);
                         }
                     }
                 }
