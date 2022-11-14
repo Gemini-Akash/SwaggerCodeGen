@@ -33,8 +33,9 @@ public class Classloader {
      * @param className
      * @param primaryKeyObject
      * @param nonPrimaryKeyObject
+     * @param filePath
      */
-    public static void convertIntoAPIJson(String className, JSONArray primaryKeyObject, JSONArray nonPrimaryKeyObject) {
+    public static void convertIntoAPIJson(String className, JSONArray primaryKeyObject, JSONArray nonPrimaryKeyObject,String filePath) {
         try {
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("className", className);
@@ -44,7 +45,7 @@ public class Classloader {
             jsonObject1.put("primaryKeys", primaryKeyObject);
             log.info("Required json :{}", jsonObject1);
             try {
-                FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath() + "/jsonFiles/" + className + ".json");
+                FileWriter file = new FileWriter(filePath+ "/jsonFiles/" + className + ".json");
                 file.write(jsonObject1.toJSONString());
                 file.close();
             } catch (IOException e) {
@@ -60,16 +61,17 @@ public class Classloader {
      * loadClass() method is used to load class from fully qualified classname
      *
      * @param classObject
+     * @param filePath
      * @return classNames
      */
-    public static List<String> loadClass(Set<Class> classObject) {
+    public static List<String> loadClass(Set<Class> classObject,String filePath) {
         List<String> classNames = new ArrayList<>();
         try {
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();
                 classNames.add(className);
                 log.info("Pojo ClassName : {}", className);
-                getJsonBody(classContent);
+                getJsonBody(classContent,filePath);
             }
         } catch (Exception e) {
             log.error("Exception in loadClass():{}" + e.getMessage());
@@ -81,8 +83,9 @@ public class Classloader {
      * getJsonBody() method is used to get json object.
      *
      * @param classContent
+     * @param filePath
      */
-    public static void getJsonBody(Class classContent) {
+    public static void getJsonBody(Class classContent,String filePath) {
 
         JSONArray primaryKeyObject = null;
         JSONArray nonPrimaryKeyObject = null;
@@ -112,7 +115,7 @@ public class Classloader {
             log.error("Exception in getJsonBody():{}" + e.getMessage());
         }
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath() + "/jsonFiles");
-        convertIntoAPIJson(classContent.getSimpleName(), primaryKeyObject, nonPrimaryKeyObject);
+        convertIntoAPIJson(classContent.getSimpleName(), primaryKeyObject, nonPrimaryKeyObject,filePath);
     }
 
     /**
@@ -155,10 +158,11 @@ public class Classloader {
     /**
      * readClass() method is used to read all pojo classes.
      *
+     * @param filePath
      * @return set of classes
      */
-    public static Set<Class> readClass() {
-        File[] files = new File(DirectoryHandler.generateDirectoryPath() + "/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos").listFiles();
+    public static Set<Class> readClass(File filePath) {
+        File[] files = filePath.listFiles();
         Set<Class> classes = new HashSet<>();
         try {
             if (validatePojoClasses(files)) {

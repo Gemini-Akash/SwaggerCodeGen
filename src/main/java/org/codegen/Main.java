@@ -8,6 +8,8 @@ import org.codegen.Handler.TemplateHandler;
 import org.codegen.JOOQ.PojosGen.EntityClassGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 import java.util.List;
 
 public class Main {
@@ -28,7 +30,7 @@ public class Main {
 
         DirectoryHandler.renameDirectory(DirectoryHandler.generateDirectoryPath()+"/com/gemini/"+ DirectoryHandler.getScriptName()+"/entity");
 
-        List<String> classNames= Classloader.loadClass(Classloader.readClass());
+        List<String> classNames= Classloader.loadClass(Classloader.readClass(new File(DirectoryHandler.generateDirectoryPath() + "/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos/")),DirectoryHandler.generateDirectoryPath());
         log.info(" ClassNames------>{}",classNames);
         JsonValidator.validateJsonFiles(classNames);
         TemplateHandler.generateSpringBootProject(classNames);
