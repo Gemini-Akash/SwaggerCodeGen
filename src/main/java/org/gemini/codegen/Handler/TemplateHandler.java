@@ -104,7 +104,7 @@ public class TemplateHandler {
             generateClassFromTemplates("HandlebarTemplates/modelTemplate", DirectoryHandler.generateDirectoryPath()+"/model/"+classname+".java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
         }
         generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json");
-        generateFileFromTemplate("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/application.properties");
+        generateClassFromTemplates("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/application.properties",DirectoryHandler.generateDirectoryPath()+"/jsonFiles/applicationProperties.json");
 
     }
 

@@ -1,7 +1,9 @@
 package org.gemini.codegen;
 
+import org.gemini.codegen.ApiCodeGen.Validator.DialectValidator;
 import org.gemini.codegen.ApiCodeGen.Validator.JsonValidator;
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
+import org.gemini.codegen.Handler.DbJsonHandler;
 import org.gemini.codegen.Handler.DirectoryHandler;
 import org.gemini.codegen.Handler.TemplateHandler;
 
@@ -19,7 +21,8 @@ public class CodeGeneratorApp {
 
 
     public static void main(String[] args) {
-
+        LOG.info("Dialect: {}",DirectoryHandler.dialect);
+        DialectValidator.validateDialect(DirectoryHandler.dialect);
 
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         LOG.info("<------ CodeGen FrameWork Started ------>");
@@ -34,6 +37,7 @@ public class CodeGeneratorApp {
         List<String> classNames= CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(DirectoryHandler.generateDirectoryPath() + "/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos/")),DirectoryHandler.generateDirectoryPath());
         LOG.info(" ClassNames------>{}",classNames);
         JsonValidator.validateJsonFiles(classNames);
+        DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath()),DirectoryHandler.url,DirectoryHandler.dialect,DirectoryHandler.username,DirectoryHandler.password,DirectoryHandler.driverClassName);
         TemplateHandler.generateSpringBootProject(classNames);
 
         DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"/com");
