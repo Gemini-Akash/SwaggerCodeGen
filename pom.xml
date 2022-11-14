@@ -136,7 +136,7 @@
 <!--                        <manifest>-->
 <!--                            <addClasspath>true</addClasspath>-->
 <!--                            <classpathPrefix>lib/</classpathPrefix>-->
-<!--                            <mainClass>org.codegen.Main</mainClass>-->
+<!--                            <mainClass>org.gemini.codegen.CodeGeneratorAppGeneratorApp</mainClass>-->
 <!--                        </manifest>-->
 <!--                    </archive>-->
 <!--                </configuration>-->
@@ -154,7 +154,7 @@
 <!--                            <archive>-->
 <!--                                <manifest>-->
 <!--                                    <mainClass>-->
-<!--                                        org.codegen.Main-->
+<!--                                        org.gemini.codegen.CodeGeneratorAppGeneratorApp-->
 <!--                                    </mainClass>-->
 <!--                                </manifest>-->
 <!--                            </archive>-->
@@ -177,7 +177,7 @@
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.codegen.Main</mainClass>
+                                    <mainClass>org.gemini.codegen.CodeGeneratorApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.PojosGen;
+package org.gemini.codegen.JOOQ.PojosGen;
 
 import java.io.File;
 
@@ -13,9 +13,9 @@ public class PathValidator {
      * @param Path Contains the path given by user to check.
      * @return boolean value True or False
      */
-    public Boolean isValidPath(String Path){
+    public boolean isValidPath(String Path){
         File file = new File(Path);
-        Boolean result = file.exists();
+        boolean result = file.exists();
         return result;
     }
 }

@@ -1,4 +1,13 @@
-//package org.codegen.SwaggerCodeGen;
+/**
+ *To Do
+ *
+ * This class was used earlier during generation of project from SwaggerYaml.
+ *
+ *
+ */
+
+
+//package org.gemini.codegen.SwaggerCodeGen;
 //
 //import io.swagger.codegen.ClientOptInput;
 //import io.swagger.codegen.DefaultGenerator;

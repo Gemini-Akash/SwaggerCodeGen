@@ -17,7 +17,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <transformers>
                 <transformer>
-                  <mainClass>org.codegen.Main</mainClass>
+                  <mainClass>org.gemini.codegen.CodeGeneratorApp</mainClass>
                 </transformer>
               </transformers>
             </configuration>

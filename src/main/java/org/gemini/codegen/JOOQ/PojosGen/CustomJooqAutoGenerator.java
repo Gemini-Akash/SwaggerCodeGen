@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.PojosGen;
+package org.gemini.codegen.JOOQ.PojosGen;
 
 import org.jooq.Configuration;
 import org.jooq.Constants;
@@ -18,15 +18,15 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class MyAutoGenerator extends JavaGenerator {
+public class CustomJooqAutoGenerator extends JavaGenerator {
 
-    private static final JooqLogger log = JooqLogger.getLogger(MyAutoGenerator.class);
+    private static final JooqLogger LOG = JooqLogger.getLogger(CustomJooqAutoGenerator.class);
 
 
     @Override
     protected void generatePojo(TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.POJO));
-        log.info("Generating POJO ", out.file().getName());
+        LOG.info("Generating POJO ", out.file().getName());
         generatePojo(table, out);
         closeJavaWriter(out);
         super.generatePojo(table);
@@ -500,7 +500,7 @@ public class MyAutoGenerator extends JavaGenerator {
     @Override
     protected void generateDao(TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.DAO));
-        log.info("Generating DAO", out.file().getName());
+        LOG.info("Generating DAO", out.file().getName());
         generateDao(table, out);
         closeJavaWriter(out);
     }
@@ -509,7 +509,7 @@ public class MyAutoGenerator extends JavaGenerator {
         UniqueKeyDefinition key = table.getPrimaryKey();
         int size = key.getKeyColumns().size();
         if (key == null) {
-            log.info("Skipping DAO generation", out.file().getName());
+            LOG.info("Skipping DAO generation", out.file().getName());
             return;
         }
 

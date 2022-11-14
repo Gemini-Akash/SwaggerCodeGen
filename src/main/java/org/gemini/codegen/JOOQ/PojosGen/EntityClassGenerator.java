@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.PojosGen;
+package org.gemini.codegen.JOOQ.PojosGen;
 
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
@@ -7,7 +7,7 @@ import org.jooq.meta.jaxb.*;
 /**
  * This Class is for the Entity and POJOs class generation with the help of this class we can generate the required classes.
  */
-public class EntityClassGen {
+public class EntityClassGenerator {
 
 
     /**
@@ -27,8 +27,8 @@ public class EntityClassGen {
 
         PathValidator pathValidator =new PathValidator();
 
-        Boolean scriptResult=pathValidator.isValidPath(scriptPath);
-        Boolean directoryResult =pathValidator.isValidPath(directory);
+        boolean scriptResult=pathValidator.isValidPath(scriptPath);
+        boolean directoryResult =pathValidator.isValidPath(directory);
 
         if(!scriptResult){
             throw  new FileNotFoundException("Script Not found");
@@ -41,7 +41,7 @@ public class EntityClassGen {
         Configuration configuration =new Configuration();
 
         configuration.withGenerator(new Generator()
-                        .withName(MyAutoGenerator.class.getCanonicalName())
+                        .withName(CustomJooqAutoGenerator.class.getCanonicalName())
                         .withStrategy(new Strategy()
                                 .withMatchers(new Matchers()
                                         .withFields(

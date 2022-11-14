@@ -1,4 +1,4 @@
-package org.codegen.JOOQ.PojosGen;
+package org.gemini.codegen.JOOQ.PojosGen;
 
 
 /**

@@ -1,4 +1,13 @@
-//package org.codegen.ApiCodeGen.loader;
+/**
+ *To Do
+ *
+ * This ClassLoader class was used earlier during generation of project from SwaggerYaml.
+ *
+ *
+ */
+
+
+//package org.gemini.codegen.ApiCodeGen.loader;
 //
 //
 //import org.json.JSONArray;
@@ -20,13 +29,13 @@
 //import java.util.*;
 //import java.util.stream.Collectors;
 //
-//import static org.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
+//import static org.gemini.codegen.ApiCodeGen.Validator.pojoValidator.validatePojoClasses;
 //
 //
-//public class ClassLoaderTest {
+//public class DummyClassLoader {
 //
 //
-//    private static final Logger log = LoggerFactory.getLogger(ClassLoaderTest.class);
+//    private static final Logger log = LoggerFactory.getLogger(org.gemini.codegen.ApiCodeGen.loader.DummyClassLoader.class);
 //
 //    /**
 //     * service method to convert into json file for creating swaggerApi yaml file

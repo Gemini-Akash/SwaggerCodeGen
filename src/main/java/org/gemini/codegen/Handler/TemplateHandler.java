@@ -1,4 +1,4 @@
-package org.codegen.Handler;
+package org.gemini.codegen.Handler;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class TemplateHandler {
-    private static final Logger log = LoggerFactory.getLogger(TemplateHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
 
     /**
      *generateClassFromTemplates() method is used for generating class from templates.
@@ -21,25 +21,32 @@ public class TemplateHandler {
      * @param jsonPath
      * @param templatePath
      */
-    public static void generateClassFromTemplates(String templatePath, String filePath, String jsonPath)
-    {
-        try
-        {
+    public static void generateClassFromTemplates(String templatePath, String filePath, String jsonPath) {
+        FileReader fileReader=null;
+        FileWriter fileWriter=null;
+        try {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
             Path path1 = Paths.get(filePath);
-            FileReader fileReader = new FileReader(jsonPath);
-            JSONParser jsonParser = new JSONParser();
+            fileReader = new FileReader(jsonPath);
+            JSONParser jsonParser= new JSONParser();
             Object obj = jsonParser.parse(fileReader);
-            FileWriter fileWriter =new FileWriter(String.valueOf(path1));
+            fileWriter=new FileWriter(String.valueOf(path1));
             fileWriter.write(template.apply(obj));
-            fileWriter.close();
-            fileReader.close();
         }
-        catch (Exception e)
-        {
-            log.error("Exception in generateClassFromTemplates() :{}", e.getMessage());
+        catch (Exception e) {
+            LOG.error("Exception in generateClassFromTemplates() :{}", e.getMessage());
         }
+        finally {
+            try {
+                fileReader.close();
+                fileWriter.close();
+            }
+            catch (IOException e) {
+                LOG.error("Exception in closing the file of generateClassFromTemplates() :{}", e.getMessage());
+            }
+        }
+
     }
 
     /**
@@ -50,17 +57,24 @@ public class TemplateHandler {
      */
     public static void generateFileFromTemplate(String templatePath,String filePath)
     {
+        FileWriter fileWriter=null;
         try {
-
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
-            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter = new FileWriter(filePath);
             fileWriter.write(template.text());
-            fileWriter.close();
         }
         catch (Exception e)
         {
-            log.error("Exception in generateFileFromTemplate() :{}", e.getMessage());
+            LOG.error("Exception in generateFileFromTemplate() :{}", e.getMessage());
+        }
+        finally {
+            try {
+                fileWriter.close();
+            }
+            catch (IOException e) {
+                LOG.error("Exception in closing the file of generateFileFromTemplate(): {}", e.getMessage());
+            }
         }
     }
 
