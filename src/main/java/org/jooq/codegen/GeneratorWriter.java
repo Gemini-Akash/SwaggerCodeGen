@@ -60,7 +60,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      */
     private static final Pattern PATTERN_LIST = Pattern.compile(
             "\\[" +
-                    "(?:\\[before=([^\\]]+)\\])?" +
+                "(?:\\[before=([^\\]]+)\\])?" +
                     "(?:\\[separator=([^\\]]+)\\])?" +
                     "(?:\\[after=([^\\]]+)\\])?" +
                     "(?:\\[(.*)\\])" +
