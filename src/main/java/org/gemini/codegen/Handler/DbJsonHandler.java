@@ -10,6 +10,17 @@ import java.io.IOException;
 
 public class DbJsonHandler {
     private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);
+
+    /**
+     *  createDbJson method is used for creating application.properties Json file.
+     *
+     * @param filePath
+     * @param dialect
+     * @param driverClassName
+     * @param password
+     * @param url
+     * @param username
+     */
     public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName){
         FileWriter fileWriter=null;
         try {
@@ -19,7 +30,7 @@ public class DbJsonHandler {
             jsonObject.put("username",username);
             jsonObject.put("driverClassName",driverClassName);
             jsonObject.put("password", password);
-            LOG.info("Required json: {}", jsonObject);
+            LOG.info("Required applicationPropertiesJson: {}", jsonObject);
             fileWriter = new FileWriter(filePath+"/jsonFiles/applicationProperties.json");
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {

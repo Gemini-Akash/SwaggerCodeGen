@@ -6,13 +6,13 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 
 public class TemplateHandler {
     private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
+    static StringBuilder path=new StringBuilder();
+    static StringBuilder jsonPath=new StringBuilder();
 
     /**
      *generateClassFromTemplates() method is used for generating class from templates.
@@ -27,11 +27,10 @@ public class TemplateHandler {
         try {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
-            Path path1 = Paths.get(filePath);
             fileReader = new FileReader(jsonPath);
             JSONParser jsonParser= new JSONParser();
             Object obj = jsonParser.parse(fileReader);
-            fileWriter=new FileWriter(String.valueOf(path1));
+            fileWriter=new FileWriter(filePath);
             fileWriter.write(template.apply(obj));
         }
         catch (Exception e) {
@@ -84,27 +83,101 @@ public class TemplateHandler {
      * @param classNames
      */
     public static void generateSpringBootProject(List<String> classNames) {
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/service");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/controller");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/model");
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+"/Exception");
-        DirectoryHandler.createDirectory(DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources");
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/service");
+        DirectoryHandler.createDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/controller");
+        DirectoryHandler.createDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/model");
+        DirectoryHandler.createDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/Exception");
+        DirectoryHandler.createDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append("/");
+        path.append(DirectoryHandler.getScriptName());
+        path.append("SpringBootApp/src/main/resources");
+        DirectoryHandler.createDirectory(path.toString());
 
         for (String className:classNames) {
-            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", DirectoryHandler.generateDirectoryPath()+"/"+ DirectoryHandler.getScriptName()+".java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/pomTemplate", DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/pom.xml", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ServiceException.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ErrorMessage.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
-            generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", DirectoryHandler.generateDirectoryPath()+"/Exception/ControllerExceptionHandler.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+className+".json");
+            jsonPath.setLength(0);
+            jsonPath.append(DirectoryHandler.generateDirectoryPath());
+            jsonPath.append("/jsonFiles/");
+            jsonPath.append(className);
+            jsonPath.append(".json");
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/");
+            path.append( DirectoryHandler.getScriptName());
+            path.append(".java");
+            generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.outerDirectoryPath);
+            path.append("/");
+            path.append( DirectoryHandler.getScriptName());
+            path.append("SpringBootApp/pom.xml");
+            generateClassFromTemplates("HandlebarTemplates/pomTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/Exception/ServiceException.java");
+            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/Exception/ErrorMessage.java");
+            generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/Exception/ControllerExceptionHandler.java");
+            generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", path.toString(), jsonPath.toString());
             break;
         }
-        for (String classname:classNames) {
-            generateClassFromTemplates("HandlebarTemplates/servicesTemplate", DirectoryHandler.generateDirectoryPath()+"/service/"+classname+"Service.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/ControllerTemplate", DirectoryHandler.generateDirectoryPath()+"/controller/"+classname+"Controller.java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
-            generateClassFromTemplates("HandlebarTemplates/modelTemplate", DirectoryHandler.generateDirectoryPath()+"/model/"+classname+".java", DirectoryHandler.generateDirectoryPath()+"/jsonFiles/"+classname+".json");
+        for (String className:classNames) {
+            jsonPath.setLength(0);
+            jsonPath.append(DirectoryHandler.generateDirectoryPath());
+            jsonPath.append("/jsonFiles/");
+            jsonPath.append(className);
+            jsonPath.append(".json");
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/service/");
+            path.append(className);
+            path.append("Service.java");
+            generateClassFromTemplates("HandlebarTemplates/servicesTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/controller/");
+            path.append(className);
+            path.append("Controller.java");
+            generateClassFromTemplates("HandlebarTemplates/ControllerTemplate", path.toString(), jsonPath.toString());
+            path.setLength(0);
+            path.append(DirectoryHandler.generateDirectoryPath());
+            path.append("/model/");
+            path.append(className);
+            path.append(".java");
+            generateClassFromTemplates("HandlebarTemplates/modelTemplate", path.toString(), jsonPath.toString());
         }
-        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json");
-        generateClassFromTemplates("HandlebarTemplates/applicationPropertiesTemplate",DirectoryHandler.outerDirectoryPath+"/"+DirectoryHandler.getScriptName()+"SpringBootApp/src/main/resources/application.properties",DirectoryHandler.generateDirectoryPath()+"/jsonFiles/applicationProperties.json");
+        path.setLength(0);
+        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append("/");
+        path.append(DirectoryHandler.getScriptName());
+        path.append("SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json");
+        generateFileFromTemplate("HandlebarTemplates/controllerExceptionHandlerJsonTemplate", path.toString());
+        jsonPath.setLength(0);
+        jsonPath.append(DirectoryHandler.generateDirectoryPath());
+        jsonPath.append("/jsonFiles/applicationProperties.json");
+        path.setLength(0);
+        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append("/");
+        path.append(DirectoryHandler.getScriptName());
+        path.append("SpringBootApp/src/main/resources/application.properties");
+        generateClassFromTemplates("HandlebarTemplates/applicationPropertiesTemplate", path.toString(), jsonPath.toString());
 
     }
 

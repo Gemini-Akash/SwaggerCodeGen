@@ -1,4 +1,3 @@
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\PathValidator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\json\simple\JSONObject.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\FileNotFoundException.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\DbJsonHandler.java
@@ -8,6 +7,7 @@ D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\Temp
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\CustomJooqAutoGenerator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\CustomClassLoader.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\jooq\codegen\GeneratorWriter.java
+D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PathValidator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\DummyClassLoader.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\CodeGeneratorApp.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PojoValidator.java

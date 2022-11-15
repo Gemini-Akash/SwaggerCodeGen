@@ -1,5 +1,6 @@
 package org.gemini.codegen.JOOQ.PojosGen;
 
+import org.gemini.codegen.ApiCodeGen.Validator.PathValidator;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
 

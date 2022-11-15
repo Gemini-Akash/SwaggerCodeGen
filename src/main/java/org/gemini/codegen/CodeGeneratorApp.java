@@ -17,32 +17,54 @@ import java.util.List;
 public class CodeGeneratorApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(CodeGeneratorApp.class);
-
-
+    static StringBuilder path=new StringBuilder();
 
     public static void main(String[] args) {
-        LOG.info("Dialect: {}",DirectoryHandler.dialect);
-        DialectValidator.validateDialect(DirectoryHandler.dialect);
 
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         LOG.info("<------ CodeGen FrameWork Started ------>");
+        DialectValidator.validateDialect(DirectoryHandler.dialect);
+        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         try {
-            EntityClassGenerator.EntityGenerator(DirectoryHandler.outerScriptDirectoryPath, "com.gemini."+ DirectoryHandler.getScriptName()+".entity", DirectoryHandler.generateDirectoryPath());
+            path.setLength(0);
+            path.append("com.gemini.");
+            path.append(DirectoryHandler.getScriptName());
+            path.append(".entity");
+            EntityClassGenerator.EntityGenerator(DirectoryHandler.outerScriptDirectoryPath, path.toString(), DirectoryHandler.generateDirectoryPath());
         } catch (Exception e) {
             LOG.error("Exception in generating POJO classes {}", e.getMessage());
         }
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append("/com/gemini/");
+        path.append(DirectoryHandler.getScriptName());
+        path.append("/entity");
+        DirectoryHandler.renameDirectory(new File(path.toString()), new File(DirectoryHandler.generateDirectoryPath() + "/entity"));
 
-        DirectoryHandler.renameDirectory(new File(DirectoryHandler.generateDirectoryPath() + "/com/gemini/" + DirectoryHandler.getScriptName() + "/entity"), new File(DirectoryHandler.generateDirectoryPath() + "/entity"));
-
-        List<String> classNames= CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(DirectoryHandler.generateDirectoryPath() + "/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos/")),DirectoryHandler.generateDirectoryPath());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append( "/entity/");
+        path.append(DirectoryHandler.getSchemaName());
+        path.append("/tables/pojos/");
+        List<String> classNames= CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(path.toString())),DirectoryHandler.generateDirectoryPath());
         LOG.info(" ClassNames------>{}",classNames);
         JsonValidator.validateJsonFiles(classNames);
         DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath()),DirectoryHandler.url,DirectoryHandler.dialect,DirectoryHandler.username,DirectoryHandler.password,DirectoryHandler.driverClassName);
         TemplateHandler.generateSpringBootProject(classNames);
 
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"/com");
-        DirectoryHandler.deleteDirectory(DirectoryHandler.generateDirectoryPath()+"/jsonFiles");
-        DirectoryHandler.deleteFiles(classNames, DirectoryHandler.generateDirectoryPath()+"/entity/"+DirectoryHandler.getSchemaName()+"/tables/pojos");
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append( "/com");
+        DirectoryHandler.deleteDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append( "/jsonFiles");
+        DirectoryHandler.deleteDirectory(path.toString());
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append( "/entity/");
+        path.append(DirectoryHandler.getSchemaName());
+        path.append("/tables/pojos/");
+        DirectoryHandler.deleteFiles(classNames, path.toString());
         LOG.info("<------ CodeGen FrameWork Successfully Generated------>");
 
         /**

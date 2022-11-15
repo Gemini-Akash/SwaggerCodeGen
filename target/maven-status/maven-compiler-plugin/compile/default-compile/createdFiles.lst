@@ -1,5 +1,6 @@
 org\gemini\codegen\Handler\DirectoryHandler.class
 org\gemini\codegen\ApiCodeGen\Validator\DialectValidator.class
+org\gemini\codegen\ApiCodeGen\Validator\PathValidator.class
 org\gemini\codegen\JOOQ\PojosGen\EntityClassGenerator.class
 org\jooq\codegen\GeneratorWriter$CloseResult.class
 org\gemini\codegen\Handler\DirectoryHandler$1.class
@@ -9,7 +10,6 @@ org\jooq\codegen\GeneratorWriter.class
 org\gemini\codegen\JOOQ\PojosGen\CustomJooqAutoGenerator.class
 org\gemini\codegen\ApiCodeGen\Validator\PojoValidator.class
 org\gemini\codegen\Handler\TemplateHandler.class
-org\gemini\codegen\JOOQ\PojosGen\PathValidator.class
 org\gemini\codegen\JOOQ\PojosGen\FileNotFoundException.class
 org\json\simple\JSONObject.class
 org\gemini\codegen\ApiCodeGen\Validator\JsonValidator.class

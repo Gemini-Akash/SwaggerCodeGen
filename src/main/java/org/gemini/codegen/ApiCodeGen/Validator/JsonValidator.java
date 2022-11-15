@@ -13,6 +13,7 @@ import java.util.List;
 
 public class JsonValidator {
     private static final Logger LOG = LoggerFactory.getLogger(JsonValidator.class);
+    static StringBuilder path=new StringBuilder();
 
     /**
      * validateJsonFiles method is used for validating generated Json Files.
@@ -24,7 +25,7 @@ public class JsonValidator {
             JSONObject jsonObject;
             FileReader fileReader=null;
             try {
-                StringBuilder path=new StringBuilder();
+                path.setLength(0);
                 path.append(DirectoryHandler.generateDirectoryPath());
                 path.append("/jsonFiles/");
                 path.append(className);

@@ -25,6 +25,7 @@ public class CustomClassLoader {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
+    static StringBuilder path=new StringBuilder();
 
     /**
      * convertIntoAPIJson() method to convert into json file for creating multiple json.
@@ -44,7 +45,12 @@ public class CustomClassLoader {
             jsonObject.put("variable", variableFieldsObject);
             jsonObject.put("primaryKeys", primaryKeysObject);
             LOG.info("Required json: {}", jsonObject);
-            fileWriter = new FileWriter(filePath+"/jsonFiles/" + className + ".json");
+            path.setLength(0);
+            path.append(filePath);
+            path.append("/jsonFiles/");
+            path.append(className);
+            path.append(".json");
+            fileWriter = new FileWriter(path.toString());
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createApiJson(): {}", e.getMessage());
@@ -68,6 +74,10 @@ public class CustomClassLoader {
      */
     public static List<String> loadClass(Set<Class> classObject,String filePath) {
         List<String> classNames = new ArrayList<>();
+        path.setLength(0);
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/jsonFiles");
+        DirectoryHandler.createDirectory(path.toString());
         try {
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();
@@ -76,7 +86,7 @@ public class CustomClassLoader {
                 getJsonBody(classContent,filePath);
             }
         } catch (Exception e) {
-            LOG.error("Exception in loadClass():c{}" + e.getMessage());
+            LOG.error("Exception in loadClass(): {}", e.getMessage());
         }
         return classNames;
     }
@@ -116,7 +126,6 @@ public class CustomClassLoader {
         } catch (Exception e) {
             LOG.error("Exception in getJsonBody(): {}", e.getMessage());
         }
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath() + "/jsonFiles");
         createAPIJson(classContent.getSimpleName(), primaryKeysObject, variableFieldsObject,filePath);
     }
 
@@ -148,7 +157,7 @@ public class CustomClassLoader {
      */
 
     public static Class getFullyQualifiedClassName(File filePath) {
-        StringBuilder path=new StringBuilder();
+        path.setLength(0);
         path.append(DirectoryHandler.outerDirectoryPath);
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
@@ -156,17 +165,17 @@ public class CustomClassLoader {
         File directoryPath = new File(path.toString());
         Class cls = null;
         try {
-            StringBuilder s=new StringBuilder();
-            s.append("com.gemini.");
-            s.append( DirectoryHandler.getScriptName());
-            s.append(".entity.");
-            s.append(DirectoryHandler.getSchemaName());
-            s.append(".tables.pojos.");
-            s.append(filePath.getName().replaceAll(".java", ""));
+            path.setLength(0);
+            path.append("com.gemini.");
+            path.append( DirectoryHandler.getScriptName());
+            path.append(".entity.");
+            path.append(DirectoryHandler.getSchemaName());
+            path.append(".tables.pojos.");
+            path.append(filePath.getName().replaceAll(".java", ""));
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
             java.lang.ClassLoader cl = new URLClassLoader(urls);
-            cls = cl.loadClass(s.toString());
+            cls = cl.loadClass(path.toString());
         } catch (Exception e) {
             LOG.error("Exception in getFullyQualifiedClassName: {}", e.getMessage());
         }
