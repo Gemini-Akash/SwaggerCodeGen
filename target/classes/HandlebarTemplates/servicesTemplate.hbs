@@ -1,0 +1,41 @@
+package com.gemini.{{scriptName}}.service;
+import com.gemini.{{scriptName}}.entity.{{schemaName}}.tables.daos.{{className}}Dao;
+import com.gemini.{{scriptName}}.entity.{{schemaName}}.tables.pojos.{{className}};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.gemini.{{scriptName}}.Exception.ServiceException;
+
+@Service
+public class {{className}}Service {
+
+    private static final Logger log = LoggerFactory.getLogger({{className}}Service.class);
+
+    @Autowired
+    {{className}}Dao objectDao ;
+
+    public {{className}} get{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+         return objectDao.fetchRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+    }
+
+    public int update{{className}}({{className}} classObject){
+         return objectDao.updateRecord(classObject);
+    }
+
+    public {{className}} patchUpdate{{className}}({{className}} classObject){
+        objectDao.update(classObject);
+        return objectDao.fetchRecord({{#each primaryKeys}}classObject.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+    }
+
+    public {{className}} add{{className}}({{className}} classObject){
+         return objectDao.insertRecord(classObject);
+    }
+
+    public int delete{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+          return objectDao.deleteRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+    }
+
+
+}
+

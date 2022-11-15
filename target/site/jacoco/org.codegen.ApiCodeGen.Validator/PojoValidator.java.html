@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PojoValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.codegen.ApiCodeGen.Validator</a> &gt; <span class="el_source">PojoValidator.java</span></div><h1>PojoValidator.java</h1><pre class="source lang-java linenums">package org.codegen.ApiCodeGen.Validator;
+
+import org.apache.commons.io.FileUtils;
+import org.codegen.Handler.DirectoryHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.charset.Charset;
+
+<span class="nc" id="L13">public class PojoValidator {</span>
+
+<span class="fc" id="L15">    private static final Logger log = LoggerFactory.getLogger(PojoValidator.class);</span>
+
+    public static int countClasses() {
+<span class="fc" id="L18">        int count = 0;</span>
+        try {
+<span class="fc" id="L20">            File f1 = new File(DirectoryHandler.outerScriptDirectoryPath);</span>
+<span class="fc" id="L21">            BufferedReader reader = new BufferedReader(new FileReader(f1));</span>
+<span class="fc" id="L22">            String line = reader.readLine();</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">                if (line.contains(&quot;CREATE TABLE&quot;)) count++;</span>
+<span class="fc" id="L25">                line = reader.readLine();</span>
+            }
+<span class="fc" id="L27">            reader.close();</span>
+<span class="nc" id="L28">        } catch (Exception e) {</span>
+<span class="nc" id="L29">            log.error(&quot;Exception in countClasses {}&quot;, e.getMessage());</span>
+<span class="fc" id="L30">        }</span>
+<span class="fc" id="L31">        return count;</span>
+    }
+
+    public static Boolean validatePojoClassContent(File filePath) {
+<span class="fc" id="L35">        int count1 = 0, count2 = 0;</span>
+<span class="fc" id="L36">        File f1 = new File(String.valueOf(filePath));</span>
+        try {
+<span class="fc" id="L38">            BufferedReader reader = new BufferedReader(new FileReader(f1));</span>
+<span class="fc" id="L39">            String line = reader.readLine();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                if (line.contains(&quot;{&quot;)) count1++;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (line.contains(&quot;}&quot;)) count2++;</span>
+<span class="fc" id="L43">                line = reader.readLine();</span>
+            }
+<span class="fc" id="L45">            reader.close();</span>
+<span class="nc" id="L46">        } catch (Exception e) {</span>
+<span class="nc" id="L47">            log.error(&quot;Exception in contentValidator {}&quot;, e.getMessage());</span>
+<span class="fc" id="L48">        }</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (count1 == count2) {</span>
+<span class="fc" id="L50">            return true;</span>
+        } else {
+<span class="fc" id="L52">            return false;</span>
+        }
+    }
+
+    public static Boolean validatePojoClasses() {
+<span class="fc" id="L57">        int count = 0,flag=0;</span>
+<span class="fc" id="L58">        File[] files = new File(DirectoryHandler.generateDirectoryPath()+&quot;\\entity\\&quot;+DirectoryHandler.getSchemaName()+&quot;\\tables\\pojos&quot;).listFiles();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (files.length == countClasses()) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                for (File file : files) {</span>
+<span class="nc" id="L61">                    Boolean emptyFileCheck=null;</span>
+                    try {
+<span class="nc" id="L63">                         emptyFileCheck = FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty();</span>
+                    }
+<span class="nc" id="L65">                    catch (Exception e) {</span>
+<span class="nc" id="L66">                            log.error(&quot;Exception in pojoValidator {}&quot;, e.getMessage());</span>
+<span class="nc" id="L67">                    }</span>
+<span class="nc bnc" id="L68" title="All 6 branches missed.">                    if (file.exists() &amp;&amp; !emptyFileCheck &amp;&amp; validatePojoClassContent(file) == true) {</span>
+<span class="nc" id="L69">                        count++;</span>
+                    }
+                    else {
+<span class="nc" id="L72">                        flag++;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                        if (flag==2) {</span>
+<span class="nc" id="L74">                            log.info(&quot;Time exceeds for running Code  Generator.&quot;);</span>
+<span class="nc" id="L75">                            throw new RuntimeException(&quot;Time out of bound to run code generator.&quot;);</span>
+                        }
+                        else {
+<span class="nc" id="L78">                            validatePojoClasses();</span>
+                        }
+                    }
+                }
+            }
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (count == files.length) {</span>
+<span class="nc" id="L84">            log.info(&quot;&lt;---------If block of pojoValidator()----------&gt;&quot;);</span>
+<span class="nc" id="L85">            return true;</span>
+        } else {
+<span class="fc" id="L87">            log.info(&quot;&lt;-----------Else block of pojoValidator()---------&gt;&quot;);</span>
+<span class="fc" id="L88">            return false;</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

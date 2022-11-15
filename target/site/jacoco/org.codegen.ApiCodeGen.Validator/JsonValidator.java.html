@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.codegen.ApiCodeGen.Validator</a> &gt; <span class="el_source">JsonValidator.java</span></div><h1>JsonValidator.java</h1><pre class="source lang-java linenums">package org.codegen.ApiCodeGen.Validator;
+
+import org.codegen.Handler.DirectoryHandler;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileReader;
+import java.util.List;
+
+<span class="nc" id="L12">public class JsonValidator {</span>
+<span class="nc" id="L13">    private static final Logger log = LoggerFactory.getLogger(JsonValidator.class);</span>
+    public static void validateJsonFiles(List&lt;String&gt; classNames){
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        for (String className:classNames) {</span>
+<span class="nc" id="L16">            JSONObject jsonObject=null;</span>
+            FileReader fileReader;
+            try {
+<span class="nc" id="L19">                fileReader=new FileReader(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles\\&quot;+ className + &quot;.json&quot;);</span>
+<span class="nc" id="L20">                jsonObject= (JSONObject) new JSONParser().parse(fileReader);</span>
+<span class="nc" id="L21">                fileReader.close();</span>
+            }
+<span class="nc" id="L23">            catch (Exception e){</span>
+<span class="nc" id="L24">                 log.info(&quot;{}&quot;,e.getMessage());</span>
+<span class="nc" id="L25">            }</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (jsonObject.get(&quot;primaryKeys&quot;).equals(&quot;{[]}&quot;)){</span>
+<span class="nc" id="L27">                log.info(&quot;Empty Jso File: {}.json&quot;,className);</span>
+<span class="nc" id="L28">                throw new RuntimeException(&quot;Json File not created.&quot;);</span>
+            }
+<span class="nc" id="L30">        }</span>
+<span class="nc" id="L31">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

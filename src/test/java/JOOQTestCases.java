@@ -15,7 +15,7 @@ public class JOOQTestCases {
     @Test
     public void testCaseForIsValidate(){
         PathValidator pathValidator =new PathValidator();
-        assertTrue(pathValidator.isValidPath("src/test/java/abc"));
+        assertTrue(pathValidator.isValidPath("src/test/resources"));
     }
 
 

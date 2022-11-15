@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClassLoaderTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.codegen.ApiCodeGen.loader</a> &gt; <span class="el_source">ClassLoaderTest.java</span></div><h1>ClassLoaderTest.java</h1><pre class="source lang-java linenums">package org.codegen.ApiCodeGen.loader;
+
+
+import org.codegen.Handler.DirectoryHandler;
+import org.json.JSONArray;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.Id;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.codegen.ApiCodeGen.Validator.PojoValidator.validatePojoClasses;
+
+
+<span class="fc" id="L25">public class ClassLoaderTest {</span>
+
+
+<span class="fc" id="L28">    private static final Logger log = LoggerFactory.getLogger(ClassLoaderTest.class);</span>
+
+    /**
+     * service method to convert into json file for creating swaggerApi yaml file
+     *
+     * @param
+     * @return
+     */
+    public static void convertIntoAPIJson(String className, JSONArray primaryKeyObject,JSONArray nonPrimaryKeyObject ) {
+
+
+        try {
+
+//            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles\\Loader.json&quot;));
+//            for (Object classname : jsonObject.keySet()) {
+//                JSONObject json1 = new JSONObject();
+//                JSONArray jsonArray1 = new JSONArray();
+//                JSONObject json2 = new JSONObject();
+//                JSONArray jsonArray2 = new JSONArray();
+//                ArrayList&lt;Object&gt; fields = new ArrayList&lt;&gt;();
+//                ArrayList&lt;Object&gt; fieldTypes = new ArrayList&lt;&gt;();
+
+
+//                JSONObject jsonBody = (JSONObject) new JSONParser().parse(jsonObject.get(classname).toString());
+//
+//                fieldTypes.addAll(jsonBody.values());
+//
+//
+//                fields.addAll(jsonBody.keySet());
+
+<span class="nc" id="L58">                JSONObject jsonObject1=new JSONObject();</span>
+<span class="nc" id="L59">                jsonObject1.put(&quot;className&quot;, className);</span>
+<span class="nc" id="L60">                jsonObject1.put(&quot;scriptName&quot;, DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L61">                jsonObject1.put(&quot;schemaName&quot;,DirectoryHandler.getSchemaName());</span>
+<span class="nc" id="L62">                jsonObject1.put(&quot;variable&quot;,nonPrimaryKeyObject);</span>
+<span class="nc" id="L63">                jsonObject1.put(&quot;primaryKeys&quot;,primaryKeyObject);</span>
+
+
+
+//                int count = 0;
+//
+//                while (count != fields.size()) {
+//                    JSONObject json3 = new JSONObject();
+//                    json3.put(&quot;fieldName&quot;, fields.get(count));
+//                    json3.put(&quot;datatype&quot;, fieldTypes.get(count));
+//                    json2.put(&quot;variable&quot;, jsonArray2.put(json3));
+//                    count++;
+//                }
+//                json1.put(&quot;classes&quot;, jsonArray1.put(json2));
+<span class="nc" id="L77">                log.info(&quot;Required json :{}&quot;, jsonObject1);</span>
+                try {
+<span class="nc" id="L79">                    FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles\\&quot;+ className + &quot;.json&quot;);</span>
+<span class="nc" id="L80">                    file.write(jsonObject1.toJSONString());</span>
+<span class="nc" id="L81">                    file.close();</span>
+<span class="nc" id="L82">                } catch (IOException e) {</span>
+<span class="nc" id="L83">                    log.error(&quot;Exception in writing into JSON file&quot; + e.getMessage());</span>
+<span class="nc" id="L84">                }</span>
+//            }
+
+<span class="nc" id="L87">        } catch (Exception e) {</span>
+<span class="nc" id="L88">            log.error(&quot;Exception in convertIntoApiJson() : {}&quot;, e.getMessage());</span>
+<span class="nc" id="L89">        }</span>
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * service method is used to load class from fully qualified classname
+     *
+     * @param classObject
+     */
+
+    public static List&lt;String&gt; loadClass(Set&lt;Class&gt; classObject) {
+//        JSONObject jsonBody = null;
+<span class="fc" id="L100">        List&lt;String&gt; classNames = new ArrayList&lt;&gt;();</span>
+        try {
+//            jsonBody = new JSONObject();
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            for (Class classContent : classObject) {</span>
+<span class="nc" id="L104">                String className = classContent.getSimpleName();</span>
+<span class="nc" id="L105">                classNames.add(className);</span>
+<span class="nc" id="L106">                log.info(&quot;Pojo ClassName : {}&quot;, className);</span>
+<span class="nc" id="L107">                getJsonBody(classContent);</span>
+//                JSONObject object = getJsonBody(classContent);
+//                jsonBody.put(className, object);
+<span class="nc" id="L110">            }</span>
+//            log.info(&quot;load class json body : {}&quot;, jsonBody);
+<span class="fc" id="L112">        } catch (Exception e) {</span>
+<span class="fc" id="L113">            log.error(&quot;Exception in loadClass():{}&quot; + e.getMessage());</span>
+<span class="fc" id="L114">        }</span>
+
+//        try {
+//            DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles&quot;);
+//            FileWriter file = new FileWriter(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles\\Loader.json&quot;);
+//            file.write(jsonBody.toJSONString());
+//            file.close();
+//        } catch (IOException e) {
+//            log.error(&quot;Exception in writing into JSON file&quot; + e.getMessage());
+//        }
+<span class="fc" id="L124">        return classNames;</span>
+    }
+
+    /**
+     * service method to get json object
+     *
+     * @param classContent
+     * @return
+     */
+    public static void getJsonBody(Class classContent) {
+
+<span class="nc" id="L135">        JSONArray primaryKeyObject = null;</span>
+<span class="nc" id="L136">        JSONArray nonPrimaryKeyObject = null;</span>
+        try {
+<span class="nc" id="L138">            primaryKeyObject = new JSONArray();</span>
+<span class="nc" id="L139">            nonPrimaryKeyObject = new JSONArray();</span>
+<span class="nc" id="L140">            JSONObject jsonObject1=new JSONObject();</span>
+<span class="nc" id="L141">            Field[] fields = classContent.getDeclaredFields();</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            List&lt;Field&gt; primaryKeyFieldlist = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) != null).collect(Collectors.toList());</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            List&lt;Field&gt; nonPrimaryKeyFieldlist = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) == null).skip(1).collect(Collectors.toList());</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            for (Field field : nonPrimaryKeyFieldlist) {</span>
+<span class="nc" id="L146">                String fieldName = field.getName();</span>
+<span class="nc" id="L147">                String fieldType = field.getType().getSimpleName();</span>
+<span class="nc" id="L148">                jsonObject1.put(&quot;fieldName&quot;,fieldName);</span>
+<span class="nc" id="L149">                jsonObject1.put(&quot;datatype&quot;,fieldType);</span>
+<span class="nc" id="L150">                nonPrimaryKeyObject.put(jsonObject1);</span>
+<span class="nc" id="L151">            }</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            for (Field field : primaryKeyFieldlist) {</span>
+<span class="nc" id="L153">                String fieldName = field.getName();</span>
+<span class="nc" id="L154">                String fieldType = field.getType().getSimpleName();</span>
+<span class="nc" id="L155">                jsonObject1.put(&quot;fieldName&quot;,fieldName);</span>
+<span class="nc" id="L156">                jsonObject1.put(&quot;datatype&quot;,fieldType);</span>
+<span class="nc" id="L157">                primaryKeyObject.put(jsonObject1);</span>
+<span class="nc" id="L158">            }</span>
+
+
+//            for (Field field : Arrays.stream(fields).skip(1).collect(Collectors.toList())) {
+//                if (!fieldlist.contains(field)) {
+//                    fieldlist.add(field);
+//                }
+//            }
+<span class="nc" id="L166">        } catch (Exception e) {</span>
+<span class="nc" id="L167">            log.error(&quot;Exception in getJsonBody():{}&quot; + e.getMessage());</span>
+<span class="nc" id="L168">        }</span>
+<span class="nc" id="L169">        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath()+&quot;\\jsonFiles&quot;);</span>
+<span class="nc" id="L170">        convertIntoAPIJson(classContent.getSimpleName(),primaryKeyObject,nonPrimaryKeyObject);</span>
+<span class="nc" id="L171">    }</span>
+
+    public static void javaCompileClass(File filePath) {
+<span class="fc" id="L174">        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();</span>
+<span class="fc" id="L175">        int compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        if (compilationResult == 0) {</span>
+<span class="fc" id="L177">            log.info(&quot;Compilation is successful&quot;);</span>
+        } else {
+<span class="nc" id="L179">            log.info(&quot;Compilation Failed at &quot; + filePath.getName());</span>
+        }
+<span class="fc" id="L181">    }</span>
+
+    public static Class fullyQualifiedClassName(File filePath) {
+<span class="fc" id="L184">        File directoryPath = new File(DirectoryHandler.outerDirectoryPath+&quot;\\&quot;+DirectoryHandler.getScriptName()+&quot;SpringBootApp\\src\\main\\java&quot;);</span>
+<span class="fc" id="L185">        Class cls = null;</span>
+        try {
+<span class="fc" id="L187">            String s =  &quot;com.gemini.&quot;+ DirectoryHandler.getScriptName()+&quot;.entity.&quot;+DirectoryHandler.getSchemaName()+&quot;.tables.pojos.&quot; + filePath.getName().replaceAll(&quot;.java&quot;, &quot;&quot;);</span>
+<span class="fc" id="L188">            URL url = directoryPath.toURI().toURL();</span>
+<span class="fc" id="L189">            URL[] urls = new URL[]{url};</span>
+<span class="fc" id="L190">            ClassLoader cl = new URLClassLoader(urls);</span>
+<span class="fc" id="L191">            cls = cl.loadClass(s);</span>
+<span class="nc" id="L192">        } catch (Exception e) {</span>
+<span class="nc" id="L193">            log.error(&quot;Exception in fullyQualifiedClassName {}&quot;, e.getMessage());</span>
+<span class="fc" id="L194">        }</span>
+<span class="fc" id="L195">        log.info(&quot;fullyQualifiedClassName-----&gt;{}&quot;,cls);</span>
+<span class="fc" id="L196">        return cls;</span>
+    }
+
+    public static Set&lt;Class&gt; readClass() {
+<span class="fc" id="L200">        File[] files = new File(DirectoryHandler.generateDirectoryPath()+&quot;\\entity\\&quot;+DirectoryHandler.getSchemaName()+&quot;\\tables\\pojos&quot;).listFiles();</span>
+<span class="fc" id="L201">        Set&lt;Class&gt; classes = new HashSet&lt;&gt;();</span>
+        try {
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (validatePojoClasses() == true) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">                for (File file : files) {</span>
+<span class="nc" id="L205">                    javaCompileClass(file);</span>
+<span class="nc" id="L206">                    classes.add(fullyQualifiedClassName(file));</span>
+                }
+            } else
+<span class="fc" id="L209">                log.info(&quot;Any of your pojoClass is Empty&quot;);</span>
+<span class="nc" id="L210">        } catch (Exception e) {</span>
+<span class="nc" id="L211">            log.error(&quot;Exception in ClassLoader Method {}&quot;, e.getMessage());</span>
+<span class="fc" id="L212">        }</span>
+<span class="fc" id="L213">        return classes;</span>
+    }
+
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

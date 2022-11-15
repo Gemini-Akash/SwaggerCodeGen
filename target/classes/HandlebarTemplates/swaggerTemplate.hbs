@@ -1,0 +1,101 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
+    For this sample, you can use the api key `special-key` to test the authorization
+    filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:{{#each classes}}
+    - name: {{className}}
+      description: "Everything about your {{className}}"{{/each}}
+schemes:
+- "http"
+paths:{{#each classes}}
+   /{{className}}:
+     post:
+       tags:
+       - "{{className}}"
+       summary: "Add a new {{className}} object"
+       description: "Add a new {{className}} object value."
+       operationId: "add{{className}}"
+       consumes:
+       - "application/json"
+       - "application/xml"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - in: "body"
+         name: "body"
+         description: "Pet object that needs to be added to the store"
+         required: true
+         schema:
+           $ref: "#/definitions/{{className}}"
+       responses:
+         405:
+          description: "Invalid input"{{#each variable}}{{#if @first}}
+   /{{className}}/{ {{~fieldName~}}}:
+     get:
+       tags:
+       - "{{className}}"
+       summary: "Find {{className}} by {{#if @first}}{{fieldName}}{{/if}}"
+       description: "Returns a single {{className}}"
+       operationId: "get{{className}}By{{#if @first}}{{fieldName}}{{/if}}"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "{{#if @first}}{{fieldName}}{{/if}}"
+         in: "path"
+         description: "ID of {{className}} to return"
+         required: true
+         type: "{{#if @first}}{{datatype}}{{/if}}"
+         format: "{{#if @first}}{{format}}{{/if}}"
+       responses:
+         200:
+           description: "successful operation"
+           schema:
+             $ref: "#/definitions/{{className}}"
+         400:
+           description: "Invalid {{#if @first}}{{fieldName}}{{/if}} supplied"
+         404:
+           description: "{{className}} not found"
+     delete:
+       tags:
+       - "{{className}}"
+       summary: "Deletes a {{className}}"
+       description: ""
+       operationId: "delete{{className}}"
+       produces:
+       - "application/xml"
+       - "application/json"
+       parameters:
+       - name: "{{#if @first}}{{fieldName}}{{/if}}"
+         in: "path"
+         description: "Pet {{className}} to delete"
+         required: true
+         type: "{{#if @first}}{{datatype}}{{/if}}"
+         format: "{{#if @first}}{{format}}{{/if}}"
+       responses:
+         400:
+           description: "Invalid {{className}} value"{{/if}}{{/each}}{{/each}}
+definitions:{{#each classes}}
+  {{className}}:
+    type: "object"
+    required:{{#each variable}}
+    - "{{fieldName}}"{{/each}}
+    properties:{{#each variable}}
+      {{fieldName}}:
+        type: "{{datatype}}"
+        format: "int64"{{/each}}
+    xml:
+      name: "{{className}}"{{/each}}
+

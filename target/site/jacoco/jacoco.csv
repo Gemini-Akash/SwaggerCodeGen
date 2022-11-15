@@ -1,0 +1,15 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+SwaggerCodeGen,org.codegen.ApiCodeGen.loader,ClassLoaderTest,253,115,13,3,58,29,12,6,4,6
+SwaggerCodeGen,org.codegen.ApiCodeGen.Validator,PojoValidator,79,113,12,14,20,30,8,10,1,4
+SwaggerCodeGen,org.codegen.ApiCodeGen.Validator,JsonValidator,59,0,4,0,15,0,5,0,3,0
+SwaggerCodeGen,org.codegen.Handler,DirectoryHandler,33,112,4,6,9,30,5,9,1,8
+SwaggerCodeGen,org.codegen.Handler,DirectoryHandler.new FilenameFilter() {...},0,10,0,0,0,2,0,2,0,2
+SwaggerCodeGen,org.codegen.Handler,TemplateHandler,125,68,4,0,25,20,4,3,2,3
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,9,0,0,0,4,0,1,0,1,0
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,718,0,88,0,145,0,80,0,36,0
+SwaggerCodeGen,org.json.simple,JSONObject,161,3,14,0,50,2,16,1,9,1
+SwaggerCodeGen,org.codegen,Main,54,0,0,0,18,0,3,0,3,0
+SwaggerCodeGen,org.codegen.JOOQ.PojosGen,PathValidator,14,0,0,0,4,0,2,0,2,0
+SwaggerCodeGen,org.codegen.JOOQ.PojosGen,EntityClassGen,127,0,4,0,36,0,4,0,2,0
+SwaggerCodeGen,org.codegen.JOOQ.PojosGen,MyAutoGenerator,3187,0,300,0,512,0,181,0,31,0
+SwaggerCodeGen,org.codegen.JOOQ.PojosGen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0

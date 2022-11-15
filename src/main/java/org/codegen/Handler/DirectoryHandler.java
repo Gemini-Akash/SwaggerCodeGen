@@ -48,7 +48,6 @@ public class DirectoryHandler {
     {
         return outerDirectoryPath+"\\"+getScriptName()+"SpringBootApp\\src\\main\\java\\com\\gemini\\"+getScriptName();
     }
-
     public static void renameDirectory(String filePath ){
         File file = new File(filePath);
         if(file.renameTo

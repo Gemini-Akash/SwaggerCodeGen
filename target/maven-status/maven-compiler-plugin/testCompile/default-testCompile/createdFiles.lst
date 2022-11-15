@@ -1,0 +1,6 @@
+ClassLoaderTests.class
+DirectoryHandlerTests.class
+JOOQTestCases.class
+PojoValidatorTest.class
+test\entity\Author.class
+HandlebarTests.class
