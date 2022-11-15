@@ -5,68 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8711a5ba-ce6d-42af-b839-a38a21387395" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SwaggerCodeGen.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Loader/CustomClassLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Validator/DialectValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Validator/JsonValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Validator/PojoValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/CodeGeneratorApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/Handler/DbJsonHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/Handler/DirectoryHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/Handler/TemplateHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/ApiCodeGen/Loader/CustomClassLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/ApiCodeGen/Validator/DialectValidator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/ApiCodeGen/Validator/JsonValidator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/ApiCodeGen/Validator/PathValidator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/ApiCodeGen/Validator/PojoValidator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/CodeGeneratorApp.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DbJsonHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/TemplateHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/JOOQ/PojosGen/EntityClassGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/ApiCodeGen/Validator/JsonValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/ApiCodeGen/Validator/PojoValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/ApiCodeGen/loader/ClassLoaderTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/ApiCodeGen/loader/Classloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Loader/DummyClassLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/Handler/DirectoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/codegen/Handler/DirectoryHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/Handler/TemplateHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/JOOQ/PojosGen/EntityClassGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/JOOQ/PojosGen/EntityClassGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/JOOQ/PojosGen/FileNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/JOOQ/PojosGen/FileNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/JOOQ/PojosGen/MyAutoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/JOOQ/PojosGen/CustomJooqAutoGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/JOOQ/PojosGen/PathValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/ApiCodeGen/Validator/PathValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/SwaggerCodeGen/GenerateSpringBootProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/SwaggerCodeGen/GenerateSpringBootProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/SwaggerCodeGen/SwaggerCodeGenException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jooq/codegen/GeneratorWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jooq/codegen/GeneratorWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HandlebarTemplates/ControllerTemplate.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HandlebarTemplates/ControllerTemplate.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HandlebarTemplates/applicationPropertiesTemplate.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HandlebarTemplates/applicationPropertiesTemplate.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Script2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SwaggerYaml.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/HandlebarTemplates/ControllerTemplate.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HandlebarTemplates/ControllerTemplate.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/HandlebarTemplates/applicationPropertiesTemplate.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HandlebarTemplates/applicationPropertiesTemplate.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Script2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SwaggerYaml.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/ApiCodeGen/Validator/JsonValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/ApiCodeGen/Validator/PojoValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/codegen/ApiCodeGen/Validator/PojoValidator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/ApiCodeGen/loader/ClassLoaderTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/Handler/DirectoryHandler$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/Handler/DirectoryHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/codegen/Handler/DirectoryHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/Handler/TemplateHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/JOOQ/PojosGen/EntityClassGen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/JOOQ/PojosGen/FileNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/JOOQ/PojosGen/FileNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/JOOQ/PojosGen/MyAutoGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/JOOQ/PojosGen/CustomJooqAutoGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/JOOQ/PojosGen/PathValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/codegen/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tech Debt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tech Debt.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/codegen/Handler/DirectoryHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/Handler/DirectoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/Handler/DirectoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/DummyClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/DummyFileTemplate.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ClassLoaderTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DirectoryHandlerTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/HandlebarTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/JOOQTestCases.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PojoValidatorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/test/entity/Author.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/test/entity/Author.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/testScript.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/xyz.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/ClassFiles/Dummy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/ClassFiles/Dummy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/DummyJsonForClass.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/NegValidatePojoClassContent.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/demoTemplateTest/DummyClassTemplate.hbs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/demoTemplateTest/DummyFileTemplate.hbs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/validatePojo/testPojo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/validatepojoclasscontent.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +36,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -83,12 +46,47 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  <component name="ProjectId" id="2HZuJSgl8UQDAjsmTVG0rmZe9VG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="CodeGeneratorApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.gemini.codegen.CodeGeneratorApp" />
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.gemini.codegen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CodeGeneratorApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8711a5ba-ce6d-42af-b839-a38a21387395" name="Changes" comment="" />
+      <created>1668504854499</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668504854499</updated>
+    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -1,34 +1,16 @@
-<<<<<<< HEAD
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\ApiCodeGen\loader\ClassLoaderTest.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\JOOQ\PojosGen\FileNotFoundException.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\JOOQ\PojosGen\EntityClassGen.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\ApiCodeGen\Validator\JsonValidator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\CustomClassLoader.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\DummyClassLoader.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\DirectoryHandler.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\EntityClassGenerator.java
 D:\Internal\SwaggerCodeGen\src\main\java\org\jooq\codegen\GeneratorWriter.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\JOOQ\PojosGen\PathValidator.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\Handler\DirectoryHandler.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\ApiCodeGen\Validator\PojoValidator.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\SwaggerCodeGen\SwaggerCodeGenException.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\SwaggerCodeGen\GenerateSpringBootProject.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\Handler\TemplateHandler.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\JOOQ\PojosGen\MyAutoGenerator.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\ApiCodeGen\loader\Classloader.java
-D:\Internal\SwaggerCodeGen\src\main\java\org\codegen\Main.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\JsonValidator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\CodeGeneratorApp.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\TemplateHandler.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\DbJsonHandler.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PojoValidator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\SwaggerCodeGen\GenerateSpringBootProject.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\DialectValidator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\CustomJooqAutoGenerator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PathValidator.java
+D:\Internal\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\FileNotFoundException.java
 D:\Internal\SwaggerCodeGen\src\main\java\org\json\simple\JSONObject.java
-=======
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\json\simple\JSONObject.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\FileNotFoundException.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\DbJsonHandler.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\JsonValidator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\SwaggerCodeGen\GenerateSpringBootProject.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\TemplateHandler.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\CustomJooqAutoGenerator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\CustomClassLoader.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\jooq\codegen\GeneratorWriter.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PathValidator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Loader\DummyClassLoader.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\CodeGeneratorApp.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\PojoValidator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\JOOQ\PojosGen\EntityClassGenerator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\ApiCodeGen\Validator\DialectValidator.java
-D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\Handler\DirectoryHandler.java
->>>>>>> main
