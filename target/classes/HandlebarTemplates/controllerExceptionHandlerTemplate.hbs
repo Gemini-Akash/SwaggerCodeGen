@@ -191,7 +191,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleNoHandlerFoundException(
         final NoHandlerFoundException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         log.info("{},{}", ex.getClass().getName(), ex.getMessage());
-        String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
+        String error = "No Handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
         final ErrorMessage apiError = new ErrorMessage(Math.toIntExact((Long) ((JSONObject) getJsonObject().get("NoHandlerFoundException")).get("statusCode")), getTime(), request.getDescription(false), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), HttpStatus.valueOf((String) ((JSONObject) getJsonObject().get("NoHandlerFoundException")).get("responseStatus")));
     }

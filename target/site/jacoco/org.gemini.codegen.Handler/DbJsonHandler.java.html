@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DbJsonHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.gemini.codegen.Handler</a> &gt; <span class="el_source">DbJsonHandler.java</span></div><h1>DbJsonHandler.java</h1><pre class="source lang-java linenums">package org.gemini.codegen.Handler;
+
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+<span class="nc" id="L11">public class DbJsonHandler {</span>
+<span class="nc" id="L12">    private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);</span>
+
+    /**
+     *  createDbJson method is used for creating application.properties Json file.
+     *
+     * @param filePath
+     * @param dialect
+     * @param driverClassName
+     * @param password
+     * @param url
+     * @param username
+     */
+    public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName){
+<span class="nc" id="L25">        FileWriter fileWriter=null;</span>
+        try {
+<span class="nc" id="L27">            JSONObject jsonObject = new JSONObject();</span>
+<span class="nc" id="L28">            jsonObject.put(&quot;url&quot;, url);</span>
+<span class="nc" id="L29">            jsonObject.put(&quot;dialect&quot;,dialect);</span>
+<span class="nc" id="L30">            jsonObject.put(&quot;username&quot;,username);</span>
+<span class="nc" id="L31">            jsonObject.put(&quot;driverClassName&quot;,driverClassName);</span>
+<span class="nc" id="L32">            jsonObject.put(&quot;password&quot;, password);</span>
+<span class="nc" id="L33">            LOG.info(&quot;Required applicationPropertiesJson: {}&quot;, jsonObject);</span>
+<span class="nc" id="L34">            fileWriter = new FileWriter(filePath);</span>
+<span class="nc" id="L35">            fileWriter.write(jsonObject.toJSONString());</span>
+<span class="nc" id="L36">        } catch (Exception e) {</span>
+<span class="nc" id="L37">            LOG.error(&quot;Exception in  writing JSON file / createDbJson(): {}&quot;, e.getMessage());</span>
+        }
+        finally {
+            try {
+<span class="nc" id="L41">                fileWriter.close();</span>
+            }
+<span class="nc" id="L43">            catch (IOException e) {</span>
+<span class="nc" id="L44">                LOG.error(&quot;Exception in closing the file of createDbJson(): {}&quot;, e.getMessage());</span>
+<span class="nc" id="L45">            }</span>
+        }
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

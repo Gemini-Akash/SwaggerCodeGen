@@ -31,7 +31,7 @@ public class DbJsonHandler {
             jsonObject.put("driverClassName",driverClassName);
             jsonObject.put("password", password);
             LOG.info("Required applicationPropertiesJson: {}", jsonObject);
-            fileWriter = new FileWriter(filePath+"/jsonFiles/applicationProperties.json");
+            fileWriter = new FileWriter(filePath);
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createDbJson(): {}", e.getMessage());

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JSONObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.json.simple</a> &gt; <span class="el_source">JSONObject.java</span></div><h1>JSONObject.java</h1><pre class="source lang-java linenums">package org.json.simple;
+
+import org.json.simple.JSONAware;
+import org.json.simple.JSONStreamAware;
+import org.json.simple.JSONValue;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class JSONObject extends LinkedHashMap implements Map, JSONAware, JSONStreamAware {
+    private static final long serialVersionUID = -503443796854799292L;
+
+<span class="fc" id="L16">    public JSONObject() {</span>
+<span class="fc" id="L17">    }</span>
+
+    public JSONObject(Map map) {
+<span class="nc" id="L20">        super(map);</span>
+<span class="nc" id="L21">    }</span>
+
+    public static void writeJSONString(Map map, Writer out) throws IOException {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (map == null) {</span>
+<span class="nc" id="L25">            out.write(&quot;null&quot;);</span>
+        } else {
+<span class="nc" id="L27">            boolean first = true;</span>
+<span class="nc" id="L28">            Iterator iter = map.entrySet().iterator();</span>
+<span class="nc" id="L29">            out.write(123);</span>
+
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            while(iter.hasNext()) {</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">                if (first) {</span>
+<span class="nc" id="L33">                    first = false;</span>
+                } else {
+<span class="nc" id="L35">                    out.write(44);</span>
+                }
+
+<span class="nc" id="L38">                Entry entry = (Entry)iter.next();</span>
+<span class="nc" id="L39">                out.write(34);</span>
+<span class="nc" id="L40">                out.write(escape(String.valueOf(entry.getKey())));</span>
+<span class="nc" id="L41">                out.write(34);</span>
+<span class="nc" id="L42">                out.write(58);</span>
+<span class="nc" id="L43">                JSONValue.writeJSONString(entry.getValue(), out);</span>
+<span class="nc" id="L44">            }</span>
+
+<span class="nc" id="L46">            out.write(125);</span>
+        }
+<span class="nc" id="L48">    }</span>
+
+    public void writeJSONString(Writer out) throws IOException {
+<span class="nc" id="L51">        writeJSONString(this, out);</span>
+<span class="nc" id="L52">    }</span>
+
+    public static String toJSONString(Map map) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (map == null) {</span>
+<span class="nc" id="L56">            return &quot;null&quot;;</span>
+        } else {
+<span class="nc" id="L58">            StringBuffer sb = new StringBuffer();</span>
+<span class="nc" id="L59">            boolean first = true;</span>
+<span class="nc" id="L60">            Iterator iter = map.entrySet().iterator();</span>
+<span class="nc" id="L61">            sb.append('{');</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">            while(iter.hasNext()) {</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                if (first) {</span>
+<span class="nc" id="L65">                    first = false;</span>
+                } else {
+<span class="nc" id="L67">                    sb.append(',');</span>
+                }
+
+<span class="nc" id="L70">                Entry entry = (Entry)iter.next();</span>
+<span class="nc" id="L71">                toJSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);</span>
+<span class="nc" id="L72">            }</span>
+
+<span class="nc" id="L74">            sb.append('}');</span>
+<span class="nc" id="L75">            return sb.toString();</span>
+        }
+    }
+
+    public String toJSONString() {
+<span class="nc" id="L80">        return toJSONString(this);</span>
+    }
+
+    private static String toJSONString(String key, Object value, StringBuffer sb) {
+<span class="nc" id="L84">        sb.append('&quot;');</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (key == null) {</span>
+<span class="nc" id="L86">            sb.append(&quot;null&quot;);</span>
+        } else {
+<span class="nc" id="L88">            JSONValue.escape(key, sb);</span>
+        }
+
+<span class="nc" id="L91">        sb.append('&quot;').append(':');</span>
+<span class="nc" id="L92">        sb.append(JSONValue.toJSONString(value));</span>
+<span class="nc" id="L93">        return sb.toString();</span>
+    }
+
+    public String toString() {
+<span class="nc" id="L97">        return this.toJSONString();</span>
+    }
+
+    public static String toString(String key, Object value) {
+<span class="nc" id="L101">        StringBuffer sb = new StringBuffer();</span>
+<span class="nc" id="L102">        toJSONString(key, value, sb);</span>
+<span class="nc" id="L103">        return sb.toString();</span>
+    }
+
+    public static String escape(String s) {
+<span class="nc" id="L107">        return JSONValue.escape(s);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

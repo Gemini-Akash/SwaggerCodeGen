@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemplateHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.gemini.codegen.Handler</a> &gt; <span class="el_source">TemplateHandler.java</span></div><h1>TemplateHandler.java</h1><pre class="source lang-java linenums">package org.gemini.codegen.Handler;
+
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.io.*;
+import java.util.List;
+
+
+<span class="nc" id="L12">public class TemplateHandler {</span>
+<span class="fc" id="L13">    private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);</span>
+<span class="fc" id="L14">    static StringBuilder path=new StringBuilder();</span>
+<span class="fc" id="L15">    static StringBuilder jsonPath=new StringBuilder();</span>
+
+    /**
+     *generateClassFromTemplates() method is used for generating class from templates.
+     *
+     * @param filePath
+     * @param jsonPath
+     * @param templatePath
+     */
+    public static void generateClassFromTemplates(String templatePath, String filePath, String jsonPath) {
+<span class="fc" id="L25">        FileReader fileReader=null;</span>
+<span class="fc" id="L26">        FileWriter fileWriter=null;</span>
+        try {
+<span class="fc" id="L28">            Handlebars handlebars = new Handlebars();</span>
+<span class="fc" id="L29">            Template template = handlebars.compile(templatePath);</span>
+<span class="fc" id="L30">            fileReader = new FileReader(jsonPath);</span>
+<span class="fc" id="L31">            JSONParser jsonParser= new JSONParser();</span>
+<span class="fc" id="L32">            Object obj = jsonParser.parse(fileReader);</span>
+<span class="fc" id="L33">            fileWriter=new FileWriter(filePath);</span>
+<span class="fc" id="L34">            fileWriter.write(template.apply(obj));</span>
+        }
+<span class="nc" id="L36">        catch (Exception e) {</span>
+<span class="nc" id="L37">            LOG.error(&quot;Exception in generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
+        }
+        finally {
+            try {
+<span class="fc" id="L41">                fileReader.close();</span>
+<span class="fc" id="L42">                fileWriter.close();</span>
+            }
+<span class="nc" id="L44">            catch (IOException e) {</span>
+<span class="nc" id="L45">                LOG.error(&quot;Exception in closing the file of generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
+<span class="fc" id="L46">            }</span>
+        }
+
+<span class="fc" id="L49">    }</span>
+
+    /**
+     *generateFileFromTemplate() method is used for generating file from templates.
+     *
+     * @param filePath
+     * @param templatePath
+     */
+    public static void generateFileFromTemplate(String templatePath,String filePath)
+    {
+<span class="fc" id="L59">        FileWriter fileWriter=null;</span>
+        try {
+<span class="fc" id="L61">            Handlebars handlebars = new Handlebars();</span>
+<span class="fc" id="L62">            Template template = handlebars.compile(templatePath);</span>
+<span class="fc" id="L63">            fileWriter = new FileWriter(filePath);</span>
+<span class="fc" id="L64">            fileWriter.write(template.text());</span>
+        }
+<span class="nc" id="L66">        catch (Exception e)</span>
+        {
+<span class="nc" id="L68">            LOG.error(&quot;Exception in generateFileFromTemplate() :{}&quot;, e.getMessage());</span>
+        }
+        finally {
+            try {
+<span class="fc" id="L72">                fileWriter.close();</span>
+            }
+<span class="nc" id="L74">            catch (IOException e) {</span>
+<span class="nc" id="L75">                LOG.error(&quot;Exception in closing the file of generateFileFromTemplate(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L76">            }</span>
+        }
+<span class="fc" id="L78">    }</span>
+
+    /**
+     *generateSpringBootProject() method is used for generating output in outerDirectoryPath.
+     *
+     * @param classNames
+     */
+    public static void generateSpringBootProject(List&lt;String&gt; classNames) {
+<span class="nc" id="L86">        path.setLength(0);</span>
+<span class="nc" id="L87">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L88">        path.append(&quot;/service&quot;);</span>
+<span class="nc" id="L89">        DirectoryHandler.createDirectory(path.toString());</span>
+<span class="nc" id="L90">        path.setLength(0);</span>
+<span class="nc" id="L91">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L92">        path.append(&quot;/controller&quot;);</span>
+<span class="nc" id="L93">        DirectoryHandler.createDirectory(path.toString());</span>
+<span class="nc" id="L94">        path.setLength(0);</span>
+<span class="nc" id="L95">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L96">        path.append(&quot;/model&quot;);</span>
+<span class="nc" id="L97">        DirectoryHandler.createDirectory(path.toString());</span>
+<span class="nc" id="L98">        path.setLength(0);</span>
+<span class="nc" id="L99">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L100">        path.append(&quot;/Exception&quot;);</span>
+<span class="nc" id="L101">        DirectoryHandler.createDirectory(path.toString());</span>
+<span class="nc" id="L102">        path.setLength(0);</span>
+<span class="nc" id="L103">        path.append(DirectoryHandler.outerDirectoryPath);</span>
+<span class="nc" id="L104">        path.append(&quot;/&quot;);</span>
+<span class="nc" id="L105">        path.append(DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L106">        path.append(&quot;SpringBootApp/src/main/resources&quot;);</span>
+<span class="nc" id="L107">        DirectoryHandler.createDirectory(path.toString());</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        for (String className:classNames) {</span>
+<span class="nc" id="L110">            jsonPath.setLength(0);</span>
+<span class="nc" id="L111">            jsonPath.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L112">            jsonPath.append(&quot;/jsonFiles/&quot;);</span>
+<span class="nc" id="L113">            jsonPath.append(className);</span>
+<span class="nc" id="L114">            jsonPath.append(&quot;.json&quot;);</span>
+<span class="nc" id="L115">            path.setLength(0);</span>
+<span class="nc" id="L116">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L117">            path.append(&quot;/&quot;);</span>
+<span class="nc" id="L118">            path.append( DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L119">            path.append(&quot;.java&quot;);</span>
+<span class="nc" id="L120">            generateClassFromTemplates(&quot;HandlebarTemplates/mainClassTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L121">            path.setLength(0);</span>
+<span class="nc" id="L122">            path.append(DirectoryHandler.outerDirectoryPath);</span>
+<span class="nc" id="L123">            path.append(&quot;/&quot;);</span>
+<span class="nc" id="L124">            path.append( DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L125">            path.append(&quot;SpringBootApp/pom.xml&quot;);</span>
+<span class="nc" id="L126">            generateClassFromTemplates(&quot;HandlebarTemplates/pomTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L127">            path.setLength(0);</span>
+<span class="nc" id="L128">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L129">            path.append(&quot;/Exception/ServiceException.java&quot;);</span>
+<span class="nc" id="L130">            generateClassFromTemplates(&quot;HandlebarTemplates/ServiceExceptionTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L131">            path.setLength(0);</span>
+<span class="nc" id="L132">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L133">            path.append(&quot;/Exception/ErrorMessage.java&quot;);</span>
+<span class="nc" id="L134">            generateClassFromTemplates(&quot;HandlebarTemplates/ErrorMessageTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L135">            path.setLength(0);</span>
+<span class="nc" id="L136">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L137">            path.append(&quot;/Exception/ControllerExceptionHandler.java&quot;);</span>
+<span class="nc" id="L138">            generateClassFromTemplates(&quot;HandlebarTemplates/controllerExceptionHandlerTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L139">            break;</span>
+        }
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (String className:classNames) {</span>
+<span class="nc" id="L142">            jsonPath.setLength(0);</span>
+<span class="nc" id="L143">            jsonPath.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L144">            jsonPath.append(&quot;/jsonFiles/&quot;);</span>
+<span class="nc" id="L145">            jsonPath.append(className);</span>
+<span class="nc" id="L146">            jsonPath.append(&quot;.json&quot;);</span>
+<span class="nc" id="L147">            path.setLength(0);</span>
+<span class="nc" id="L148">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L149">            path.append(&quot;/service/&quot;);</span>
+<span class="nc" id="L150">            path.append(className);</span>
+<span class="nc" id="L151">            path.append(&quot;Service.java&quot;);</span>
+<span class="nc" id="L152">            generateClassFromTemplates(&quot;HandlebarTemplates/servicesTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L153">            path.setLength(0);</span>
+<span class="nc" id="L154">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L155">            path.append(&quot;/controller/&quot;);</span>
+<span class="nc" id="L156">            path.append(className);</span>
+<span class="nc" id="L157">            path.append(&quot;Controller.java&quot;);</span>
+<span class="nc" id="L158">            generateClassFromTemplates(&quot;HandlebarTemplates/ControllerTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L159">            path.setLength(0);</span>
+<span class="nc" id="L160">            path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L161">            path.append(&quot;/model/&quot;);</span>
+<span class="nc" id="L162">            path.append(className);</span>
+<span class="nc" id="L163">            path.append(&quot;.java&quot;);</span>
+<span class="nc" id="L164">            generateClassFromTemplates(&quot;HandlebarTemplates/modelTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">        path.setLength(0);</span>
+<span class="nc" id="L167">        path.append(DirectoryHandler.outerDirectoryPath);</span>
+<span class="nc" id="L168">        path.append(&quot;/&quot;);</span>
+<span class="nc" id="L169">        path.append(DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L170">        path.append(&quot;SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json&quot;);</span>
+<span class="nc" id="L171">        generateFileFromTemplate(&quot;HandlebarTemplates/controllerExceptionHandlerJsonTemplate&quot;, path.toString());</span>
+<span class="nc" id="L172">        jsonPath.setLength(0);</span>
+<span class="nc" id="L173">        jsonPath.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L174">        jsonPath.append(&quot;/jsonFiles/applicationProperties.json&quot;);</span>
+<span class="nc" id="L175">        path.setLength(0);</span>
+<span class="nc" id="L176">        path.append(DirectoryHandler.outerDirectoryPath);</span>
+<span class="nc" id="L177">        path.append(&quot;/&quot;);</span>
+<span class="nc" id="L178">        path.append(DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L179">        path.append(&quot;SpringBootApp/src/main/resources/application.properties&quot;);</span>
+<span class="nc" id="L180">        generateClassFromTemplates(&quot;HandlebarTemplates/applicationPropertiesTemplate&quot;, path.toString(), jsonPath.toString());</span>
+
+<span class="nc" id="L182">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

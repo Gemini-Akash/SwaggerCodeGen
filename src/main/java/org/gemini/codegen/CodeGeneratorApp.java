@@ -48,7 +48,7 @@ public class CodeGeneratorApp {
         List<String> classNames= CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(path.toString())),DirectoryHandler.generateDirectoryPath());
         LOG.info(" ClassNames------>{}",classNames);
         JsonValidator.validateJsonFiles(classNames);
-        DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath()),DirectoryHandler.url,DirectoryHandler.dialect,DirectoryHandler.username,DirectoryHandler.password,DirectoryHandler.driverClassName);
+        DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath()+"/jsonFiles/applicationProperties.json"),DirectoryHandler.url,DirectoryHandler.dialect,DirectoryHandler.username,DirectoryHandler.password,DirectoryHandler.driverClassName);
         TemplateHandler.generateSpringBootProject(classNames);
 
         path.setLength(0);

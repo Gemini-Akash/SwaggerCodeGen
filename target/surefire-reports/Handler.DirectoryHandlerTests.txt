@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: Handler.DirectoryHandlerTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.164 s <<< FAILURE! - in Handler.DirectoryHandlerTests
+testNegRenameDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at Handler.DirectoryHandlerTests.testNegRenameDirectory(DirectoryHandlerTests.java:76)
+
