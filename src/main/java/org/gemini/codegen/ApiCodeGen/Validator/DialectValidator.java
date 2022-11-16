@@ -15,7 +15,7 @@ public class DialectValidator {
      *
      * @param dialectName
      */
-    public static void validateDialect(String dialectName) {
+    public static void validateDialect(final String dialectName) {
         LOG.info("InputDialect-----> {}", dialectName);
         List<String> dialects = Arrays.asList("CUBRID", "DERBY", "FIREBIRD", "H2", "HSQLDB", "MARIADB", "MYSQL", "POSTGRES", "SQLITE");
         if (!dialects.contains(dialectName) && !(dialectName.isEmpty())) {

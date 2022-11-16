@@ -13,7 +13,7 @@ public class PathValidator {
      * @param filePath Contains the path given by user to check.
      * @return boolean value True or False
      */
-    public static boolean isValidPath(String filePath) {
+    public static boolean isValidPath(final String filePath) {
         File file = new File(filePath);
         boolean result = file.exists();
         return result;

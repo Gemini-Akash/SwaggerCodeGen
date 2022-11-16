@@ -21,7 +21,7 @@ public class DbJsonHandler {
      * @param url
      * @param username
      */
-    public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName) {
+    public static void createDbJson(final File filePath, final String url, final String dialect, final String username, final String password, final String driverClassName) {
         FileWriter fileWriter = null;
         try {
             JSONObject jsonObject = new JSONObject();

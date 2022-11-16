@@ -23,7 +23,7 @@ public class TemplateHandler {
      * @param jsonPath
      * @param templatePath
      */
-    public static void generateClassFromTemplates(String templatePath, String filePath, String jsonPath) {
+    public static void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
         FileReader fileReader = null;
         FileWriter fileWriter = null;
         try {
@@ -53,7 +53,7 @@ public class TemplateHandler {
      * @param filePath
      * @param templatePath
      */
-    public static void generateFileFromTemplate(String templatePath, String filePath) {
+    public static void generateFileFromTemplate(final String templatePath, final String filePath) {
         FileWriter fileWriter = null;
         try {
             Handlebars handlebars = new Handlebars();
@@ -76,7 +76,7 @@ public class TemplateHandler {
      *
      * @param classNames
      */
-    public static void generateSpringBootProject(List<String> classNames) {
+    public static void generateSpringBootProject(final List<String> classNames) {
         StringBuilder path = new StringBuilder();
         StringBuilder jsonPath = new StringBuilder();
         path.setLength(0);

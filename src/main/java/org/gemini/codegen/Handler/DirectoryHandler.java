@@ -34,7 +34,7 @@ public class DirectoryHandler {
      *
      * @param directoryPath
      */
-    public static void createDirectory(String directoryPath) {
+    public static void createDirectory(final String directoryPath) {
         File file = new File(directoryPath);
         if (file.isDirectory()) {
             LOG.info("Directory already exists");
@@ -97,7 +97,7 @@ public class DirectoryHandler {
      *
      * @param filePath
      */
-    public static void renameDirectory(File filePath, File renameFilePath) {
+    public static void renameDirectory(final File filePath, final File renameFilePath) {
         if (filePath.renameTo(renameFilePath)) {
             LOG.info("File moved successfully");
         } else {
@@ -111,7 +111,7 @@ public class DirectoryHandler {
      *
      * @param filePath
      */
-    public static void deleteDirectory(String filePath) {
+    public static void deleteDirectory(final String filePath) {
         File file = new File(filePath);
         try {
             if (file.isDirectory()) {
@@ -131,7 +131,7 @@ public class DirectoryHandler {
      * @param filePath
      * @param classNames
      */
-    public static void deleteFiles(List<String> classNames, String filePath) {
+    public static void deleteFiles(final List<String> classNames, final String filePath) {
         StringBuilder path = new StringBuilder();
         for (String className : classNames) {
             path.setLength(0);

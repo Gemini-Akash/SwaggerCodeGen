@@ -56,7 +56,7 @@ public class PojoValidator {
      * @return boolean value
      */
 
-    public static boolean validatePojoClassContent(File filePath) {
+    public static boolean validatePojoClassContent(final File filePath) {
         int leftCurlyBracesCount = 0, rightCurlyBracesCount = 0;
         File f1 = new File(String.valueOf(filePath));
         try {
@@ -83,7 +83,7 @@ public class PojoValidator {
      *
      * @return boolean value
      */
-    public static boolean validatePojoClasses(File[] files) {
+    public static boolean validatePojoClasses(final File[] files) {
         int count = 0;
         if (files.length == countTables()) {
             for (File file : files) {

@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.gemini.codegen.ApiCodeGen.Validator.PojoValidator.validatePojoClasses;
@@ -35,7 +39,7 @@ public class CustomClassLoader {
      * @param variableFieldsObject
      * @param filePath
      */
-    public static void createAPIJson(String className, JSONArray primaryKeysObject, JSONArray variableFieldsObject, String filePath) {
+    public static void createAPIJson(final String className,final JSONArray primaryKeysObject,final JSONArray variableFieldsObject,final String filePath) {
         FileWriter fileWriter = null;
         StringBuilder path = new StringBuilder();
         try {
@@ -71,7 +75,7 @@ public class CustomClassLoader {
      * @param filePath
      * @return classNames
      */
-    public static List<String> loadClass(Set<Class> classObject, String filePath) {
+    public static List<String> loadClass(final Set<Class> classObject,final String filePath) {
         StringBuilder path = new StringBuilder();
         List<String> classNames = new ArrayList<>();
         path.setLength(0);
@@ -97,7 +101,7 @@ public class CustomClassLoader {
      * @param classContent
      * @param filePath
      */
-    public static void getJsonBody(Class classContent, String filePath) {
+    public static void getJsonBody(final Class classContent,final String filePath) {
 
         JSONArray primaryKeysObject = null;
         JSONArray variableFieldsObject = null;
@@ -134,7 +138,7 @@ public class CustomClassLoader {
      *
      * @param filePath
      */
-    public static void compileJavaClasses(File filePath) {
+    public static void compileJavaClasses(final File filePath) {
         int compilationResult = 0;
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -155,7 +159,7 @@ public class CustomClassLoader {
      * @param filePath
      */
 
-    public static Class getFullyQualifiedClassName(File filePath) {
+    public static Class getFullyQualifiedClassName(final File filePath) {
         StringBuilder path = new StringBuilder();
         path.setLength(0);
         path.append(DirectoryHandler.outerDirectoryPath);
@@ -189,7 +193,7 @@ public class CustomClassLoader {
      * @param filePath
      * @return set of classes
      */
-    public static Set<Class> getFullyQualifiedClasses(File filePath) {
+    public static Set<Class> getFullyQualifiedClasses(final File filePath) {
         File[] files = filePath.listFiles();
         Set<Class> classes = new HashSet<>();
         try {
