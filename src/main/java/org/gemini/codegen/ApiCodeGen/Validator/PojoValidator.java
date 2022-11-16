@@ -57,7 +57,8 @@ public class PojoValidator {
      */
 
     public static boolean validatePojoClassContent(final File filePath) {
-        int leftCurlyBracesCount = 0, rightCurlyBracesCount = 0;
+        int leftCurlyBracesCount = 0;
+        int rightCurlyBracesCount = 0;
         File f1 = new File(String.valueOf(filePath));
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f1));
