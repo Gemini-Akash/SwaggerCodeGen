@@ -60,21 +60,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      */
     private static final Pattern PATTERN_LIST = Pattern.compile(
             "\\[" +
-                "(?:\\[before=([^\\]]+)\\])?" +
+                    "(?:\\[before=([^\\]]+)\\])?" +
                     "(?:\\[separator=([^\\]]+)\\])?" +
                     "(?:\\[after=([^\\]]+)\\])?" +
                     "(?:\\[(.*)\\])" +
                     "\\]", Pattern.DOTALL);
 
     private final Files files;
-    private final File           file;
-    private final String         encoding;
-    private final StringBuilder  sb;
-    private int                  indentTabsThisLine;
-    private int                  indentTabsAllLines;
-    private String               tabString     = "    ";
-    private String               newlineString = "\n";
-    private boolean              newline       = true;
+    private final File file;
+    private final String encoding;
+    private final StringBuilder sb;
+    private int indentTabsThisLine;
+    private int indentTabsAllLines;
+    private String tabString = "    ";
+    private String newlineString = "\n";
+    private boolean newline = true;
 
     protected GeneratorWriter(File file) {
         this(file, null, null);
@@ -146,36 +146,38 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         //   for JPA annotations, then it may fail, e.g. by producing an indentation of -1
         // - When a single line is printed in steps, and a step contains such characters,
         //   the character is interpreted erroneously as being semantic.
-        if (string.startsWith("}") || string.startsWith("]") || string.startsWith(")"))
+        if (string.startsWith("}") || string.startsWith("]") || string.startsWith(")")) {
             indentTabsAllLines--;
+        }
 
-        if (indentTabsAllLines < 0 && !Boolean.getBoolean("mute-indentation-error"))
+        if (indentTabsAllLines < 0 && !Boolean.getBoolean("mute-indentation-error")) {
             new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
-
+        }
         int indentTabsThisLine0 = indentTabsThisLine;
         if (newline && indentTabsThisLine + indentTabsAllLines > 0) {
-            for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++)
+            for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++) {
                 sb.append(tabString);
+            }
 
             newline = false;
             indentTabsThisLine = 0;
         }
 
-        if (string.endsWith("{") || string.endsWith("[") || string.endsWith("("))
+        if (string.endsWith("{") || string.endsWith("[") || string.endsWith("(")) {
             indentTabsAllLines++;
-        else if (string.startsWith("if") || string.startsWith("else") || string.startsWith("for") || string.startsWith("while"))
+        } else if (string.startsWith("if") || string.startsWith("else") || string.startsWith("for") || string.startsWith("while")) {
             indentTabsThisLine = indentTabsThisLine0 + 1;
+        }
 
         if (args.length > 0) {
             List<Object> originals = Arrays.asList(args);
             List<Object> translated = new ArrayList<>();
 
-            for (;;) {
+            for (; ; ) {
                 for (Object arg : originals) {
                     if (arg instanceof Class) {
                         translated.add(ref((Class<?>) arg));
-                    }
-                    else if (arg instanceof Object[] || arg instanceof Collection) {
+                    } else if (arg instanceof Object[] || arg instanceof Collection) {
                         if (arg instanceof Collection) {
                             arg = ((Collection<?>) arg).toArray();
                         }
@@ -196,7 +198,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
                         String separator = gBefore;
 
-                        for (Object o : ((Object[]) arg)) {
+                        for (Object o : (Object[]) arg) {
                             translated.add(o);
 
                             replacement.append(separator);
@@ -209,8 +211,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                         }
 
                         string = string.substring(0, start) + replacement + string.substring(end + 2);
-                    }
-                    else {
+                    } else {
                         translated.add(arg);
                     }
                 }
@@ -224,8 +225,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             }
 
             sb.append(String.format(string, translated.toArray()));
-        }
-        else {
+        } else {
             sb.append(string);
         }
 
@@ -234,8 +234,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     @SuppressWarnings("unchecked")
     public W printlnIf(boolean condition) {
-        if (condition)
+        if (condition) {
             println();
+        }
 
         return (W) this;
     }
@@ -308,30 +309,13 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         return indentTabsThisLine;
     }
 
-    public static class CloseResult {
-
-        /**
-         * Whether closing the file affected any files at all.
-         */
-        public final boolean affected;
-
-        /**
-         * Whether closing the file modified the file.
-         */
-        public final boolean modified;
-
-        CloseResult(boolean affected, boolean modified) {
-            this.affected = affected;
-            this.modified = modified;
-        }
-    }
-
     public CloseResult close() {
         String newContent = beforeClose(sb.toString());
 
         // [#4626] Don't write empty files
-        if (StringUtils.isBlank(newContent))
+        if (StringUtils.isBlank(newContent)) {
             return new CloseResult(false, false);
+        }
 
         try {
 
@@ -345,10 +329,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                     byte[] oldBytes = new byte[(int) old.length()];
                     old.readFully(oldBytes);
                     oldContent = new String(oldBytes, encoding());
-                }
-                finally {
-                    if (old != null)
+                } finally {
+                    if (old != null) {
                         old.close();
+                    }
                 }
             }
 
@@ -357,8 +341,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 // [#5892] [#8363] On Windows FAT or NTFS and other case-insensitive
                 //                 file systems, we must explicitly replace files whose
                 //                 case-sensitive file name has changed
-                if (oldContent != null)
+                if (oldContent != null) {
                     file.delete();
+                }
 
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), encoding()));
 
@@ -370,10 +355,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             }
 
             // [#10648] Check all modified files by this run
-            else
+            else {
                 return new CloseResult(true, false);
-        }
-        catch (IOException e) {
+            }
+        } catch (IOException e) {
             throw new GeneratorException("Error writing " + file.getAbsolutePath(), e);
         }
     }
@@ -384,8 +369,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     protected String beforeClose(String string) {
 //        muted-indentation-error By changing condition in line 387, originally-->  if (indentTabsAllLines > 0 && !Boolean.getBoolean("mute-indentation-error"))
-        if (indentTabsAllLines > 0 && Boolean.getBoolean("mute-indentation-error"))
+        if (indentTabsAllLines > 0 && Boolean.getBoolean("mute-indentation-error")) {
             new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
+        }
         return string;
     }
 
@@ -416,7 +402,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * Subtypes may override this to generate import statements.
      */
     public List<String> ref(List<String> clazzOrId) {
-        return clazzOrId == null ? Collections.<String>emptyList() : ref(clazzOrId, 1);
+        return clazzOrId == null ? Collections.emptyList() : ref(clazzOrId, 1);
     }
 
     /**
@@ -439,11 +425,29 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * Subtypes may override this to generate import statements.
      */
     public List<String> ref(List<String> clazzOrId, int keepSegments) {
-        return clazzOrId == null ? Collections.<String>emptyList() : clazzOrId;
+        return clazzOrId == null ? Collections.emptyList() : clazzOrId;
     }
 
     @Override
     public String toString() {
         return "GenerationWriter [" + file + "]";
+    }
+
+    public static class CloseResult {
+
+        /**
+         * Whether closing the file affected any files at all.
+         */
+        public final boolean affected;
+
+        /**
+         * Whether closing the file modified the file.
+         */
+        public final boolean modified;
+
+        CloseResult(boolean affected, boolean modified) {
+            this.affected = affected;
+            this.modified = modified;
+        }
     }
 }

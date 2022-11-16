@@ -12,7 +12,7 @@ public class DbJsonHandler {
     private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);
 
     /**
-     *  createDbJson method is used for creating application.properties Json file.
+     * createDbJson method is used for creating application.properties Json file.
      *
      * @param filePath
      * @param dialect
@@ -21,26 +21,24 @@ public class DbJsonHandler {
      * @param url
      * @param username
      */
-    public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName){
-        FileWriter fileWriter=null;
+    public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName) {
+        FileWriter fileWriter = null;
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("url", url);
-            jsonObject.put("dialect",dialect);
-            jsonObject.put("username",username);
-            jsonObject.put("driverClassName",driverClassName);
+            jsonObject.put("dialect", dialect);
+            jsonObject.put("username", username);
+            jsonObject.put("driverClassName", driverClassName);
             jsonObject.put("password", password);
             LOG.info("Required applicationPropertiesJson: {}", jsonObject);
-            fileWriter = new FileWriter(filePath+"/jsonFiles/applicationProperties.json");
+            fileWriter = new FileWriter(filePath);
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createDbJson(): {}", e.getMessage());
-        }
-        finally {
+        } finally {
             try {
                 fileWriter.close();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 LOG.error("Exception in closing the file of createDbJson(): {}", e.getMessage());
             }
         }

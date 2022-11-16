@@ -1,12 +1,11 @@
 package org.gemini.codegen;
 
+import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
 import org.gemini.codegen.ApiCodeGen.Validator.DialectValidator;
 import org.gemini.codegen.ApiCodeGen.Validator.JsonValidator;
-import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
 import org.gemini.codegen.Handler.DbJsonHandler;
 import org.gemini.codegen.Handler.DirectoryHandler;
 import org.gemini.codegen.Handler.TemplateHandler;
-
 import org.gemini.codegen.JOOQ.PojosGen.EntityClassGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +16,9 @@ import java.util.List;
 public class CodeGeneratorApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(CodeGeneratorApp.class);
-    static StringBuilder path=new StringBuilder();
 
     public static void main(String[] args) {
+        StringBuilder path = new StringBuilder();
 
         LOG.info("<------ CodeGen FrameWork Started ------>");
         DialectValidator.validateDialect(DirectoryHandler.dialect);
@@ -34,34 +33,34 @@ public class CodeGeneratorApp {
             LOG.error("Exception in generating POJO classes {}", e.getMessage());
         }
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath() );
+        path.append(DirectoryHandler.generateDirectoryPath());
         path.append("/com/gemini/");
         path.append(DirectoryHandler.getScriptName());
         path.append("/entity");
         DirectoryHandler.renameDirectory(new File(path.toString()), new File(DirectoryHandler.generateDirectoryPath() + "/entity"));
 
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath() );
-        path.append( "/entity/");
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/entity/");
         path.append(DirectoryHandler.getSchemaName());
         path.append("/tables/pojos/");
-        List<String> classNames= CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(path.toString())),DirectoryHandler.generateDirectoryPath());
-        LOG.info(" ClassNames------>{}",classNames);
+        List<String> classNames = CustomClassLoader.loadClass(CustomClassLoader.getFullyQualifiedClasses(new File(path.toString())), DirectoryHandler.generateDirectoryPath());
+        LOG.info(" ClassNames------>{}", classNames);
         JsonValidator.validateJsonFiles(classNames);
-        DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath()),DirectoryHandler.url,DirectoryHandler.dialect,DirectoryHandler.username,DirectoryHandler.password,DirectoryHandler.driverClassName);
+        DbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath() + "/jsonFiles/applicationProperties.json"), DirectoryHandler.url, DirectoryHandler.dialect, DirectoryHandler.username, DirectoryHandler.password, DirectoryHandler.driverClassName);
         TemplateHandler.generateSpringBootProject(classNames);
 
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath() );
-        path.append( "/com");
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/com");
         DirectoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath() );
-        path.append( "/jsonFiles");
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/jsonFiles");
         DirectoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath() );
-        path.append( "/entity/");
+        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/entity/");
         path.append(DirectoryHandler.getSchemaName());
         path.append("/tables/pojos/");
         DirectoryHandler.deleteFiles(classNames, path.toString());

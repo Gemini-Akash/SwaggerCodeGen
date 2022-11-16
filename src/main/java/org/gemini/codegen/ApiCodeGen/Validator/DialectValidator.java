@@ -3,7 +3,6 @@ package org.gemini.codegen.ApiCodeGen.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,11 +15,12 @@ public class DialectValidator {
      *
      * @param dialectName
      */
-    public static void validateDialect(String dialectName){
-        LOG.info("InputDialect-----> {}",dialectName);
-        List<String> dialects= Arrays.asList("CUBRID","DERBY" , "FIREBIRD" , "H2" , "HSQLDB" , "MARIADB", "MYSQL", "POSTGRES", "SQLITE");
-        if (!dialects.contains(dialectName) && !(dialectName.isEmpty()))
+    public static void validateDialect(String dialectName) {
+        LOG.info("InputDialect-----> {}", dialectName);
+        List<String> dialects = Arrays.asList("CUBRID", "DERBY", "FIREBIRD", "H2", "HSQLDB", "MARIADB", "MYSQL", "POSTGRES", "SQLITE");
+        if (!dialects.contains(dialectName) && !(dialectName.isEmpty())) {
             throw new RuntimeException("Wrong Dialect as an input. We only support these dialects : {CUBRID,DERBY,FIREBIRD ,H2 ,HSQLDB , MARIADB,MYSQL,POSTGRES,SQLITE}");
+        }
     }
 
 }

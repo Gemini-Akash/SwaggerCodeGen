@@ -17,40 +17,38 @@ public class EntityClassGenerator {
      * and store the classes with the given package name and directory.
      * This Method also Validates the paths given by the Users.
      * Return NULL
-     * @return null
-     * @param scriptPath Containing the path of script
-     * @param packageName Containing the package name
-     * @param directory Containing the directory where it stores the classes
      *
+     * @param scriptPath  Containing the path of script
+     * @param packageName Containing the package name
+     * @param directory   Containing the directory where it stores the classes
+     * @return null
      */
 
-    public static void EntityGenerator( String scriptPath, String packageName, String directory) throws Exception {
+    public static void EntityGenerator(String scriptPath, String packageName, String directory) throws Exception {
 
-        PathValidator pathValidator =new PathValidator();
+        boolean scriptResult = PathValidator.isValidPath(scriptPath);
+        boolean directoryResult = PathValidator.isValidPath(directory);
 
-        boolean scriptResult=pathValidator.isValidPath(scriptPath);
-        boolean directoryResult =pathValidator.isValidPath(directory);
-
-        if(!scriptResult){
-            throw  new FileNotFoundException("Script Not found");
+        if (!scriptResult) {
+            throw new FileNotFoundException("Script Not found");
         }
 
-        if(!directoryResult){
-            throw  new FileNotFoundException("Directory Not found");
+        if (!directoryResult) {
+            throw new FileNotFoundException("Directory Not found");
         }
 
-        Configuration configuration =new Configuration();
+        Configuration configuration = new Configuration();
 
         configuration.withGenerator(new Generator()
-                        .withName(CustomJooqAutoGenerator.class.getCanonicalName())
-                        .withStrategy(new Strategy()
-                                .withMatchers(new Matchers()
-                                        .withFields(
-                                                new MatchersFieldType()
-                                                        .withFieldMember(new MatcherRule()
-                                                                .withTransform(MatcherTransformType.PASCAL))
+                .withName(CustomJooqAutoGenerator.class.getCanonicalName())
+                .withStrategy(new Strategy()
+                        .withMatchers(new Matchers()
+                                .withFields(
+                                        new MatchersFieldType()
+                                                .withFieldMember(new MatcherRule()
+                                                        .withTransform(MatcherTransformType.PASCAL))
 
-                                        )))
+                                )))
                 .withDatabase(new Database()
                         .withName("org.jooq.meta.extensions.ddl.DDLDatabase")
                         .withProperties(new Property().
@@ -72,7 +70,7 @@ public class EntityClassGenerator {
                         .withPackageName(packageName)
                         .withDirectory(directory))
 
-        ) .withOnError(OnError.FAIL);
+        ).withOnError(OnError.FAIL);
         GenerationTool.generate(configuration);
     }
 }

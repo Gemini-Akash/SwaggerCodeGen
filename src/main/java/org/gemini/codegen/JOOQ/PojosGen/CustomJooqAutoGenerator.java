@@ -3,16 +3,16 @@ package org.gemini.codegen.JOOQ.PojosGen;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Record;
-import org.jooq.codegen.*;
+import org.jooq.codegen.GeneratorStrategy;
+import org.jooq.codegen.JavaGenerator;
+import org.jooq.codegen.JavaWriter;
 import org.jooq.impl.DAOImpl;
 import org.jooq.meta.*;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +22,28 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
     private static final JooqLogger LOG = JooqLogger.getLogger(CustomJooqAutoGenerator.class);
 
+    private static final <T> List<T> list(T first, List<T> remaining) {
+        List<T> result = new ArrayList<>();
+
+        result.addAll(list(first));
+        result.addAll(remaining);
+
+        return result;
+    }
+
+    private static final <T> List<T> list(T... objects) {
+        List<T> result = new ArrayList<>();
+
+        if (objects != null) {
+            for (T object : objects) {
+                if (object != null && !"".equals(object)) {
+                    result.add(object);
+                }
+            }
+        }
+
+        return result;
+    }
 
     @Override
     protected void generatePojo(TableDefinition table) {
@@ -44,39 +66,44 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));
 
-        if (generateInterfaces())
+        if (generateInterfaces()) {
             interfaces.add(interfaceName);
+        }
 
-        final List<String> superTypes = list(superName, interfaces);
+//        final List<String> superTypes = list(superName, interfaces);
         printPackage(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
 
-        if (tableUdtOrEmbeddable instanceof TableDefinition)
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
             generatePojoClassJavadoc((TableDefinition) tableUdtOrEmbeddable, out);
-        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
             generateEmbeddableClassJavadoc((EmbeddableDefinition) tableUdtOrEmbeddable, out);
-        else
+        } else {
             generateUDTPojoClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);
+        }
 
         printClassAnnotations(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
 
-        if (tableUdtOrEmbeddable instanceof TableDefinition)
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
+        }
 
         int maxLength = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable))
+        for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());
-
+        }
 
         out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
 
-        if (generateSerializablePojos() || generateSerializableInterfaces())
+        if (generateSerializablePojos() || generateSerializableInterfaces()) {
             out.printSerial();
+        }
 
         out.println();
 
         for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
-            if (column instanceof ColumnDefinition)
+            if (column instanceof ColumnDefinition) {
                 printColumnJPAAnnotation(out, (ColumnDefinition) column);
+            }
 
             out.println("private %s%s %s;",
                     generateImmutablePojos() ? "final " : "",
@@ -89,8 +116,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         // ---------------------------------------------------------------------
 
         // Default constructor
-        if (!generateImmutablePojos())
+        if (!generateImmutablePojos()) {
             generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);
+        }
 
 
         // [#1363] [#7055] copy constructor
@@ -103,17 +131,20 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         for (int i = 0; i < elements.size(); i++) {
             TypedElementDefinition<?> column = elements.get(i);
 
-            if (tableUdtOrEmbeddable instanceof TableDefinition)
+            if (tableUdtOrEmbeddable instanceof TableDefinition) {
                 generatePojoGetter(column, i, out);
-            else
+            } else {
                 generateUDTPojoGetter(column, i, out);
+            }
 
             // Setter
-            if (!generateImmutablePojos())
-                if (tableUdtOrEmbeddable instanceof TableDefinition)
+            if (!generateImmutablePojos()) {
+                if (tableUdtOrEmbeddable instanceof TableDefinition) {
                     generatePojoSetter(column, i, out);
-                else
+                } else {
                     generateUDTPojoSetter(column, i, out);
+                }
+            }
         }
 
 
@@ -128,36 +159,41 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             }
         }
 
-        if (generatePojosEqualsAndHashCode())
+        if (generatePojosEqualsAndHashCode()) {
             generatePojoEqualsAndHashCode(tableUdtOrEmbeddable, out);
+        }
 
-        if (generatePojosToString())
+        if (generatePojosToString()) {
             generatePojoToString(tableUdtOrEmbeddable, out);
+        }
 
-        if (generateInterfaces() && !generateImmutablePojos())
+        if (generateInterfaces() && !generateImmutablePojos()) {
             printFromAndInto(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
+        }
 
-        if (tableUdtOrEmbeddable instanceof TableDefinition)
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
             generatePojoClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
-        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
             generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);
-        else
+        }
+        else {
             generateUDTPojoClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);
+        }
 
         out.println("}");
         closeJavaWriter(out);
     }
+
     protected void printColumnJPAAnnotation(JavaWriter out, ColumnDefinition column) {
         int indent = out.indent();
         if (this.generateJPAAnnotations()) {
-            String prefix ="";
+            String prefix = "";
             UniqueKeyDefinition pk = column.getPrimaryKey();
             if (pk != null) {
-                out.println("@%s%s", new Object[]{prefix, out.ref("javax.persistence.Id")});
-                for (ColumnDefinition s:pk.getKeyColumns()) {
-                    if(s.isIdentity())
-                    {
-                        out.println("@%s%s(strategy = %s.IDENTITY)", new Object[]{prefix, out.ref("javax.persistence.GeneratedValue"), out.ref("javax.persistence.GenerationType")});
+                out.println("@%s%s", prefix, out.ref("javax.persistence.Id"));
+                for (ColumnDefinition s : pk.getKeyColumns()) {
+                    if (s.isIdentity()) {
+                        out.println("@%s%s(strategy = %s.IDENTITY)", prefix, out.ref("javax.persistence.GeneratedValue"), out.ref("javax.persistence.GenerationType"));
                     }
                 }
             }
@@ -179,7 +215,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 }
             }
 
-            out.print("@%s%s(name = \"", new Object[]{prefix, out.ref("javax.persistence.Column")});
+            out.print("@%s%s(name = \"", prefix, out.ref("javax.persistence.Column"));
             out.print(this.escapeString(column.getName()));
             out.print("\"");
             out.print(nullable);
@@ -191,6 +227,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
         out.indent(indent);
     }
+
     protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);
         final List<String> properties = new ArrayList<>();
@@ -208,8 +245,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 getTypedElements(tableOrUDT).size() < 256) {
             out.println();
 
-            if (generateConstructorPropertiesAnnotationOnPojos())
+            if (generateConstructorPropertiesAnnotationOnPojos()) {
                 out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
+            }
 
             out.print("public %s(", className);
 
@@ -273,12 +311,11 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);
 
         out.println();
-        int size = getTypedElements(tableOrUDT).size();
+//        int size = getTypedElements(tableOrUDT).size();
         // [#6248] [#10288] The no-args constructor isn't needed because we have named, defaulted parameters
         out.println("public %s() {}", className);
 
     }
-
 
     @Override
     protected void generatePojoGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
@@ -297,9 +334,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         final String name = column.getQualifiedOutputName();
 
         // Getter
-        if (!printDeprecationIfUnknownType(out, columnTypeFull))
+        if (!printDeprecationIfUnknownType(out, columnTypeFull)) {
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
-
+        }
 
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
@@ -320,34 +357,38 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             // [#5128] defaulted columns are nullable in Java
             if (!column.getType(resolver(out)).isNullable() &&
                     !column.getType(resolver(out)).isDefaulted() &&
-                    !column.getType(resolver(out)).isIdentity())
+                    !column.getType(resolver(out)).isIdentity()) {
                 out.println("@%s%s", prefix, out.ref("javax.validation.constraints.NotNull"));
-
+            }
             String javaType = getJavaType(type, out);
             if ("java.lang.String".equals(javaType) || "byte[]".equals(javaType)) {
                 int length = type.getLength();
 
-                if (length > 0)
+                if (length > 0) {
                     out.println("@%s%s(max = %s)", prefix, out.ref("javax.validation.constraints.Size"), length);
+                }
             }
         }
     }
 
     private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable())
+        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable()) {
             printNullableAnnotation(out);
-        else
+        } else {
             printNonnullAnnotation(out);
+        }
     }
 
     protected void printNullableAnnotation(JavaWriter out) {
-        if (generateNullableAnnotation())
+        if (generateNullableAnnotation()) {
             out.println("@%s", out.ref(generatedNullableAnnotationType()));
+        }
     }
 
     protected void printNonnullAnnotation(JavaWriter out) {
-        if (generateNonnullAnnotation())
+        if (generateNonnullAnnotation()) {
             out.println("@%s", out.ref(generatedNonnullAnnotationType()));
+        }
     }
 
     private String comment(Definition definition) {
@@ -366,9 +407,8 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 : "";
     }
 
-
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
-        if (generateDeprecationOnUnknownTypes() && (Object.class.getName().equals(type) && "Any".equals(type))) {
+        if (generateDeprecationOnUnknownTypes() && Object.class.getName().equals(type) && "Any".equals(type)) {
 
             out.javadoc("@deprecated Unknown data type. "
                     + "Please define an explicit {@link org.jooq.Binding} to specify how this "
@@ -384,18 +424,18 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-
     private List<? extends TypedElementDefinition<? extends Definition>> getTypedElements(Definition definition) {
-        if (definition instanceof TableDefinition)
+        if (definition instanceof TableDefinition) {
             return ((TableDefinition) definition).getColumns();
-        else if (definition instanceof EmbeddableDefinition)
+        } else if (definition instanceof EmbeddableDefinition) {
             return ((EmbeddableDefinition) definition).getColumns();
-        else if (definition instanceof UDTDefinition)
+        } else if (definition instanceof UDTDefinition) {
             return ((UDTDefinition) definition).getAttributes();
-        else if (definition instanceof RoutineDefinition)
+        } else if (definition instanceof RoutineDefinition) {
             return ((RoutineDefinition) definition).getAllParameters();
-        else
+        } else {
             throw new IllegalArgumentException("Unsupported type : " + definition);
+        }
     }
 
     private void printFromAndInto(JavaWriter out, Definition tableOrUDT, GeneratorStrategy.Mode mode) {
@@ -414,7 +454,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             final String getter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.INTERFACE);
 
             // TODO: Use appropriate Mode here
-            final String member = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);
+//            final String member = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);
 
             out.println("%s(from.%s());", setter, getter);
         }
@@ -435,28 +475,8 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-    private static final <T> List<T> list(T first, List<T> remaining) {
-        List<T> result = new ArrayList<>();
-
-        result.addAll(list(first));
-        result.addAll(remaining);
-
-        return result;
-    }
-
-    private static final <T> List<T> list(T... objects) {
-        List<T> result = new ArrayList<>();
-
-        if (objects != null)
-            for (T object : objects)
-                if (object != null && !"".equals(object))
-                    result.add(object);
-
-        return result;
-    }
-
     private String nullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        return (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable())
+        return column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable()
                 ? nullableAnnotation(out)
                 : nonnullAnnotation(out);
     }
@@ -471,8 +491,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
     private String escapeString(String string) {
 
-        if (string == null)
+        if (string == null) {
             return null;
+        }
 
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
         String result = string.replace("\\", "\\\\")
@@ -482,15 +503,17 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
         // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
         int max = 16384;
-        if (result.length() <= max)
+        if (result.length() <= max) {
             return result;
+        }
 
         StringBuilder sb = new StringBuilder("\" + \"");
         for (int i = 0; i < result.length(); i += max) {
-            if (i > 0)
+            if (i > 0) {
                 sb.append("\".toString() + \"");
+            }
 
-            sb.append(result.substring(i, Math.min(i + max, result.length())));
+            sb.append(result, i, Math.min(i + max, result.length()));
         }
 
         return sb.append("\".toString() + \"").toString();
@@ -550,16 +573,15 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         generateDaoClassJavadoc(table, out);
         printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);
 
-        if (generateSpringAnnotations())
+        if (generateSpringAnnotations()) {
             out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
-
+        }
 
         out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
 
         // Default constructor
         // -------------------
         out.javadoc("Create a new %s without any configuration", className);
-
 
 
         out.println("public %s() {", className);
@@ -590,7 +612,6 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
             out.println("return object.%s();", getStrategy().getJavaGetterName(keyColumns.get(0), GeneratorStrategy.Mode.POJO));
         }
-
         // [#2574] This should be replaced by a call to a method on the target table's Key type
         else {
             String params = "";
@@ -619,9 +640,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
             // fetchRangeOf[Column]([T]...)
             // -----------------------
-            if (!printDeprecationIfUnknownType(out, colTypeFull))
+            if (!printDeprecationIfUnknownType(out, colTypeFull)) {
                 out.javadoc("Fetch records that have <code>%s BETWEEN lowerInclusive AND upperInclusive</code>", colName);
-
+            }
             printNonnullAnnotation(out);
             out.println("public %s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", List.class, pType, colClass, colType, colType);
             out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
@@ -630,9 +651,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
             // fetchBy[Column]([T]...)
             // -----------------------
-            if (!printDeprecationIfUnknownType(out, colTypeFull))
+            if (!printDeprecationIfUnknownType(out, colTypeFull)) {
                 out.javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
-
+            }
 
             printNonnullAnnotation(out);
             out.println("public %s<%s> fetchBy%s(%s... values) {", List.class, pType, colClass, colType);
@@ -648,10 +669,9 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
                 // If column is part of a single-column unique key...
                 if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
-                    if (!printDeprecationIfUnknownType(out, colTypeFull))
+                    if (!printDeprecationIfUnknownType(out, colTypeFull)) {
                         out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
-
-
+                    }
                     printNullableAnnotation(out);
                     out.println("public %s fetchOneBy%s(%s value) {", pType, colClass, colType);
                     out.println("return fetchOne(%s, value);", colIdentifier);
@@ -672,7 +692,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
             final String colType1 = out.ref(colTypeFull);
             if (key == column.getPrimaryKey()) {
-                if (flag != (size - 1)) {
+                if (flag != size - 1) {
                     out.print("%s %s,", colType1, colClass);
                     flag++;
                 } else {
@@ -680,15 +700,13 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 }
             }
         }
-        out.print("return this.ctx().selectFrom(%s).where(",  tableIdentifier);
+        out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
         int flag2 = 0;
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass1 = getStrategy().getJavaClassName(column);
-            final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
-            final String colType1 = out.ref(colTypeFull1);
             final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
             if (key == column.getPrimaryKey()) {
-                if (flag2 != (size - 1)) {
+                if (flag2 != size - 1) {
                     if (flag2 == 0) {
                         out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
                     } else {
@@ -717,8 +735,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 if (key != column.getPrimaryKey()) {
                     out.println("record.set%s(classObject.get%s());", colClass, colClass);
                 }
-            }
-            else {
+            } else {
                 out.println("record.set%s(classObject.get%s());", colClass, colClass);
             }
         }
@@ -744,12 +761,10 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             int flag1 = 0;
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column);
-                final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull1);
                 final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
                 if (key == column.getPrimaryKey()) {
-                    if (flag1 != (size - 1)) {
+                    if (flag1 != size - 1) {
                         if (flag1 == 0) {
                             out.print("%s.eq(classObject.get%s()).and(", colIdentifier1, colClass1);
                         } else {
@@ -772,7 +787,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
                 final String colType1 = out.ref(colTypeFull);
                 if (key == column.getPrimaryKey()) {
-                    if (flag5 != (size - 1)) {
+                    if (flag5 != size - 1) {
                         out.print("%s %s,", colType1, colClass);
                         flag5++;
                     } else {
@@ -784,27 +799,22 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             int flag6 = 0;
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column);
-                final String colTypeFull1 = getJavaType(column.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull1);
                 final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-
                 if (key == column.getPrimaryKey()) {
-                    if (flag6 != (size - 1)) {
+                    if (flag6 != size - 1) {
                         if (flag6 == 0) {
                             out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
                         } else {
                             out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
                         }
                         flag6++;
-                    }
-                    else {
+                    } else {
                         out.println("%s.eq(%s))).execute();", colIdentifier1, colClass1, pType);
                         out.println("}");
                     }
                 }
             }
-        }
-        else {
+        } else {
             //For Delete single primary key
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass = getStrategy().getJavaClassName(column);
@@ -819,61 +829,60 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                     out.println("}");
                 }
             }
-            for (ColumnDefinition column : table.getColumns()) {
-                final String colClass = getStrategy().getJavaClassName(column);
-                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-                final String colType = out.ref(colTypeFull);
-                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
-                //For update single primary key
-                out.javadoc("Created custom Update record Method");
-                out.println("public int updateRecord(%s classObject){", pType);
-                out.println("int result=this.ctx().update(%s)", tableIdentifier);
-                for (ColumnDefinition column1 : table.getColumns()) {
-                    final String colClass1 = getStrategy().getJavaClassName(column1);
-                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));
-                    if (key != column1.getPrimaryKey()) {
-                        out.println(".set(%s,classObject.get%s())", colIdentifier1, colClass1);
-                    }
+            ColumnDefinition column = table.getColumns().get(0);
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            //For update single primary key
+            out.javadoc("Created custom Update record Method");
+            out.println("public int updateRecord(%s classObject){", pType);
+            out.println("int result=this.ctx().update(%s)", tableIdentifier);
+            for (ColumnDefinition column1 : table.getColumns()) {
+                final String colClass1 = getStrategy().getJavaClassName(column1);
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));
+                if (key != column1.getPrimaryKey()) {
+                    out.println(".set(%s,classObject.get%s())", colIdentifier1, colClass1);
                 }
-                out.println(".where(%s.eq(classObject.get%s())).execute();", colIdentifier, colClass);
-                out.println("return result;");
-                out.println("}");
-                break;
             }
+            out.println(".where(%s.eq(classObject.get%s())).execute();", colIdentifier, colClass);
+            out.println("return result;");
+            out.println("}");
+
         }
         generateDaoClassFooter(table, out);
         out.println("}");
     }
+
     protected String ref(String clazzOrId, int keepSegments) {
         return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);
     }
 
 
     protected List<String> ref(List<String> clazzOrId, int keepSegments) {
-        return clazzOrId == null ? Collections.<String>emptyList() : clazzOrId;
+        return clazzOrId == null ? Collections.emptyList() : clazzOrId;
     }
+
     //
 //    /**
 //     * Subclasses may override this method to provide alternative DAO
 //     * constructor annotations, such as DI annotations. [#10801]
 //     */
     protected void printDaoConstructorAnnotations(TableDefinition table, JavaWriter out) {
-        if (generateSpringAnnotations())
+        if (generateSpringAnnotations()) {
             out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
+        }
     }
 
 
     private int colRefSegments(Definition column) {
-        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getContainer() instanceof UDTDefinition)
+        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getContainer() instanceof UDTDefinition) {
             return 2;
-
-        if (!getStrategy().getInstanceFields())
+        }
+        if (!getStrategy().getInstanceFields()) {
             return 2;
+        }
 
         return 3;
     }
-
-
 
 
 }

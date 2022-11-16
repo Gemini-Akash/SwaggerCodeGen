@@ -1,9 +1,7 @@
 /**
- *To Do
- *
+ * To Do
+ * <p>
  * This class was used earlier during generation of project from SwaggerYaml.
- *
- *
  */
 
 

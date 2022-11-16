@@ -25,10 +25,10 @@ public class CustomClassLoader {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
-    static StringBuilder path=new StringBuilder();
+
 
     /**
-     * convertIntoAPIJson() method to convert into json file for creating multiple json.
+     * createAPIJson() method to convert into json file for creating multiple json.
      *
      * @param className
      * @param primaryKeysObject
@@ -36,7 +36,8 @@ public class CustomClassLoader {
      * @param filePath
      */
     public static void createAPIJson(String className, JSONArray primaryKeysObject, JSONArray variableFieldsObject, String filePath) {
-        FileWriter fileWriter=null;
+        FileWriter fileWriter = null;
+        StringBuilder path = new StringBuilder();
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("className", className);
@@ -54,12 +55,10 @@ public class CustomClassLoader {
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createApiJson(): {}", e.getMessage());
-        }
-        finally {
+        } finally {
             try {
                 fileWriter.close();
-            }
-            catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 LOG.error("Exception in closing the file of countTables(): {}", e.getMessage());
             }
         }
@@ -72,7 +71,8 @@ public class CustomClassLoader {
      * @param filePath
      * @return classNames
      */
-    public static List<String> loadClass(Set<Class> classObject,String filePath) {
+    public static List<String> loadClass(Set<Class> classObject, String filePath) {
+        StringBuilder path = new StringBuilder();
         List<String> classNames = new ArrayList<>();
         path.setLength(0);
         path.append(DirectoryHandler.generateDirectoryPath());
@@ -83,7 +83,7 @@ public class CustomClassLoader {
                 String className = classContent.getSimpleName();
                 classNames.add(className);
                 LOG.info("Pojo ClassName : {}", className);
-                getJsonBody(classContent,filePath);
+                getJsonBody(classContent, filePath);
             }
         } catch (Exception e) {
             LOG.error("Exception in loadClass(): {}", e.getMessage());
@@ -97,7 +97,7 @@ public class CustomClassLoader {
      * @param classContent
      * @param filePath
      */
-    public static void getJsonBody(Class classContent,String filePath) {
+    public static void getJsonBody(Class classContent, String filePath) {
 
         JSONArray primaryKeysObject = null;
         JSONArray variableFieldsObject = null;
@@ -126,7 +126,7 @@ public class CustomClassLoader {
         } catch (Exception e) {
             LOG.error("Exception in getJsonBody(): {}", e.getMessage());
         }
-        createAPIJson(classContent.getSimpleName(), primaryKeysObject, variableFieldsObject,filePath);
+        createAPIJson(classContent.getSimpleName(), primaryKeysObject, variableFieldsObject, filePath);
     }
 
     /**
@@ -135,18 +135,17 @@ public class CustomClassLoader {
      * @param filePath
      */
     public static void compileJavaClasses(File filePath) {
-        int compilationResult=0;
-        try{
+        int compilationResult = 0;
+        try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());
-        }
-        catch (Exception e){
-            LOG.info("Exception in compileJavaClasses(): {}",e.getMessage());
+        } catch (Exception e) {
+            LOG.info("Exception in compileJavaClasses(): {}", e.getMessage());
         }
         if (compilationResult == 0) {
             LOG.info("Compilation is successful");
         } else {
-            LOG.info("Compilation Failed at: {} ",filePath.getName());
+            LOG.info("Compilation Failed at: {} ", filePath.getName());
         }
     }
 
@@ -157,6 +156,7 @@ public class CustomClassLoader {
      */
 
     public static Class getFullyQualifiedClassName(File filePath) {
+        StringBuilder path = new StringBuilder();
         path.setLength(0);
         path.append(DirectoryHandler.outerDirectoryPath);
         path.append("/");
@@ -167,14 +167,14 @@ public class CustomClassLoader {
         try {
             path.setLength(0);
             path.append("com.gemini.");
-            path.append( DirectoryHandler.getScriptName());
+            path.append(DirectoryHandler.getScriptName());
             path.append(".entity.");
             path.append(DirectoryHandler.getSchemaName());
             path.append(".tables.pojos.");
             path.append(filePath.getName().replaceAll(".java", ""));
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
-            java.lang.ClassLoader cl = new URLClassLoader(urls);
+            ClassLoader cl = new URLClassLoader(urls);
             cls = cl.loadClass(path.toString());
         } catch (Exception e) {
             LOG.error("Exception in getFullyQualifiedClassName: {}", e.getMessage());
@@ -198,8 +198,9 @@ public class CustomClassLoader {
                     compileJavaClasses(file);
                     classes.add(getFullyQualifiedClassName(file));
                 }
-            } else
+            } else {
                 LOG.info("Any of your pojoClass is Empty");
+            }
         } catch (Exception e) {
             LOG.error("Exception in getFullyQualifiedClasses(): {}", e.getMessage());
         }
