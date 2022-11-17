@@ -13,10 +13,13 @@ public class PojoValidatorTest {
 
     private static final Logger log =  LoggerFactory.getLogger(PojoValidatorTest.class);
 
-//    @Test
-//    public void testCountTables(){
-//
-//    }
+    @Test
+    public void testCountTables(){
+        int countOfTables = PojoValidator.countTables();
+        Assertions.assertTrue(countOfTables>=0);
+
+    }
+
 //    @Test
 //    public void testValidatePojoClasses(){
 //    }

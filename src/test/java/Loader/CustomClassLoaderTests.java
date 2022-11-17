@@ -1,17 +1,14 @@
 package Loader;
 
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
-import org.gemini.codegen.Handler.DirectoryHandler;
-import org.gemini.codegen.JOOQ.PojosGen.EntityClassGenerator;
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CustomClassLoaderTests {
 
@@ -69,6 +66,17 @@ public class CustomClassLoaderTests {
 //        }
 //        Set<Class> actualClasses = CustomClassLoader.getFullyQualifiedClasses(new File("src/test/resources/CustomClassLoader/entity/" + DirectoryHandler.getSchemaName() + "/tables/pojos/"));
 //
+//        Assertions.assertTrue(!actualClasses.isEmpty());
+//
 //    }
+    @AfterAll
+    public static void cleanUp(){
+        String path = "src/test/resources/CustomClassLoader/ClassFiles/Dummy.class";
+        File file = new File(path);
+        if(file.exists()){
+            file.delete();
+        }
+    }
+
 
 }

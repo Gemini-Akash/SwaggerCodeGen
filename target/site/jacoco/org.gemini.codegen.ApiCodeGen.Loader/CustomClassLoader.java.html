@@ -143,10 +143,10 @@ import static org.gemini.codegen.ApiCodeGen.Validator.PojoValidator.validatePojo
 <span class="nc" id="L143">        catch (Exception e){</span>
 <span class="nc" id="L144">            LOG.info(&quot;Exception in compileJavaClasses(): {}&quot;,e.getMessage());</span>
 <span class="fc" id="L145">        }</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (compilationResult == 0) {</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        if (compilationResult == 0) {</span>
 <span class="fc" id="L147">            LOG.info(&quot;Compilation is successful&quot;);</span>
         } else {
-<span class="fc" id="L149">            LOG.info(&quot;Compilation Failed at: {} &quot;,filePath.getName());</span>
+<span class="nc" id="L149">            LOG.info(&quot;Compilation Failed at: {} &quot;,filePath.getName());</span>
         }
 <span class="fc" id="L151">    }</span>
 

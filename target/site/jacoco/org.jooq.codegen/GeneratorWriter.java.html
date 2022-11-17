@@ -58,7 +58,7 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
     /**
      * A pattern to be used with &quot;list&quot; expressions
      */
-<span class="nc" id="L61">    private static final Pattern PATTERN_LIST = Pattern.compile(</span>
+<span class="fc" id="L61">    private static final Pattern PATTERN_LIST = Pattern.compile(</span>
             &quot;\\[&quot; +
                 &quot;(?:\\[before=([^\\]]+)\\])?&quot; +
                     &quot;(?:\\[separator=([^\\]]+)\\])?&quot; +
@@ -72,9 +72,9 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
     private final StringBuilder  sb;
     private int                  indentTabsThisLine;
     private int                  indentTabsAllLines;
-<span class="nc" id="L75">    private String               tabString     = &quot;    &quot;;</span>
-<span class="nc" id="L76">    private String               newlineString = &quot;\n&quot;;</span>
-<span class="nc" id="L77">    private boolean              newline       = true;</span>
+<span class="fc" id="L75">    private String               tabString     = &quot;    &quot;;</span>
+<span class="fc" id="L76">    private String               newlineString = &quot;\n&quot;;</span>
+<span class="fc" id="L77">    private boolean              newline       = true;</span>
 
     protected GeneratorWriter(File file) {
 <span class="nc" id="L80">        this(file, null, null);</span>
@@ -88,39 +88,39 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
 <span class="nc" id="L88">        this(file, null, files);</span>
 <span class="nc" id="L89">    }</span>
 
-<span class="nc" id="L91">    protected GeneratorWriter(File file, String encoding, Files files) {</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        this.files = files == null ? new Files() : files;</span>
-<span class="nc" id="L93">        this.file = file;</span>
-<span class="nc" id="L94">        this.encoding = encoding;</span>
-<span class="nc" id="L95">        this.sb = new StringBuilder();</span>
+<span class="fc" id="L91">    protected GeneratorWriter(File file, String encoding, Files files) {</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        this.files = files == null ? new Files() : files;</span>
+<span class="fc" id="L93">        this.file = file;</span>
+<span class="fc" id="L94">        this.encoding = encoding;</span>
+<span class="fc" id="L95">        this.sb = new StringBuilder();</span>
 
-<span class="nc" id="L97">        this.files.mkdirs(file.getParentFile());</span>
-<span class="nc" id="L98">    }</span>
+<span class="fc" id="L97">        this.files.mkdirs(file.getParentFile());</span>
+<span class="fc" id="L98">    }</span>
 
     public String tabString() {
 <span class="nc" id="L101">        return tabString;</span>
     }
 
     public void tabString(String string) {
-<span class="nc" id="L105">        this.tabString = string.replace(&quot;\\t&quot;, &quot;\t&quot;).replace(&quot;\\s&quot;, &quot; &quot;);</span>
-<span class="nc" id="L106">    }</span>
+<span class="fc" id="L105">        this.tabString = string.replace(&quot;\\t&quot;, &quot;\t&quot;).replace(&quot;\\s&quot;, &quot; &quot;);</span>
+<span class="fc" id="L106">    }</span>
 
     public String newlineString() {
-<span class="nc" id="L109">        return newlineString;</span>
+<span class="fc" id="L109">        return newlineString;</span>
     }
 
     public void newlineString(String string) {
-<span class="nc" id="L113">        this.newlineString = string.replace(&quot;\\n&quot;, &quot;\n&quot;).replace(&quot;\\r&quot;, &quot;\r&quot;);</span>
-<span class="nc" id="L114">    }</span>
+<span class="fc" id="L113">        this.newlineString = string.replace(&quot;\\n&quot;, &quot;\n&quot;).replace(&quot;\\r&quot;, &quot;\r&quot;);</span>
+<span class="fc" id="L114">    }</span>
 
     public File file() {
-<span class="nc" id="L117">        return file;</span>
+<span class="fc" id="L117">        return file;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W print(char value) {
-<span class="nc" id="L122">        print(&quot;&quot; + value);</span>
-<span class="nc" id="L123">        return (W) this;</span>
+<span class="fc" id="L122">        print(&quot;&quot; + value);</span>
+<span class="fc" id="L123">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
@@ -131,13 +131,13 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W print(String string) {
-<span class="nc" id="L134">        print(string, new Object[0]);</span>
-<span class="nc" id="L135">        return (W) this;</span>
+<span class="fc" id="L134">        print(string, new Object[0]);</span>
+<span class="fc" id="L135">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W print(String string, Object... args) {
-<span class="nc" id="L140">        string = string.replace(&quot;\n&quot;, newlineString).replace(&quot;\t&quot;, tabString);</span>
+<span class="fc" id="L140">        string = string.replace(&quot;\n&quot;, newlineString).replace(&quot;\t&quot;, tabString);</span>
 
         // [#10196] The following auto-indentation logic works well in most cases
         // There are known caveats:
@@ -146,90 +146,90 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
         //   for JPA annotations, then it may fail, e.g. by producing an indentation of -1
         // - When a single line is printed in steps, and a step contains such characters,
         //   the character is interpreted erroneously as being semantic.
-<span class="nc bnc" id="L149" title="All 6 branches missed.">        if (string.startsWith(&quot;}&quot;) || string.startsWith(&quot;]&quot;) || string.startsWith(&quot;)&quot;))</span>
-<span class="nc" id="L150">            indentTabsAllLines--;</span>
+<span class="pc bpc" id="L149" title="1 of 6 branches missed.">        if (string.startsWith(&quot;}&quot;) || string.startsWith(&quot;]&quot;) || string.startsWith(&quot;)&quot;))</span>
+<span class="fc" id="L150">            indentTabsAllLines--;</span>
 
-<span class="nc bnc" id="L152" title="All 4 branches missed.">        if (indentTabsAllLines &lt; 0 &amp;&amp; !Boolean.getBoolean(&quot;mute-indentation-error&quot;))</span>
+<span class="pc bpc" id="L152" title="3 of 4 branches missed.">        if (indentTabsAllLines &lt; 0 &amp;&amp; !Boolean.getBoolean(&quot;mute-indentation-error&quot;))</span>
 <span class="nc" id="L153">            new IllegalStateException(&quot;A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196&quot;).printStackTrace(System.err);</span>
 
-<span class="nc" id="L155">        int indentTabsThisLine0 = indentTabsThisLine;</span>
-<span class="nc bnc" id="L156" title="All 4 branches missed.">        if (newline &amp;&amp; indentTabsThisLine + indentTabsAllLines &gt; 0) {</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">            for (int i = 0; i &lt; indentTabsThisLine + indentTabsAllLines; i++)</span>
-<span class="nc" id="L158">                sb.append(tabString);</span>
+<span class="fc" id="L155">        int indentTabsThisLine0 = indentTabsThisLine;</span>
+<span class="fc bfc" id="L156" title="All 4 branches covered.">        if (newline &amp;&amp; indentTabsThisLine + indentTabsAllLines &gt; 0) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            for (int i = 0; i &lt; indentTabsThisLine + indentTabsAllLines; i++)</span>
+<span class="fc" id="L158">                sb.append(tabString);</span>
 
-<span class="nc" id="L160">            newline = false;</span>
-<span class="nc" id="L161">            indentTabsThisLine = 0;</span>
+<span class="fc" id="L160">            newline = false;</span>
+<span class="fc" id="L161">            indentTabsThisLine = 0;</span>
         }
 
-<span class="nc bnc" id="L164" title="All 6 branches missed.">        if (string.endsWith(&quot;{&quot;) || string.endsWith(&quot;[&quot;) || string.endsWith(&quot;(&quot;))</span>
-<span class="nc" id="L165">            indentTabsAllLines++;</span>
-<span class="nc bnc" id="L166" title="All 8 branches missed.">        else if (string.startsWith(&quot;if&quot;) || string.startsWith(&quot;else&quot;) || string.startsWith(&quot;for&quot;) || string.startsWith(&quot;while&quot;))</span>
-<span class="nc" id="L167">            indentTabsThisLine = indentTabsThisLine0 + 1;</span>
+<span class="pc bpc" id="L164" title="1 of 6 branches missed.">        if (string.endsWith(&quot;{&quot;) || string.endsWith(&quot;[&quot;) || string.endsWith(&quot;(&quot;))</span>
+<span class="fc" id="L165">            indentTabsAllLines++;</span>
+<span class="pc bpc" id="L166" title="3 of 8 branches missed.">        else if (string.startsWith(&quot;if&quot;) || string.startsWith(&quot;else&quot;) || string.startsWith(&quot;for&quot;) || string.startsWith(&quot;while&quot;))</span>
+<span class="fc" id="L167">            indentTabsThisLine = indentTabsThisLine0 + 1;</span>
 
-<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
-<span class="nc" id="L170">            List&lt;Object&gt; originals = Arrays.asList(args);</span>
-<span class="nc" id="L171">            List&lt;Object&gt; translated = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (args.length &gt; 0) {</span>
+<span class="fc" id="L170">            List&lt;Object&gt; originals = Arrays.asList(args);</span>
+<span class="fc" id="L171">            List&lt;Object&gt; translated = new ArrayList&lt;&gt;();</span>
 
             for (;;) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">                for (Object arg : originals) {</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">                    if (arg instanceof Class) {</span>
-<span class="nc" id="L176">                        translated.add(ref((Class&lt;?&gt;) arg));</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                for (Object arg : originals) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                    if (arg instanceof Class) {</span>
+<span class="fc" id="L176">                        translated.add(ref((Class&lt;?&gt;) arg));</span>
                     }
-<span class="nc bnc" id="L178" title="All 4 branches missed.">                    else if (arg instanceof Object[] || arg instanceof Collection) {</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">                        if (arg instanceof Collection) {</span>
-<span class="nc" id="L180">                            arg = ((Collection&lt;?&gt;) arg).toArray();</span>
+<span class="pc bpc" id="L178" title="1 of 4 branches missed.">                    else if (arg instanceof Object[] || arg instanceof Collection) {</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                        if (arg instanceof Collection) {</span>
+<span class="fc" id="L180">                            arg = ((Collection&lt;?&gt;) arg).toArray();</span>
                         }
 
-<span class="nc" id="L183">                        int start = string.indexOf(&quot;[[&quot;);</span>
-<span class="nc" id="L184">                        int end = string.indexOf(&quot;]]&quot;);</span>
+<span class="fc" id="L183">                        int start = string.indexOf(&quot;[[&quot;);</span>
+<span class="fc" id="L184">                        int end = string.indexOf(&quot;]]&quot;);</span>
 
-<span class="nc" id="L186">                        String expression = string.substring(start, end + 2);</span>
-<span class="nc" id="L187">                        StringBuilder replacement = new StringBuilder();</span>
+<span class="fc" id="L186">                        String expression = string.substring(start, end + 2);</span>
+<span class="fc" id="L187">                        StringBuilder replacement = new StringBuilder();</span>
 
-<span class="nc" id="L189">                        Matcher m = PATTERN_LIST.matcher(expression);</span>
-<span class="nc" id="L190">                        m.find();</span>
+<span class="fc" id="L189">                        Matcher m = PATTERN_LIST.matcher(expression);</span>
+<span class="fc" id="L190">                        m.find();</span>
 
-<span class="nc" id="L192">                        String gBefore = StringUtils.defaultString(m.group(1));</span>
-<span class="nc" id="L193">                        String gSeparator = StringUtils.defaultString(m.group(2), &quot;, &quot;);</span>
-<span class="nc" id="L194">                        String gAfter = StringUtils.defaultString(m.group(3));</span>
-<span class="nc" id="L195">                        String gContent = m.group(4);</span>
+<span class="fc" id="L192">                        String gBefore = StringUtils.defaultString(m.group(1));</span>
+<span class="fc" id="L193">                        String gSeparator = StringUtils.defaultString(m.group(2), &quot;, &quot;);</span>
+<span class="fc" id="L194">                        String gAfter = StringUtils.defaultString(m.group(3));</span>
+<span class="fc" id="L195">                        String gContent = m.group(4);</span>
 
-<span class="nc" id="L197">                        String separator = gBefore;</span>
+<span class="fc" id="L197">                        String separator = gBefore;</span>
 
-<span class="nc bnc" id="L199" title="All 2 branches missed.">                        for (Object o : ((Object[]) arg)) {</span>
-<span class="nc" id="L200">                            translated.add(o);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">                        for (Object o : ((Object[]) arg)) {</span>
+<span class="fc" id="L200">                            translated.add(o);</span>
 
-<span class="nc" id="L202">                            replacement.append(separator);</span>
-<span class="nc" id="L203">                            replacement.append(gContent);</span>
-<span class="nc" id="L204">                            separator = gSeparator;</span>
+<span class="fc" id="L202">                            replacement.append(separator);</span>
+<span class="fc" id="L203">                            replacement.append(gContent);</span>
+<span class="fc" id="L204">                            separator = gSeparator;</span>
                         }
 
-<span class="nc bnc" id="L207" title="All 2 branches missed.">                        if (((Object[]) arg).length &gt; 0) {</span>
-<span class="nc" id="L208">                            replacement.append(gAfter);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                        if (((Object[]) arg).length &gt; 0) {</span>
+<span class="fc" id="L208">                            replacement.append(gAfter);</span>
                         }
 
-<span class="nc" id="L211">                        string = string.substring(0, start) + replacement + string.substring(end + 2);</span>
-<span class="nc" id="L212">                    }</span>
+<span class="fc" id="L211">                        string = string.substring(0, start) + replacement + string.substring(end + 2);</span>
+<span class="fc" id="L212">                    }</span>
                     else {
-<span class="nc" id="L214">                        translated.add(arg);</span>
+<span class="fc" id="L214">                        translated.add(arg);</span>
                     }
-<span class="nc" id="L216">                }</span>
+<span class="fc" id="L216">                }</span>
 
-<span class="nc bnc" id="L218" title="All 2 branches missed.">                if (!string.contains(&quot;[[&quot;)) {</span>
-<span class="nc" id="L219">                    break;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                if (!string.contains(&quot;[[&quot;)) {</span>
+<span class="fc" id="L219">                    break;</span>
                 }
 
 <span class="nc" id="L222">                originals = translated;</span>
 <span class="nc" id="L223">                translated = new ArrayList&lt;&gt;();</span>
             }
 
-<span class="nc" id="L226">            sb.append(String.format(string, translated.toArray()));</span>
-<span class="nc" id="L227">        }</span>
+<span class="fc" id="L226">            sb.append(String.format(string, translated.toArray()));</span>
+<span class="fc" id="L227">        }</span>
         else {
-<span class="nc" id="L229">            sb.append(string);</span>
+<span class="fc" id="L229">            sb.append(string);</span>
         }
 
-<span class="nc" id="L232">        return (W) this;</span>
+<span class="fc" id="L232">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
@@ -244,12 +244,12 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
     public W println() {
 
         // Don't add empty lines at the beginning of files
-<span class="nc bnc" id="L247" title="All 2 branches missed.">        if (sb.length() &gt; 0) {</span>
-<span class="nc" id="L248">            sb.append(newlineString);</span>
-<span class="nc" id="L249">            newline = true;</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">        if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L248">            sb.append(newlineString);</span>
+<span class="fc" id="L249">            newline = true;</span>
         }
 
-<span class="nc" id="L252">        return (W) this;</span>
+<span class="fc" id="L252">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
@@ -262,18 +262,18 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W println(String string) {
-<span class="nc" id="L265">        print(string);</span>
-<span class="nc" id="L266">        println();</span>
+<span class="fc" id="L265">        print(string);</span>
+<span class="fc" id="L266">        println();</span>
 
-<span class="nc" id="L268">        return (W) this;</span>
+<span class="fc" id="L268">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W println(String string, Object... args) {
-<span class="nc" id="L273">        print(string, args);</span>
-<span class="nc" id="L274">        println();</span>
+<span class="fc" id="L273">        print(string, args);</span>
+<span class="fc" id="L274">        println();</span>
 
-<span class="nc" id="L276">        return (W) this;</span>
+<span class="fc" id="L276">        return (W) this;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
@@ -290,12 +290,12 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
 
     @SuppressWarnings(&quot;unchecked&quot;)
     public W indent(int tabs) {
-<span class="nc" id="L293">        this.indentTabsAllLines = tabs;</span>
-<span class="nc" id="L294">        return (W) this;</span>
+<span class="fc" id="L293">        this.indentTabsAllLines = tabs;</span>
+<span class="fc" id="L294">        return (W) this;</span>
     }
 
     public int indent() {
-<span class="nc" id="L298">        return indentTabsAllLines;</span>
+<span class="fc" id="L298">        return indentTabsAllLines;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
@@ -320,58 +320,58 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
          */
         public final boolean modified;
 
-<span class="nc" id="L323">        CloseResult(boolean affected, boolean modified) {</span>
-<span class="nc" id="L324">            this.affected = affected;</span>
-<span class="nc" id="L325">            this.modified = modified;</span>
-<span class="nc" id="L326">        }</span>
+<span class="fc" id="L323">        CloseResult(boolean affected, boolean modified) {</span>
+<span class="fc" id="L324">            this.affected = affected;</span>
+<span class="fc" id="L325">            this.modified = modified;</span>
+<span class="fc" id="L326">        }</span>
     }
 
     public CloseResult close() {
-<span class="nc" id="L330">        String newContent = beforeClose(sb.toString());</span>
+<span class="fc" id="L330">        String newContent = beforeClose(sb.toString());</span>
 
         // [#4626] Don't write empty files
-<span class="nc bnc" id="L333" title="All 2 branches missed.">        if (StringUtils.isBlank(newContent))</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">        if (StringUtils.isBlank(newContent))</span>
 <span class="nc" id="L334">            return new CloseResult(false, false);</span>
 
         try {
 
             // [#3756] Regenerate files only if there is a difference
-<span class="nc" id="L339">            String oldContent = null;</span>
-<span class="nc bnc" id="L340" title="All 4 branches missed.">            if (file.exists() &amp;&amp; file.length() == newContent.getBytes(encoding()).length) {</span>
-<span class="nc" id="L341">                RandomAccessFile old = null;</span>
+<span class="fc" id="L339">            String oldContent = null;</span>
+<span class="pc bpc" id="L340" title="1 of 4 branches missed.">            if (file.exists() &amp;&amp; file.length() == newContent.getBytes(encoding()).length) {</span>
+<span class="fc" id="L341">                RandomAccessFile old = null;</span>
 
                 try {
-<span class="nc" id="L344">                    old = new RandomAccessFile(file, &quot;r&quot;);</span>
-<span class="nc" id="L345">                    byte[] oldBytes = new byte[(int) old.length()];</span>
-<span class="nc" id="L346">                    old.readFully(oldBytes);</span>
-<span class="nc" id="L347">                    oldContent = new String(oldBytes, encoding());</span>
+<span class="fc" id="L344">                    old = new RandomAccessFile(file, &quot;r&quot;);</span>
+<span class="fc" id="L345">                    byte[] oldBytes = new byte[(int) old.length()];</span>
+<span class="fc" id="L346">                    old.readFully(oldBytes);</span>
+<span class="fc" id="L347">                    oldContent = new String(oldBytes, encoding());</span>
                 }
                 finally {
-<span class="nc bnc" id="L350" title="All 2 branches missed.">                    if (old != null)</span>
-<span class="nc" id="L351">                        old.close();</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">                    if (old != null)</span>
+<span class="fc" id="L351">                        old.close();</span>
                 }
             }
 
-<span class="nc bnc" id="L355" title="All 4 branches missed.">            if (oldContent == null || !oldContent.equals(newContent)) {</span>
+<span class="pc bpc" id="L355" title="1 of 4 branches missed.">            if (oldContent == null || !oldContent.equals(newContent)) {</span>
 
                 // [#5892] [#8363] On Windows FAT or NTFS and other case-insensitive
                 //                 file systems, we must explicitly replace files whose
                 //                 case-sensitive file name has changed
-<span class="nc bnc" id="L360" title="All 2 branches missed.">                if (oldContent != null)</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">                if (oldContent != null)</span>
 <span class="nc" id="L361">                    file.delete();</span>
 
-<span class="nc" id="L363">                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), encoding()));</span>
+<span class="fc" id="L363">                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), encoding()));</span>
 
-<span class="nc" id="L365">                writer.append(newContent);</span>
-<span class="nc" id="L366">                writer.flush();</span>
-<span class="nc" id="L367">                writer.close();</span>
+<span class="fc" id="L365">                writer.append(newContent);</span>
+<span class="fc" id="L366">                writer.flush();</span>
+<span class="fc" id="L367">                writer.close();</span>
 
-<span class="nc" id="L369">                return new CloseResult(true, true);</span>
+<span class="fc" id="L369">                return new CloseResult(true, true);</span>
             }
 
             // [#10648] Check all modified files by this run
             else
-<span class="nc" id="L374">                return new CloseResult(true, false);</span>
+<span class="fc" id="L374">                return new CloseResult(true, false);</span>
         }
 <span class="nc" id="L376">        catch (IOException e) {</span>
 <span class="nc" id="L377">            throw new GeneratorException(&quot;Error writing &quot; + file.getAbsolutePath(), e);</span>
@@ -379,28 +379,28 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
     }
 
     protected String encoding() {
-<span class="nc bnc" id="L382" title="All 2 branches missed.">        return encoding != null ? encoding : &quot;UTF-8&quot;;</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">        return encoding != null ? encoding : &quot;UTF-8&quot;;</span>
     }
 
     protected String beforeClose(String string) {
 //        muted-indentation-error By changing condition in line 387, originally--&gt;  if (indentTabsAllLines &gt; 0 &amp;&amp; !Boolean.getBoolean(&quot;mute-indentation-error&quot;))
-<span class="nc bnc" id="L387" title="All 4 branches missed.">        if (indentTabsAllLines &gt; 0 &amp;&amp; Boolean.getBoolean(&quot;mute-indentation-error&quot;))</span>
+<span class="pc bpc" id="L387" title="1 of 4 branches missed.">        if (indentTabsAllLines &gt; 0 &amp;&amp; Boolean.getBoolean(&quot;mute-indentation-error&quot;))</span>
 <span class="nc" id="L388">            new IllegalStateException(&quot;A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196&quot;).printStackTrace(System.err);</span>
-<span class="nc" id="L389">        return string;</span>
+<span class="fc" id="L389">        return string;</span>
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
     public String ref(Class&lt;?&gt; clazz) {
-<span class="nc bnc" id="L396" title="All 2 branches missed.">        return clazz == null ? null : ref(clazz.getName());</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">        return clazz == null ? null : ref(clazz.getName());</span>
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
     public String ref(String clazzOrId) {
-<span class="nc bnc" id="L403" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), 1).get(0);</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), 1).get(0);</span>
     }
 
     /**
@@ -416,14 +416,14 @@ public abstract class GeneratorWriter&lt;W extends GeneratorWriter&lt;W&gt;&gt; 
      * Subtypes may override this to generate import statements.
      */
     public List&lt;String&gt; ref(List&lt;String&gt; clazzOrId) {
-<span class="nc bnc" id="L419" title="All 2 branches missed.">        return clazzOrId == null ? Collections.&lt;String&gt;emptyList() : ref(clazzOrId, 1);</span>
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">        return clazzOrId == null ? Collections.&lt;String&gt;emptyList() : ref(clazzOrId, 1);</span>
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
     public String ref(String clazzOrId, int keepSegments) {
-<span class="nc bnc" id="L426" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
     }
 
     /**

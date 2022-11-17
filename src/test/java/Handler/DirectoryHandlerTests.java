@@ -2,37 +2,61 @@ package Handler;
 
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
 import org.gemini.codegen.Handler.DirectoryHandler;
-import org.gemini.codegen.JOOQ.PojosGen.EntityClassGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
+
 public class DirectoryHandlerTests {
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryHandlerTests.class);
+
+//    @Mock
+    DirectoryHandler directoryHandler = Mockito.mock(DirectoryHandler.class);
+
+    @BeforeAll
+    public void setUp(){
+        outerScriptDirectoryPath=("src/test/resources/CustomClassLoader/testScript.sql").replaceAll("[/\\\\]+","/");
+//        directoryHandler = mock(DirectoryHandler.class);
+//        MockitoAnnotations.initMocks(this);
+    }
+    String outerScriptDirectoryPath;
 
     @Test
     public void testCreateDirectory(){
         String directoryPath = "src/test/resources/Handler/demoDirectory";
         DirectoryHandler.createDirectory(directoryPath);
         File file = new File(directoryPath);
-        Assertions.assertTrue(file.isDirectory(),"Directory Not Created");
+        Assertions.assertTrue(file.exists(),"Directory Not Created");
     }
 
-//    @Test
-//    public void testGetScriptName(){
+    @Test
+    public void testGetScriptName(){
+
 //        try {
 //            EntityClassGenerator.EntityGenerator("src/test/resources/CustomClassLoader/testScript.sql","entity","src/test/resources/CustomClassLoader/");
 //        } catch (Exception e) {
 //            throw new RuntimeException("Exception in testLoadClass() :{}",e);
 //        }
-//        String expected = "DummyScript";
+//        String expected = "testScript";
+        String expected = "testScript";
 //        String actual = DirectoryHandler.getScriptName();
-//        Assertions.assertEquals(expected,actual,"Right Script Not Present ");
-//    }
+//        System.out.println(actual.getClass().getSimpleName());
+//        Assertions.assertTrue(!actual.isEmpty(), "Right Script Not Present ");
+//        Assertions.assertTrue(DirectoryHandler.getScriptName() instanceof String);
+//        doReturn("src/test/resources/CustomClassLoader/testScript.sql").when(outerScriptDirectoryPath);
+      when(directoryHandler.getScriptName()).thenReturn("testScript");
+//      String actual  = DirectoryHandler.getScriptName();
+        Assertions.assertEquals(expected,DirectoryHandler.getScriptName());
+    }
 
 //    @Test
 //    public void negTestGetScriptName(){
@@ -46,6 +70,9 @@ public class DirectoryHandlerTests {
 //        String actual = DirectoryHandler.getScriptName();
 //        Assertions.assertNotEquals(expected,actual);
 //    }
+
+//    @Test
+//    public void testGetSchemaName(){}
 
 //    @Test
 //    public void testGenerateDirectoryPath(){
@@ -69,26 +96,40 @@ public class DirectoryHandlerTests {
         Assertions.assertTrue(file.isDirectory());
     }
 
-    @Test
-    public void testNegRenameDirectory(){
-        DirectoryHandler.renameDirectory(new File("src/test/resources/Handler/Abc"), new File("src/test/resources/xyz"));
-        File file = new File("src/test/resources/Handler/xyz");
-        Assertions.assertFalse(file.isDirectory());
-    }
+//    @Test
+//    public void testNegRenameDirectory(){
+//        DirectoryHandler.renameDirectory(new File("src/test/resources/Handler/demoDirectory"), new File("src/test/resources/renamedDemoDirectory"));
+//        File file = new File("src/test/resources/Handler/renamedDemoDirectory");
+//        Assertions.assertFalse(file.isDirectory());
+//    }
 
     @Test
     public void testDeleteDirectory(){
-        DirectoryHandler.deleteDirectory("src/test/resources/Handler/demo");
-        File file = new File("src/test/resources/Handler/demo");
+        DirectoryHandler.deleteDirectory("src/test/resources/Handler/xyz");
+        File file = new File("src/test/resources/Handler/xyz");
         Assertions.assertFalse(file.exists());
     }
+
     @Test
     public void testDeleteFiles(){
-        File file  = new File("src/test/resources/Handler/DemoClassFiles/");
-        CustomClassLoader.compileJavaClasses(file);
-        List<String> list = Arrays.asList("Author");
+        CustomClassLoader.compileJavaClasses(new File("src/test/resources/Handler/DemoClassFiles/Dummy.java"));
+        List<String> list = Arrays.asList("Dummy");
         DirectoryHandler.deleteFiles(list,"src/test/resources/Handler/DemoClassFiles/");
-        File classFile = new File("src/test/resources/Handler/DemoClassFiles/Author.class");
+        File classFile = new File("src/test/resources/Handler/DemoClassFiles/Dummy.class");
         Assertions.assertFalse(classFile.exists());
     }
+
+    @AfterAll
+    public static void cleanUp(){
+        cleanUpFiles("src/test/resources/Handler/demoDirectory");
+    }
+    @AfterAll
+    public static void cleanUpFiles( String filePath){
+        String path = filePath;
+        File file = new File(path);
+        if(file.isDirectory() || file.isFile()){
+            file.delete();
+        }
+    }
+
 }

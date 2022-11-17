@@ -36,7 +36,7 @@ public class DirectoryHandler {
     public static void createDirectory(String directoryPath)
     {
         File file = new File(directoryPath);
-        if(file.isDirectory())
+        if(file.exists())
             LOG.info("Directory already exists");
         else {
             file.mkdirs();

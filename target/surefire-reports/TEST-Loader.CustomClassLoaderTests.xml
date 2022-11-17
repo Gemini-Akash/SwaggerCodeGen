@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="Loader.CustomClassLoaderTests" time="2.19" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="Loader.CustomClassLoaderTests" time="6.014" tests="2" errors="1" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="D:\Internal\SwaggerCodeGen\target\test-classes;D:\Internal\SwaggerCodeGen\target\classes;C:\Users\ad.shrivastava\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\ad.shrivastava\.m2\repository\com\github\jknack\handlebars\4.1.2\handlebars-4.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\json\json\20220320\json-20220320.jar;C:\Users\ad.shrivastava\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq\3.14.15\jooq-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\reactivestreams\reactive-streams\1.0.2\reactive-streams-1.0.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\ad.shrivastava\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta\3.14.15\jooq-meta-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-codegen\3.14.15\jooq-codegen-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta-extensions\3.14.15\jooq-meta-extensions-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\ad.shrivastava\.m2\repository\junit\junit\4.13.1\junit-4.13.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.1\junit-jupiter-api-5.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\platform\junit-platform-commons\1.9.1\junit-platform-commons-1.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\3.8.1\maven-compiler-plugin-3.8.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-bean\1.4.2\sisu-inject-bean-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-guice\2.1.7\sisu-guice-2.1.7-noaop.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-artifact\3.0\maven-artifact-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-utils\2.0.4\plexus-utils-2.0.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-core\3.0\maven-core-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings\3.0\maven-settings-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings-builder\3.0\maven-settings-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-repository-metadata\3.0\maven-repository-metadata-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model-builder\3.0\maven-model-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-aether-provider\3.0\maven-aether-provider-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-impl\1.7\aether-impl-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-spi\1.7\aether-spi-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-api\1.7\aether-api-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-util\1.7\aether-util-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.14\plexus-interpolation-1.14.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-sec-dispatcher\1.3\plexus-sec-dispatcher-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.2.1\maven-shared-utils-3.2.1.jar;C:\Users\ad.shrivastava\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-incremental\1.1\maven-shared-incremental-1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-java\0.9.10\plexus-java-0.9.10.jar;C:\Users\ad.shrivastava\.m2\repository\org\ow2\asm\asm\6.2\asm-6.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\thoughtworks\qdox\qdox\2.0-M8\qdox-2.0-M8.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-api\2.8.4\plexus-compiler-api-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\2.8.4\plexus-compiler-manager-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\2.8.4\plexus-compiler-javac-2.8.4.jar;"/>
+    <property name="java.class.path" value="D:\Internal\SwaggerCodeGen\target\test-classes;D:\Internal\SwaggerCodeGen\target\classes;C:\Users\ad.shrivastava\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\ad.shrivastava\.m2\repository\com\github\jknack\handlebars\4.1.2\handlebars-4.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\json\json\20220320\json-20220320.jar;C:\Users\ad.shrivastava\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq\3.14.15\jooq-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\reactivestreams\reactive-streams\1.0.2\reactive-streams-1.0.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\ad.shrivastava\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta\3.14.15\jooq-meta-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-codegen\3.14.15\jooq-codegen-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta-extensions\3.14.15\jooq-meta-extensions-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\ad.shrivastava\.m2\repository\junit\junit\4.13.1\junit-4.13.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.1\junit-jupiter-api-5.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\platform\junit-platform-commons\1.9.1\junit-platform-commons-1.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\mockito\mockito-core\4.9.0\mockito-core-4.9.0.jar;C:\Users\ad.shrivastava\.m2\repository\net\bytebuddy\byte-buddy\1.12.16\byte-buddy-1.12.16.jar;C:\Users\ad.shrivastava\.m2\repository\net\bytebuddy\byte-buddy-agent\1.12.16\byte-buddy-agent-1.12.16.jar;C:\Users\ad.shrivastava\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\3.8.1\maven-compiler-plugin-3.8.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-bean\1.4.2\sisu-inject-bean-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-guice\2.1.7\sisu-guice-2.1.7-noaop.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-artifact\3.0\maven-artifact-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-utils\2.0.4\plexus-utils-2.0.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-core\3.0\maven-core-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings\3.0\maven-settings-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings-builder\3.0\maven-settings-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-repository-metadata\3.0\maven-repository-metadata-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model-builder\3.0\maven-model-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-aether-provider\3.0\maven-aether-provider-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-impl\1.7\aether-impl-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-spi\1.7\aether-spi-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-api\1.7\aether-api-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-util\1.7\aether-util-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.14\plexus-interpolation-1.14.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-sec-dispatcher\1.3\plexus-sec-dispatcher-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.2.1\maven-shared-utils-3.2.1.jar;C:\Users\ad.shrivastava\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-incremental\1.1\maven-shared-incremental-1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-java\0.9.10\plexus-java-0.9.10.jar;C:\Users\ad.shrivastava\.m2\repository\org\ow2\asm\asm\6.2\asm-6.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\thoughtworks\qdox\qdox\2.0-M8\qdox-2.0-M8.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-api\2.8.4\plexus-compiler-api-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\2.8.4\plexus-compiler-manager-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\2.8.4\plexus-compiler-javac-2.8.4.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -17,9 +17,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.15\bin"/>
-    <property name="sun.java.command" value="C:\Users\ADFA3E~1.SHR\AppData\Local\Temp\surefire17489779642942795280\surefirebooter12646259520923039478.jar C:\Users\ad.shrivastava\AppData\Local\Temp\surefire17489779642942795280 2022-11-15T19-10-46_159-jvmRun1 surefire13371883220394920328tmp surefire_118177986732145235520tmp"/>
+    <property name="sun.java.command" value="C:\Users\ADFA3E~1.SHR\AppData\Local\Temp\surefire16234174192522083184\surefirebooter1174291995060570718.jar C:\Users\ad.shrivastava\AppData\Local\Temp\surefire16234174192522083184 2022-11-16T18-54-17_778-jvmRun1 surefire7373817923838603925tmp surefire_010737105089763019805tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="D:\Internal\SwaggerCodeGen\target\test-classes;D:\Internal\SwaggerCodeGen\target\classes;C:\Users\ad.shrivastava\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\ad.shrivastava\.m2\repository\com\github\jknack\handlebars\4.1.2\handlebars-4.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\json\json\20220320\json-20220320.jar;C:\Users\ad.shrivastava\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq\3.14.15\jooq-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\reactivestreams\reactive-streams\1.0.2\reactive-streams-1.0.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\ad.shrivastava\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta\3.14.15\jooq-meta-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-codegen\3.14.15\jooq-codegen-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta-extensions\3.14.15\jooq-meta-extensions-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\ad.shrivastava\.m2\repository\junit\junit\4.13.1\junit-4.13.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.1\junit-jupiter-api-5.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\platform\junit-platform-commons\1.9.1\junit-platform-commons-1.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\3.8.1\maven-compiler-plugin-3.8.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-bean\1.4.2\sisu-inject-bean-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-guice\2.1.7\sisu-guice-2.1.7-noaop.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-artifact\3.0\maven-artifact-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-utils\2.0.4\plexus-utils-2.0.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-core\3.0\maven-core-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings\3.0\maven-settings-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings-builder\3.0\maven-settings-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-repository-metadata\3.0\maven-repository-metadata-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model-builder\3.0\maven-model-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-aether-provider\3.0\maven-aether-provider-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-impl\1.7\aether-impl-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-spi\1.7\aether-spi-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-api\1.7\aether-api-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-util\1.7\aether-util-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.14\plexus-interpolation-1.14.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-sec-dispatcher\1.3\plexus-sec-dispatcher-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.2.1\maven-shared-utils-3.2.1.jar;C:\Users\ad.shrivastava\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-incremental\1.1\maven-shared-incremental-1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-java\0.9.10\plexus-java-0.9.10.jar;C:\Users\ad.shrivastava\.m2\repository\org\ow2\asm\asm\6.2\asm-6.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\thoughtworks\qdox\qdox\2.0-M8\qdox-2.0-M8.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-api\2.8.4\plexus-compiler-api-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\2.8.4\plexus-compiler-manager-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\2.8.4\plexus-compiler-javac-2.8.4.jar;"/>
+    <property name="surefire.test.class.path" value="D:\Internal\SwaggerCodeGen\target\test-classes;D:\Internal\SwaggerCodeGen\target\classes;C:\Users\ad.shrivastava\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\ad.shrivastava\.m2\repository\com\github\jknack\handlebars\4.1.2\handlebars-4.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\json\json\20220320\json-20220320.jar;C:\Users\ad.shrivastava\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq\3.14.15\jooq-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\reactivestreams\reactive-streams\1.0.2\reactive-streams-1.0.2.jar;C:\Users\ad.shrivastava\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\ad.shrivastava\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta\3.14.15\jooq-meta-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-codegen\3.14.15\jooq-codegen-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\org\jooq\jooq-meta-extensions\3.14.15\jooq-meta-extensions-3.14.15.jar;C:\Users\ad.shrivastava\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\ad.shrivastava\.m2\repository\junit\junit\4.13.1\junit-4.13.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.1\junit-jupiter-api-5.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\junit\platform\junit-platform-commons\1.9.1\junit-platform-commons-1.9.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\mockito\mockito-core\4.9.0\mockito-core-4.9.0.jar;C:\Users\ad.shrivastava\.m2\repository\net\bytebuddy\byte-buddy\1.12.16\byte-buddy-1.12.16.jar;C:\Users\ad.shrivastava\.m2\repository\net\bytebuddy\byte-buddy-agent\1.12.16\byte-buddy-agent-1.12.16.jar;C:\Users\ad.shrivastava\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\ad.shrivastava\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\3.8.1\maven-compiler-plugin-3.8.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-inject-bean\1.4.2\sisu-inject-bean-1.4.2.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\sisu\sisu-guice\2.1.7\sisu-guice-2.1.7-noaop.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-artifact\3.0\maven-artifact-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-utils\2.0.4\plexus-utils-2.0.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-core\3.0\maven-core-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings\3.0\maven-settings-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-settings-builder\3.0\maven-settings-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-repository-metadata\3.0\maven-repository-metadata-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-model-builder\3.0\maven-model-builder-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\maven-aether-provider\3.0\maven-aether-provider-3.0.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-impl\1.7\aether-impl-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-spi\1.7\aether-spi-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-api\1.7\aether-api-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\aether\aether-util\1.7\aether-util-1.7.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.14\plexus-interpolation-1.14.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-sec-dispatcher\1.3\plexus-sec-dispatcher-1.3.jar;C:\Users\ad.shrivastava\.m2\repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.2.1\maven-shared-utils-3.2.1.jar;C:\Users\ad.shrivastava\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\ad.shrivastava\.m2\repository\org\apache\maven\shared\maven-shared-incremental\1.1\maven-shared-incremental-1.1.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-java\0.9.10\plexus-java-0.9.10.jar;C:\Users\ad.shrivastava\.m2\repository\org\ow2\asm\asm\6.2\asm-6.2.jar;C:\Users\ad.shrivastava\.m2\repository\com\thoughtworks\qdox\qdox\2.0-M8\qdox-2.0-M8.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-api\2.8.4\plexus-compiler-api-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\2.8.4\plexus-compiler-manager-2.8.4.jar;C:\Users\ad.shrivastava\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\2.8.4\plexus-compiler-javac-2.8.4.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\ad.shrivastava"/>
     <property name="user.language" value="en"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\ADFA3E~1.SHR\AppData\Local\Temp\surefire17489779642942795280\surefirebooter12646259520923039478.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ADFA3E~1.SHR\AppData\Local\Temp\surefire16234174192522083184\surefirebooter1174291995060570718.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.15+8-LTS-149"/>
@@ -60,5 +60,206 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testForJavaCompileClass" classname="Loader.CustomClassLoaderTests" time="2"/>
+  <testcase name="testGetFullyQualifiedClasses" classname="Loader.CustomClassLoaderTests" time="4.291">
+    <error type="java.lang.ExceptionInInitializerError">java.lang.ExceptionInInitializerError
+	at Loader.CustomClassLoaderTests.testGetFullyQualifiedClasses(CustomClassLoaderTests.java:70)
+Caused by: java.lang.NullPointerException
+	at Loader.CustomClassLoaderTests.testGetFullyQualifiedClasses(CustomClassLoaderTests.java:70)
+</error>
+    <system-err><![CDATA[2494 [main] INFO org.jooq.codegen.GenerationTool - No <inputCatalog/> was provided. Generating ALL available catalogs instead.
+2494 [main] INFO org.jooq.codegen.GenerationTool - No <inputSchema/> was provided. Generating ALL available schemata instead.
+4376 [main] INFO org.jooq.FilePattern - Reading from: src\test\resources\CustomClassLoader\testScript.sql [*]
+4587 [main] INFO org.jooq.Constants - 
+                                      
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@        @@  @  @  @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.14.15
+                                      
+4608 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+4654 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create schema if not exists "DEMO"
+4655 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+4690 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+4691 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.AUTHOR (
+  ID number(7) not null generated by default as identity,
+  FIRST_NAME varchar(50) null,
+  LAST_NAME varchar(50) not null,
+  DATE_OF_BIRTH date null,
+  YEAR_OF_BIRTH number(7) null,
+  DISTINGUISHED number(1) null,
+  primary key (ID)
+)
+4695 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+4697 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.BOOK (
+  ID number(7) not null generated by default as identity,
+  AUTHOR_ID number(7) not null,
+  TITLE varchar(400) not null,
+  PUBLISHED_IN number(7) not null,
+  LANGUAGE_ID number(7) not null,
+  primary key (ID),
+  constraint FK_BOOK_AUTHOR
+    foreign key (AUTHOR_ID)
+    references AUTHOR (ID),
+  constraint FK_BOOK_LANGUAGE
+    foreign key (LANGUAGE_ID)
+    references LANGUAGE (ID)
+)
+4742 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+4789 [main] INFO org.jooq.codegen.AbstractGenerator - License parameters       
+4789 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+4789 [main] INFO org.jooq.codegen.AbstractGenerator -   Thank you for using jOOQ and jOOQ's code generator
+4789 [main] INFO org.jooq.codegen.AbstractGenerator -                          
+4789 [main] INFO org.jooq.codegen.AbstractGenerator - Database parameters      
+4789 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+4789 [main] INFO org.jooq.codegen.AbstractGenerator -   dialect                : H2
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   URL                    : 
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   target dir             : D:\Internal\SwaggerCodeGen\src\test\resources\CustomClassLoader
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   target package         : entity
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   includes               : [.*]
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   excludes               : []
+4790 [main] INFO org.jooq.codegen.AbstractGenerator -   includeExcludeColumns  : false
+4790 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+4790 [main] INFO org.jooq.codegen.JavaGenerator -                          
+4790 [main] INFO org.jooq.codegen.JavaGenerator - JavaGenerator parameters 
+4790 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (generated): false
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: any) : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: version): 2.2
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (validation): true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments               : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on attributes : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on catalogs   : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on columns    : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on keys       : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on links      : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on packages   : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on parameters : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on queues     : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on routines   : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on schemas    : true
+4790 [main] INFO org.jooq.codegen.JavaGenerator -   comments on sequences  : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   comments on tables     : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   comments on udts       : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   sources                : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   sources on views       : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   daos                   : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   deprecated code        : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (any): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (catalogs): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (keys): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (links): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (queues): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (routines): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (schemas): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (sequences): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (tables): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   global references (udts): true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   indexes                : true
+4792 [main] INFO org.jooq.codegen.JavaGenerator -   instance fields        : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces             : false
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces (immutable) : false
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   javadoc                : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   keys                   : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   links                  : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   pojos                  : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   pojos (immutable)      : false
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   queues                 : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   records                : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   routines               : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   sequences              : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   sequenceFlags          : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   table-valued functions : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   tables                 : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   udts                   : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator -   relations              : true
+4793 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+4793 [main] INFO org.jooq.codegen.JavaGenerator -                          
+4793 [main] INFO org.jooq.codegen.AbstractGenerator - Generation remarks       
+4794 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+4794 [main] INFO org.jooq.codegen.JavaGenerator -                          
+4794 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+4798 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalogs      : Total: 1
+5192 [main] INFO org.jooq.meta.AbstractDatabase - ARRAYs fetched           : 0 (0 included, 0 excluded)
+5208 [main] INFO org.jooq.meta.AbstractDatabase - Domains fetched          : 0 (0 included, 0 excluded)
+5292 [main] INFO org.jooq.meta.AbstractDatabase - Tables fetched           : 3 (3 included, 0 excluded)
+5292 [main] INFO org.jooq.meta.AbstractDatabase - Embeddables fetched      : 0 (0 included, 0 excluded)
+5333 [main] INFO org.jooq.meta.AbstractDatabase - Enums fetched            : 0 (0 included, 0 excluded)
+5335 [main] INFO org.jooq.meta.AbstractDatabase - Packages fetched         : 0 (0 included, 0 excluded)
+5354 [main] INFO org.jooq.meta.AbstractDatabase - Routines fetched         : 0 (0 included, 0 excluded)
+5373 [main] INFO org.jooq.meta.AbstractDatabase - Sequences fetched        : 0 (0 included, 0 excluded)
+5373 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for catalog . Regenerating.
+5376 [main] INFO org.jooq.codegen.JavaGenerator -                          
+5377 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalog       : DefaultCatalog.java
+5377 [main] INFO org.jooq.codegen.JavaGenerator - ==========================================================
+5407 [main] INFO org.jooq.meta.AbstractDatabase - UDTs fetched             : 0 (0 included, 0 excluded)
+5421 [main] INFO org.jooq.codegen.JavaGenerator - Generating schemata      : Total: 2
+5422 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for schema DEMO. Regenerating.
+5424 [main] INFO org.jooq.codegen.JavaGenerator - Generating schema        : Demo.java
+5424 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+5432 [main] INFO org.jooq.codegen.JavaGenerator - Generating tables        
+5526 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_AUTHOR (DEMO.BOOK.AUTHOR_ID) referencing CONSTRAINT_7 (DEMO.AUTHOR.ID)
+5531 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_LANGUAGE (DEMO.BOOK.LANGUAGE_ID) referencing CONSTRAINT_CE (DEMO.LANGUAGE.ID)
+5550 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Author.java [input=AUTHOR, output=AUTHOR, pk=CONSTRAINT_7]
+5571 [main] INFO org.jooq.meta.AbstractDatabase - Indexes fetched          : 0 (0 included, 0 excluded)
+5581 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Book.java [input=BOOK, output=BOOK, pk=CONSTRAINT_1]
+5612 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Language.java [input=LANGUAGE, output=LANGUAGE, pk=CONSTRAINT_CE]
+5624 [main] INFO org.jooq.tools.StopWatch - Tables generated         : Total: 3.245s
+5624 [main] INFO org.jooq.codegen.JavaGenerator - Generating table POJOs   
+5625 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating POJO          : Author.java
+5741 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Author.java
+5755 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating POJO          : Book.java
+5770 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Book.java
+5780 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating POJO          : Language.java
+5788 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Language.java
+5794 [main] INFO org.jooq.tools.StopWatch - Table POJOs generated    : Total: 3.415s, +169.788ms
+5794 [main] INFO org.jooq.codegen.JavaGenerator - Generating DAOs          
+5795 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating DAO           : AuthorDao.java
+5806 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating DAO           : BookDao.java
+5813 [main] INFO org.gemini.codegen.JOOQ.PojosGen.CustomJooqAutoGenerator - Generating DAO           : LanguageDao.java
+5821 [main] INFO org.jooq.tools.StopWatch - Table DAOs generated     : Total: 3.442s, +27.532ms
+5822 [main] INFO org.jooq.codegen.JavaGenerator - Generating table references
+5826 [main] INFO org.jooq.tools.StopWatch - Table refs generated     : Total: 3.447s, +4.408ms
+5826 [main] INFO org.jooq.codegen.JavaGenerator - Generating Keys          
+5830 [main] INFO org.jooq.tools.StopWatch - Keys generated           : Total: 3.451s, +4.589ms
+5830 [main] INFO org.jooq.codegen.JavaGenerator - Generating Indexes       
+5830 [main] INFO org.jooq.codegen.JavaGenerator - Skipping empty indexes   
+5830 [main] INFO org.jooq.codegen.JavaGenerator - Generating table records 
+5831 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : AuthorRecord.java
+5844 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : BookRecord.java
+5855 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : LanguageRecord.java
+5861 [main] INFO org.jooq.tools.StopWatch - Table records generated  : Total: 3.482s, +30.078ms
+5861 [main] INFO org.jooq.tools.StopWatch - Generation finished: DEMO: Total: 3.482s, +0.184ms
+5861 [main] INFO org.jooq.codegen.JavaGenerator -                          
+5861 [main] INFO org.jooq.codegen.JavaGenerator - Excluding empty schema   : PUBLIC
+5861 [main] INFO org.jooq.codegen.JavaGenerator - Affected files: 16       
+5861 [main] INFO org.jooq.codegen.JavaGenerator - Modified files: 16       
+5861 [main] INFO org.jooq.codegen.JavaGenerator - Removing excess files    
+]]></system-err>
+  </testcase>
+  <testcase name="testForJavaCompileClass" classname="Loader.CustomClassLoaderTests" time="1.152"/>
 </testsuite>

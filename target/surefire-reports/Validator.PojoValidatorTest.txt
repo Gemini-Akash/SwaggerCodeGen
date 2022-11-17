@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: Validator.PojoValidatorTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s - in Validator.PojoValidatorTest
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.012 s <<< FAILURE! - in Validator.PojoValidatorTest
+testCountTables(Validator.PojoValidatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NullPointerException
+	at Validator.PojoValidatorTest.testCountTables(PojoValidatorTest.java:18)
+
