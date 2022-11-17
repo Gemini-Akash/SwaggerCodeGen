@@ -39,6 +39,13 @@ public class PojoValidator {
 
         } catch (Exception e) {
             LOG.error("Exception in countTables(): {}", e.getMessage());
+        }
+        try{
+            if(fileReader == null && reader ==null) {
+                throw new NullPointerException();
+            }
+        } catch ( NullPointerException e){
+            LOG.error("Exception in countTables() / fileReader and reader is null: {}", e.getMessage());
         } finally {
             try {
                 reader.close();
@@ -60,8 +67,9 @@ public class PojoValidator {
         int leftCurlyBracesCount = 0;
         int rightCurlyBracesCount = 0;
         File f1 = new File(String.valueOf(filePath));
+        BufferedReader reader = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(f1));
+            reader=new BufferedReader(new FileReader(f1));
             String line = reader.readLine();
             while (line != null) {
                 if (line.contains("{")) {
@@ -72,9 +80,24 @@ public class PojoValidator {
                 }
                 line = reader.readLine();
             }
-            reader.close();
+
         } catch (Exception e) {
-            LOG.error("Exception in contentValidator(): {}", e.getMessage());
+            LOG.error("Exception in validatePojoClassContent(): {}", e.getMessage());
+        }
+        try{
+            if( reader == null) {
+                throw new NullPointerException();
+            }
+        } catch ( NullPointerException e){
+            LOG.error("Exception in  validatePojoClassContent() / reader is null: {}", e.getMessage());
+        }finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                LOG.error("Exception in closing the file of validatePojoClassContent(): {}", e.getMessage());
+            }
         }
         return leftCurlyBracesCount == rightCurlyBracesCount;
     }
@@ -103,7 +126,7 @@ public class PojoValidator {
                         }
                     }
                 } catch (IOException e) {
-                    LOG.error("Exception in pojoValidator {}", e.getMessage());
+                    LOG.error("Exception in validatePojoClasses(): {}", e.getMessage());
                 }
 
             }

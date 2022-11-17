@@ -38,9 +38,18 @@ public class JsonValidator {
                 }
             } catch (IOException | ParseException e) {
                 LOG.info("Exception in validateJsonFiles method: {}", e.getMessage());
-            } finally {
+            }
+            try{
+                if(fileReader == null) {
+                    throw new NullPointerException();
+                }
+            } catch ( NullPointerException e){
+                LOG.error("Exception in  validateJsonFiles() / fileReader is null: {}", e.getMessage());
+            }finally {
                 try {
-                    fileReader.close();
+                    if(fileReader != null){
+                        fileReader.close();
+                    }
                 } catch (IOException e) {
                     LOG.error("Exception in closing the file of validateJsonFiles() :{}", e.getMessage());
                 }
