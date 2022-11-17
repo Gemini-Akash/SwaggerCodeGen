@@ -1,12 +1,12 @@
 package org.gemini.codegen;
 
-import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
-import org.gemini.codegen.ApiCodeGen.Validator.DialectValidator;
-import org.gemini.codegen.ApiCodeGen.Validator.JsonValidator;
-import org.gemini.codegen.Handler.DbJsonHandler;
-import org.gemini.codegen.Handler.DirectoryHandler;
-import org.gemini.codegen.Handler.TemplateHandler;
-import org.gemini.codegen.JOOQ.PojosGen.EntityClassGenerator;
+import org.gemini.codegen.apiCodeGen.loader.CustomClassLoader;
+import org.gemini.codegen.apiCodeGen.validator.DialectValidator;
+import org.gemini.codegen.apiCodeGen.validator.JsonValidator;
+import org.gemini.codegen.handler.DbJsonHandler;
+import org.gemini.codegen.handler.DirectoryHandler;
+import org.gemini.codegen.handler.TemplateHandler;
+import org.gemini.codegen.jooqPojoGen.EntityClassGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
