@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 
-public class TemplateHandler {
+public final class TemplateHandler {
     private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
 
 
@@ -24,33 +23,18 @@ public class TemplateHandler {
      * @param templatePath
      */
     public static void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
-        FileReader fileReader = null;
-        FileWriter fileWriter = null;
-        try {
+
+        try (FileReader fileReader = new FileReader(jsonPath);
+             FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
-            fileReader = new FileReader(jsonPath);
+
             JSONParser jsonParser = new JSONParser();
             Object obj = jsonParser.parse(fileReader);
-            fileWriter = new FileWriter(filePath);
+
             fileWriter.write(template.apply(obj));
         } catch (Exception e) {
             LOG.error("Exception in generateClassFromTemplates() :{}", e.getMessage());
-        } finally {
-            if (fileWriter != null ) {
-                try {
-                    fileWriter.close();
-                } catch (IOException e) {
-                    LOG.error("Exception in closing the fileWriter of generateClassFromTemplates(): {}", e.getMessage());
-                }
-            }
-            if ( fileReader != null) {
-                try {
-                    fileReader.close();
-                } catch (IOException e) {
-                    LOG.error("Exception in closing the fileReader of generateClassFromTemplates(): {}", e.getMessage());
-                }
-            }
         }
     }
 
@@ -61,22 +45,12 @@ public class TemplateHandler {
      * @param templatePath
      */
     public static void generateFileFromTemplate(final String templatePath, final String filePath) {
-        FileWriter fileWriter = null;
-        try {
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
-            fileWriter = new FileWriter(filePath);
             fileWriter.write(template.text());
         } catch (Exception e) {
             LOG.error("Exception in generateFileFromTemplate() :{}", e.getMessage());
-        } finally {
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException e) {
-                    LOG.error("Exception in closing the fileWriter of generateFileFromTemplate(): {}", e.getMessage());
-                }
-            }
         }
     }
 

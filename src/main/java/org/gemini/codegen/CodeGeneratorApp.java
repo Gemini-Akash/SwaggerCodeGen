@@ -1,12 +1,13 @@
 package org.gemini.codegen;
 
-import org.gemini.codegen.apiCodeGen.loader.CustomClassLoader;
-import org.gemini.codegen.apiCodeGen.validator.DialectValidator;
-import org.gemini.codegen.apiCodeGen.validator.JsonValidator;
+import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
+import org.gemini.codegen.apicodegen.validator.DialectValidator;
+import org.gemini.codegen.apicodegen.validator.JsonValidator;
 import org.gemini.codegen.handler.DbJsonHandler;
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.gemini.codegen.handler.TemplateHandler;
-import org.gemini.codegen.jooqPojoGen.EntityClassGenerator;
+import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
+import org.gemini.codegen.jooqpojogen.FileNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,10 @@ public class CodeGeneratorApp {
             path.append(DirectoryHandler.getScriptName());
             path.append(".entity");
             EntityClassGenerator.EntityGenerator(DirectoryHandler.outerScriptDirectoryPath, path.toString(), DirectoryHandler.generateDirectoryPath());
+        }catch (FileNotFoundException e){
+            LOG.error("Exception in generating POJO classes: {}", e.message);
         } catch (Exception e) {
-            LOG.error("Exception in generating POJO classes {}", e.getMessage());
+            LOG.error("Exception in generating POJO classes: {}", e.getMessage());
         }
         path.setLength(0);
         path.append(DirectoryHandler.generateDirectoryPath());

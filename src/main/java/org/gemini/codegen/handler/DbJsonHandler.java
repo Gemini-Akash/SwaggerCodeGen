@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 
-public class DbJsonHandler {
+public final class DbJsonHandler {
     private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);
 
     /**
@@ -22,27 +21,17 @@ public class DbJsonHandler {
      * @param username
      */
     public static void createDbJson(final File filePath, final String url, final String dialect, final String username, final String password, final String driverClassName) {
-        FileWriter fileWriter = null;
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("url", url);
-            jsonObject.put("dialect", dialect);
-            jsonObject.put("username", username);
-            jsonObject.put("driverClassName", driverClassName);
-            jsonObject.put("password", password);
-            LOG.info("Required applicationPropertiesJson: {}", jsonObject);
-            fileWriter = new FileWriter(filePath);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("url", url);
+        jsonObject.put("dialect", dialect);
+        jsonObject.put("username", username);
+        jsonObject.put("driverClassName", driverClassName);
+        jsonObject.put("password", password);
+        LOG.info("Required applicationPropertiesJson: {}", jsonObject);
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createDbJson(): {}", e.getMessage());
-        }finally {
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException e) {
-                    LOG.error("Exception in closing the fileWriter of createDbJson(): {}", e.getMessage());
-                }
-            }
         }
     }
 }
