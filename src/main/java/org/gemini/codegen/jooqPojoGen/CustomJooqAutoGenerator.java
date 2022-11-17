@@ -55,10 +55,10 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
     }
 
     protected void generatePojo(TableDefinition table, JavaWriter out) {
-        generatePojo0(table, out);
+        generatePojoClass(table, out);
     }
 
-    private final void generatePojo0(Definition tableUdtOrEmbeddable, JavaWriter out) {
+    private final void generatePojoClass(Definition tableUdtOrEmbeddable, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
         final String interfaceName = generateInterfaces()
                 ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.INTERFACE))
@@ -168,7 +168,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
 
         if (generateInterfaces() && !generateImmutablePojos()) {
-            printFromAndInto(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
+            printFromAndIntoMethod(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);
         }
 
         if (tableUdtOrEmbeddable instanceof TableDefinition) {
@@ -215,7 +215,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             }
 
             out.print("@%s%s(name = \"", prefix, out.ref("javax.persistence.Column"));
-            out.print(this.escapeString(column.getName()));
+            out.print(this.escapeStringMethod(column.getName()));
             out.print("\"");
             out.print(nullable);
             out.print(length);
@@ -234,7 +234,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         int maxLength = 0;
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());
-            properties.add("\"" + escapeString(getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO)) + "\"");
+            properties.add("\"" + escapeStringMethod(getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO)) + "\"");
         }
 
 
@@ -252,7 +252,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
             String separator1 = "";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+                final String nullableAnnotation = nullableOrNonnullAnnotationMethod(out, column);
 
                 out.println(separator1);
                 out.print("[[before=@][after= ][%s]]%s %s",
@@ -318,14 +318,14 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
     @Override
     protected void generatePojoGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
-        generatePojoGetter0(column, index, out);
+        generatePojoGetterClass(column, index, out);
     }
 
     /**
      * Subclasses may override this method to provide their own pojo getters.
      */
 
-    private final void generatePojoGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+    private final void generatePojoGetterClass(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String columnTypeFull = getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnGetter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.POJO);
@@ -333,12 +333,12 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         final String name = column.getQualifiedOutputName();
 
         // Getter
-        if (!printDeprecationIfUnknownType(out, columnTypeFull)) {
-            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+        if (!printDeprecationIfUnknownTypeMethod(out, columnTypeFull)) {
+            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(commentMethod(column))));
         }
 
-        printValidationAnnotation(out, column);
-        printNullableOrNonnullAnnotation(out, column);
+        printValidationAnnotationClass(out, column);
+        printNullableOrNonnullAnnotationClass(out, column);
 
 
         out.overrideIf(generateInterfaces());
@@ -348,7 +348,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
     }
 
-    private void printValidationAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
+    private void printValidationAnnotationClass(JavaWriter out, TypedElementDefinition<?> column) {
         if (generateValidationAnnotations()) {
             String prefix = "";
             DataTypeDefinition type = column.getType(resolver(out));
@@ -370,7 +370,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-    private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
+    private void printNullableOrNonnullAnnotationClass(JavaWriter out, Definition column) {
         if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable()) {
             printNullableAnnotation(out);
         } else {
@@ -390,7 +390,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-    private String comment(Definition definition) {
+    private String commentMethod(Definition definition) {
         return definition instanceof CatalogDefinition && generateCommentsOnCatalogs()
                 || definition instanceof SchemaDefinition && generateCommentsOnSchemas()
                 || definition instanceof TableDefinition && generateCommentsOnTables()
@@ -406,7 +406,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 : "";
     }
 
-    private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
+    private boolean printDeprecationIfUnknownTypeMethod(JavaWriter out, String type) {
         if (generateDeprecationOnUnknownTypes() && Object.class.getName().equals(type) && "Any".equals(type)) {
 
             out.javadoc("@deprecated Unknown data type. "
@@ -437,7 +437,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-    private void printFromAndInto(JavaWriter out, Definition tableOrUDT, GeneratorStrategy.Mode mode) {
+    private void printFromAndIntoMethod(JavaWriter out, Definition tableOrUDT, GeneratorStrategy.Mode mode) {
         String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, GeneratorStrategy.Mode.INTERFACE));
 
         out.header("FROM and INTO");
@@ -474,21 +474,21 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
     }
 
-    private String nullableOrNonnullAnnotation(JavaWriter out, Definition column) {
+    private String nullableOrNonnullAnnotationMethod(JavaWriter out, Definition column) {
         return column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable()
-                ? nullableAnnotation(out)
-                : nonnullAnnotation(out);
+                ? nullableAnnotationMethod(out)
+                : nonnullAnnotationMethod(out);
     }
 
-    private String nullableAnnotation(JavaWriter out) {
+    private String nullableAnnotationMethod(JavaWriter out) {
         return generateNullableAnnotation() ? out.ref(generatedNullableAnnotationType()) : null;
     }
 
-    private String nonnullAnnotation(JavaWriter out) {
+    private String nonnullAnnotationMethod(JavaWriter out) {
         return generateNonnullAnnotation() ? out.ref(generatedNonnullAnnotationType()) : null;
     }
 
-    private String escapeString(String string) {
+    private String escapeStringMethod(String string) {
 
         if (string == null) {
             return null;
@@ -635,11 +635,11 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             final String colClass = getStrategy().getJavaClassName(column);
             final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
             final String colType = out.ref(colTypeFull);
-            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
 
             // fetchRangeOf[Column]([T]...)
             // -----------------------
-            if (!printDeprecationIfUnknownType(out, colTypeFull)) {
+            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {
                 out.javadoc("Fetch records that have <code>%s BETWEEN lowerInclusive AND upperInclusive</code>", colName);
             }
             printNonnullAnnotation(out);
@@ -650,7 +650,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
             // fetchBy[Column]([T]...)
             // -----------------------
-            if (!printDeprecationIfUnknownType(out, colTypeFull)) {
+            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {
                 out.javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
             }
 
@@ -668,7 +668,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
                 // If column is part of a single-column unique key...
                 if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
-                    if (!printDeprecationIfUnknownType(out, colTypeFull)) {
+                    if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {
                         out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
                     }
                     printNullableAnnotation(out);
@@ -703,7 +703,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         int flag2 = 0;
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass1 = getStrategy().getJavaClassName(column);
-            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
             if (key == column.getPrimaryKey()) {
                 if (flag2 != size - 1) {
                     if (flag2 == 0) {
@@ -751,7 +751,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             out.println("int result=this.ctx().update(%s)", tableIdentifier);
             for (ColumnDefinition column1 : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column1);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
                 if (key != column1.getPrimaryKey()) {
                     out.println(".set(%s,classObject.get%s())", colIdentifier1, colClass1);
                 }
@@ -760,7 +760,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             int flag1 = 0;
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
 
                 if (key == column.getPrimaryKey()) {
                     if (flag1 != size - 1) {
@@ -798,7 +798,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             int flag6 = 0;
             for (ColumnDefinition column : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
                 if (key == column.getPrimaryKey()) {
                     if (flag6 != size - 1) {
                         if (flag6 == 0) {
@@ -819,7 +819,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 final String colClass = getStrategy().getJavaClassName(column);
                 final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
                 final String colType = out.ref(colTypeFull);
-                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
                 if (key == column.getPrimaryKey()) {
                     out.javadoc("Created custom Delete record Method");
                     out.println("public int deleteRecord(%s %s){", colType, colClass);
@@ -830,14 +830,14 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             }
             ColumnDefinition column = table.getColumns().get(0);
             final String colClass = getStrategy().getJavaClassName(column);
-            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
             //For update single primary key
             out.javadoc("Created custom Update record Method");
             out.println("public int updateRecord(%s classObject){", pType);
             out.println("int result=this.ctx().update(%s)", tableIdentifier);
             for (ColumnDefinition column1 : table.getColumns()) {
                 final String colClass1 = getStrategy().getJavaClassName(column1);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegments(column1));
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
                 if (key != column1.getPrimaryKey()) {
                     out.println(".set(%s,classObject.get%s())", colIdentifier1, colClass1);
                 }
@@ -872,7 +872,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
     }
 
 
-    private int colRefSegments(Definition column) {
+    private int colRefSegmentsMethod(Definition column) {
         if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getContainer() instanceof UDTDefinition) {
             return 2;
         }
