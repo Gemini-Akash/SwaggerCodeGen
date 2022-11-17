@@ -59,11 +59,20 @@ public class CustomClassLoader {
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createApiJson(): {}", e.getMessage());
+        }
+        try{
+            if(fileWriter == null) {
+                throw new NullPointerException();
+            }
+        } catch ( NullPointerException e){
+            LOG.error("Exception in  writing JSON file / createApiJson() / fileWriter is null: {}", e.getMessage());
         } finally {
             try {
-                fileWriter.close();
-            } catch (IOException | NullPointerException e) {
-                LOG.error("Exception in closing the file of countTables(): {}", e.getMessage());
+                if(fileWriter != null){
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                LOG.error("Exception in closing the file of createApiJson(): {}", e.getMessage());
             }
         }
     }
@@ -183,6 +192,7 @@ public class CustomClassLoader {
         } catch (Exception e) {
             LOG.error("Exception in getFullyQualifiedClassName: {}", e.getMessage());
         }
+
         LOG.info("getFullyQualifiedClassName----->{}", cls);
         return cls;
     }

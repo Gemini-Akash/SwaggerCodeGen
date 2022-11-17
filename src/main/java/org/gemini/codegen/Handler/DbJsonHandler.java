@@ -35,12 +35,23 @@ public class DbJsonHandler {
             fileWriter.write(jsonObject.toJSONString());
         } catch (Exception e) {
             LOG.error("Exception in  writing JSON file / createDbJson(): {}", e.getMessage());
-        } finally {
+        }
+        try{
+            if( fileWriter == null) {
+                throw new NullPointerException();
+            }
+        } catch ( NullPointerException e){
+            LOG.error("Exception in   createDbJson() / fileWriter is null: {}", e.getMessage());
+        }finally {
             try {
-                fileWriter.close();
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
             } catch (IOException e) {
                 LOG.error("Exception in closing the file of createDbJson(): {}", e.getMessage());
             }
         }
+
+ 
     }
 }
