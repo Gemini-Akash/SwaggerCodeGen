@@ -1,10 +1,19 @@
-//package validator;
-//
-//import org.junit.Test;
-//
-//public class JsonValidatorTest {
-//
-//    @Test
-//    public void validateJsonFiles(){}
-//
-//}
+package Validator;
+
+import org.gemini.codegen.Handler.DirectoryHandler;
+import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+public class JsonValidatorTest {
+
+    @Test
+    public void validateJsonFiles(){
+        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
+            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
+                    .thenReturn("src/test/resources/Handler");
+        }
+
+    }
+
+}
