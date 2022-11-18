@@ -12,6 +12,7 @@ public class JsonValidatorTest {
         try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
             theMock.when(() -> DirectoryHandler.generateDirectoryPath())
                     .thenReturn("src/test/resources/Handler");
+
         }
 
     }

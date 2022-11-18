@@ -30,23 +30,23 @@ import java.util.List;
 <span class="fc" id="L30">            fileReader = new FileReader(jsonPath);</span>
 <span class="fc" id="L31">            JSONParser jsonParser= new JSONParser();</span>
 <span class="fc" id="L32">            Object obj = jsonParser.parse(fileReader);</span>
-<span class="nc" id="L33">            fileWriter=new FileWriter(filePath);</span>
-<span class="nc" id="L34">            fileWriter.write(template.apply(obj));</span>
+<span class="fc" id="L33">            fileWriter=new FileWriter(filePath);</span>
+<span class="fc" id="L34">            fileWriter.write(template.apply(obj));</span>
         }
-<span class="fc" id="L36">        catch (Exception e) {</span>
-<span class="fc" id="L37">            LOG.error(&quot;Exception in generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
+<span class="nc" id="L36">        catch (Exception e) {</span>
+<span class="nc" id="L37">            LOG.error(&quot;Exception in generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
         }
         finally {
             try {
 <span class="fc" id="L41">                fileReader.close();</span>
-<span class="nc" id="L42">                fileWriter.close();</span>
+<span class="fc" id="L42">                fileWriter.close();</span>
             }
 <span class="nc" id="L44">            catch (IOException e) {</span>
 <span class="nc" id="L45">                LOG.error(&quot;Exception in closing the file of generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
-<span class="nc" id="L46">            }</span>
+<span class="fc" id="L46">            }</span>
         }
 
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L49">    }</span>
 
     /**
      *generateFileFromTemplate() method is used for generating file from templates.
@@ -60,22 +60,22 @@ import java.util.List;
         try {
 <span class="fc" id="L61">            Handlebars handlebars = new Handlebars();</span>
 <span class="fc" id="L62">            Template template = handlebars.compile(templatePath);</span>
-<span class="nc" id="L63">            fileWriter = new FileWriter(filePath);</span>
-<span class="nc" id="L64">            fileWriter.write(template.text());</span>
+<span class="fc" id="L63">            fileWriter = new FileWriter(filePath);</span>
+<span class="fc" id="L64">            fileWriter.write(template.text());</span>
         }
-<span class="fc" id="L66">        catch (Exception e)</span>
+<span class="nc" id="L66">        catch (Exception e)</span>
         {
-<span class="fc" id="L68">            LOG.error(&quot;Exception in generateFileFromTemplate() :{}&quot;, e.getMessage());</span>
+<span class="nc" id="L68">            LOG.error(&quot;Exception in generateFileFromTemplate() :{}&quot;, e.getMessage());</span>
         }
         finally {
             try {
-<span class="nc" id="L72">                fileWriter.close();</span>
+<span class="fc" id="L72">                fileWriter.close();</span>
             }
 <span class="nc" id="L74">            catch (IOException e) {</span>
 <span class="nc" id="L75">                LOG.error(&quot;Exception in closing the file of generateFileFromTemplate(): {}&quot;, e.getMessage());</span>
-<span class="nc" id="L76">            }</span>
+<span class="fc" id="L76">            }</span>
         }
-<span class="nc" id="L78">    }</span>
+<span class="fc" id="L78">    }</span>
 
     /**
      *generateSpringBootProject() method is used for generating output in outerDirectoryPath.

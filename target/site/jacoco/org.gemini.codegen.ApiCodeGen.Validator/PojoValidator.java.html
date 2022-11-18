@@ -22,17 +22,17 @@ import java.nio.charset.Charset;
      * @return count
      */
     public static int countTables() {
-<span class="nc" id="L25">        int count = 0;</span>
-<span class="nc" id="L26">        BufferedReader reader=null;</span>
-<span class="nc" id="L27">        FileReader fileReader=null;</span>
+<span class="fc" id="L25">        int count = 0;</span>
+<span class="fc" id="L26">        BufferedReader reader=null;</span>
+<span class="fc" id="L27">        FileReader fileReader=null;</span>
         try {
-<span class="nc" id="L29">            File scriptFilePath = new File(DirectoryHandler.outerScriptDirectoryPath);</span>
-<span class="nc" id="L30">            fileReader=new FileReader(scriptFilePath);</span>
-<span class="nc" id="L31">            reader = new BufferedReader(fileReader);</span>
-<span class="nc" id="L32">            String line = reader.readLine();</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">            while (line != null) {</span>
-<span class="nc bnc" id="L34" title="All 6 branches missed.">                if (line.contains(&quot;CREATE TABLE&quot;) || line.contains(&quot;Create Table&quot;) || line.contains(&quot;create table&quot;)) count++;</span>
-<span class="nc" id="L35">                line = reader.readLine();</span>
+<span class="fc" id="L29">            File scriptFilePath = new File(DirectoryHandler.outerScriptDirectoryPath);</span>
+<span class="fc" id="L30">            fileReader=new FileReader(scriptFilePath);</span>
+<span class="fc" id="L31">            reader = new BufferedReader(fileReader);</span>
+<span class="fc" id="L32">            String line = reader.readLine();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="pc bpc" id="L34" title="2 of 6 branches missed.">                if (line.contains(&quot;CREATE TABLE&quot;) || line.contains(&quot;Create Table&quot;) || line.contains(&quot;create table&quot;)) count++;</span>
+<span class="fc" id="L35">                line = reader.readLine();</span>
             }
 
 <span class="nc" id="L38">        } catch (Exception e) {</span>
@@ -40,14 +40,14 @@ import java.nio.charset.Charset;
         }
         finally {
             try {
-<span class="nc" id="L43">                reader.close();</span>
-<span class="nc" id="L44">                fileReader.close();</span>
+<span class="fc" id="L43">                reader.close();</span>
+<span class="fc" id="L44">                fileReader.close();</span>
             }
 <span class="nc" id="L46">            catch (IOException e) {</span>
 <span class="nc" id="L47">                LOG.error(&quot;Exception in closing the file of countTables(): {}&quot;, e.getMessage());</span>
-<span class="nc" id="L48">            }</span>
+<span class="fc" id="L48">            }</span>
         }
-<span class="nc" id="L50">        return count;</span>
+<span class="fc" id="L50">        return count;</span>
     }
 
     /**
@@ -84,14 +84,14 @@ import java.nio.charset.Charset;
      * @return boolean value
      */
     public static boolean validatePojoClasses(File[] files) {
-<span class="nc" id="L87">        int count = 0;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">            if (files.length == countTables()) {</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">                for (File file : files) {</span>
-<span class="nc" id="L90">                    Boolean emptyFileCheck=null;</span>
+<span class="fc" id="L87">        int count = 0;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (files.length == countTables()) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                for (File file : files) {</span>
+<span class="fc" id="L90">                    Boolean emptyFileCheck=null;</span>
                     try {
-<span class="nc" id="L92">                        emptyFileCheck = FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty();</span>
-<span class="nc bnc" id="L93" title="All 6 branches missed.">                        if (file.exists() &amp;&amp; !emptyFileCheck &amp;&amp; validatePojoClassContent(file)) {</span>
-<span class="nc" id="L94">                            count++;</span>
+<span class="fc" id="L92">                        emptyFileCheck = FileUtils.readFileToString(file, Charset.defaultCharset()).isEmpty();</span>
+<span class="pc bpc" id="L93" title="3 of 6 branches missed.">                        if (file.exists() &amp;&amp; !emptyFileCheck &amp;&amp; validatePojoClassContent(file)) {</span>
+<span class="fc" id="L94">                            count++;</span>
                         }
                         else {
 <span class="nc" id="L97">                            recursionCount++;</span>
@@ -106,16 +106,16 @@ import java.nio.charset.Charset;
                     }
 <span class="nc" id="L107">                    catch (IOException e) {</span>
 <span class="nc" id="L108">                        LOG.error(&quot;Exception in pojoValidator {}&quot;, e.getMessage());</span>
-<span class="nc" id="L109">                    }</span>
+<span class="fc" id="L109">                    }</span>
 
                 }
             }
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (count == files.length) {</span>
-<span class="nc" id="L114">            LOG.info(&quot;&lt;---------If block of pojoValidator()----------&gt;&quot;);</span>
-<span class="nc" id="L115">            return true;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (count == files.length) {</span>
+<span class="fc" id="L114">            LOG.info(&quot;&lt;---------If block of pojoValidator()----------&gt;&quot;);</span>
+<span class="fc" id="L115">            return true;</span>
         } else {
-<span class="nc" id="L117">            LOG.info(&quot;&lt;-----------Else block of pojoValidator()---------&gt;&quot;);</span>
-<span class="nc" id="L118">            return false;</span>
+<span class="fc" id="L117">            LOG.info(&quot;&lt;-----------Else block of pojoValidator()---------&gt;&quot;);</span>
+<span class="fc" id="L118">            return false;</span>
         }
 
     }

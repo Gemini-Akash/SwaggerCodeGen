@@ -15,7 +15,7 @@ public class JOOQTestCases {
     @Test
     public void testEntityGenerator(){
         try {
-            EntityClassGenerator.EntityGenerator("src/test/resources/Jooq/testScript.sql","entity","src/test/resources/Jooq/");
+            EntityClassGenerator.EntityGenerator("src/test/resources/testScript.sql","entity","src/test/resources/Jooq/");
         } catch (Exception e) {
             throw new RuntimeException("Exception in testLoadClass() :{}",e);
         }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Validator.PojoValidatorTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.131 s - in Validator.PojoValidatorTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.599 s - in Validator.PojoValidatorTest

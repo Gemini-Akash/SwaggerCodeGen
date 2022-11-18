@@ -24,7 +24,7 @@ public class DirectoryHandlerTests {
         if(!file.exists()){
             file.mkdir();
         }
-        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/Handler/testScript.sql");
+        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/testScript.sql");
         DirectoryHandler.setOuterDirectoryPath("src/test/resources/Handler");
     }
     @After
@@ -34,12 +34,14 @@ public class DirectoryHandlerTests {
         if(file.isDirectory() || file.isFile()){
             file.delete();
         }
-        String path1 = "src/test/resources/Handler/renamedXYZ";
+        String path1 = "src/test/resources/renamedXYZ";
         File file1 = new File(path1);
         if(file1.isDirectory() || file1.isFile()){
             file1.delete();
         }
     }
+
+
 
 
     @Test
@@ -61,30 +63,31 @@ public class DirectoryHandlerTests {
         String expected = "DummyScriptt";
         String actual = DirectoryHandler.getScriptName();
         Assertions.assertNotEquals(expected,actual);
+
     }
 
-    @Test
-    public void testGetSchemaName(){
-        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
-            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-                    .thenReturn("src/test/resources/Handler");
-            String expected = DirectoryHandler.getSchemaName();
-            System.out.println(expected);
-            String actual = "ims";
-            Assertions.assertEquals(expected, actual);
-        }
-    }
+//    @Test
+//    public void testGetSchemaName(){
+//        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
+//            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
+//                    .thenReturn("src/test/resources/Handler");
+//            String expected = DirectoryHandler.getSchemaName();
+//            System.out.println(expected);
+//            String actual = "ims";
+//            Assertions.assertEquals(expected, actual);
+//        }
+//    }
 
-    @Test
-    public void negTestGetSchemaName(){
-        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
-            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-                    .thenReturn("src/test/resources/Handler");
-            String expected = DirectoryHandler.getSchemaName();
-            String actual = "ims1";
-            Assertions.assertNotEquals(expected, actual);
-        }
-    }
+//    @Test
+//    public void negTestGetSchemaName(){
+//        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
+//            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
+//                    .thenReturn("src/test/resources/Handler");
+//            String expected = DirectoryHandler.getSchemaName();
+//            String actual = "ims1";
+//            Assertions.assertNotEquals(expected, actual);
+//        }
+//    }
 
 
     @Test

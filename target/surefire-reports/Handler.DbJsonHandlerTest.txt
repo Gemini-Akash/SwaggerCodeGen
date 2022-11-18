@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: Handler.DbJsonHandlerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.332 s - in Handler.DbJsonHandlerTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.129 s <<< FAILURE! - in Handler.DbJsonHandlerTest
+createDbJson(Handler.DbJsonHandlerTest)  Time elapsed: 0.199 s  <<< ERROR!
+java.lang.NullPointerException
+	at Handler.DbJsonHandlerTest.createDbJson(DbJsonHandlerTest.java:22)
+

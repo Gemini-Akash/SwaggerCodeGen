@@ -121,11 +121,11 @@ import java.util.List;
      * @param filePath
      */
     public static void renameDirectory(File filePath, File renameFilePath){
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if(filePath.renameTo(renameFilePath)) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if(filePath.renameTo(renameFilePath)) {</span>
 <span class="fc" id="L125">            LOG.info(&quot;File moved successfully&quot;);</span>
         }
         else {
-<span class="fc" id="L128">            LOG.info(&quot;Failed to move the file&quot;);</span>
+<span class="nc" id="L128">            LOG.info(&quot;Failed to move the file&quot;);</span>
         }
 <span class="fc" id="L130">    }</span>
 
@@ -139,10 +139,10 @@ import java.util.List;
 <span class="fc" id="L139">        File file =new File(filePath);</span>
         try {
 <span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (file.isDirectory()) {</span>
-<span class="fc" id="L142">                FileUtils.deleteDirectory(file);</span>
-<span class="fc" id="L143">                LOG.info(&quot;Directory deleted successfully : {}&quot;, file);</span>
+<span class="nc" id="L142">                FileUtils.deleteDirectory(file);</span>
+<span class="nc" id="L143">                LOG.info(&quot;Directory deleted successfully : {}&quot;, file);</span>
             } else {
-<span class="nc" id="L145">                LOG.info(&quot;Directory does not exist&quot;);</span>
+<span class="fc" id="L145">                LOG.info(&quot;Directory does not exist&quot;);</span>
             }
         }
 <span class="nc" id="L148">        catch (Exception e){</span>

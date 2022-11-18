@@ -1,4 +1,4 @@
-Loader\CustomClassLoaderTests.class
+Loader\CustomClassLoaderTest.class
 Validator\JsonValidatorTest.class
 Validator\PojoValidatorTest.class
 Handler\DirectoryHandlerTests.class
