@@ -2,10 +2,11 @@ package Handler;
 
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
 import org.gemini.codegen.Handler.DirectoryHandler;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,21 +15,16 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
 public class DirectoryHandlerTests {
     private static final Logger LOG = LoggerFactory.getLogger(DirectoryHandlerTests.class);
 
-//    @Mock
-    DirectoryHandler directoryHandler = Mockito.mock(DirectoryHandler.class);
-
-    @BeforeAll
+    @Before
     public void setUp(){
-        outerScriptDirectoryPath=("src/test/resources/CustomClassLoader/testScript.sql").replaceAll("[/\\\\]+","/");
-//        directoryHandler = mock(DirectoryHandler.class);
-//        MockitoAnnotations.initMocks(this);
+        File file = new File("src/test/resources/Handler/Abc");
+        if(!file.exists()){
+            file.mkdir();
+        }
     }
-    String outerScriptDirectoryPath;
 
     @Test
     public void testCreateDirectory(){
@@ -37,29 +33,19 @@ public class DirectoryHandlerTests {
         File file = new File(directoryPath);
         Assertions.assertTrue(file.exists(),"Directory Not Created");
     }
-
     @Test
     public void testGetScriptName(){
+        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
+            theMock.when(() -> DirectoryHandler.getScriptName())
+                    .thenReturn("DummyScript");
+            System.out.println(DirectoryHandler.getScriptName());
+            Assertions.assertEquals("DummyScript", DirectoryHandler.getScriptName());
+        }
 
-//        try {
-//            EntityClassGenerator.EntityGenerator("src/test/resources/CustomClassLoader/testScript.sql","entity","src/test/resources/CustomClassLoader/");
-//        } catch (Exception e) {
-//            throw new RuntimeException("Exception in testLoadClass() :{}",e);
-//        }
-//        String expected = "testScript";
-        String expected = "testScript";
-//        String actual = DirectoryHandler.getScriptName();
-//        System.out.println(actual.getClass().getSimpleName());
-//        Assertions.assertTrue(!actual.isEmpty(), "Right Script Not Present ");
-//        Assertions.assertTrue(DirectoryHandler.getScriptName() instanceof String);
-//        doReturn("src/test/resources/CustomClassLoader/testScript.sql").when(outerScriptDirectoryPath);
-      when(directoryHandler.getScriptName()).thenReturn("testScript");
-//      String actual  = DirectoryHandler.getScriptName();
-        Assertions.assertEquals(expected,DirectoryHandler.getScriptName());
     }
 
-//    @Test
-//    public void negTestGetScriptName(){
+    @Test
+    public void negTestGetScriptName(){
 //    try {
 //        EntityClassGenerator.EntityGenerator("src/test/resources/CustomClassLoader/testScript.sql","entity","src/test/resources/CustomClassLoader/");
 //    } catch (Exception e) {
@@ -69,7 +55,12 @@ public class DirectoryHandlerTests {
 //        String expected = "DummyScriptt";
 //        String actual = DirectoryHandler.getScriptName();
 //        Assertions.assertNotEquals(expected,actual);
-//    }
+
+        DirectoryHandler d = new DirectoryHandler();
+        d.se
+
+
+    }
 
 //    @Test
 //    public void testGetSchemaName(){}
@@ -119,13 +110,13 @@ public class DirectoryHandlerTests {
         Assertions.assertFalse(classFile.exists());
     }
 
-    @AfterAll
-    public static void cleanUp(){
-        cleanUpFiles("src/test/resources/Handler/demoDirectory");
-    }
-    @AfterAll
-    public static void cleanUpFiles( String filePath){
-        String path = filePath;
+//    @After
+//    public static void cleanUp(){
+//        cleanUpFiles("src/test/resources/Handler/demoDirectory");
+//    }
+    @After
+    public  void cleanUpFiles(){
+        String path = "src/test/resources/Handler/demoDirectory";
         File file = new File(path);
         if(file.isDirectory() || file.isFile()){
             file.delete();

@@ -1,7 +1,6 @@
 Loader\CustomClassLoaderTests.class
 Validator\PojoValidatorTest.class
 Handler\DirectoryHandlerTests.class
-Handler\DbJsonHandlerTest.class
 Validator\PathValidatorTest.class
 Handler\TemplateHandlerTests.class
 Jooq\JOOQTestCases.class

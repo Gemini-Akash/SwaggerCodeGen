@@ -1,26 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Handler.DirectoryHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 4.355 s <<< FAILURE! - in Handler.DirectoryHandlerTests
-testRenameDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.033 s  <<< ERROR!
-java.lang.ExceptionInInitializerError
-	at Handler.DirectoryHandlerTests.testRenameDirectory(DirectoryHandlerTests.java:86)
-Caused by: java.lang.NullPointerException
-	at Handler.DirectoryHandlerTests.testRenameDirectory(DirectoryHandlerTests.java:86)
-
-testDeleteFiles(Handler.DirectoryHandlerTests)  Time elapsed: 3.878 s  <<< ERROR!
-java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.Handler.DirectoryHandler
-	at Handler.DirectoryHandlerTests.testDeleteFiles(DirectoryHandlerTests.java:109)
-
-testDeleteDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0 s  <<< ERROR!
-java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.Handler.DirectoryHandler
-	at Handler.DirectoryHandlerTests.testDeleteDirectory(DirectoryHandlerTests.java:100)
-
-testGetScriptName(Handler.DirectoryHandlerTests)  Time elapsed: 0 s  <<< ERROR!
-java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.Handler.DirectoryHandler
-	at Handler.DirectoryHandlerTests.testGetScriptName(DirectoryHandlerTests.java:52)
-
-testCreateDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0 s  <<< ERROR!
-java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.Handler.DirectoryHandler
-	at Handler.DirectoryHandlerTests.testCreateDirectory(DirectoryHandlerTests.java:39)
-
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.217 s - in Handler.DirectoryHandlerTests

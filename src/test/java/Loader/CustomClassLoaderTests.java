@@ -1,8 +1,8 @@
 package Loader;
 
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
-//import org.junit.Test;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import java.io.File;
 public class CustomClassLoaderTests {
 
     private static final Logger log = LoggerFactory.getLogger(CustomClassLoaderTests.class);
-    CustomClassLoader customClassLoader = new CustomClassLoader();
 
 //    @Test
 //    public void testCreateApiJson() throws IOException {
@@ -69,8 +68,8 @@ public class CustomClassLoaderTests {
 //        Assertions.assertTrue(!actualClasses.isEmpty());
 //
 //    }
-    @AfterAll
-    public static void cleanUp(){
+    @After
+    public void cleanUpClassFiles(){
         String path = "src/test/resources/CustomClassLoader/ClassFiles/Dummy.class";
         File file = new File(path);
         if(file.exists()){

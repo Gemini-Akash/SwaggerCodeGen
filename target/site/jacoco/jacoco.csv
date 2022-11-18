@@ -1,17 +1,17 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Loader,CustomClassLoader,412,36,15,1,101,10,15,3,7,3
+SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Loader,CustomClassLoader,415,33,15,1,102,9,16,2,8,2
 SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Validator,JsonValidator,88,0,4,0,23,0,5,0,3,0
-SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Validator,PojoValidator,145,59,22,8,38,18,13,7,2,3
+SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Validator,PojoValidator,151,53,22,8,41,15,14,6,3,2
 SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Validator,DialectValidator,64,0,4,0,7,0,5,0,3,0
 SwaggerCodeGen,org.gemini.codegen.ApiCodeGen.Validator,PathValidator,0,13,0,0,0,4,0,2,0,2
 SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,177,0,0,0,46,0,3,0,3,0
-SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,0,9,0,0,0,4,0,1,0,1
-SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,163,555,31,57,34,111,41,39,15,21
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,9,0,0,0,4,0,1,0,1,0
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,718,0,88,0,145,0,80,0,36,0
 SwaggerCodeGen,org.json.simple,JSONObject,161,3,14,0,50,2,16,1,9,1
 SwaggerCodeGen,org.gemini.codegen.Handler,DbJsonHandler,67,0,0,0,19,0,3,0,3,0
 SwaggerCodeGen,org.gemini.codegen.Handler,TemplateHandler,401,76,4,0,103,24,4,3,2,3
 SwaggerCodeGen,org.gemini.codegen.Handler,DirectoryHandler.new FilenameFilter() {...},10,0,0,0,2,0,2,0,2,0
-SwaggerCodeGen,org.gemini.codegen.Handler,DirectoryHandler,211,7,12,0,57,2,14,1,8,1
-SwaggerCodeGen,org.gemini.codegen.JOOQ.PojosGen,EntityClassGenerator,13,114,2,2,3,33,3,1,1,1
+SwaggerCodeGen,org.gemini.codegen.Handler,DirectoryHandler,93,118,6,6,24,35,9,6,4,5
+SwaggerCodeGen,org.gemini.codegen.JOOQ.PojosGen,EntityClassGenerator,127,0,4,0,36,0,4,0,2,0
 SwaggerCodeGen,org.gemini.codegen.JOOQ.PojosGen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0
-SwaggerCodeGen,org.gemini.codegen.JOOQ.PojosGen,CustomJooqAutoGenerator,952,2235,167,133,145,367,122,59,3,28
+SwaggerCodeGen,org.gemini.codegen.JOOQ.PojosGen,CustomJooqAutoGenerator,3187,0,300,0,512,0,181,0,31,0

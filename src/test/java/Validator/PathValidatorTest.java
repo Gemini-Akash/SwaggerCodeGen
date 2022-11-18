@@ -4,7 +4,6 @@ import org.gemini.codegen.ApiCodeGen.Validator.PathValidator;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.Assert.assertFalse;
 
 public class PathValidatorTest {
 
@@ -18,6 +17,6 @@ public class PathValidatorTest {
     @Test
     public void testCaseForIsValidateNeg(){
         PathValidator pathValidator =new PathValidator();
-        assertFalse(pathValidator.isValidPath("src/test/java1/abc"));
+        Assertions.assertFalse(pathValidator.isValidPath("src/test/java1/abc"));
     }
 }

@@ -1,12 +1,10 @@
 package org.gemini.codegen;
 
-import org.gemini.codegen.ApiCodeGen.Validator.DialectValidator;
-import org.gemini.codegen.ApiCodeGen.Validator.JsonValidator;
 import org.gemini.codegen.ApiCodeGen.Loader.CustomClassLoader;
+import org.gemini.codegen.ApiCodeGen.Validator.JsonValidator;
 import org.gemini.codegen.Handler.DbJsonHandler;
 import org.gemini.codegen.Handler.DirectoryHandler;
 import org.gemini.codegen.Handler.TemplateHandler;
-
 import org.gemini.codegen.JOOQ.PojosGen.EntityClassGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +20,7 @@ public class CodeGeneratorApp {
     public static void main(String[] args) {
 
         LOG.info("<------ CodeGen FrameWork Started ------>");
-        DialectValidator.validateDialect(DirectoryHandler.dialect);
+        org.gemini.codegen.ApiCodeGen.Validator.DialectValidator.validateDialect(DirectoryHandler.dialect);
         DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
         try {
             path.setLength(0);

@@ -1,8 +1,8 @@
 package Handler;
 
 import org.gemini.codegen.Handler.TemplateHandler;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
@@ -20,15 +20,22 @@ public class TemplateHandlerTests {
         File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
             Assertions.assertTrue(file.exists(),"File Template Not Generated");
         }
-
-        @AfterAll
-        public static void cleanUp(){
-            cleanUpFiles("src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java");
-            cleanUpFiles("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
+//        @After
+//        public static void cleanUp(){
+//            cleanUpFiles("src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java");
+//            cleanUpFiles("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
+//        }
+        @After
+        public  void cleanUpGeneratedClassTemplate(){
+            String path = "src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java";
+            File file = new File(path);
+            if(file.isDirectory() || file.isFile()){
+                file.delete();
+            }
         }
-        @AfterAll
-        public static void cleanUpFiles( String filePath){
-            String path = filePath;
+        @After
+        public void cleanUpGeneratedFileTemplate(){
+            String path = "src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt";
             File file = new File(path);
             if(file.isDirectory() || file.isFile()){
                 file.delete();
