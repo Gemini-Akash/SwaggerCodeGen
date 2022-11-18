@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="323cf8ef-58eb-4638-8c06-a60c33c0c29a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/DbJsonHandlerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/DirectoryHandlerTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/TemplateHandlerTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Jooq/JOOQTestCases.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Loader/CustomClassLoaderTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/DialectValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/JsonValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/PathValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/PojoValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/CustomClassLoader/ClassFiles/Dummy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/CustomClassLoader/testScript.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/DemoClassFiles/Dummy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/DummyJsonForClass.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/demoTemplateTest/DummyClassTemplate.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/demoTemplateTest/DummyFileTemplate.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Validator/DemoNegValidatePojoClassContent.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/Validator/DemoValidatepojoclasscontent.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testScript.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/handler/DirectoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/handler/DirectoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/sonar/.sonar_lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/sonar/report-task.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2Hid2q1NNFule7qEfWBlgQJOqlY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Intellj Projects/SwaggerCodeGen/src&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Intellj Projects\SwaggerCodeGen\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.PojoValidatorTest">
+    <configuration name="DbJsonHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Handler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Handler" />
+      <option name="MAIN_CLASS_NAME" value="Handler.DbJsonHandlerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DialectValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Validator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Validator" />
+      <option name="MAIN_CLASS_NAME" value="Validator.DialectValidatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectoryHandlerTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Handler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Handler" />
+      <option name="MAIN_CLASS_NAME" value="Handler.DirectoryHandlerTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PojoValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Validator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Validator" />
+      <option name="MAIN_CLASS_NAME" value="Validator.PojoValidatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PojoValidatorTest" />
+        <item itemvalue="JUnit.DirectoryHandlerTests" />
+        <item itemvalue="JUnit.DialectValidatorTest" />
+        <item itemvalue="JUnit.DbJsonHandlerTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="323cf8ef-58eb-4638-8c06-a60c33c0c29a" name="Changes" comment="" />
+      <created>1668771634009</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668771634009</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

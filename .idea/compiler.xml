@@ -9,5 +9,8 @@
         <module name="SwaggerCodeGen" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SwaggerCodeGen" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
