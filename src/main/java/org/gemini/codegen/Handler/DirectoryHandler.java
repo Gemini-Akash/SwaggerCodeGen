@@ -78,7 +78,10 @@ public class DirectoryHandler {
      * @return schemaName
      */
     public static String getSchemaName() {
-        File schemaName= new File(DirectoryHandler.generateDirectoryPath()+"/entity");
+        StringBuilder path =new StringBuilder();
+//        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append("/entity");
+        File schemaName= new File(path.toString());
         String[] directories = schemaName.list(new FilenameFilter() {
             @Override
             public boolean accept(File current, String name) {

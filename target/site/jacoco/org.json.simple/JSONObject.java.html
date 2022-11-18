@@ -52,49 +52,49 @@ public class JSONObject extends LinkedHashMap implements Map, JSONAware, JSONStr
 <span class="nc" id="L52">    }</span>
 
     public static String toJSONString(Map map) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (map == null) {</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (map == null) {</span>
 <span class="nc" id="L56">            return &quot;null&quot;;</span>
         } else {
-<span class="nc" id="L58">            StringBuffer sb = new StringBuffer();</span>
-<span class="nc" id="L59">            boolean first = true;</span>
-<span class="nc" id="L60">            Iterator iter = map.entrySet().iterator();</span>
-<span class="nc" id="L61">            sb.append('{');</span>
+<span class="fc" id="L58">            StringBuffer sb = new StringBuffer();</span>
+<span class="fc" id="L59">            boolean first = true;</span>
+<span class="fc" id="L60">            Iterator iter = map.entrySet().iterator();</span>
+<span class="fc" id="L61">            sb.append('{');</span>
 
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            while(iter.hasNext()) {</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">                if (first) {</span>
-<span class="nc" id="L65">                    first = false;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            while(iter.hasNext()) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                if (first) {</span>
+<span class="fc" id="L65">                    first = false;</span>
                 } else {
-<span class="nc" id="L67">                    sb.append(',');</span>
+<span class="fc" id="L67">                    sb.append(',');</span>
                 }
 
-<span class="nc" id="L70">                Entry entry = (Entry)iter.next();</span>
-<span class="nc" id="L71">                toJSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);</span>
-<span class="nc" id="L72">            }</span>
+<span class="fc" id="L70">                Entry entry = (Entry)iter.next();</span>
+<span class="fc" id="L71">                toJSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);</span>
+<span class="fc" id="L72">            }</span>
 
-<span class="nc" id="L74">            sb.append('}');</span>
-<span class="nc" id="L75">            return sb.toString();</span>
+<span class="fc" id="L74">            sb.append('}');</span>
+<span class="fc" id="L75">            return sb.toString();</span>
         }
     }
 
     public String toJSONString() {
-<span class="nc" id="L80">        return toJSONString(this);</span>
+<span class="fc" id="L80">        return toJSONString(this);</span>
     }
 
     private static String toJSONString(String key, Object value, StringBuffer sb) {
-<span class="nc" id="L84">        sb.append('&quot;');</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (key == null) {</span>
+<span class="fc" id="L84">        sb.append('&quot;');</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (key == null) {</span>
 <span class="nc" id="L86">            sb.append(&quot;null&quot;);</span>
         } else {
-<span class="nc" id="L88">            JSONValue.escape(key, sb);</span>
+<span class="fc" id="L88">            JSONValue.escape(key, sb);</span>
         }
 
-<span class="nc" id="L91">        sb.append('&quot;').append(':');</span>
-<span class="nc" id="L92">        sb.append(JSONValue.toJSONString(value));</span>
-<span class="nc" id="L93">        return sb.toString();</span>
+<span class="fc" id="L91">        sb.append('&quot;').append(':');</span>
+<span class="fc" id="L92">        sb.append(JSONValue.toJSONString(value));</span>
+<span class="fc" id="L93">        return sb.toString();</span>
     }
 
     public String toString() {
-<span class="nc" id="L97">        return this.toJSONString();</span>
+<span class="fc" id="L97">        return this.toJSONString();</span>
     }
 
     public static String toString(String key, Object value) {

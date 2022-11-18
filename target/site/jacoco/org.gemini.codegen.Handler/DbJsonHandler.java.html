@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 <span class="nc" id="L11">public class DbJsonHandler {</span>
-<span class="nc" id="L12">    private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);</span>
+<span class="fc" id="L12">    private static final Logger LOG = LoggerFactory.getLogger(DbJsonHandler.class);</span>
 
     /**
      *  createDbJson method is used for creating application.properties Json file.
@@ -22,28 +22,28 @@ import java.io.IOException;
      * @param username
      */
     public static void createDbJson(File filePath, String url, String dialect, String username, String password, String driverClassName){
-<span class="nc" id="L25">        FileWriter fileWriter=null;</span>
+<span class="fc" id="L25">        FileWriter fileWriter=null;</span>
         try {
-<span class="nc" id="L27">            JSONObject jsonObject = new JSONObject();</span>
-<span class="nc" id="L28">            jsonObject.put(&quot;url&quot;, url);</span>
-<span class="nc" id="L29">            jsonObject.put(&quot;dialect&quot;,dialect);</span>
-<span class="nc" id="L30">            jsonObject.put(&quot;username&quot;,username);</span>
-<span class="nc" id="L31">            jsonObject.put(&quot;driverClassName&quot;,driverClassName);</span>
-<span class="nc" id="L32">            jsonObject.put(&quot;password&quot;, password);</span>
-<span class="nc" id="L33">            LOG.info(&quot;Required applicationPropertiesJson: {}&quot;, jsonObject);</span>
-<span class="nc" id="L34">            fileWriter = new FileWriter(filePath);</span>
-<span class="nc" id="L35">            fileWriter.write(jsonObject.toJSONString());</span>
+<span class="fc" id="L27">            JSONObject jsonObject = new JSONObject();</span>
+<span class="fc" id="L28">            jsonObject.put(&quot;url&quot;, url);</span>
+<span class="fc" id="L29">            jsonObject.put(&quot;dialect&quot;,dialect);</span>
+<span class="fc" id="L30">            jsonObject.put(&quot;username&quot;,username);</span>
+<span class="fc" id="L31">            jsonObject.put(&quot;driverClassName&quot;,driverClassName);</span>
+<span class="fc" id="L32">            jsonObject.put(&quot;password&quot;, password);</span>
+<span class="fc" id="L33">            LOG.info(&quot;Required applicationPropertiesJson: {}&quot;, jsonObject);</span>
+<span class="fc" id="L34">            fileWriter = new FileWriter(filePath);</span>
+<span class="fc" id="L35">            fileWriter.write(jsonObject.toJSONString());</span>
 <span class="nc" id="L36">        } catch (Exception e) {</span>
 <span class="nc" id="L37">            LOG.error(&quot;Exception in  writing JSON file / createDbJson(): {}&quot;, e.getMessage());</span>
         }
         finally {
             try {
-<span class="nc" id="L41">                fileWriter.close();</span>
+<span class="fc" id="L41">                fileWriter.close();</span>
             }
 <span class="nc" id="L43">            catch (IOException e) {</span>
 <span class="nc" id="L44">                LOG.error(&quot;Exception in closing the file of createDbJson(): {}&quot;, e.getMessage());</span>
-<span class="nc" id="L45">            }</span>
+<span class="fc" id="L45">            }</span>
         }
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L47">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

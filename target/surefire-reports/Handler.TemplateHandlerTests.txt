@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: Handler.TemplateHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.562 s - in Handler.TemplateHandlerTests
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 4.972 s <<< FAILURE! - in Handler.TemplateHandlerTests
+testGenerateClassFromTemplates(Handler.TemplateHandlerTests)  Time elapsed: 4.746 s  <<< ERROR!
+java.lang.NullPointerException
+	at Handler.TemplateHandlerTests.testGenerateClassFromTemplates(TemplateHandlerTests.java:13)
+
+testGenerateFileFromTemplate(Handler.TemplateHandlerTests)  Time elapsed: 0.218 s  <<< ERROR!
+java.lang.NullPointerException
+	at Handler.TemplateHandlerTests.testGenerateFileFromTemplate(TemplateHandlerTests.java:19)
+
