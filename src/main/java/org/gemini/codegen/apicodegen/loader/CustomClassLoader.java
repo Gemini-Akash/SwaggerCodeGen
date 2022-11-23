@@ -1,6 +1,8 @@
 package org.gemini.codegen.apicodegen.loader;
 
+import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
+
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,6 +28,7 @@ public final class CustomClassLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
     PojoValidator pojoValidator=new PojoValidator();
+    DirectoryHandler directoryHandler=new DirectoryHandler();
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
@@ -39,8 +42,8 @@ public final class CustomClassLoader {
         StringBuilder path = new StringBuilder();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("className", className);
-        jsonObject.put("scriptName", DirectoryHandler.getScriptName());
-        jsonObject.put("schemaName", DirectoryHandler.getSchemaName());
+        jsonObject.put("scriptName", CodeGenUtils.getScriptName());
+        jsonObject.put("schemaName", CodeGenUtils.getSchemaName());
         jsonObject.put("variable", variableFieldsObject);
         jsonObject.put("primaryKeys", primaryKeysObject);
         LOG.info("Required json: {}", jsonObject);
@@ -67,9 +70,9 @@ public final class CustomClassLoader {
         StringBuilder path = new StringBuilder();
         List<String> classNames = new ArrayList<>();
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/jsonFiles");
-        DirectoryHandler.createDirectory(path.toString());
+       CodeGenUtils.createDirectory(path.toString());
         try {
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();
@@ -150,18 +153,18 @@ public final class CustomClassLoader {
     public Class getFullyQualifiedClassName(final File filePath) {
         StringBuilder path = new StringBuilder();
         path.setLength(0);
-        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
+        path.append(CodeGenUtils.createMap().get("outerDirectoryPath"));
         path.append("/");
-        path.append(DirectoryHandler.getScriptName());
+        path.append(CodeGenUtils.getScriptName());
         path.append("SpringBootApp/src/main/java");
         File directoryPath = new File(path.toString());
         Class cls = null;
         URLClassLoader urlClassLoader = null;
             path.setLength(0);
             path.append("com.gemini.");
-            path.append(DirectoryHandler.getScriptName());
+            path.append(CodeGenUtils.getScriptName());
             path.append(".entity.");
-            path.append(DirectoryHandler.getSchemaName());
+            path.append(CodeGenUtils.getSchemaName());
             path.append(".tables.pojos.");
             path.append(filePath.getName().replaceAll(".java", ""));
         try{
