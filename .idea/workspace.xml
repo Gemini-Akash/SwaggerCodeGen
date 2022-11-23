@@ -5,49 +5,73 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="323cf8ef-58eb-4638-8c06-a60c33c0c29a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/DbJsonHandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/DirectoryHandlerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Handler/TemplateHandlerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Jooq/JOOQTestCases.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Loader/CustomClassLoaderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/DialectValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/JsonValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/PathValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Validator/PojoValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/CustomClassLoader/ClassFiles/Dummy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/CustomClassLoader/testScript.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/DemoClassFiles/Dummy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/DummyJsonForClass.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/demoTemplateTest/DummyClassTemplate.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Handler/demoTemplateTest/DummyFileTemplate.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Validator/DemoNegValidatePojoClassContent.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/Validator/DemoValidatepojoclasscontent.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/testScript.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/CoverUsage.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/handler/DirectoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gemini/codegen/handler/DirectoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Handler/DirectoryHandlerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Handler/DirectoryHandlerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Validator/PojoValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Validator/PojoValidatorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT-shaded.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SwaggerCodeGen-1.1-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gemini/codegen/Handler/DirectoryHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/coverage-reports/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/target/coverage-reports/jacoco.exec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/sonar/.sonar_lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/sonar/report-task.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/PojoValidator.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/PojoValidator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/PojoValidator.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/PojoValidator.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.apicodegen.validator/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler$1.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler$1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/DirectoryHandler.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.handler/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/CustomJooqAutoGenerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/CustomJooqAutoGenerator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/CustomJooqAutoGenerator.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/CustomJooqAutoGenerator.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/EntityClassGenerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/EntityClassGenerator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/EntityClassGenerator.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/EntityClassGenerator.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.gemini.codegen.jooqpojogen/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter$CloseResult.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter$CloseResult.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/GeneratorWriter.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/org.jooq.codegen/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2022-11-18T17-42-45_704-jvmRun2.dump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Handler.DbJsonHandlerTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Handler.DbJsonHandlerTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Handler.DirectoryHandlerTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Handler.DirectoryHandlerTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Handler.TemplateHandlerTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Handler.TemplateHandlerTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Loader.CustomClassLoaderTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Loader.CustomClassLoaderTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.DbJsonHandlerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.DbJsonHandlerTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.DirectoryHandlerTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.DirectoryHandlerTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.TemplateHandlerTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Handler.TemplateHandlerTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Loader.CustomClassLoaderTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Loader.CustomClassLoaderTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.DialectValidatorTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.DialectValidatorTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.JsonValidatorTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.JsonValidatorTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.PathValidatorTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.PathValidatorTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.PojoValidatorTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-Validator.PojoValidatorTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Validator.DialectValidatorTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Validator.DialectValidatorTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Validator.JsonValidatorTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Validator.JsonValidatorTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Validator.PathValidatorTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Validator.PathValidatorTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/Validator.PojoValidatorTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/Validator.PojoValidatorTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Handler/DirectoryHandlerTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Handler/DirectoryHandlerTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Validator/PojoValidatorTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Validator/PojoValidatorTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,7 +85,7 @@
     </option>
     <option name="myId2Visible">
       <map>
-        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
         <entry key="com.haulmont.jpb.jpaStructure" value="false" />
       </map>
     </option>
@@ -81,49 +105,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Intellj Projects/SwaggerCodeGen/src&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "D:/Intellj Projects/SwaggerCodeGen/src/main/java/org/gemini/codegen",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen" />
       <recent name="D:\Intellj Projects\SwaggerCodeGen\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PojoValidatorTest">
-    <configuration name="DbJsonHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SwaggerCodeGen" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Handler.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Handler" />
-      <option name="MAIN_CLASS_NAME" value="Handler.DbJsonHandlerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DialectValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SwaggerCodeGen" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Validator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Validator" />
-      <option name="MAIN_CLASS_NAME" value="Validator.DialectValidatorTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.DirectoryHandlerTests.testGenerateDirectoryPath">
     <configuration name="DirectoryHandlerTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SwaggerCodeGen" />
       <extension name="coverage">
@@ -139,27 +136,77 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PojoValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DirectoryHandlerTests.testGenerateDirectoryPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SwaggerCodeGen" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Validator.*" />
+          <option name="PATTERN" value="Handler.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Validator" />
-      <option name="MAIN_CLASS_NAME" value="Validator.PojoValidatorTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Handler" />
+      <option name="MAIN_CLASS_NAME" value="Handler.DirectoryHandlerTests" />
+      <option name="METHOD_NAME" value="testGenerateDirectoryPath" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectoryHandlerTests.testGetSchemaName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Handler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Handler" />
+      <option name="MAIN_CLASS_NAME" value="Handler.DirectoryHandlerTests" />
+      <option name="METHOD_NAME" value="testGetSchemaName" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="demoTest.testMethod1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="sample" />
+      <option name="MAIN_CLASS_NAME" value="sample.demoTest" />
+      <option name="METHOD_NAME" value="testMethod1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="demoTest.testMethod2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SwaggerCodeGen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="sample" />
+      <option name="MAIN_CLASS_NAME" value="sample.demoTest" />
+      <option name="METHOD_NAME" value="testMethod2" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PojoValidatorTest" />
+        <item itemvalue="JUnit.DirectoryHandlerTests.testGenerateDirectoryPath" />
         <item itemvalue="JUnit.DirectoryHandlerTests" />
-        <item itemvalue="JUnit.DialectValidatorTest" />
-        <item itemvalue="JUnit.DbJsonHandlerTest" />
+        <item itemvalue="JUnit.DirectoryHandlerTests.testGetSchemaName" />
+        <item itemvalue="JUnit.demoTest.testMethod1" />
+        <item itemvalue="JUnit.demoTest.testMethod2" />
       </list>
     </recent_temporary>
   </component>
@@ -184,5 +231,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.mockito.internal.creation.settings.CreationSettings" memberName="serializableMode" />
+        <PinnedItemInfo parentTag="org.mockito.internal.creation.bytebuddy.InlineDelegateByteBuddyMockMaker$InlineStaticMockControl" memberName="settings" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

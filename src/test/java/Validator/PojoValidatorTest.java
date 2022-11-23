@@ -18,8 +18,8 @@ public class PojoValidatorTest {
 
     @Before
     public void setUp() {
-        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/testScript.sql");
-        DirectoryHandler.setOuterDirectoryPath("src/test/resources/Handler");
+//        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/testScript.sql");
+//        DirectoryHandler.setOuterDirectoryPath("src/test/resources/Handler");
         try {
             EntityClassGenerator.EntityGenerator("src/test/resources/testScript.sql", "entity", "src/test/resources/");
         } catch (Exception e) {

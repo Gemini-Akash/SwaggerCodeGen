@@ -1,17 +1,17 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,68,161,7,7,19,49,10,10,4,9
+SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,236,3,18,0,71,1,21,1,12,1
 SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler.new FilenameFilter() {...},10,0,0,0,2,0,2,0,2,0
 SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,391,56,2,0,100,16,3,3,2,3
 SwaggerCodeGen,org.gemini.codegen.handler,DbJsonHandler,9,48,0,0,3,12,1,2,1,2
 SwaggerCodeGen,org.gemini.codegen.apicodegen.loader,CustomClassLoader,431,29,17,1,107,8,17,2,8,2
 SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,184,0,0,0,48,0,3,0,3,0
-SwaggerCodeGen,org.gemini.codegen.jooqpojogen,EntityClassGenerator,13,106,2,2,3,32,3,1,1,1
-SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,939,2174,166,132,144,357,122,58,4,27
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,EntityClassGenerator,119,0,4,0,35,0,4,0,2,0
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,3113,0,298,0,501,0,180,0,31,0
 SwaggerCodeGen,org.gemini.codegen.jooqpojogen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0
-SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,0,9,0,0,0,4,0,1,0,1
-SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,163,555,31,57,34,111,41,39,15,21
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,9,0,0,0,4,0,1,0,1,0
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,718,0,88,0,145,0,80,0,36,0
 SwaggerCodeGen,org.json.simple,JSONObject,84,80,8,6,28,24,10,7,5,5
-SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,PojoValidator,39,140,7,23,12,38,7,13,1,4
+SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,PojoValidator,179,0,30,0,50,0,20,0,5,0
 SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,DialectValidator,4,60,2,2,2,5,3,2,1,2
 SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,JsonValidator,78,0,4,0,19,0,5,0,3,0
 SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,PathValidator,0,13,0,0,0,4,0,2,0,2

@@ -1,29 +1,43 @@
 package Handler;
 
 import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
+import org.gemini.codegen.handler.ConfigValue;
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DirectoryHandlerTests {
-    private static final Logger LOG = LoggerFactory.getLogger(DirectoryHandlerTests.class);
-
     @Before
     public void setUp() {
         File file = new File("src/test/resources/Handler/Abc");
         if (!file.exists()) {
             file.mkdir();
         }
-        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/testScript.sql");
-        DirectoryHandler.setOuterDirectoryPath("src/test/resources/Handler");
+        Map<String, String> result = new HashMap<>();
+        result.put("outerDirectoryPath","src/test/resources");
+        result.put("outerScriptDirectoryPath","src/test/resources/testScript.sql");
+        result.put("dialect", "");
+        result.put("driverClassName", "");
+        result.put("username", "");
+        result.put("password", "");
+        result.put("url", "");
+
+        MockedStatic<ConfigValue> theMock = Mockito.mockStatic(ConfigValue.class);
+            theMock.when(() -> ConfigValue.createMap()).thenReturn(result);
+            ConfigValue.createMap();
+
+
     }
 
     @After
@@ -38,6 +52,7 @@ public class DirectoryHandlerTests {
         if (file1.isDirectory() || file1.isFile()) {
             file1.delete();
         }
+
     }
 
 
@@ -64,42 +79,44 @@ public class DirectoryHandlerTests {
 
     }
 
-//    @Test
-//    public void testGetSchemaName(){
-//        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
-//            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-//                    .thenReturn("src/test/resources/Handler");
-//            String expected = DirectoryHandler.getSchemaName();
-//            System.out.println(expected);
-//            String actual = "ims";
-//            Assertions.assertEquals(expected, actual);
-//        }
-//    }
+    @Test
+    public void testGetSchemaName() {
+        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class, InvocationOnMock::callRealMethod)) {
+            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
+                    .thenReturn("src/test/resources/Handler");
+            System.out.println(DirectoryHandler.generateDirectoryPath());
+            String expected = DirectoryHandler.getSchemaName();
+            String actual = "ims";
+            Assertions.assertEquals(expected, actual);
+        }
+    }
 
-//    @Test
-//    public void negTestGetSchemaName(){
-//        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class)) {
-//            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-//                    .thenReturn("src/test/resources/Handler");
-//            String expected = DirectoryHandler.getSchemaName();
-//            String actual = "ims1";
-//            Assertions.assertNotEquals(expected, actual);
-//        }
-//    }
+    @Test
+    public void negTestGetSchemaName() {
+        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class, InvocationOnMock::callRealMethod)) {
+            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
+                    .thenReturn("src/test/resources/Handler");
+            String expected = DirectoryHandler.getSchemaName();
+            String actual = "ims1";
+            Assertions.assertNotEquals(expected, actual);
+        }
+    }
 
 
     @Test
     public void testGenerateDirectoryPath() {
-        StringBuilder path = new StringBuilder();
-        path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
-        path.append("/");
-        path.append(DirectoryHandler.getScriptName());
-        path.append("SpringBootApp/src/main/java/com/gemini/");
-        path.append(DirectoryHandler.getScriptName());
-        String expected = path.toString();
-        String actual = DirectoryHandler.generateDirectoryPath();
-        Assertions.assertEquals(expected, actual);
+
+            StringBuilder path = new StringBuilder();
+            path.setLength(0);
+            path.append(ConfigValue.createMap().get("outerDirectoryPath"));
+            path.append("/");
+            path.append(DirectoryHandler.getScriptName());
+            path.append("SpringBootApp/src/main/java/com/gemini/");
+            path.append(DirectoryHandler.getScriptName());
+            String expected = path.toString();
+            String actual = DirectoryHandler.generateDirectoryPath();
+            Assertions.assertEquals(expected, actual);
+
     }
 
 
@@ -133,3 +150,5 @@ public class DirectoryHandlerTests {
         Assertions.assertFalse(classFile.exists());
     }
 }
+//        result.put("outerDirectoryPath", System.setProperty("directoryPath", "src/test/resources"));
+//        result.put("outerScriptDirectoryPath", System.setProperty("scriptPath", "src/test/resources/testScript.sql"));

@@ -26,52 +26,52 @@ import org.jooq.meta.jaxb.*;
 
     public static void EntityGenerator(String scriptPath, String packageName, String directory) throws Exception {
 
-<span class="fc" id="L29">        boolean scriptResult = PathValidator.isValidPath(scriptPath);</span>
-<span class="fc" id="L30">        boolean directoryResult = PathValidator.isValidPath(directory);</span>
+<span class="nc" id="L29">        boolean scriptResult = PathValidator.isValidPath(scriptPath);</span>
+<span class="nc" id="L30">        boolean directoryResult = PathValidator.isValidPath(directory);</span>
 
-<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (!scriptResult) {</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (!scriptResult) {</span>
 <span class="nc" id="L33">            throw new FileNotFoundException(&quot;Script Not found....&quot;);</span>
         }
 
-<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (!directoryResult) {</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (!directoryResult) {</span>
 <span class="nc" id="L37">            throw new FileNotFoundException(&quot;Directory Not found....&quot;);</span>
         }
 
-<span class="fc" id="L40">        Configuration configuration = new Configuration();</span>
+<span class="nc" id="L40">        Configuration configuration = new Configuration();</span>
 
-<span class="fc" id="L42">        configuration.withGenerator(new Generator()</span>
-<span class="fc" id="L43">                .withName(CustomJooqAutoGenerator.class.getCanonicalName())</span>
-<span class="fc" id="L44">                .withStrategy(new Strategy()</span>
-<span class="fc" id="L45">                        .withMatchers(new Matchers()</span>
-<span class="fc" id="L46">                                .withFields(</span>
+<span class="nc" id="L42">        configuration.withGenerator(new Generator()</span>
+<span class="nc" id="L43">                .withName(CustomJooqAutoGenerator.class.getCanonicalName())</span>
+<span class="nc" id="L44">                .withStrategy(new Strategy()</span>
+<span class="nc" id="L45">                        .withMatchers(new Matchers()</span>
+<span class="nc" id="L46">                                .withFields(</span>
                                         new MatchersFieldType()
-<span class="fc" id="L48">                                                .withFieldMember(new MatcherRule()</span>
-<span class="fc" id="L49">                                                        .withTransform(MatcherTransformType.PASCAL))</span>
+<span class="nc" id="L48">                                                .withFieldMember(new MatcherRule()</span>
+<span class="nc" id="L49">                                                        .withTransform(MatcherTransformType.PASCAL))</span>
 
                                 )))
-<span class="fc" id="L52">                .withDatabase(new Database()</span>
-<span class="fc" id="L53">                        .withName(&quot;org.jooq.meta.extensions.ddl.DDLDatabase&quot;)</span>
-<span class="fc" id="L54">                        .withProperties(new Property().</span>
-<span class="fc" id="L55">                                withKey(&quot;scripts&quot;).</span>
-<span class="fc" id="L56">                                withValue(scriptPath)</span>
+<span class="nc" id="L52">                .withDatabase(new Database()</span>
+<span class="nc" id="L53">                        .withName(&quot;org.jooq.meta.extensions.ddl.DDLDatabase&quot;)</span>
+<span class="nc" id="L54">                        .withProperties(new Property().</span>
+<span class="nc" id="L55">                                withKey(&quot;scripts&quot;).</span>
+<span class="nc" id="L56">                                withValue(scriptPath)</span>
                         )
                 )
-<span class="fc" id="L59">                .withGenerate(new Generate()</span>
-<span class="fc" id="L60">                        .withPojos(true)</span>
-<span class="fc" id="L61">                        .withDaos(true)</span>
-<span class="fc" id="L62">                        .withSpringAnnotations(true)</span>
-<span class="fc" id="L63">                        .withJpaAnnotations(true)</span>
-<span class="fc" id="L64">                        .withJpaVersion(String.valueOf(2.2))</span>
-<span class="fc" id="L65">                        .withValidationAnnotations(true)</span>
-<span class="fc" id="L66">                        .withConstructorPropertiesAnnotation(true)</span>
-<span class="fc" id="L67">                        .withConstructorPropertiesAnnotationOnPojos(true)</span>
+<span class="nc" id="L59">                .withGenerate(new Generate()</span>
+<span class="nc" id="L60">                        .withPojos(true)</span>
+<span class="nc" id="L61">                        .withDaos(true)</span>
+<span class="nc" id="L62">                        .withSpringAnnotations(true)</span>
+<span class="nc" id="L63">                        .withJpaAnnotations(true)</span>
+<span class="nc" id="L64">                        .withJpaVersion(String.valueOf(2.2))</span>
+<span class="nc" id="L65">                        .withValidationAnnotations(true)</span>
+<span class="nc" id="L66">                        .withConstructorPropertiesAnnotation(true)</span>
+<span class="nc" id="L67">                        .withConstructorPropertiesAnnotationOnPojos(true)</span>
                 )
-<span class="fc" id="L69">                .withTarget(new Target()</span>
-<span class="fc" id="L70">                        .withPackageName(packageName)</span>
-<span class="fc" id="L71">                        .withDirectory(directory))</span>
+<span class="nc" id="L69">                .withTarget(new Target()</span>
+<span class="nc" id="L70">                        .withPackageName(packageName)</span>
+<span class="nc" id="L71">                        .withDirectory(directory))</span>
 
-<span class="fc" id="L73">        ).withOnError(OnError.FAIL);</span>
-<span class="fc" id="L74">        GenerationTool.generate(configuration);</span>
-<span class="fc" id="L75">    }</span>
+<span class="nc" id="L73">        ).withOnError(OnError.FAIL);</span>
+<span class="nc" id="L74">        GenerationTool.generate(configuration);</span>
+<span class="nc" id="L75">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

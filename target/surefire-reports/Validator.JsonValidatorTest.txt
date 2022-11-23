@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: Validator.JsonValidatorTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.591 s - in Validator.JsonValidatorTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 11.154 s <<< FAILURE! - in Validator.JsonValidatorTest
+validateJsonFiles(Validator.JsonValidatorTest)  Time elapsed: 11.153 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: Cannot instrument class org.gemini.codegen.handler.DirectoryHandler because it or one of its supertypes could not be initialized
+	at Validator.JsonValidatorTest.validateJsonFiles(JsonValidatorTest.java:12)
+Caused by: java.lang.NullPointerException
+	at Validator.JsonValidatorTest.validateJsonFiles(JsonValidatorTest.java:12)
+

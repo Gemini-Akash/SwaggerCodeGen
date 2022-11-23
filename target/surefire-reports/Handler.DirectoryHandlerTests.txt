@@ -1,4 +1,38 @@
 -------------------------------------------------------------------------------
 Test set: Handler.DirectoryHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.489 s - in Handler.DirectoryHandlerTests
+Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 1.703 s <<< FAILURE! - in Handler.DirectoryHandlerTests
+testRenameDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.601 s  <<< ERROR!
+java.lang.ExceptionInInitializerError
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+Caused by: java.lang.NullPointerException
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+testDeleteFiles(Handler.DirectoryHandlerTests)  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+negTestRenameDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+negTestGetScriptName(Handler.DirectoryHandlerTests)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+testDeleteDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.003 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+testGenerateDirectoryPath(Handler.DirectoryHandlerTests)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+testGetScriptName(Handler.DirectoryHandlerTests)  Time elapsed: 0.015 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+
+testCreateDirectory(Handler.DirectoryHandlerTests)  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class org.gemini.codegen.handler.DirectoryHandler
+	at Handler.DirectoryHandlerTests.setUp(DirectoryHandlerTests.java:25)
+

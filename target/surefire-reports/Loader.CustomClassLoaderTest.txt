@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Loader.CustomClassLoaderTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.861 s - in Loader.CustomClassLoaderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.101 s - in Loader.CustomClassLoaderTest
