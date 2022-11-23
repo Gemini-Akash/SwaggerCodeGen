@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 public class CustomClassLoaderTest {
+    CustomClassLoader customClassLoader=new CustomClassLoader();
 
     private static final Logger log = LoggerFactory.getLogger(CustomClassLoaderTest.class);
 
@@ -49,7 +50,7 @@ public class CustomClassLoaderTest {
 //    }
     @Test
     public void testForJavaCompileClass() {
-        CustomClassLoader.compileJavaClasses(new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
+        customClassLoader.compileJavaClasses(new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
         File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
         Assertions.assertTrue(file.exists(), "File is not compiled by compiler");
     }

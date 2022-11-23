@@ -17,30 +17,39 @@ import java.util.List;
 import java.util.Map;
 
 public class DirectoryHandlerTests {
+    static MockedStatic<DirectoryHandler> theMock;
+    CustomClassLoader customClassLoader = new CustomClassLoader();
+
     @Before
     public void setUp() {
         File file = new File("src/test/resources/Handler/Abc");
         if (!file.exists()) {
             file.mkdir();
         }
+
         Map<String, String> result = new HashMap<>();
-        result.put("outerDirectoryPath","src/test/resources");
-        result.put("outerScriptDirectoryPath","src/test/resources/testScript.sql");
+        result.put("outerDirectoryPath", "src/test/resources");
+        result.put("outerScriptDirectoryPath", "src/test/resources/testScript.sql");
         result.put("dialect", "");
         result.put("driverClassName", "");
         result.put("username", "");
         result.put("password", "");
         result.put("url", "");
 
-        MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class);
-            theMock.when(() -> DirectoryHandler.createMap()).thenReturn(result);
-            DirectoryHandler.createMap();
+        theMock = Mockito.mockStatic(DirectoryHandler.class, InvocationOnMock::callRealMethod);
+        theMock.when(() -> DirectoryHandler.createMap()).thenReturn(result);
 
 
     }
 
     @After
+    public void close() {
+        theMock.close();
+    }
+
+    @After
     public void cleanUpFiles() {
+
         String path = "src/test/resources/Handler/demoDirectory";
         File file = new File(path);
         if (file.isDirectory() || file.isFile()) {
@@ -80,41 +89,35 @@ public class DirectoryHandlerTests {
 
     @Test
     public void testGetSchemaName() {
-        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class, InvocationOnMock::callRealMethod)) {
-            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-                    .thenReturn("src/test/resources/Handler");
-            System.out.println(DirectoryHandler.generateDirectoryPath());
-            String expected = DirectoryHandler.getSchemaName();
-            String actual = "ims";
-            Assertions.assertEquals(expected, actual);
-        }
+        theMock.when(() -> DirectoryHandler.generateDirectoryPath()).thenReturn("src/test/resources/Handler");
+        String expected = DirectoryHandler.getSchemaName();
+        String actual = "ims";
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void negTestGetSchemaName() {
-        try (MockedStatic<DirectoryHandler> theMock = Mockito.mockStatic(DirectoryHandler.class, InvocationOnMock::callRealMethod)) {
-            theMock.when(() -> DirectoryHandler.generateDirectoryPath())
-                    .thenReturn("src/test/resources/Handler");
-            String expected = DirectoryHandler.getSchemaName();
-            String actual = "ims1";
-            Assertions.assertNotEquals(expected, actual);
-        }
-    }
 
+        theMock.when(() -> DirectoryHandler.generateDirectoryPath()).thenReturn("src/test/resources/Handler");
+        String expected = DirectoryHandler.getSchemaName();
+        String actual = "ims1";
+        Assertions.assertNotEquals(expected, actual);
+
+    }
 
     @Test
     public void testGenerateDirectoryPath() {
 
-            StringBuilder path = new StringBuilder();
-            path.setLength(0);
-            path.append(ConfigValue.createMap().get("outerDirectoryPath"));
-            path.append("/");
-            path.append(DirectoryHandler.getScriptName());
-            path.append("SpringBootApp/src/main/java/com/gemini/");
-            path.append(DirectoryHandler.getScriptName());
-            String expected = path.toString();
-            String actual = DirectoryHandler.generateDirectoryPath();
-            Assertions.assertEquals(expected, actual);
+        StringBuilder path = new StringBuilder();
+        path.setLength(0);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
+        path.append("/");
+        path.append(DirectoryHandler.getScriptName());
+        path.append("SpringBootApp/src/main/java/com/gemini/");
+        path.append(DirectoryHandler.getScriptName());
+        String expected = path.toString();
+        String actual = DirectoryHandler.generateDirectoryPath();
+        Assertions.assertEquals(expected, actual);
 
     }
 
@@ -142,7 +145,7 @@ public class DirectoryHandlerTests {
 
     @Test
     public void testDeleteFiles() {
-        CustomClassLoader.compileJavaClasses(new File("src/test/resources/Handler/DemoClassFiles/Dummy.java"));
+        customClassLoader.compileJavaClasses(new File("src/test/resources/Handler/DemoClassFiles/Dummy.java"));
         List<String> list = Arrays.asList("Dummy");
         DirectoryHandler.deleteFiles(list, "src/test/resources/Handler/DemoClassFiles/");
         File classFile = new File("src/test/resources/Handler/DemoClassFiles/Dummy.class");

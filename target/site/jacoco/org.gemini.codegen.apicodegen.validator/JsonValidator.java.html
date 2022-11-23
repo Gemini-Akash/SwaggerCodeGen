@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.gemini.codegen.apicodegen.validator</a> &gt; <span class="el_source">JsonValidator.java</span></div><h1>JsonValidator.java</h1><pre class="source lang-java linenums">package org.gemini.codegen.apicodegen.validator;
+
+import org.gemini.codegen.handler.DirectoryHandler;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
+<span class="nc" id="L14">public class JsonValidator {</span>
+<span class="nc" id="L15">    private static final Logger LOG = LoggerFactory.getLogger(JsonValidator.class);</span>
+
+    /**
+     * validateJsonFiles method is used for validating generated Json Files.
+     *
+     * @param classNames
+     */
+    public void validateJsonFiles(final List&lt;String&gt; classNames) {
+<span class="nc" id="L23">        StringBuilder path = new StringBuilder();</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for (String className : classNames) {</span>
+            JSONObject jsonObject;
+
+<span class="nc" id="L27">                path.setLength(0);</span>
+<span class="nc" id="L28">                path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L29">                path.append(&quot;/jsonFiles/&quot;);</span>
+<span class="nc" id="L30">                path.append(className);</span>
+<span class="nc" id="L31">                path.append(&quot;.json&quot;);</span>
+<span class="nc" id="L32">            try(FileReader fileReader = new FileReader(path.toString())) {</span>
+<span class="nc" id="L33">                jsonObject = (JSONObject) new JSONParser().parse(fileReader);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">                if (jsonObject.get(&quot;primaryKeys&quot;).toString().equals(&quot;[]&quot;)) {</span>
+<span class="nc" id="L35">                    LOG.info(&quot;Empty Json File: {}.json&quot;, className);</span>
+<span class="nc" id="L36">                    throw new RuntimeException(&quot;Json File is not created.&quot;);</span>
+                }
+<span class="nc" id="L38">            } catch (IOException | ParseException e) {</span>
+<span class="nc" id="L39">                LOG.info(&quot;Exception in validateJsonFiles method: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L40">            }</span>
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -15,11 +15,9 @@ import java.io.File;
 
 public class PojoValidatorTest {
 
-
+    PojoValidator pojoValidator=new PojoValidator();
     @Before
     public void setUp() {
-//        DirectoryHandler.setOuterScriptDirectoryPath("src/test/resources/testScript.sql");
-//        DirectoryHandler.setOuterDirectoryPath("src/test/resources/Handler");
         try {
             EntityClassGenerator.EntityGenerator("src/test/resources/testScript.sql", "entity", "src/test/resources/");
         } catch (Exception e) {
@@ -43,7 +41,7 @@ public class PojoValidatorTest {
 
     @Test
     public void testCountTables() {
-        int actual = PojoValidator.countTables();
+        int actual = pojoValidator.countTables();
         int expected = 3;
         Assertions.assertEquals(expected, actual);
     }
@@ -52,13 +50,13 @@ public class PojoValidatorTest {
     @Test
     public void testValidatePojoClassContent() {
         File file = new File("src/test/resources/Validator/DemoValidatepojoclasscontent.txt");
-        Assertions.assertTrue(PojoValidator.validatePojoClassContent(file));
+        Assertions.assertTrue(pojoValidator.validatePojoClassContent(file));
     }
 
     @Test
     public void negTestValidatePojoClassContent() {
         File file = new File("src/test/resources/Validator/DemoNegValidatePojoClassContent.txt");
-        Assertions.assertFalse(PojoValidator.validatePojoClassContent(file));
+        Assertions.assertFalse(pojoValidator.validatePojoClassContent(file));
     }
 
     /**
@@ -66,7 +64,7 @@ public class PojoValidatorTest {
      */
     @Test
     public void testValidatePojoClasses() {
-        boolean actual = PojoValidator.validatePojoClasses(new File("src/test/resources/entity/demo/tables/pojos").listFiles());
+        boolean actual = pojoValidator.validatePojoClasses(new File("src/test/resources/entity/demo/tables/pojos").listFiles());
         Assertions.assertTrue(actual);
     }
 
@@ -74,7 +72,7 @@ public class PojoValidatorTest {
     public void negTestValidatePojoClasses() {
         File file = new File("src/test/resources/entity/demo/tables/pojos/Author.java");
         file.delete();
-        boolean actual = PojoValidator.validatePojoClasses(new File("src/test/resources/entity/demo/tables/pojos").listFiles());
+        boolean actual = pojoValidator.validatePojoClasses(new File("src/test/resources/entity/demo/tables/pojos").listFiles());
         Assertions.assertFalse(actual);
     }
 

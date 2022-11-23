@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeGeneratorApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.gemini.codegen</a> &gt; <span class="el_source">CodeGeneratorApp.java</span></div><h1>CodeGeneratorApp.java</h1><pre class="source lang-java linenums">package org.gemini.codegen;
+
+import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
+import org.gemini.codegen.apicodegen.validator.DialectValidator;
+import org.gemini.codegen.apicodegen.validator.JsonValidator;
+import org.gemini.codegen.handler.DbJsonHandler;
+import org.gemini.codegen.handler.DirectoryHandler;
+import org.gemini.codegen.handler.TemplateHandler;
+import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
+import org.gemini.codegen.jooqpojogen.FileNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.List;
+
+<span class="nc" id="L17">public class CodeGeneratorApp {</span>
+
+<span class="nc" id="L19">    private static final Logger LOG = LoggerFactory.getLogger(CodeGeneratorApp.class);</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L22">        DbJsonHandler dbJsonHandler=new DbJsonHandler();</span>
+<span class="nc" id="L23">        TemplateHandler templateHandler=new TemplateHandler();</span>
+<span class="nc" id="L24">        CustomClassLoader customClassLoader=new CustomClassLoader();</span>
+<span class="nc" id="L25">        DialectValidator dialectValidator=new DialectValidator();</span>
+<span class="nc" id="L26">        JsonValidator jsonValidator=new JsonValidator();</span>
+<span class="nc" id="L27">        StringBuilder path = new StringBuilder();</span>
+
+
+<span class="nc" id="L30">        LOG.info(&quot;&lt;------ CodeGen FrameWork Started ------&gt;&quot;);</span>
+<span class="nc" id="L31">        dialectValidator.validateDialect(DirectoryHandler.createMap().get(&quot;dialect&quot;));</span>
+<span class="nc" id="L32">        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());</span>
+        try {
+<span class="nc" id="L34">            path.setLength(0);</span>
+<span class="nc" id="L35">            path.append(&quot;com.gemini.&quot;);</span>
+<span class="nc" id="L36">            path.append(DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L37">            path.append(&quot;.entity&quot;);</span>
+<span class="nc" id="L38">            EntityClassGenerator.EntityGenerator(DirectoryHandler.createMap().get(&quot;outerScriptDirectoryPath&quot;), path.toString(), DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L39">        }catch (FileNotFoundException e){</span>
+<span class="nc" id="L40">            LOG.error(&quot;Exception in generating POJO classes: {}&quot;, e.message);</span>
+<span class="nc" id="L41">        } catch (Exception e) {</span>
+<span class="nc" id="L42">            LOG.error(&quot;Exception in generating POJO classes: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">        path.setLength(0);</span>
+<span class="nc" id="L45">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L46">        path.append(&quot;/com/gemini/&quot;);</span>
+<span class="nc" id="L47">        path.append(DirectoryHandler.getScriptName());</span>
+<span class="nc" id="L48">        path.append(&quot;/entity&quot;);</span>
+<span class="nc" id="L49">        DirectoryHandler.renameDirectory(new File(path.toString()), new File(DirectoryHandler.generateDirectoryPath() + &quot;/entity&quot;));</span>
+
+<span class="nc" id="L51">        path.setLength(0);</span>
+<span class="nc" id="L52">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L53">        path.append(&quot;/entity/&quot;);</span>
+<span class="nc" id="L54">        path.append(DirectoryHandler.getSchemaName());</span>
+<span class="nc" id="L55">        path.append(&quot;/tables/pojos/&quot;);</span>
+<span class="nc" id="L56">        List&lt;String&gt; classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L57">        LOG.info(&quot; ClassNames------&gt;{}&quot;, classNames);</span>
+<span class="nc" id="L58">        jsonValidator.validateJsonFiles(classNames);</span>
+<span class="nc" id="L59">        dbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath() + &quot;/jsonFiles/applicationProperties.json&quot;), DirectoryHandler.createMap().get(&quot;url&quot;), DirectoryHandler.createMap().get(&quot;dialect&quot;), DirectoryHandler.createMap().get(&quot;username&quot;), DirectoryHandler.createMap().get(&quot;password&quot;), DirectoryHandler.createMap().get(&quot;driverClassName&quot;));</span>
+<span class="nc" id="L60">        templateHandler.generateSpringBootProject(classNames);</span>
+
+<span class="nc" id="L62">        path.setLength(0);</span>
+<span class="nc" id="L63">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L64">        path.append(&quot;/com&quot;);</span>
+<span class="nc" id="L65">        DirectoryHandler.deleteDirectory(path.toString());</span>
+<span class="nc" id="L66">        path.setLength(0);</span>
+<span class="nc" id="L67">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L68">        path.append(&quot;/jsonFiles&quot;);</span>
+<span class="nc" id="L69">        DirectoryHandler.deleteDirectory(path.toString());</span>
+<span class="nc" id="L70">        path.setLength(0);</span>
+<span class="nc" id="L71">        path.append(DirectoryHandler.generateDirectoryPath());</span>
+<span class="nc" id="L72">        path.append(&quot;/entity/&quot;);</span>
+<span class="nc" id="L73">        path.append(DirectoryHandler.getSchemaName());</span>
+<span class="nc" id="L74">        path.append(&quot;/tables/pojos/&quot;);</span>
+<span class="nc" id="L75">        DirectoryHandler.deleteFiles(classNames, path.toString());</span>
+<span class="nc" id="L76">        LOG.info(&quot;&lt;------ CodeGen FrameWork Successfully Generated------&gt;&quot;);</span>
+
+        /**
+         *To Do
+         *
+         * This generateProject() method was used earlier during generation of project from SwaggerYaml.
+         */
+
+//        Handlebar.SwaggerYaml();
+//        try {
+//           GenerateSpringBootProject.generateProject(&quot;src/main/resources/SwaggerYaml.yml&quot;, &quot;spring&quot;, &quot;io.codejournal.maven.swagger2java.api&quot;, &quot;io.codejournal.maven.swagger2java.model&quot;, &quot;io.codejournal.maven.swagger2java.handler&quot;, &quot;src/main/java/org/Autogenerated&quot;);
+//        } catch (Exception e) {
+//            log.error(&quot;Exception in generating SpringBoot Project {}&quot;, e.getMessage());
+//        }
+
+
+<span class="nc" id="L92">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

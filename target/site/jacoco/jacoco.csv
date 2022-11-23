@@ -1,0 +1,17 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,43,184,6,8,12,45,7,10,1,9
+SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler.new FilenameFilter() {...},0,10,0,0,0,2,0,2,0,2
+SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,410,59,2,0,99,17,2,4,1,4
+SwaggerCodeGen,org.gemini.codegen.handler,DbJsonHandler,6,51,0,0,2,13,0,3,0,3
+SwaggerCodeGen,org.gemini.codegen.apicodegen.loader,CustomClassLoader,437,37,17,1,106,10,16,3,7,3
+SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,231,0,0,0,53,0,3,0,3,0
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,EntityClassGenerator,13,112,2,2,3,33,3,1,1,1
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,939,2174,166,132,144,357,122,58,4,27
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,0,9,0,0,0,4,0,1,0,1
+SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,163,555,31,57,34,111,41,39,15,21
+SwaggerCodeGen,org.json.simple,JSONObject,84,80,8,6,28,24,10,7,5,5
+SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,PojoValidator,37,148,7,23,11,39,6,14,0,5
+SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,DialectValidator,1,63,2,2,1,6,2,3,0,3
+SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,JsonValidator,78,0,4,0,19,0,5,0,3,0
+SwaggerCodeGen,org.gemini.codegen.apicodegen.validator,PathValidator,0,13,0,0,0,4,0,2,0,2
