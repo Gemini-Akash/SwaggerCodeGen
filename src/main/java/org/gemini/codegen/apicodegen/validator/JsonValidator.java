@@ -19,7 +19,7 @@ public class JsonValidator {
      *
      * @param classNames
      */
-    public static void validateJsonFiles(final List<String> classNames) {
+    public void validateJsonFiles(final List<String> classNames) {
         StringBuilder path = new StringBuilder();
         for (String className : classNames) {
             JSONObject jsonObject;

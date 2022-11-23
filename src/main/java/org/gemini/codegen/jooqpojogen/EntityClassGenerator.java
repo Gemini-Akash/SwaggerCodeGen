@@ -25,9 +25,9 @@ public final class EntityClassGenerator {
      */
 
     public static void EntityGenerator(String scriptPath, String packageName, String directory) throws Exception {
-
-        boolean scriptResult = PathValidator.isValidPath(scriptPath);
-        boolean directoryResult = PathValidator.isValidPath(directory);
+        PathValidator pathValidator=new PathValidator();
+        boolean scriptResult = pathValidator.isValidPath(scriptPath);
+        boolean directoryResult = pathValidator.isValidPath(directory);
 
         if (!scriptResult) {
             throw new FileNotFoundException("Script Not found....");

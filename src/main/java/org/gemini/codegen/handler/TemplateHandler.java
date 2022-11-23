@@ -22,7 +22,7 @@ public final class TemplateHandler {
      * @param jsonPath
      * @param templatePath
      */
-    public static void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
+    public void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
 
         try (FileReader fileReader = new FileReader(jsonPath);
              FileWriter fileWriter = new FileWriter(filePath)) {
@@ -44,7 +44,7 @@ public final class TemplateHandler {
      * @param filePath
      * @param templatePath
      */
-    public static void generateFileFromTemplate(final String templatePath, final String filePath) {
+    public void generateFileFromTemplate(final String templatePath, final String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);
@@ -59,7 +59,7 @@ public final class TemplateHandler {
      *
      * @param classNames
      */
-    public static void generateSpringBootProject(final List<String> classNames) {
+    public void generateSpringBootProject(final List<String> classNames) {
         StringBuilder path = new StringBuilder();
         StringBuilder jsonPath = new StringBuilder();
         path.setLength(0);
@@ -79,7 +79,7 @@ public final class TemplateHandler {
         path.append("/Exception");
         DirectoryHandler.createDirectory(path.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
         path.append("SpringBootApp/src/main/resources");
@@ -98,7 +98,7 @@ public final class TemplateHandler {
         path.append(".java");
         generateClassFromTemplates("HandlebarTemplates/mainClassTemplate", path.toString(), jsonPath.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
         path.append("SpringBootApp/pom.xml");
@@ -142,7 +142,7 @@ public final class TemplateHandler {
             generateClassFromTemplates("HandlebarTemplates/modelTemplate", path.toString(), jsonPath.toString());
         }
         path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
         path.append("SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json");
@@ -151,7 +151,7 @@ public final class TemplateHandler {
         jsonPath.append(DirectoryHandler.generateDirectoryPath());
         jsonPath.append("/jsonFiles/applicationProperties.json");
         path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
         path.append("SpringBootApp/src/main/resources/application.properties");

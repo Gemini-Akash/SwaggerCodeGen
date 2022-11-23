@@ -1,5 +1,6 @@
 package org.gemini.codegen.apicodegen.loader;
 
+import org.gemini.codegen.apicodegen.validator.PojoValidator;
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,14 +19,13 @@ import java.net.URLClassLoader;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.gemini.codegen.apicodegen.validator.PojoValidator.validatePojoClasses;
 
 
 public final class CustomClassLoader {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
-
+    PojoValidator pojoValidator=new PojoValidator();
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
@@ -35,7 +35,7 @@ public final class CustomClassLoader {
      * @param variableFieldsObject
      * @param filePath
      */
-    public static void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
+    public void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
         StringBuilder path = new StringBuilder();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("className", className);
@@ -63,7 +63,7 @@ public final class CustomClassLoader {
      * @param filePath
      * @return classNames
      */
-    public static List<String> loadClass(final Set<Class> classObject, final String filePath) {
+    public List<String> loadClass(final Set<Class> classObject, final String filePath) {
         StringBuilder path = new StringBuilder();
         List<String> classNames = new ArrayList<>();
         path.setLength(0);
@@ -89,7 +89,7 @@ public final class CustomClassLoader {
      * @param classContent
      * @param filePath
      */
-    public static void getJsonBody(final Class classContent, final String filePath) {
+    public void getJsonBody(final Class classContent, final String filePath) {
 
         JSONArray primaryKeysObject = null;
         JSONArray variableFieldsObject = null;
@@ -126,7 +126,7 @@ public final class CustomClassLoader {
      *
      * @param filePath
      */
-    public static void compileJavaClasses(final File filePath) {
+    public void compileJavaClasses(final File filePath) {
         int compilationResult = 0;
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -147,10 +147,10 @@ public final class CustomClassLoader {
      * @param filePath
      */
 
-    public static Class getFullyQualifiedClassName(final File filePath) {
+    public Class getFullyQualifiedClassName(final File filePath) {
         StringBuilder path = new StringBuilder();
         path.setLength(0);
-        path.append(DirectoryHandler.outerDirectoryPath);
+        path.append(DirectoryHandler.createMap().get("outerDirectoryPath"));
         path.append("/");
         path.append(DirectoryHandler.getScriptName());
         path.append("SpringBootApp/src/main/java");
@@ -192,11 +192,11 @@ public final class CustomClassLoader {
      * @param filePath
      * @return set of classes
      */
-    public static Set<Class> getFullyQualifiedClasses(final File filePath) {
+    public Set<Class> getFullyQualifiedClasses(final File filePath) {
         File[] files = filePath.listFiles();
         Set<Class> classes = new HashSet<>();
         try {
-            if (validatePojoClasses(files)) {
+            if (pojoValidator.validatePojoClasses(files)) {
                 for (File file : files) {
                     compileJavaClasses(file);
                     classes.add(getFullyQualifiedClassName(file));

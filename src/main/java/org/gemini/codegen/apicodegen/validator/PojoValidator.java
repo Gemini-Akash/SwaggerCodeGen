@@ -21,9 +21,9 @@ public final class PojoValidator {
      *
      * @return count
      */
-    public static int countTables() {
+    public int countTables() {
         int count = 0;
-        try(FileReader fileReader = new FileReader(DirectoryHandler.outerScriptDirectoryPath);
+        try(FileReader fileReader = new FileReader(DirectoryHandler.createMap().get("outerScriptDirectoryPath"));
         BufferedReader  bufferedReader = new BufferedReader(fileReader)) {
             String line = bufferedReader.readLine();
             while (line != null) {
@@ -45,7 +45,7 @@ public final class PojoValidator {
      * @return boolean value
      */
 
-    public static boolean validatePojoClassContent(final File filePath) {
+    public  boolean validatePojoClassContent(final File filePath) {
         int leftCurlyBracesCount = 0;
         int rightCurlyBracesCount = 0;
         try(FileReader fileReader = new FileReader(filePath);
@@ -72,7 +72,7 @@ public final class PojoValidator {
      *
      * @return boolean value
      */
-    public static boolean validatePojoClasses(final File[] files) {
+    public  boolean validatePojoClasses(final File[] files) {
         int count = 0;
         if (files.length == countTables()) {
             for (File file : files) {

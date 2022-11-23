@@ -20,7 +20,7 @@ public final class DbJsonHandler {
      * @param url
      * @param username
      */
-    public static void createDbJson(final File filePath, final String url, final String dialect, final String username, final String password, final String driverClassName) {
+    public void createDbJson(final File filePath, final String url, final String dialect, final String username, final String password, final String driverClassName) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("url", url);
         jsonObject.put("dialect", dialect);
