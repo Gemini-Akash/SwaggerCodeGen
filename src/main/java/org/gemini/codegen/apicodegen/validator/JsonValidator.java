@@ -1,6 +1,6 @@
 package org.gemini.codegen.apicodegen.validator;
 
-import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
+import org.gemini.codegen.utiltiy.CodeGenUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

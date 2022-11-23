@@ -1,6 +1,6 @@
 package org.gemini.codegen.apicodegen.loader;
 
-import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
+import org.gemini.codegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
 
 import org.gemini.codegen.handler.DirectoryHandler;

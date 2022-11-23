@@ -1,15 +1,16 @@
 org\gemini\codegen\handler\TemplateHandler.class
+org\gemini\codegen\utiltiy\CodeGenUtils$1.class
 org\gemini\codegen\jooqpojogen\EntityClassGenerator.class
 org\gemini\codegen\apicodegen\loader\CustomClassLoader.class
 org\gemini\codegen\apicodegen\validator\PojoValidator.class
 org\gemini\codegen\apicodegen\validator\JsonValidator.class
+org\gemini\codegen\utiltiy\CodeGenUtils.class
 org\gemini\codegen\apicodegen\validator\DialectValidator.class
 org\jooq\codegen\GeneratorWriter$CloseResult.class
 org\gemini\codegen\CodeGeneratorApp.class
 org\jooq\codegen\GeneratorWriter.class
 org\gemini\codegen\handler\DbJsonHandler.class
 org\gemini\codegen\jooqpojogen\CustomJooqAutoGenerator.class
-org\gemini\codegen\handler\DirectoryHandler$1.class
 org\json\simple\JSONObject.class
 org\gemini\codegen\apicodegen\validator\PathValidator.class
 org\gemini\codegen\handler\DirectoryHandler.class

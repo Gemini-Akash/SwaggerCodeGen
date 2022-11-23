@@ -2,7 +2,7 @@ package org.gemini.codegen.handler;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
+import org.gemini.codegen.utiltiy.CodeGenUtils;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

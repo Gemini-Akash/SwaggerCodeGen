@@ -5,6 +5,7 @@ D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\swaggercodeg
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\handler\TemplateHandler.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\jooqpojogen\CustomJooqAutoGenerator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\loader\CustomClassLoader.java
+D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\utiltiy\CodeGenUtils.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\jooq\codegen\GeneratorWriter.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\validator\PathValidator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\jooqpojogen\EntityClassGenerator.java

@@ -1,7 +1,7 @@
 package org.gemini.codegen;
 
 import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
-import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
+import org.gemini.codegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.DialectValidator;
 import org.gemini.codegen.apicodegen.validator.JsonValidator;
 import org.gemini.codegen.handler.DbJsonHandler;

@@ -2,7 +2,7 @@ package org.gemini.codegen.apicodegen.validator;
 
 import org.apache.commons.io.FileUtils;
 
-import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
+import org.gemini.codegen.utiltiy.CodeGenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
