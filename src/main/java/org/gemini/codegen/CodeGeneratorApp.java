@@ -1,9 +1,11 @@
 package org.gemini.codegen;
 
 import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
+import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.DialectValidator;
 import org.gemini.codegen.apicodegen.validator.JsonValidator;
 import org.gemini.codegen.handler.DbJsonHandler;
+
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.gemini.codegen.handler.TemplateHandler;
 import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
@@ -24,55 +26,56 @@ public class CodeGeneratorApp {
         CustomClassLoader customClassLoader=new CustomClassLoader();
         DialectValidator dialectValidator=new DialectValidator();
         JsonValidator jsonValidator=new JsonValidator();
+        DirectoryHandler directoryHandler=new DirectoryHandler();
         StringBuilder path = new StringBuilder();
 
 
         LOG.info("<------ CodeGen FrameWork Started ------>");
-        dialectValidator.validateDialect(DirectoryHandler.createMap().get("dialect"));
-        DirectoryHandler.createDirectory(DirectoryHandler.generateDirectoryPath());
+        dialectValidator.validateDialect(CodeGenUtils.createMap().get("dialect"));
+        CodeGenUtils.createDirectory(CodeGenUtils.generateDirectoryPath());
         try {
             path.setLength(0);
             path.append("com.gemini.");
-            path.append(DirectoryHandler.getScriptName());
+            path.append(CodeGenUtils.getScriptName());
             path.append(".entity");
-            EntityClassGenerator.EntityGenerator(DirectoryHandler.createMap().get("outerScriptDirectoryPath"), path.toString(), DirectoryHandler.generateDirectoryPath());
+            EntityClassGenerator.EntityGenerator(CodeGenUtils.createMap().get("outerScriptDirectoryPath"), path.toString(), CodeGenUtils.generateDirectoryPath());
         }catch (FileNotFoundException e){
             LOG.error("Exception in generating POJO classes: {}", e.message);
         } catch (Exception e) {
             LOG.error("Exception in generating POJO classes: {}", e.getMessage());
         }
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/com/gemini/");
-        path.append(DirectoryHandler.getScriptName());
+        path.append(CodeGenUtils.getScriptName());
         path.append("/entity");
-        DirectoryHandler.renameDirectory(new File(path.toString()), new File(DirectoryHandler.generateDirectoryPath() + "/entity"));
+        directoryHandler.renameDirectory(new File(path.toString()), new File(CodeGenUtils.generateDirectoryPath() + "/entity"));
 
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");
-        path.append(DirectoryHandler.getSchemaName());
+        path.append(CodeGenUtils.getSchemaName());
         path.append("/tables/pojos/");
-        List<String> classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), DirectoryHandler.generateDirectoryPath());
+        List<String> classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), CodeGenUtils.generateDirectoryPath());
         LOG.info(" ClassNames------>{}", classNames);
         jsonValidator.validateJsonFiles(classNames);
-        dbJsonHandler.createDbJson(new File(DirectoryHandler.generateDirectoryPath() + "/jsonFiles/applicationProperties.json"), DirectoryHandler.createMap().get("url"), DirectoryHandler.createMap().get("dialect"), DirectoryHandler.createMap().get("username"), DirectoryHandler.createMap().get("password"), DirectoryHandler.createMap().get("driverClassName"));
+        dbJsonHandler.createDbJson(new File(CodeGenUtils.generateDirectoryPath() + "/jsonFiles/applicationProperties.json"), CodeGenUtils.createMap().get("url"), CodeGenUtils.createMap().get("dialect"), CodeGenUtils.createMap().get("username"), CodeGenUtils.createMap().get("password"), CodeGenUtils.createMap().get("driverClassName"));
         templateHandler.generateSpringBootProject(classNames);
 
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/com");
-        DirectoryHandler.deleteDirectory(path.toString());
+        directoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/jsonFiles");
-        DirectoryHandler.deleteDirectory(path.toString());
+        directoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
-        path.append(DirectoryHandler.generateDirectoryPath());
+        path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");
-        path.append(DirectoryHandler.getSchemaName());
+        path.append(CodeGenUtils.getSchemaName());
         path.append("/tables/pojos/");
-        DirectoryHandler.deleteFiles(classNames, path.toString());
+        directoryHandler.deleteFiles(classNames, path.toString());
         LOG.info("<------ CodeGen FrameWork Successfully Generated------>");
 
         /**

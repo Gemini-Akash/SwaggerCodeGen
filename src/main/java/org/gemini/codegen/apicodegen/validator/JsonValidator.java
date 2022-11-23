@@ -1,6 +1,6 @@
 package org.gemini.codegen.apicodegen.validator;
 
-import org.gemini.codegen.handler.DirectoryHandler;
+import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -25,7 +25,7 @@ public class JsonValidator {
             JSONObject jsonObject;
 
                 path.setLength(0);
-                path.append(DirectoryHandler.generateDirectoryPath());
+                path.append(CodeGenUtils.generateDirectoryPath());
                 path.append("/jsonFiles/");
                 path.append(className);
                 path.append(".json");
