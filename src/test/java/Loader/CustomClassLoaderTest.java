@@ -1,9 +1,11 @@
 package Loader;
 
+import entity.demo.tables.pojos.Language;
 import org.gemini.codegen.apicodegen.loader.CustomClassLoader;
+import org.gemini.codegen.apicodegen.validator.PojoValidator;
 import org.gemini.codegen.handler.DirectoryHandler;
-import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
 import org.gemini.codegen.utiltiy.CodeGenUtils;
+
 
 
 import org.json.JSONArray;
@@ -19,24 +21,28 @@ import org.mockito.invocation.InvocationOnMock;
 import java.io.File;
 import java.util.*;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class CustomClassLoaderTest {
     CustomClassLoader customClassLoader = new CustomClassLoader();
     DirectoryHandler directoryHandler=new DirectoryHandler();
+    PojoValidator pojoValidator=new PojoValidator();
     static MockedStatic<CodeGenUtils> theMock;
-    static MockedStatic<CustomClassLoader> theClassLoaderMock;
-
+//    static MockedStatic<CustomClassLoader> theClassLoaderMock;
+//    static MockedStatic<PojoValidator> thePojoValidatorMock;
 
     @Before
     public void setUp() {
 //        try {
-//            EntityClassGenerator.EntityGenerator("src/test/resources/CustomClassLoader/testScript.sql", "CustomClassLoader/entity", "src/test/resources/");
+//            EntityClassGenerator.EntityGenerator("src/test/resources/CustomClassLoader/testScript.sql", "entity", "src/test/resources/");
 //        } catch (Exception e) {
 //            throw new RuntimeException("Exception in testLoadClass() :{}", e);
 //        }
 
         Map<String, String> result = new HashMap<>();
         result.put("outerDirectoryPath", "src/test/resources");
-        result.put("outerScriptDirectoryPath", "src/test/resources/testScript.sql");
+        result.put("outerScriptDirectoryPath", "src/test/resources/CustomClassLoader/testScript.sql");
         result.put("dialect", "");
         result.put("driverClassName", "");
         result.put("username", "");
@@ -45,8 +51,9 @@ public class CustomClassLoaderTest {
 
         theMock = Mockito.mockStatic(CodeGenUtils.class, InvocationOnMock::callRealMethod);
         theMock.when(() -> CodeGenUtils.createMap()).thenReturn(result);
-        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/");
-        theClassLoaderMock = Mockito.mockStatic(CustomClassLoader.class, InvocationOnMock::callRealMethod);
+        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/java");
+
+//        theClassLoaderMock = Mockito.mockStatic(CustomClassLoader.class, InvocationOnMock::callRealMethod);
 
     }
     @After
@@ -86,16 +93,16 @@ public class CustomClassLoaderTest {
     @Test
     public void testLoadClass() {
 
-        Set<Class> classes=new HashSet<>();
-        classes.add(Language.class);
-
-        theClassLoaderMock.when(() -> customClassLoader.getFullyQualifiedClassName(new File("src/test/resources/entity/demo/tables/pojos/"))).thenReturn("Language");
-
-        List<String> expectedClassNames = Arrays.asList("Author","Book","Language");
-
-        List<String> actualClassNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File("src/test/resources/entity/demo/tables/pojos/")),"src/test/resources/entity/demo/tables/pojos/");
-
-        Assertions.assertEquals(expectedClassNames,actualClassNames,"ClassNames not Similar");
+//        Set<Class> classes=new HashSet<>();
+//        classes.add(Language.class);
+//
+//        theClassLoaderMock.when(() -> customClassLoader.getFullyQualifiedClassName(new File("src/test/resources/entity/demo/tables/pojos/"))).thenReturn(Language.class);
+//
+//        List<String> expectedClassNames = Arrays.asList("Language");
+//
+//        List<String> actualClassNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File("src/test/resources/entity/demo/tables/pojos/")),"src/test/resources/entity/demo/tables/pojos/");
+//
+//        Assertions.assertEquals(expectedClassNames,actualClassNames,"ClassNames not Similar");
     }
 
     //    @Test
@@ -104,9 +111,10 @@ public class CustomClassLoaderTest {
 //    }
     @Test
     public void testForJavaCompileClass() {
-        customClassLoader.compileJavaClasses(new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
-        File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
-        Assertions.assertTrue(file.exists());
+//        customClassLoader.compileJavaClasses(new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
+//        File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
+//        Assertions.assertTrue(file.exists());
+        customClassLoader.compileJavaClasses(new File("src/test/java/entity/demo/tables/pojos/Language.java"));
 
     }
 
@@ -123,11 +131,23 @@ public class CustomClassLoaderTest {
 
     @Test
     public void testGetFullyQualifiedClasses(){
-        theClassLoaderMock.when(() -> customClassLoader.getFullyQualifiedClassName(new File("src/test/resources/entity/demo/tables/pojos/"))).thenReturn("Language");
+        CustomClassLoader theClassLoaderMock = Mockito.spy(CustomClassLoader.class);
+        Mockito.doReturn(Language.class).when(theClassLoaderMock).getFullyQualifiedClassName(new File("src/test/java/entity/demo/tables/pojos/"));
+        PojoValidator thePojoValidatorMock= Mockito.spy(PojoValidator.class);
+        Mockito.doReturn(true).when(thePojoValidatorMock).validatePojoClasses(new File("src/test/java/entity/demo/tables/pojos/").listFiles());
+
+
+//        CustomClassLoader theClassLoaderMock = mock(CustomClassLoader.class);
+//        when(theClassLoaderMock.getFullyQualifiedClassName(new File("src/test/java/entity/demo/tables/pojos/"))).thenReturn(Language.class);
+//        PojoValidator thePojoValidatorMock= mock(PojoValidator.class);
+//        when(thePojoValidatorMock.validatePojoClasses(new File("src/test/java/entity/demo/tables/pojos/").listFiles())).thenReturn(true);
+
+        System.out.println(pojoValidator.validatePojoClasses(new File("src/test/java/entity/demo/tables/pojos/").listFiles()));
+        System.out.println(customClassLoader.getFullyQualifiedClassName(new File("src/test/java/entity/demo/tables/pojos/")));
         Set<Class> expectedClasses=new HashSet<>();
         expectedClasses.add(Language.class);
 
-        Set<Class> actualClasses = customClassLoader.getFullyQualifiedClasses(new File("src/test/resources/CustomClassLoader/entity/demo/tables/pojos/"));
+        Set<Class> actualClasses = customClassLoader.getFullyQualifiedClasses(new File("src/test/java/entity/demo/tables/pojos/"));
 
         Assertions.assertEquals(expectedClasses,actualClasses);
 
