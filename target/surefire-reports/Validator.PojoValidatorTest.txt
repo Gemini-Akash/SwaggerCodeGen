@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: Validator.PojoValidatorTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.5 s - in Validator.PojoValidatorTest
+Tests run: 5, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 7.867 s <<< FAILURE! - in Validator.PojoValidatorTest
+testValidatePojoClasses(Validator.PojoValidatorTest)  Time elapsed: 5.861 s  <<< ERROR!
+java.lang.NullPointerException
+	at Validator.PojoValidatorTest.testValidatePojoClasses(PojoValidatorTest.java:66)
+
+negTestValidatePojoClasses(Validator.PojoValidatorTest)  Time elapsed: 0.838 s  <<< ERROR!
+java.lang.NullPointerException
+	at Validator.PojoValidatorTest.negTestValidatePojoClasses(PojoValidatorTest.java:74)
+

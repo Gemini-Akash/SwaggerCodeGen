@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Handler.DirectoryHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.762 s - in Handler.DirectoryHandlerTests
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.123 s - in Handler.DirectoryHandlerTests

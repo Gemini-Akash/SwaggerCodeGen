@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="Validator.PojoValidatorTest" time="13.5" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="Validator.PojoValidatorTest" time="7.867" tests="5" errors="2" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.15\bin"/>
-    <property name="sun.java.command" value="C:\Users\DI0D39~1.GAR\AppData\Local\Temp\surefire11098114225923989292\surefirebooter351089472752254776.jar C:\Users\di.garg1\AppData\Local\Temp\surefire11098114225923989292 2022-11-23T16-12-40_578-jvmRun2 surefire12372052324186204919tmp surefire_09110438231955060694tmp"/>
+    <property name="sun.java.command" value="C:\Users\DI0D39~1.GAR\AppData\Local\Temp\surefire15865161493877152461\surefirebooter16982844210633247133.jar C:\Users\di.garg1\AppData\Local\Temp\surefire15865161493877152461 2022-11-24T14-37-09_323-jvmRun1 surefire3849362268837388527tmp surefire_05605854664623079337tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="D:\Intellj Projects\SwaggerCodeGen\target\test-classes;D:\Intellj Projects\SwaggerCodeGen\target\classes;C:\Users\di.garg1\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\di.garg1\.m2\repository\com\github\jknack\handlebars\4.1.2\handlebars-4.1.2.jar;C:\Users\di.garg1\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\di.garg1\.m2\repository\org\json\json\20220320\json-20220320.jar;C:\Users\di.garg1\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\di.garg1\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\di.garg1\.m2\repository\org\jooq\jooq\3.14.15\jooq-3.14.15.jar;C:\Users\di.garg1\.m2\repository\org\reactivestreams\reactive-streams\1.0.2\reactive-streams-1.0.2.jar;C:\Users\di.garg1\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\di.garg1\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\di.garg1\.m2\repository\org\jooq\jooq-meta\3.14.15\jooq-meta-3.14.15.jar;C:\Users\di.garg1\.m2\repository\org\jooq\jooq-codegen\3.14.15\jooq-codegen-3.14.15.jar;C:\Users\di.garg1\.m2\repository\org\jooq\jooq-meta-extensions\3.14.15\jooq-meta-extensions-3.14.15.jar;C:\Users\di.garg1\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\di.garg1\.m2\repository\junit\junit\4.13.1\junit-4.13.1.jar;C:\Users\di.garg1\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\di.garg1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.1\junit-jupiter-api-5.9.1.jar;C:\Users\di.garg1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\di.garg1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.1\junit-platform-commons-1.9.1.jar;C:\Users\di.garg1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\di.garg1\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\di.garg1\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\3.8.1\maven-compiler-plugin-3.8.1.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\sisu\sisu-inject-bean\1.4.2\sisu-inject-bean-1.4.2.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\sisu\sisu-guice\2.1.7\sisu-guice-2.1.7-noaop.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-artifact\3.0\maven-artifact-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-core\3.0\maven-core-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-settings\3.0\maven-settings-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-settings-builder\3.0\maven-settings-builder-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-repository-metadata\3.0\maven-repository-metadata-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-model-builder\3.0\maven-model-builder-3.0.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\maven-aether-provider\3.0\maven-aether-provider-3.0.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\aether\aether-impl\1.7\aether-impl-1.7.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\aether\aether-spi\1.7\aether-spi-1.7.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\aether\aether-api\1.7\aether-api-1.7.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\aether\aether-util\1.7\aether-util-1.7.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.14\plexus-interpolation-1.14.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.2.1\maven-shared-utils-3.2.1.jar;C:\Users\di.garg1\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\shared\maven-shared-incremental\1.1\maven-shared-incremental-1.1.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-java\0.9.10\plexus-java-0.9.10.jar;C:\Users\di.garg1\.m2\repository\org\ow2\asm\asm\6.2\asm-6.2.jar;C:\Users\di.garg1\.m2\repository\com\thoughtworks\qdox\qdox\2.0-M8\qdox-2.0-M8.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-compiler-api\2.8.4\plexus-compiler-api-2.8.4.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\2.8.4\plexus-compiler-manager-2.8.4.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\2.8.4\plexus-compiler-javac-2.8.4.jar;C:\Users\di.garg1\.m2\repository\org\sonarsource\scanner\maven\sonar-maven-plugin\3.2\sonar-maven-plugin-3.2.jar;C:\Users\di.garg1\.m2\repository\org\apache\maven\shared\maven-dependency-tree\2.2\maven-dependency-tree-2.2.jar;C:\Users\di.garg1\.m2\repository\org\eclipse\aether\aether-util\0.9.0.M2\aether-util-0.9.0.M2.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\plexus\plexus-sec-dispatcher\1.4\plexus-sec-dispatcher-1.4.jar;C:\Users\di.garg1\.m2\repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar;C:\Users\di.garg1\.m2\repository\org\codehaus\plexus\plexus-utils\3.0.22\plexus-utils-3.0.22.jar;C:\Users\di.garg1\.m2\repository\org\sonarsource\scanner\api\sonar-scanner-api\2.8\sonar-scanner-api-2.8.jar;C:\Users\di.garg1\.m2\repository\commons-lang\commons-lang\2.6\commons-lang-2.6.jar;C:\Users\di.garg1\.m2\repository\com\google\code\findbugs\jsr305\2.0.3\jsr305-2.0.3.jar;C:\Users\di.garg1\.m2\repository\org\mockito\mockito-inline\4.9.0\mockito-inline-4.9.0.jar;C:\Users\di.garg1\.m2\repository\org\mockito\mockito-core\4.9.0\mockito-core-4.9.0.jar;C:\Users\di.garg1\.m2\repository\net\bytebuddy\byte-buddy\1.12.16\byte-buddy-1.12.16.jar;C:\Users\di.garg1\.m2\repository\net\bytebuddy\byte-buddy-agent\1.12.16\byte-buddy-agent-1.12.16.jar;C:\Users\di.garg1\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\DI0D39~1.GAR\AppData\Local\Temp\surefire11098114225923989292\surefirebooter351089472752254776.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\DI0D39~1.GAR\AppData\Local\Temp\surefire15865161493877152461\surefirebooter16982844210633247133.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.15+8-LTS-149"/>
@@ -60,9 +60,394 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testValidatePojoClasses" classname="Validator.PojoValidatorTest" time="9.723"/>
-  <testcase name="negTestValidatePojoClasses" classname="Validator.PojoValidatorTest" time="2.954"/>
-  <testcase name="negTestValidatePojoClassContent" classname="Validator.PojoValidatorTest" time="0.151"/>
-  <testcase name="testValidatePojoClassContent" classname="Validator.PojoValidatorTest" time="0.146"/>
-  <testcase name="testCountTables" classname="Validator.PojoValidatorTest" time="0.129"/>
+  <testcase name="testValidatePojoClasses" classname="Validator.PojoValidatorTest" time="5.861">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at Validator.PojoValidatorTest.testValidatePojoClasses(PojoValidatorTest.java:66)
+</error>
+    <system-err><![CDATA[20051 [main] INFO org.jooq.codegen.GenerationTool - No <inputCatalog/> was provided. Generating ALL available catalogs instead.
+20051 [main] INFO org.jooq.codegen.GenerationTool - No <inputSchema/> was provided. Generating ALL available schemata instead.
+21886 [main] INFO org.jooq.FilePattern - Reading from: src\test\resources\testScript.sql [*]
+22371 [main] INFO org.jooq.Constants - 
+                                      
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@        @@  @  @  @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.14.15
+                                      
+22402 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+22476 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create schema if not exists "DEMO"
+22481 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+22545 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+22546 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.AUTHOR (
+  ID number(7) not null generated by default as identity,
+  FIRST_NAME varchar(50) null,
+  LAST_NAME varchar(50) not null,
+  DATE_OF_BIRTH date null,
+  YEAR_OF_BIRTH number(7) null,
+  DISTINGUISHED number(1) null,
+  primary key (ID)
+)
+22552 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+22552 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.BOOK (
+  ID number(7) not null generated by default as identity,
+  AUTHOR_ID number(7) not null,
+  TITLE varchar(400) not null,
+  PUBLISHED_IN number(7) not null,
+  LANGUAGE_ID number(7) not null,
+  primary key (ID),
+  constraint FK_BOOK_AUTHOR
+    foreign key (AUTHOR_ID)
+    references AUTHOR (ID),
+  constraint FK_BOOK_LANGUAGE
+    foreign key (LANGUAGE_ID)
+    references LANGUAGE (ID)
+)
+22606 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+22693 [main] INFO org.jooq.codegen.AbstractGenerator - License parameters       
+22693 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   Thank you for using jOOQ and jOOQ's code generator
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -                          
+22693 [main] INFO org.jooq.codegen.AbstractGenerator - Database parameters      
+22693 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   dialect                : H2
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   URL                    : 
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   target dir             : D:\Intellj Projects\SwaggerCodeGen\src\test\resources
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   target package         : CustomClassLoader/entity
+22693 [main] INFO org.jooq.codegen.AbstractGenerator -   includes               : [.*]
+22697 [main] INFO org.jooq.codegen.AbstractGenerator -   excludes               : []
+22697 [main] INFO org.jooq.codegen.AbstractGenerator -   includeExcludeColumns  : false
+22697 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+22697 [main] INFO org.jooq.codegen.JavaGenerator -                          
+22697 [main] INFO org.jooq.codegen.JavaGenerator - JavaGenerator parameters 
+22697 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (generated): false
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: any) : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: version): 2.2
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (validation): true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments               : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on attributes : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on catalogs   : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on columns    : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on keys       : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on links      : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on packages   : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on parameters : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on queues     : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on routines   : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on schemas    : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on sequences  : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on tables     : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   comments on udts       : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   sources                : true
+22697 [main] INFO org.jooq.codegen.JavaGenerator -   sources on views       : true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   daos                   : true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   deprecated code        : true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (any): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (catalogs): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (keys): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (links): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (queues): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (routines): true
+22702 [main] INFO org.jooq.codegen.JavaGenerator -   global references (schemas): true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   global references (sequences): true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   global references (tables): true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   global references (udts): true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   indexes                : true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   instance fields        : true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces             : false
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces (immutable) : false
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   javadoc                : true
+22704 [main] INFO org.jooq.codegen.JavaGenerator -   keys                   : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   links                  : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   pojos                  : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   pojos (immutable)      : false
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   queues                 : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   records                : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   routines               : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   sequences              : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   sequenceFlags          : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   table-valued functions : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   tables                 : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   udts                   : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator -   relations              : true
+22706 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+22706 [main] INFO org.jooq.codegen.JavaGenerator -                          
+22706 [main] INFO org.jooq.codegen.AbstractGenerator - Generation remarks       
+22707 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+22707 [main] INFO org.jooq.codegen.JavaGenerator -                          
+22707 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+22718 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalogs      : Total: 1
+23300 [main] INFO org.jooq.meta.AbstractDatabase - ARRAYs fetched           : 0 (0 included, 0 excluded)
+23332 [main] INFO org.jooq.meta.AbstractDatabase - Domains fetched          : 0 (0 included, 0 excluded)
+23486 [main] INFO org.jooq.meta.AbstractDatabase - Tables fetched           : 3 (3 included, 0 excluded)
+23486 [main] INFO org.jooq.meta.AbstractDatabase - Embeddables fetched      : 0 (0 included, 0 excluded)
+23572 [main] INFO org.jooq.meta.AbstractDatabase - Enums fetched            : 0 (0 included, 0 excluded)
+23572 [main] INFO org.jooq.meta.AbstractDatabase - Packages fetched         : 0 (0 included, 0 excluded)
+23601 [main] INFO org.jooq.meta.AbstractDatabase - Routines fetched         : 0 (0 included, 0 excluded)
+23616 [main] INFO org.jooq.meta.AbstractDatabase - Sequences fetched        : 0 (0 included, 0 excluded)
+23617 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for catalog . Regenerating.
+23619 [main] INFO org.jooq.codegen.JavaGenerator -                          
+23621 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalog       : DefaultCatalog.java
+23621 [main] INFO org.jooq.codegen.JavaGenerator - ==========================================================
+23646 [main] INFO org.jooq.meta.AbstractDatabase - UDTs fetched             : 0 (0 included, 0 excluded)
+23662 [main] INFO org.jooq.codegen.JavaGenerator - Generating schemata      : Total: 2
+23662 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for schema DEMO. Regenerating.
+23662 [main] INFO org.jooq.codegen.JavaGenerator - Generating schema        : Demo.java
+23662 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+23678 [main] INFO org.jooq.codegen.JavaGenerator - Generating tables        
+23833 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_AUTHOR (DEMO.BOOK.AUTHOR_ID) referencing CONSTRAINT_7 (DEMO.AUTHOR.ID)
+23834 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_LANGUAGE (DEMO.BOOK.LANGUAGE_ID) referencing CONSTRAINT_CE (DEMO.LANGUAGE.ID)
+23873 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Author.java [input=AUTHOR, output=AUTHOR, pk=CONSTRAINT_7]
+23905 [main] INFO org.jooq.meta.AbstractDatabase - Indexes fetched          : 0 (0 included, 0 excluded)
+23921 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Book.java [input=BOOK, output=BOOK, pk=CONSTRAINT_1]
+23951 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Language.java [input=LANGUAGE, output=LANGUAGE, pk=CONSTRAINT_CE]
+23973 [main] INFO org.jooq.tools.StopWatch - Tables generated         : Total: 4.004s
+23973 [main] INFO org.jooq.codegen.JavaGenerator - Generating table POJOs   
+23974 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Author.java
+24078 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Author.java
+24112 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Book.java
+24141 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Book.java
+24159 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Language.java
+24177 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Language.java
+24207 [main] INFO org.jooq.tools.StopWatch - Table POJOs generated    : Total: 4.237s, +233.812ms
+24207 [main] INFO org.jooq.codegen.JavaGenerator - Generating DAOs          
+24207 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : AuthorDao.java
+24252 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : BookDao.java
+24285 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : LanguageDao.java
+24318 [main] INFO org.jooq.tools.StopWatch - Table DAOs generated     : Total: 4.349s, +111.249ms
+24318 [main] INFO org.jooq.codegen.JavaGenerator - Generating table references
+24321 [main] INFO org.jooq.tools.StopWatch - Table refs generated     : Total: 4.352s, +3.532ms
+24321 [main] INFO org.jooq.codegen.JavaGenerator - Generating Keys          
+24350 [main] INFO org.jooq.tools.StopWatch - Keys generated           : Total: 4.381s, +28.81ms
+24351 [main] INFO org.jooq.codegen.JavaGenerator - Generating Indexes       
+24351 [main] INFO org.jooq.codegen.JavaGenerator - Skipping empty indexes   
+24352 [main] INFO org.jooq.codegen.JavaGenerator - Generating table records 
+24352 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : AuthorRecord.java
+24401 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : BookRecord.java
+24446 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : LanguageRecord.java
+24480 [main] INFO org.jooq.tools.StopWatch - Table records generated  : Total: 4.51s, +129.314ms
+24480 [main] INFO org.jooq.tools.StopWatch - Generation finished: DEMO: Total: 4.511s, +0.297ms
+24480 [main] INFO org.jooq.codegen.JavaGenerator -                          
+24481 [main] INFO org.jooq.codegen.JavaGenerator - Excluding empty schema   : PUBLIC
+24481 [main] INFO org.jooq.codegen.JavaGenerator - Affected files: 16       
+24481 [main] INFO org.jooq.codegen.JavaGenerator - Modified files: 16       
+24481 [main] INFO org.jooq.codegen.JavaGenerator - Removing excess files    
+]]></system-err>
+  </testcase>
+  <testcase name="negTestValidatePojoClasses" classname="Validator.PojoValidatorTest" time="0.838">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at Validator.PojoValidatorTest.negTestValidatePojoClasses(PojoValidatorTest.java:74)
+</error>
+    <system-err><![CDATA[24493 [main] INFO org.jooq.codegen.GenerationTool - No <inputCatalog/> was provided. Generating ALL available catalogs instead.
+24493 [main] INFO org.jooq.codegen.GenerationTool - No <inputSchema/> was provided. Generating ALL available schemata instead.
+24521 [main] INFO org.jooq.FilePattern - Reading from: src\test\resources\testScript.sql [*]
+24526 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+24542 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create schema if not exists "DEMO"
+24542 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.LANGUAGE (
+  ID number(7) not null generated by default as identity,
+  CD char(2) not null,
+  DESCRIPTION varchar(50) null,
+  unique (CD),
+  primary key (ID)
+)
+24554 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+24558 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.AUTHOR (
+  ID number(7) not null generated by default as identity,
+  FIRST_NAME varchar(50) null,
+  LAST_NAME varchar(50) not null,
+  DATE_OF_BIRTH date null,
+  YEAR_OF_BIRTH number(7) null,
+  DISTINGUISHED number(1) null,
+  primary key (ID)
+)
+24558 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+24570 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - create table DEMO.BOOK (
+  ID number(7) not null generated by default as identity,
+  AUTHOR_ID number(7) not null,
+  TITLE varchar(400) not null,
+  PUBLISHED_IN number(7) not null,
+  LANGUAGE_ID number(7) not null,
+  primary key (ID),
+  constraint FK_BOOK_AUTHOR
+    foreign key (AUTHOR_ID)
+    references AUTHOR (ID),
+  constraint FK_BOOK_LANGUAGE
+    foreign key (LANGUAGE_ID)
+    references LANGUAGE (ID)
+)
+24600 [main] INFO org.jooq.meta.extensions.ddl.DDLDatabase - Update count: 0          
+24602 [main] INFO org.jooq.codegen.AbstractGenerator - License parameters       
+24602 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   Thank you for using jOOQ and jOOQ's code generator
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -                          
+24602 [main] INFO org.jooq.codegen.AbstractGenerator - Database parameters      
+24602 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   dialect                : H2
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   URL                    : 
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   target dir             : D:\Intellj Projects\SwaggerCodeGen\src\test\resources
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   target package         : CustomClassLoader/entity
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   includes               : [.*]
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   excludes               : []
+24602 [main] INFO org.jooq.codegen.AbstractGenerator -   includeExcludeColumns  : false
+24602 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+24602 [main] INFO org.jooq.codegen.JavaGenerator -                          
+24602 [main] INFO org.jooq.codegen.JavaGenerator - JavaGenerator parameters 
+24602 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (generated): false
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: any) : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (JPA: version): 2.2
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   annotations (validation): true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments               : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on attributes : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on catalogs   : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on columns    : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on keys       : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on links      : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on packages   : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on parameters : true
+24602 [main] INFO org.jooq.codegen.JavaGenerator -   comments on queues     : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   comments on routines   : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   comments on schemas    : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   comments on sequences  : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   comments on tables     : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   comments on udts       : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   sources                : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   sources on views       : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   daos                   : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   deprecated code        : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (any): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (catalogs): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (keys): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (links): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (queues): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (routines): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (schemas): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (sequences): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (tables): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   global references (udts): true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   indexes                : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   instance fields        : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces             : false
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   interfaces (immutable) : false
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   javadoc                : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   keys                   : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   links                  : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   pojos                  : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   pojos (immutable)      : false
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   queues                 : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   records                : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   routines               : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   sequences              : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   sequenceFlags          : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   table-valued functions : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   tables                 : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   udts                   : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator -   relations              : true
+24604 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+24605 [main] INFO org.jooq.codegen.JavaGenerator -                          
+24605 [main] INFO org.jooq.codegen.AbstractGenerator - Generation remarks       
+24605 [main] INFO org.jooq.codegen.AbstractGenerator - ----------------------------------------------------------
+24605 [main] INFO org.jooq.codegen.JavaGenerator -                          
+24605 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+24605 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalogs      : Total: 1
+24612 [main] INFO org.jooq.meta.AbstractDatabase - ARRAYs fetched           : 0 (0 included, 0 excluded)
+24621 [main] INFO org.jooq.meta.AbstractDatabase - Domains fetched          : 0 (0 included, 0 excluded)
+24631 [main] INFO org.jooq.meta.AbstractDatabase - Tables fetched           : 3 (3 included, 0 excluded)
+24631 [main] INFO org.jooq.meta.AbstractDatabase - Embeddables fetched      : 0 (0 included, 0 excluded)
+24671 [main] INFO org.jooq.meta.AbstractDatabase - Enums fetched            : 0 (0 included, 0 excluded)
+24673 [main] INFO org.jooq.meta.AbstractDatabase - Packages fetched         : 0 (0 included, 0 excluded)
+24688 [main] INFO org.jooq.meta.AbstractDatabase - Routines fetched         : 0 (0 included, 0 excluded)
+24704 [main] INFO org.jooq.meta.AbstractDatabase - Sequences fetched        : 0 (0 included, 0 excluded)
+24704 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for catalog . Regenerating.
+24704 [main] INFO org.jooq.codegen.JavaGenerator -                          
+24704 [main] INFO org.jooq.codegen.JavaGenerator - Generating catalog       : DefaultCatalog.java
+24704 [main] INFO org.jooq.codegen.JavaGenerator - ==========================================================
+24712 [main] INFO org.jooq.meta.AbstractDatabase - UDTs fetched             : 0 (0 included, 0 excluded)
+24712 [main] INFO org.jooq.codegen.JavaGenerator - Generating schemata      : Total: 2
+24712 [main] INFO org.jooq.codegen.JavaGenerator - No schema version is applied for schema DEMO. Regenerating.
+24712 [main] INFO org.jooq.codegen.JavaGenerator - Generating schema        : Demo.java
+24712 [main] INFO org.jooq.codegen.JavaGenerator - ----------------------------------------------------------
+24719 [main] INFO org.jooq.codegen.JavaGenerator - Generating tables        
+24793 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_AUTHOR (DEMO.BOOK.AUTHOR_ID) referencing CONSTRAINT_7 (DEMO.AUTHOR.ID)
+24793 [main] INFO org.jooq.meta.DefaultRelations - Adding foreign key       : FK_BOOK_LANGUAGE (DEMO.BOOK.LANGUAGE_ID) referencing CONSTRAINT_CE (DEMO.LANGUAGE.ID)
+24812 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Author.java [input=AUTHOR, output=AUTHOR, pk=CONSTRAINT_7]
+24834 [main] INFO org.jooq.meta.AbstractDatabase - Indexes fetched          : 0 (0 included, 0 excluded)
+24842 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Book.java [input=BOOK, output=BOOK, pk=CONSTRAINT_1]
+24859 [main] INFO org.jooq.codegen.JavaGenerator - Generating table         : Language.java [input=LANGUAGE, output=LANGUAGE, pk=CONSTRAINT_CE]
+24875 [main] INFO org.jooq.tools.StopWatch - Tables generated         : Total: 366.161ms
+24875 [main] INFO org.jooq.codegen.JavaGenerator - Generating table POJOs   
+24876 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Author.java
+24891 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Author.java
+24899 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Book.java
+24914 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Book.java
+24920 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating POJO          : Language.java
+24929 [main] INFO org.jooq.codegen.JavaGenerator - Generating POJO          : Language.java
+24931 [main] INFO org.jooq.tools.StopWatch - Table POJOs generated    : Total: 436.656ms, +70.494ms
+24931 [main] INFO org.jooq.codegen.JavaGenerator - Generating DAOs          
+24931 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : AuthorDao.java
+24946 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : BookDao.java
+24953 [main] INFO org.gemini.codegen.jooqpojogen.CustomJooqAutoGenerator - Generating DAO           : LanguageDao.java
+24961 [main] INFO org.jooq.tools.StopWatch - Table DAOs generated     : Total: 469.055ms, +32.398ms
+24961 [main] INFO org.jooq.codegen.JavaGenerator - Generating table references
+24961 [main] INFO org.jooq.tools.StopWatch - Table refs generated     : Total: 470.595ms, +1.54ms
+24961 [main] INFO org.jooq.codegen.JavaGenerator - Generating Keys          
+24979 [main] INFO org.jooq.tools.StopWatch - Keys generated           : Total: 488.622ms, +18.026ms
+24979 [main] INFO org.jooq.codegen.JavaGenerator - Generating Indexes       
+24979 [main] INFO org.jooq.codegen.JavaGenerator - Skipping empty indexes   
+24979 [main] INFO org.jooq.codegen.JavaGenerator - Generating table records 
+24979 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : AuthorRecord.java
+25012 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : BookRecord.java
+25028 [main] INFO org.jooq.codegen.JavaGenerator - Generating record        : LanguageRecord.java
+25029 [main] INFO org.jooq.tools.StopWatch - Table records generated  : Total: 535.128ms, +46.506ms
+25029 [main] INFO org.jooq.tools.StopWatch - Generation finished: DEMO: Total: 535.324ms, +0.195ms
+25029 [main] INFO org.jooq.codegen.JavaGenerator -                          
+25029 [main] INFO org.jooq.codegen.JavaGenerator - Excluding empty schema   : PUBLIC
+25029 [main] INFO org.jooq.codegen.JavaGenerator - Affected files: 16       
+25029 [main] INFO org.jooq.codegen.JavaGenerator - Modified files: 0        
+25029 [main] INFO org.jooq.codegen.JavaGenerator - No modified files        : This code generation run has not produced any file modifications.
+This means, the schema has not changed, and no other parameters (jOOQ version, driver version, database version,
+and any configuration elements) have not changed either.
+
+In automated builds, it is recommended to prevent unnecessary code generation runs. This run took: 427.077ms
+Possible means to prevent this:
+- Use manual code generation and check in generated sources: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/
+- Use schema version providers: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-version-providers/
+- Use gradle tasks and inputs: https://github.com/etiennestuder/gradle-jooq-plugin/blob/master/README.md
+25029 [main] INFO org.jooq.codegen.JavaGenerator - Removing excess files    
+]]></system-err>
+  </testcase>
+  <testcase name="negTestValidatePojoClassContent" classname="Validator.PojoValidatorTest" time="1.047"/>
+  <testcase name="testValidatePojoClassContent" classname="Validator.PojoValidatorTest" time="0.061"/>
+  <testcase name="testCountTables" classname="Validator.PojoValidatorTest" time="0.046"/>
 </testsuite>

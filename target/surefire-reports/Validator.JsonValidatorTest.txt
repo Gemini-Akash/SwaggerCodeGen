@@ -1,19 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Validator.JsonValidatorTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 12.732 s <<< FAILURE! - in Validator.JsonValidatorTest
-validateJsonFiles(Validator.JsonValidatorTest)  Time elapsed: 12.71 s  <<< ERROR!
-org.mockito.exceptions.misusing.MissingMethodInvocationException: 
-
-when() requires an argument which has to be 'a method call on a mock'.
-For example:
-    when(mock.getArticles()).thenReturn(articles);
-
-Also, this error might show up because:
-1. you stub either of: final/private/equals()/hashCode() methods.
-   Those methods *cannot* be stubbed/verified.
-   Mocking methods declared on non-public parent classes is not supported.
-2. inside when() you don't call method on mock but on some other object.
-
-	at Validator.JsonValidatorTest.validateJsonFiles(JsonValidatorTest.java:14)
-
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.086 s - in Validator.JsonValidatorTest

@@ -20,11 +20,6 @@ public class CodeGenUtilsTest {
 
     @Before
     public void setUp() {
-        File file = new File("src/test/resources/Handler/Abc");
-        if (!file.exists()) {
-            file.mkdir();
-        }
-
         Map<String, String> result = new HashMap<>();
         result.put("outerDirectoryPath", "src/test/resources");
         result.put("outerScriptDirectoryPath", "src/test/resources/testScript.sql");
@@ -37,14 +32,24 @@ public class CodeGenUtilsTest {
         theMock = Mockito.mockStatic(CodeGenUtils.class, InvocationOnMock::callRealMethod);
         theMock.when(() -> CodeGenUtils.createMap()).thenReturn(result);
     }
+
     @After
     public void close() {
         theMock.close();
     }
 
+    @After
+    public void cleanUp() {
+        String path = "src/test/resources/utility/demoDirectory";
+        File file = new File(path);
+        if (file.isDirectory() || file.isFile()) {
+            file.delete();
+        }
+    }
+
     @Test
     public void testCreateDirectory() {
-        String directoryPath = "src/test/resources/Handler/demoDirectory";
+        String directoryPath = "src/test/resources/utility/demoDirectory";
         CodeGenUtils.createDirectory(directoryPath);
         File file = new File(directoryPath);
         Assertions.assertTrue(file.exists());
@@ -64,9 +69,10 @@ public class CodeGenUtilsTest {
         Assertions.assertNotEquals(expected, actual);
 
     }
+
     @Test
     public void testGetSchemaName() {
-        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/Handler");
+        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/utility");
         String expected = CodeGenUtils.getSchemaName();
         String actual = "ims";
         Assertions.assertEquals(expected, actual);
@@ -75,7 +81,7 @@ public class CodeGenUtilsTest {
     @Test
     public void negTestGetSchemaName() {
 
-        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/Handler");
+        theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/utility");
         String expected = CodeGenUtils.getSchemaName();
         String actual = "ims1";
         Assertions.assertNotEquals(expected, actual);

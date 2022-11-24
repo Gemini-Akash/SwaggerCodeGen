@@ -5,6 +5,7 @@ Handler\DirectoryHandlerTests.class
 Handler\DbJsonHandlerTest.class
 utility\CodeGenUtilsTest.class
 Validator\DialectValidatorTest.class
+entity\demo\tables\pojos\Language.class
 Validator\PathValidatorTest.class
 Handler\TemplateHandlerTests.class
 Jooq\JOOQTestCases.class

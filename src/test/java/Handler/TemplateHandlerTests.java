@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import java.io.File;
 
 public class TemplateHandlerTests {
-    TemplateHandler templateHandler=new TemplateHandler();
+    TemplateHandler templateHandler = new TemplateHandler();
 
     @After
     public void cleanUpGeneratedClassTemplate() {

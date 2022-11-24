@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DialectValidatorTest {
 
-    DialectValidator dialectValidator=new DialectValidator();
+    DialectValidator dialectValidator = new DialectValidator();
 
     @Test
     public void negValidateDialect() {

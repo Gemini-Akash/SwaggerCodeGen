@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Assertions;
 
 public class PathValidatorTest {
 
-    PathValidator pathValidator=new PathValidator();
+    PathValidator pathValidator = new PathValidator();
+
     @Test
     public void isValidPath() {
         boolean expectedValue = true;
@@ -17,7 +18,7 @@ public class PathValidatorTest {
     }
 
     @Test
-    public void testCaseForIsValidateNeg() {
+    public void negIsValidPath() {
         Assertions.assertFalse(pathValidator.isValidPath("src/test/java1/abc"));
     }
 }

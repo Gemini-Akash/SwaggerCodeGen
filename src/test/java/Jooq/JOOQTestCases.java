@@ -14,7 +14,7 @@ public class JOOQTestCases {
     @Test
     public void testEntityGenerator() {
         try {
-            EntityClassGenerator.EntityGenerator("src/test/resources/testScript.sql", "CustomClassLoader/entity", "src/test/resources/Jooq/");
+            EntityClassGenerator.EntityGenerator("src/test/resources/testScript.sql", "entity", "src/test/resources/Jooq/");
         } catch (Exception e) {
             throw new RuntimeException("Exception in testLoadClass() :{}", e);
         }
@@ -22,25 +22,16 @@ public class JOOQTestCases {
         Assertions.assertTrue(file.isDirectory());
     }
 
-    @Test
-    public void testCaseForScriptPath() {
+    @Test(expected = FileNotFoundException.class)
+    public void testCaseForScriptPath() throws Exception {
+        EntityClassGenerator.EntityGenerator("src/main/resources/testScript1.sql", "entity", "src/test/resources/Jooq/");
 
-        FileNotFoundException exception = Assertions.assertThrows(FileNotFoundException.class, () -> {
-            EntityClassGenerator entityClassGen = new EntityClassGenerator();
-            entityClassGen.EntityGenerator("src/main/resources/Scrpt.sql", "Entity.Generated", "D:\\JooqCodeGen\\src\\main\\java");
-        });
-        Assertions.assertEquals("Script Not found", exception.message);
     }
 
 
-    @Test
-    public void testCaseForDirectoryPath() {
-
-        FileNotFoundException exception = Assertions.assertThrows(FileNotFoundException.class, () -> {
-            EntityClassGenerator entityClassGen = new EntityClassGenerator();
-            entityClassGen.EntityGenerator("src/main/resources/Script.sql", "Entity.Generated", "D:\\JoGen\\src\\main\\java");
-        });
-        Assertions.assertEquals("Directory Not found", exception.message);
+    @Test(expected = FileNotFoundException.class)
+    public void testCaseForDirectoryPath() throws Exception {
+        EntityClassGenerator.EntityGenerator("src/main/resources/testScript.sql", "entity", "src/test/resources/Jooq1/");
     }
 
 

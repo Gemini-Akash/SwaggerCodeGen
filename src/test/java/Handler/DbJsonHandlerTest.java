@@ -9,7 +9,8 @@ import java.io.File;
 
 public class DbJsonHandlerTest {
 
-    DbJsonHandler dbJsonHandler=new DbJsonHandler();
+    DbJsonHandler dbJsonHandler = new DbJsonHandler();
+
     @After
     public void cleanUpFiles() {
         String path = "src/test/resources/Handler/jsonFiles/DemoApplicationProperties.json";

@@ -39,25 +39,25 @@ import java.util.stream.Collectors;
      * @param filePath
      */
     public void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
-<span class="nc" id="L42">        StringBuilder path = new StringBuilder();</span>
-<span class="nc" id="L43">        JSONObject jsonObject = new JSONObject();</span>
-<span class="nc" id="L44">        jsonObject.put(&quot;className&quot;, className);</span>
-<span class="nc" id="L45">        jsonObject.put(&quot;scriptName&quot;, CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L46">        jsonObject.put(&quot;schemaName&quot;, CodeGenUtils.getSchemaName());</span>
-<span class="nc" id="L47">        jsonObject.put(&quot;variable&quot;, variableFieldsObject);</span>
-<span class="nc" id="L48">        jsonObject.put(&quot;primaryKeys&quot;, primaryKeysObject);</span>
-<span class="nc" id="L49">        LOG.info(&quot;Required json: {}&quot;, jsonObject);</span>
-<span class="nc" id="L50">        path.setLength(0);</span>
-<span class="nc" id="L51">        path.append(filePath);</span>
-<span class="nc" id="L52">        path.append(&quot;/jsonFiles/&quot;);</span>
-<span class="nc" id="L53">        path.append(className);</span>
-<span class="nc" id="L54">        path.append(&quot;.json&quot;);</span>
+<span class="fc" id="L42">        StringBuilder path = new StringBuilder();</span>
+<span class="fc" id="L43">        JSONObject jsonObject = new JSONObject();</span>
+<span class="fc" id="L44">        jsonObject.put(&quot;className&quot;, className);</span>
+<span class="fc" id="L45">        jsonObject.put(&quot;scriptName&quot;, CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L46">        jsonObject.put(&quot;schemaName&quot;, CodeGenUtils.getSchemaName());</span>
+<span class="fc" id="L47">        jsonObject.put(&quot;variable&quot;, variableFieldsObject);</span>
+<span class="fc" id="L48">        jsonObject.put(&quot;primaryKeys&quot;, primaryKeysObject);</span>
+<span class="fc" id="L49">        LOG.info(&quot;Required json: {}&quot;, jsonObject);</span>
+<span class="fc" id="L50">        path.setLength(0);</span>
+<span class="fc" id="L51">        path.append(filePath);</span>
+<span class="fc" id="L52">        path.append(&quot;/jsonFiles/&quot;);</span>
+<span class="fc" id="L53">        path.append(className);</span>
+<span class="fc" id="L54">        path.append(&quot;.json&quot;);</span>
 <span class="nc" id="L55">        try (FileWriter fileWriter = new FileWriter(path.toString())) {</span>
 <span class="nc" id="L56">            fileWriter.write(jsonObject.toJSONString());</span>
-<span class="nc" id="L57">        } catch (Exception e) {</span>
-<span class="nc" id="L58">            LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L57">        } catch (Exception e) {</span>
+<span class="fc" id="L58">            LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
 <span class="nc" id="L59">        }</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L60">    }</span>
 
     /**
      * loadClass() method is used to load class from fully qualified classname
@@ -196,21 +196,21 @@ import java.util.stream.Collectors;
      * @return set of classes
      */
     public Set&lt;Class&gt; getFullyQualifiedClasses(final File filePath) {
-<span class="nc" id="L199">        File[] files = filePath.listFiles();</span>
-<span class="nc" id="L200">        Set&lt;Class&gt; classes = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L199">        File[] files = filePath.listFiles();</span>
+<span class="fc" id="L200">        Set&lt;Class&gt; classes = new HashSet&lt;&gt;();</span>
         try {
-<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (pojoValidator.validatePojoClasses(files)) {</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">            if (pojoValidator.validatePojoClasses(files)) {</span>
 <span class="nc bnc" id="L203" title="All 2 branches missed.">                for (File file : files) {</span>
 <span class="nc" id="L204">                    compileJavaClasses(file);</span>
 <span class="nc" id="L205">                    classes.add(getFullyQualifiedClassName(file));</span>
                 }
             } else {
-<span class="nc" id="L208">                LOG.info(&quot;Any of your pojoClass is Empty&quot;);</span>
+<span class="fc" id="L208">                LOG.info(&quot;Any of your pojoClass is Empty&quot;);</span>
             }
 <span class="nc" id="L210">        } catch (Exception e) {</span>
 <span class="nc" id="L211">            LOG.error(&quot;Exception in getFullyQualifiedClasses(): {}&quot;, e.getMessage());</span>
-<span class="nc" id="L212">        }</span>
-<span class="nc" id="L213">        return classes;</span>
+<span class="fc" id="L212">        }</span>
+<span class="fc" id="L213">        return classes;</span>
     }
 
 
