@@ -83,12 +83,29 @@ public class TemplateHandlerTests {
         File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java");
         Assertions.assertTrue(file.exists());
     }
+    @Test
+    public void negTestGenerateClassFromTemplates() {
+        try {
+            templateHandler.generateClassFromTemplates("", "", "");
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in generateClassFromTemplates() : (The system cannot find the path specified)",e.getMessage());
+        }
+    }
+
 
     @Test
     public void testGenerateFileFromTemplate() {
         templateHandler.generateFileFromTemplate("Handler/demoTemplateTest/DummyFileTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
         File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
         Assertions.assertTrue(file.exists());
+    }
+    @Test
+    public void negTestGenerateFileFromTemplate() {
+        try {
+            templateHandler.generateFileFromTemplate("", "");
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in generateFileFromTemplate() : (The system cannot find the path specified)",e.getMessage());
+        }
     }
     @Test
     public void testGenerateSpringBootProject() {

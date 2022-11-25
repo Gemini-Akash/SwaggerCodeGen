@@ -35,8 +35,8 @@ import java.util.List;
 <span class="fc" id="L35">            Object obj = jsonParser.parse(fileReader);</span>
 
 <span class="fc" id="L37">            fileWriter.write(template.apply(obj));</span>
-<span class="nc" id="L38">        } catch (Exception e) {</span>
-<span class="nc" id="L39">            LOG.error(&quot;Exception in generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
+<span class="fc" id="L38">        } catch (Exception e) {</span>
+<span class="fc" id="L39">            LOG.error(&quot;Exception in generateClassFromTemplates() :{}&quot;, e.getMessage());</span>
 <span class="fc" id="L40">        }</span>
 <span class="fc" id="L41">    }</span>
 
@@ -51,8 +51,8 @@ import java.util.List;
 <span class="fc" id="L51">            Handlebars handlebars = new Handlebars();</span>
 <span class="fc" id="L52">            Template template = handlebars.compile(templatePath);</span>
 <span class="fc" id="L53">            fileWriter.write(template.text());</span>
-<span class="nc" id="L54">        } catch (Exception e) {</span>
-<span class="nc" id="L55">            LOG.error(&quot;Exception in generateFileFromTemplate() :{}&quot;, e.getMessage());</span>
+<span class="fc" id="L54">        } catch (Exception e) {</span>
+<span class="fc" id="L55">            LOG.error(&quot;Exception in generateFileFromTemplate() :{}&quot;, e.getMessage());</span>
 <span class="fc" id="L56">        }</span>
 <span class="fc" id="L57">    }</span>
 

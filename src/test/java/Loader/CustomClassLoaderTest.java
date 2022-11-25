@@ -78,6 +78,15 @@ public class CustomClassLoaderTest {
                 "src/test/resources/");
         Assertions.assertEquals(expectedClassNames, actualClassNames);
     }
+    @Test
+    public void negTestLoadClass() {
+        try {
+            customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos")),
+                    "src/test/generated/resources/");
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in loadClass():src/test/generated/resources/", e.getMessage());
+        }
+    }
 
 
     @Test
@@ -86,12 +95,28 @@ public class CustomClassLoaderTest {
         File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
         Assertions.assertTrue(file.exists());
     }
+    @Test
+    public void negTestForJavaCompileClass() {
+        try {
+            customClassLoader.compileJavaClasses( new File("src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy.java"));
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in compileJavaClasses():src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy.java", e.getMessage());
+        }
+    }
 
     @Test
     public void testGetJsonBody() {
         customClassLoader.getJsonBody(Language.class, "src/test/resources");
         File file = new File("src/test/resources/jsonFiles/Book.json");
         Assertions.assertTrue(file.exists());
+    }
+    @Test
+    public void negTestGetJsonBody() {
+        try {
+            customClassLoader.getJsonBody(Language.class, "src/test/generated/resources");
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in getJsonBody():src/test/generated/resources", e.getMessage());
+        }
     }
 
 
@@ -104,11 +129,26 @@ public class CustomClassLoaderTest {
         Assertions.assertEquals(expected, actualClasses);
     }
     @Test
+    public void negTestGetFullyQualifiedClasses() {
+        try {
+            customClassLoader.getFullyQualifiedClasses(new File("src/test/java/com/gemini/generated/testScript/entity/demo/tables/pojos"));
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in getFullyQualifiedClasses():src/test/java/com/gemini/generated/testScript/entity/demo/tables/pojos", e.getMessage());
+        }
+    }
+    @Test
     public void testGetFullyQualifiedClassName() {
         Class expected = com.gemini.testScript.entity.demo.tables.pojos.Language.class;
         Class actual = customClassLoader.getFullyQualifiedClassName(new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos/Language.java"));
         Assertions.assertEquals(expected, actual);
-
+    }
+    @Test
+    public void negTestGetFullyQualifiedClassName() {
+        try {
+            customClassLoader.getFullyQualifiedClassName(new File(""));
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in getFullyQualifiedClassName: com.gemini.testScript.entity.demo.tables.pojos.", e.getMessage());
+        }
     }
 
 

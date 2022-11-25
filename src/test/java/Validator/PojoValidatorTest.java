@@ -92,6 +92,14 @@ public class PojoValidatorTest {
         File file = new File("src/test/resources/Validator/DemoNegValidatePojoClassContent.txt");
         Assertions.assertFalse(pojoValidator.validatePojoClassContent(file));
     }
+    @Test
+    public void negExceptionTestValidatePojoClassContent() {
+        try {
+            pojoValidator.validatePojoClassContent(new File(""));
+        } catch (Exception e) {
+            Assertions.assertEquals("Exception in validatePojoClassContent(): (The system cannot find the path specified)",e.getMessage());
+        }
+    }
 
 
     @Test

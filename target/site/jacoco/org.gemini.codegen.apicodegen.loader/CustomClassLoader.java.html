@@ -54,8 +54,8 @@ import java.util.stream.Collectors;
 <span class="fc" id="L54">        path.append(&quot;.json&quot;);</span>
 <span class="fc" id="L55">        try (FileWriter fileWriter = new FileWriter(path.toString())) {</span>
 <span class="fc" id="L56">            fileWriter.write(jsonObject.toJSONString());</span>
-<span class="nc" id="L57">        } catch (Exception e) {</span>
-<span class="nc" id="L58">            LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L57">        } catch (Exception e) {</span>
+<span class="fc" id="L58">            LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
 <span class="fc" id="L59">        }</span>
 <span class="fc" id="L60">    }</span>
 
@@ -137,10 +137,10 @@ import java.util.stream.Collectors;
 <span class="nc" id="L137">        } catch (Exception e) {</span>
 <span class="nc" id="L138">            LOG.info(&quot;Exception in compileJavaClasses(): {}&quot;, e.getMessage());</span>
 <span class="fc" id="L139">        }</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (compilationResult == 0) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (compilationResult == 0) {</span>
 <span class="fc" id="L141">            LOG.info(&quot;Compilation is successful&quot;);</span>
         } else {
-<span class="nc" id="L143">            LOG.info(&quot;Compilation Failed at: {} &quot;, filePath.getName());</span>
+<span class="fc" id="L143">            LOG.info(&quot;Compilation Failed at: {} &quot;, filePath.getName());</span>
         }
 <span class="fc" id="L145">    }</span>
 
@@ -173,8 +173,8 @@ import java.util.stream.Collectors;
 <span class="fc" id="L173">            urlClassLoader = new URLClassLoader(urls);</span>
 <span class="fc" id="L174">            ClassLoader cl = urlClassLoader;</span>
 <span class="fc" id="L175">            cls = cl.loadClass(path.toString());</span>
-<span class="nc" id="L176">        } catch (Exception e) {</span>
-<span class="nc" id="L177">            LOG.error(&quot;Exception in getFullyQualifiedClassName: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L176">        } catch (Exception e) {</span>
+<span class="fc" id="L177">            LOG.error(&quot;Exception in getFullyQualifiedClassName: {}&quot;, e.getMessage());</span>
         } finally {
 <span class="pc bpc" id="L179" title="1 of 2 branches missed.">            if (urlClassLoader != null) {</span>
                 try {
@@ -207,8 +207,8 @@ import java.util.stream.Collectors;
             } else {
 <span class="nc" id="L208">                LOG.info(&quot;Any of your pojoClass is Empty&quot;);</span>
             }
-<span class="nc" id="L210">        } catch (Exception e) {</span>
-<span class="nc" id="L211">            LOG.error(&quot;Exception in getFullyQualifiedClasses(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L210">        } catch (Exception e) {</span>
+<span class="fc" id="L211">            LOG.error(&quot;Exception in getFullyQualifiedClasses(): {}&quot;, e.getMessage());</span>
 <span class="fc" id="L212">        }</span>
 <span class="fc" id="L213">        return classes;</span>
     }
