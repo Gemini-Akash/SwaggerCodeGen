@@ -8,13 +8,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +76,7 @@ public class PojoValidatorTest {
         try {
             pojoValidator.countTables();
         } catch (Exception e) {
-            Assertions.assertEquals(e.getMessage(), "Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Language.json");
+            Assertions.assertEquals(e.getMessage(), "Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Book.json");
         }
     }
 
@@ -95,12 +93,9 @@ public class PojoValidatorTest {
         Assertions.assertFalse(pojoValidator.validatePojoClassContent(file));
     }
 
-    /**
-     * To Do getSchemaName() is left for congi
-     */
+
     @Test
     public void testValidatePojoClasses() {
-
         theMock.when(() -> CodeGenUtils.createMap()).thenReturn(result);
         boolean actual = pojoValidator.validatePojoClasses(new File("src/test/resources/entity/demo/tables/pojos").listFiles());
         Assertions.assertTrue(actual);

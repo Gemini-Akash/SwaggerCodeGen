@@ -67,7 +67,6 @@ public final class DirectoryHandler{
                 } else {
                     LOG.info("{}.class exits but not deleted", className);
                 }
-
             } else {
                 LOG.info("{}.class does not exist", className);
             }

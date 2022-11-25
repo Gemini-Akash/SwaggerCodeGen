@@ -30,8 +30,8 @@ import java.io.FileWriter;
 <span class="fc" id="L30">        LOG.info(&quot;Required applicationPropertiesJson: {}&quot;, jsonObject);</span>
 <span class="fc" id="L31">        try (FileWriter fileWriter = new FileWriter(filePath)) {</span>
 <span class="fc" id="L32">            fileWriter.write(jsonObject.toJSONString());</span>
-<span class="nc" id="L33">        } catch (Exception e) {</span>
-<span class="nc" id="L34">            LOG.error(&quot;Exception in  writing JSON file / createDbJson(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L33">        } catch (Exception e) {</span>
+<span class="fc" id="L34">            LOG.error(&quot;Exception in  writing JSON file / createDbJson(): {}&quot;, e.getMessage());</span>
 <span class="fc" id="L35">        }</span>
 <span class="fc" id="L36">    }</span>
 }

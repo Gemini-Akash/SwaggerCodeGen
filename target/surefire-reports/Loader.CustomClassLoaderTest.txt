@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Loader.CustomClassLoaderTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 13.875 s <<< FAILURE! - in Loader.CustomClassLoaderTest
-testGetFullyQualifiedClasses(Loader.CustomClassLoaderTest)  Time elapsed: 0.43 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <[class entity.demo.tables.pojos.Language]> but was: <[]>
-	at Loader.CustomClassLoaderTest.testGetFullyQualifiedClasses(CustomClassLoaderTest.java:155)
-
-testCreateApiJson(Loader.CustomClassLoaderTest)  Time elapsed: 0.104 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at Loader.CustomClassLoaderTest.testCreateApiJson(CustomClassLoaderTest.java:89)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.482 s - in Loader.CustomClassLoaderTest

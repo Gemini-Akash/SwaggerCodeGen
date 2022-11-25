@@ -72,7 +72,7 @@ public final class CustomClassLoader {
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/jsonFiles");
-       CodeGenUtils.createDirectory(path.toString());
+        CodeGenUtils.createDirectory(path.toString());
         try {
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();

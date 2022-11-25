@@ -1,9 +1,10 @@
 Loader\CustomClassLoaderTest.class
 Validator\JsonValidatorTest.class
 Validator\PojoValidatorTest.class
-Handler\DirectoryHandlerTests.class
+com\gemini\testScript\entity\demo\tables\pojos\Language.class
 Handler\DbJsonHandlerTest.class
 utility\CodeGenUtilsTest.class
+Handler\DirectoryHandlerTests.class
 Validator\DialectValidatorTest.class
 entity\demo\tables\pojos\Language.class
 Validator\PathValidatorTest.class

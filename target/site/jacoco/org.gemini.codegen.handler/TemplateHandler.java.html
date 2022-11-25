@@ -62,104 +62,104 @@ import java.util.List;
      * @param classNames
      */
     public void generateSpringBootProject(final List&lt;String&gt; classNames) {
-<span class="nc" id="L65">        StringBuilder path = new StringBuilder();</span>
-<span class="nc" id="L66">        StringBuilder jsonPath = new StringBuilder();</span>
-<span class="nc" id="L67">        path.setLength(0);</span>
-<span class="nc" id="L68">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L69">        path.append(&quot;/service&quot;);</span>
-<span class="nc" id="L70">        CodeGenUtils.createDirectory(path.toString());</span>
-<span class="nc" id="L71">        path.setLength(0);</span>
-<span class="nc" id="L72">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L73">        path.append(&quot;/controller&quot;);</span>
-<span class="nc" id="L74">        CodeGenUtils.createDirectory(path.toString());</span>
-<span class="nc" id="L75">        path.setLength(0);</span>
-<span class="nc" id="L76">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L77">        path.append(&quot;/model&quot;);</span>
-<span class="nc" id="L78">        CodeGenUtils.createDirectory(path.toString());</span>
-<span class="nc" id="L79">        path.setLength(0);</span>
-<span class="nc" id="L80">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L81">        path.append(&quot;/Exception&quot;);</span>
-<span class="nc" id="L82">        CodeGenUtils.createDirectory(path.toString());</span>
-<span class="nc" id="L83">        path.setLength(0);</span>
-<span class="nc" id="L84">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
-<span class="nc" id="L85">        path.append(&quot;/&quot;);</span>
-<span class="nc" id="L86">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L87">        path.append(&quot;SpringBootApp/src/main/resources&quot;);</span>
-<span class="nc" id="L88">        CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L65">        StringBuilder path = new StringBuilder();</span>
+<span class="fc" id="L66">        StringBuilder jsonPath = new StringBuilder();</span>
+<span class="fc" id="L67">        path.setLength(0);</span>
+<span class="fc" id="L68">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L69">        path.append(&quot;/service&quot;);</span>
+<span class="fc" id="L70">        CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L71">        path.setLength(0);</span>
+<span class="fc" id="L72">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L73">        path.append(&quot;/controller&quot;);</span>
+<span class="fc" id="L74">        CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L75">        path.setLength(0);</span>
+<span class="fc" id="L76">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L77">        path.append(&quot;/model&quot;);</span>
+<span class="fc" id="L78">        CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L79">        path.setLength(0);</span>
+<span class="fc" id="L80">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L81">        path.append(&quot;/Exception&quot;);</span>
+<span class="fc" id="L82">        CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L83">        path.setLength(0);</span>
+<span class="fc" id="L84">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
+<span class="fc" id="L85">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L86">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L87">        path.append(&quot;SpringBootApp/src/main/resources&quot;);</span>
+<span class="fc" id="L88">        CodeGenUtils.createDirectory(path.toString());</span>
 
-<span class="nc" id="L90">        String classname = classNames.get(0);</span>
-<span class="nc" id="L91">        jsonPath.setLength(0);</span>
-<span class="nc" id="L92">        jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L93">        jsonPath.append(&quot;/jsonFiles/&quot;);</span>
-<span class="nc" id="L94">        jsonPath.append(classname);</span>
-<span class="nc" id="L95">        jsonPath.append(&quot;.json&quot;);</span>
-<span class="nc" id="L96">        path.setLength(0);</span>
-<span class="nc" id="L97">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L98">        path.append(&quot;/&quot;);</span>
-<span class="nc" id="L99">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L100">        path.append(&quot;.java&quot;);</span>
-<span class="nc" id="L101">        generateClassFromTemplates(&quot;HandlebarTemplates/mainClassTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L102">        path.setLength(0);</span>
-<span class="nc" id="L103">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
-<span class="nc" id="L104">        path.append(&quot;/&quot;);</span>
-<span class="nc" id="L105">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L106">        path.append(&quot;SpringBootApp/pom.xml&quot;);</span>
-<span class="nc" id="L107">        generateClassFromTemplates(&quot;HandlebarTemplates/pomTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L108">        path.setLength(0);</span>
-<span class="nc" id="L109">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L110">        path.append(&quot;/Exception/ServiceException.java&quot;);</span>
-<span class="nc" id="L111">        generateClassFromTemplates(&quot;HandlebarTemplates/ServiceExceptionTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L112">        path.setLength(0);</span>
-<span class="nc" id="L113">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L114">        path.append(&quot;/Exception/ErrorMessage.java&quot;);</span>
-<span class="nc" id="L115">        generateClassFromTemplates(&quot;HandlebarTemplates/ErrorMessageTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L116">        path.setLength(0);</span>
-<span class="nc" id="L117">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L118">        path.append(&quot;/Exception/ControllerExceptionHandler.java&quot;);</span>
-<span class="nc" id="L119">        generateClassFromTemplates(&quot;HandlebarTemplates/controllerExceptionHandlerTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L90">        String classname = classNames.get(0);</span>
+<span class="fc" id="L91">        jsonPath.setLength(0);</span>
+<span class="fc" id="L92">        jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L93">        jsonPath.append(&quot;/jsonFiles/&quot;);</span>
+<span class="fc" id="L94">        jsonPath.append(classname);</span>
+<span class="fc" id="L95">        jsonPath.append(&quot;.json&quot;);</span>
+<span class="fc" id="L96">        path.setLength(0);</span>
+<span class="fc" id="L97">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L98">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L99">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L100">        path.append(&quot;.java&quot;);</span>
+<span class="fc" id="L101">        generateClassFromTemplates(&quot;HandlebarTemplates/mainClassTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L102">        path.setLength(0);</span>
+<span class="fc" id="L103">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
+<span class="fc" id="L104">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L105">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L106">        path.append(&quot;SpringBootApp/pom.xml&quot;);</span>
+<span class="fc" id="L107">        generateClassFromTemplates(&quot;HandlebarTemplates/pomTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L108">        path.setLength(0);</span>
+<span class="fc" id="L109">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L110">        path.append(&quot;/Exception/ServiceException.java&quot;);</span>
+<span class="fc" id="L111">        generateClassFromTemplates(&quot;HandlebarTemplates/ServiceExceptionTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L112">        path.setLength(0);</span>
+<span class="fc" id="L113">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L114">        path.append(&quot;/Exception/ErrorMessage.java&quot;);</span>
+<span class="fc" id="L115">        generateClassFromTemplates(&quot;HandlebarTemplates/ErrorMessageTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L116">        path.setLength(0);</span>
+<span class="fc" id="L117">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L118">        path.append(&quot;/Exception/ControllerExceptionHandler.java&quot;);</span>
+<span class="fc" id="L119">        generateClassFromTemplates(&quot;HandlebarTemplates/controllerExceptionHandlerTemplate&quot;, path.toString(), jsonPath.toString());</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">        for (String className : classNames) {</span>
-<span class="nc" id="L122">            jsonPath.setLength(0);</span>
-<span class="nc" id="L123">            jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L124">            jsonPath.append(&quot;/jsonFiles/&quot;);</span>
-<span class="nc" id="L125">            jsonPath.append(className);</span>
-<span class="nc" id="L126">            jsonPath.append(&quot;.json&quot;);</span>
-<span class="nc" id="L127">            path.setLength(0);</span>
-<span class="nc" id="L128">            path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L129">            path.append(&quot;/service/&quot;);</span>
-<span class="nc" id="L130">            path.append(className);</span>
-<span class="nc" id="L131">            path.append(&quot;Service.java&quot;);</span>
-<span class="nc" id="L132">            generateClassFromTemplates(&quot;HandlebarTemplates/servicesTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L133">            path.setLength(0);</span>
-<span class="nc" id="L134">            path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L135">            path.append(&quot;/controller/&quot;);</span>
-<span class="nc" id="L136">            path.append(className);</span>
-<span class="nc" id="L137">            path.append(&quot;Controller.java&quot;);</span>
-<span class="nc" id="L138">            generateClassFromTemplates(&quot;HandlebarTemplates/ControllerTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L139">            path.setLength(0);</span>
-<span class="nc" id="L140">            path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L141">            path.append(&quot;/model/&quot;);</span>
-<span class="nc" id="L142">            path.append(className);</span>
-<span class="nc" id="L143">            path.append(&quot;.java&quot;);</span>
-<span class="nc" id="L144">            generateClassFromTemplates(&quot;HandlebarTemplates/modelTemplate&quot;, path.toString(), jsonPath.toString());</span>
-<span class="nc" id="L145">        }</span>
-<span class="nc" id="L146">        path.setLength(0);</span>
-<span class="nc" id="L147">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
-<span class="nc" id="L148">        path.append(&quot;/&quot;);</span>
-<span class="nc" id="L149">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L150">        path.append(&quot;SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json&quot;);</span>
-<span class="nc" id="L151">        generateFileFromTemplate(&quot;HandlebarTemplates/controllerExceptionHandlerJsonTemplate&quot;, path.toString());</span>
-<span class="nc" id="L152">        jsonPath.setLength(0);</span>
-<span class="nc" id="L153">        jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="nc" id="L154">        jsonPath.append(&quot;/jsonFiles/applicationProperties.json&quot;);</span>
-<span class="nc" id="L155">        path.setLength(0);</span>
-<span class="nc" id="L156">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
-<span class="nc" id="L157">        path.append(&quot;/&quot;);</span>
-<span class="nc" id="L158">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="nc" id="L159">        path.append(&quot;SpringBootApp/src/main/resources/application.properties&quot;);</span>
-<span class="nc" id="L160">        generateClassFromTemplates(&quot;HandlebarTemplates/applicationPropertiesTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (String className : classNames) {</span>
+<span class="fc" id="L122">            jsonPath.setLength(0);</span>
+<span class="fc" id="L123">            jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L124">            jsonPath.append(&quot;/jsonFiles/&quot;);</span>
+<span class="fc" id="L125">            jsonPath.append(className);</span>
+<span class="fc" id="L126">            jsonPath.append(&quot;.json&quot;);</span>
+<span class="fc" id="L127">            path.setLength(0);</span>
+<span class="fc" id="L128">            path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L129">            path.append(&quot;/service/&quot;);</span>
+<span class="fc" id="L130">            path.append(className);</span>
+<span class="fc" id="L131">            path.append(&quot;Service.java&quot;);</span>
+<span class="fc" id="L132">            generateClassFromTemplates(&quot;HandlebarTemplates/servicesTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L133">            path.setLength(0);</span>
+<span class="fc" id="L134">            path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L135">            path.append(&quot;/controller/&quot;);</span>
+<span class="fc" id="L136">            path.append(className);</span>
+<span class="fc" id="L137">            path.append(&quot;Controller.java&quot;);</span>
+<span class="fc" id="L138">            generateClassFromTemplates(&quot;HandlebarTemplates/ControllerTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L139">            path.setLength(0);</span>
+<span class="fc" id="L140">            path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L141">            path.append(&quot;/model/&quot;);</span>
+<span class="fc" id="L142">            path.append(className);</span>
+<span class="fc" id="L143">            path.append(&quot;.java&quot;);</span>
+<span class="fc" id="L144">            generateClassFromTemplates(&quot;HandlebarTemplates/modelTemplate&quot;, path.toString(), jsonPath.toString());</span>
+<span class="fc" id="L145">        }</span>
+<span class="fc" id="L146">        path.setLength(0);</span>
+<span class="fc" id="L147">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
+<span class="fc" id="L148">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L149">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L150">        path.append(&quot;SpringBootApp/src/main/resources/controllerExceptionHandlerJson.json&quot;);</span>
+<span class="fc" id="L151">        generateFileFromTemplate(&quot;HandlebarTemplates/controllerExceptionHandlerJsonTemplate&quot;, path.toString());</span>
+<span class="fc" id="L152">        jsonPath.setLength(0);</span>
+<span class="fc" id="L153">        jsonPath.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L154">        jsonPath.append(&quot;/jsonFiles/applicationProperties.json&quot;);</span>
+<span class="fc" id="L155">        path.setLength(0);</span>
+<span class="fc" id="L156">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
+<span class="fc" id="L157">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L158">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L159">        path.append(&quot;SpringBootApp/src/main/resources/application.properties&quot;);</span>
+<span class="fc" id="L160">        generateClassFromTemplates(&quot;HandlebarTemplates/applicationPropertiesTemplate&quot;, path.toString(), jsonPath.toString());</span>
 
-<span class="nc" id="L162">    }</span>
+<span class="fc" id="L162">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

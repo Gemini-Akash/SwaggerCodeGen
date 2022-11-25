@@ -43,7 +43,7 @@ public class JsonValidatorTest {
         try {
             jsonValidator.validateJsonFiles(Arrays.asList("Language"));
         } catch (Exception e) {
-            Assertions.assertEquals(e.getMessage(), "Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Language.json");
+            Assertions.assertEquals("Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Book.json",e.getMessage());
         }
     }
 
