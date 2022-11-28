@@ -23,7 +23,6 @@ public class JsonValidator {
         StringBuilder path = new StringBuilder();
         for (String className : classNames) {
             JSONObject jsonObject;
-
                 path.setLength(0);
                 path.append(CodeGenUtils.generateDirectoryPath());
                 path.append("/jsonFiles/");
