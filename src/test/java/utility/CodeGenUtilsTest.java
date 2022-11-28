@@ -1,7 +1,6 @@
 package utility;
 
 
-
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 public class CodeGenUtilsTest {
     static MockedStatic<CodeGenUtils> theMock;
-
 
     @Before
     public void setUp() {
@@ -81,14 +79,11 @@ public class CodeGenUtilsTest {
 
     @Test
     public void negTestGetSchemaName() {
-
         theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/utility");
         String expected = CodeGenUtils.getSchemaName();
         String actual = "ims1";
         Assertions.assertNotEquals(expected, actual);
-
     }
-
 
     @Test
     public void testGenerateDirectoryPath() {

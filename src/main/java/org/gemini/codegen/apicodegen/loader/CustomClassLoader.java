@@ -2,7 +2,6 @@ package org.gemini.codegen.apicodegen.loader;
 
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
-
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -21,12 +20,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
 public final class CustomClassLoader {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
-    PojoValidator pojoValidator=new PojoValidator();
+    PojoValidator pojoValidator = new PojoValidator();
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
@@ -70,7 +68,7 @@ public final class CustomClassLoader {
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/jsonFiles");
-       CodeGenUtils.createDirectory(path.toString());
+        CodeGenUtils.createDirectory(path.toString());
         try {
             for (Class classContent : classObject) {
                 String className = classContent.getSimpleName();
@@ -158,14 +156,14 @@ public final class CustomClassLoader {
         File directoryPath = new File(path.toString());
         Class cls = null;
         URLClassLoader urlClassLoader = null;
-            path.setLength(0);
-            path.append("com.gemini.");
-            path.append(CodeGenUtils.getScriptName());
-            path.append(".entity.");
-            path.append(CodeGenUtils.getSchemaName());
-            path.append(".tables.pojos.");
-            path.append(filePath.getName().replaceAll(".java", ""));
-        try{
+        path.setLength(0);
+        path.append("com.gemini.");
+        path.append(CodeGenUtils.getScriptName());
+        path.append(".entity.");
+        path.append(CodeGenUtils.getSchemaName());
+        path.append(".tables.pojos.");
+        path.append(filePath.getName().replaceAll(".java", ""));
+        try {
             URL url = directoryPath.toURI().toURL();
             URL[] urls = new URL[]{url};
             urlClassLoader = new URLClassLoader(urls);

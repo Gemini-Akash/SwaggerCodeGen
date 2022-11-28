@@ -5,7 +5,6 @@ import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.DialectValidator;
 import org.gemini.codegen.apicodegen.validator.JsonValidator;
 import org.gemini.codegen.handler.DbJsonHandler;
-
 import org.gemini.codegen.handler.DirectoryHandler;
 import org.gemini.codegen.handler.TemplateHandler;
 import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
@@ -21,12 +20,12 @@ public class CodeGeneratorApp {
     private static final Logger LOG = LoggerFactory.getLogger(CodeGeneratorApp.class);
 
     public static void main(String[] args) {
-        DbJsonHandler dbJsonHandler=new DbJsonHandler();
-        TemplateHandler templateHandler=new TemplateHandler();
-        CustomClassLoader customClassLoader=new CustomClassLoader();
-        DialectValidator dialectValidator=new DialectValidator();
-        JsonValidator jsonValidator=new JsonValidator();
-        DirectoryHandler directoryHandler=new DirectoryHandler();
+        DbJsonHandler dbJsonHandler = new DbJsonHandler();
+        TemplateHandler templateHandler = new TemplateHandler();
+        CustomClassLoader customClassLoader = new CustomClassLoader();
+        DialectValidator dialectValidator = new DialectValidator();
+        JsonValidator jsonValidator = new JsonValidator();
+        DirectoryHandler directoryHandler = new DirectoryHandler();
         StringBuilder path = new StringBuilder();
 
 
@@ -39,7 +38,7 @@ public class CodeGeneratorApp {
             path.append(CodeGenUtils.getScriptName());
             path.append(".entity");
             EntityClassGenerator.EntityGenerator(CodeGenUtils.createMap().get("outerScriptDirectoryPath"), path.toString(), CodeGenUtils.generateDirectoryPath());
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             LOG.error("Exception in generating POJO classes: {}", e.message);
         } catch (Exception e) {
             LOG.error("Exception in generating POJO classes: {}", e.getMessage());

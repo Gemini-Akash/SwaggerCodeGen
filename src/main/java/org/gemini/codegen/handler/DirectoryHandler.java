@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.List;
 
 
-public final class DirectoryHandler{
+public final class DirectoryHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(DirectoryHandler.class);
 

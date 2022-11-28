@@ -2,7 +2,6 @@ package Validator;
 
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.JsonValidator;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +43,7 @@ public class JsonValidatorTest {
         try {
             jsonValidator.validateJsonFiles(Arrays.asList("Language"));
         } catch (Exception e) {
-            Assertions.assertEquals("Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Book.json",e.getMessage());
+            Assertions.assertEquals("Exception in validateJsonFiles method: src/test/resources/Handler/jsonFiles/Book.json", e.getMessage());
         }
     }
 

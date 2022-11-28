@@ -3,7 +3,6 @@ package Handler;
 import org.apache.commons.io.FileUtils;
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.handler.TemplateHandler;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 public class TemplateHandlerTests {
-    TemplateHandler templateHandler = new TemplateHandler();
     static MockedStatic<CodeGenUtils> theMock;
+    TemplateHandler templateHandler = new TemplateHandler();
+
     @Before
     public void setUp() {
         Map<String, String> result = new HashMap<>();
@@ -36,6 +36,7 @@ public class TemplateHandlerTests {
         theMock.when(() -> CodeGenUtils.createMap()).thenReturn(result);
         theMock.when(() -> CodeGenUtils.generateDirectoryPath()).thenReturn("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/");
     }
+
     @After
     public void close() {
         theMock.close();
@@ -58,6 +59,7 @@ public class TemplateHandlerTests {
             file.delete();
         }
     }
+
     @After
     public void cleanUpGeneratedSpringBootProject() {
 
@@ -77,79 +79,55 @@ public class TemplateHandlerTests {
             }
         }
     }
+
     @Test
     public void testGenerateClassFromTemplates() {
         try {
             Method method = TemplateHandler.class.getDeclaredMethod("generateClassFromTemplates", String.class, String.class, String.class);
             method.setAccessible(true);
-            method.invoke(templateHandler,"Handler/demoTemplateTest/DummyClassTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java", "src/test/resources/Handler/jsonFiles/DummyJsonForClass.json");
+            method.invoke(templateHandler, "Handler/demoTemplateTest/DummyClassTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java", "src/test/resources/Handler/jsonFiles/DummyJsonForClass.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
         File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java");
         Assertions.assertTrue(file.exists());
     }
+
     @Test
     public void negTestGenerateClassFromTemplates() {
         try {
             Method method = TemplateHandler.class.getDeclaredMethod("generateClassFromTemplates", String.class, String.class, String.class);
             method.setAccessible(true);
-            method.invoke(templateHandler,"", "", "");
+            method.invoke(templateHandler, "", "", "");
         } catch (Exception e) {
-            Assertions.assertEquals("Exception in generateClassFromTemplates() : (The system cannot find the path specified)",e.getMessage());
+            Assertions.assertEquals("Exception in generateClassFromTemplates() : (The system cannot find the path specified)", e.getMessage());
         }
     }
-//    @Test
-//    public void testGenerateClassFromTemplates() {
-//        templateHandler.generateClassFromTemplates("Handler/demoTemplateTest/DummyClassTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java", "src/test/resources/Handler/jsonFiles/DummyJsonForClass.json");
-//        File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyClass.java");
-//        Assertions.assertTrue(file.exists());
-//    }
-//    @Test
-//    public void negTestGenerateClassFromTemplates() {
-//        try {
-//            templateHandler.generateClassFromTemplates("", "", "");
-//        } catch (Exception e) {
-//            Assertions.assertEquals("Exception in generateClassFromTemplates() : (The system cannot find the path specified)",e.getMessage());
-//        }
-//    }
+
     @Test
     public void testGenerateFileFromTemplate() {
         try {
             Method method = TemplateHandler.class.getDeclaredMethod("generateFileFromTemplate", String.class, String.class);
             method.setAccessible(true);
-            method.invoke(templateHandler,"Handler/demoTemplateTest/DummyFileTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
+            method.invoke(templateHandler, "Handler/demoTemplateTest/DummyFileTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
         File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
         Assertions.assertTrue(file.exists());
     }
+
     @Test
     public void negTestGenerateFileFromTemplate() {
         try {
             Method method = TemplateHandler.class.getDeclaredMethod("generateFileFromTemplate", String.class, String.class);
             method.setAccessible(true);
-            method.invoke(templateHandler,"","");
+            method.invoke(templateHandler, "", "");
         } catch (Exception e) {
-            Assertions.assertEquals("Exception in generateFileFromTemplate() : (The system cannot find the path specified)",e.getMessage());
+            Assertions.assertEquals("Exception in generateFileFromTemplate() : (The system cannot find the path specified)", e.getMessage());
         }
     }
 
-//    @Test
-//    public void testGenerateFileFromTemplate() {
-//        templateHandler.generateFileFromTemplate("Handler/demoTemplateTest/DummyFileTemplate", "src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
-//        File file = new File("src/test/resources/Handler/GeneratedTestTemplates/DummyFileTemplate.txt");
-//        Assertions.assertTrue(file.exists());
-//    }
-//    @Test
-//    public void negTestGenerateFileFromTemplate() {
-//        try {
-//            templateHandler.generateFileFromTemplate("", "");
-//        } catch (Exception e) {
-//            Assertions.assertEquals("Exception in generateFileFromTemplate() : (The system cannot find the path specified)",e.getMessage());
-//        }
-//    }
     @Test
     public void testGenerateSpringBootProject() {
         templateHandler.generateSpringBootProject(Arrays.asList("Author"));

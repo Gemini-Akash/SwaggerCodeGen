@@ -64,15 +64,16 @@ public class CustomClassLoaderTest {
         JSONArray variableKeyObject = new JSONArray();
         primaryKeyObject.put(jsonObject);
         try {
-            Method method = CustomClassLoader.class.getDeclaredMethod("createAPIJson",String.class, JSONArray.class,JSONArray.class, String.class);
+            Method method = CustomClassLoader.class.getDeclaredMethod("createAPIJson", String.class, JSONArray.class, JSONArray.class, String.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,"Author", primaryKeyObject, variableKeyObject, "src/test/resources");
+            method.invoke(customClassLoader, "Author", primaryKeyObject, variableKeyObject, "src/test/resources");
         } catch (Exception e) {
             e.printStackTrace();
         }
         File file = new File("src/test/resources/jsonFiles/Author.json");
         Assertions.assertTrue(file.exists());
     }
+
     @Test
     public void negTestCreateApiJson() {
         JSONObject jsonObject = new JSONObject();
@@ -83,26 +84,13 @@ public class CustomClassLoaderTest {
         JSONArray variableKeyObject = new JSONArray();
         primaryKeyObject.put(jsonObject);
         try {
-            Method method = CustomClassLoader.class.getDeclaredMethod("createAPIJson",String.class, JSONArray.class,JSONArray.class, String.class);
+            Method method = CustomClassLoader.class.getDeclaredMethod("createAPIJson", String.class, JSONArray.class, JSONArray.class, String.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,"Author", primaryKeyObject, variableKeyObject, "");
+            method.invoke(customClassLoader, "Author", primaryKeyObject, variableKeyObject, "");
         } catch (Exception e) {
             Assertions.assertEquals("Exception in  writing JSON file / createApiJson(): /jsonFiles/Author.json (The system cannot find the path specified)", e.getMessage());
         }
     }
-//    @Test
-//    public void testCreateApiJson() {
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("fieldName", "Id");
-//        jsonObject.put("datatype", "String");
-//        JSONArray primaryKeyObject = new JSONArray();
-//        primaryKeyObject.put(jsonObject);
-//        JSONArray variableKeyObject = new JSONArray();
-//        primaryKeyObject.put(jsonObject);
-//        customClassLoader.createAPIJson("Author", primaryKeyObject, variableKeyObject, "src/test/resources");
-//        File file = new File("src/test/resources/jsonFiles/Author.json");
-//        Assertions.assertTrue(file.exists());
-//    }
 
     @Test
     public void testLoadClass() {
@@ -114,133 +102,69 @@ public class CustomClassLoaderTest {
                 "src/test/resources/");
         Assertions.assertEquals(expectedClassNames, actualClassNames);
     }
-    @Test
-    public void negTestLoadClass() {
-        try {
-//            customClassLoader.getFullyQualifiedClasses(new File(""))
-            Set<Class> result=new HashSet<>();
-            customClassLoader.loadClass(result,
-                    "src/test/generated/resources/");
-        } catch (Exception e) {
-            Assertions.assertEquals("Exception in loadClass():src/test/generated/resources/", e.getMessage());
-        }
-    }
 
-
-//    @Test
-//    public void testForJavaCompileClass() {
-//        customClassLoader.compileJavaClasses(new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
-//        File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
-//        Assertions.assertTrue(file.exists());
-//    }
     @Test
     public void testForJavaCompileClass() {
         try {
             Method method = CustomClassLoader.class.getDeclaredMethod("compileJavaClasses", File.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
+            method.invoke(customClassLoader, new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.java"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         File file = new File("src/test/resources/CustomClassLoader/ClassFiles/Dummy.class");
-        Assertions.assertTrue(file.exists() );
+        Assertions.assertTrue(file.exists());
     }
+
     @Test
     public void negTestForJavaCompileClass() {
         try {
             Method method = CustomClassLoader.class.getDeclaredMethod("compileJavaClasses", File.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,new File("src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy1.java"));
+            method.invoke(customClassLoader, new File("src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy1.java"));
         } catch (Exception e) {
             Assertions.assertEquals("Exception in compileJavaClasses():src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy.java", e.getMessage());
         }
     }
-//    @Test
-//    public void negTestForJavaCompileClass() {
-//        try {
-//            customClassLoader.compileJavaClasses( new File("src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy.java"));
-//        } catch (Exception e) {
-//            Assertions.assertEquals("Exception in compileJavaClasses():src/test/resources/generated/CustomClassLoader/ClassFiles/Dummy.java", e.getMessage());
-//        }
-//    }
 
     @Test
     public void testGetJsonBody() {
         try {
-            Method method = CustomClassLoader.class.getDeclaredMethod("getJsonBody", Class.class,String.class);
+            Method method = CustomClassLoader.class.getDeclaredMethod("getJsonBody", Class.class, String.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,Language.class,"src/test/resources");
+            method.invoke(customClassLoader, Language.class, "src/test/resources");
         } catch (Exception e) {
             e.printStackTrace();
         }
         File file = new File("src/test/resources/jsonFiles/Book.json");
         Assertions.assertTrue(file.exists());
     }
-    @Test
-    public void negTestGetJsonBody() {
-        try {
-            Method method = CustomClassLoader.class.getDeclaredMethod("getJsonBody", Class.class,String.class);
-            method.setAccessible(true);
-            method.invoke(customClassLoader,Language.class,"src/test/generated/resources");
-        } catch (Exception e) {
-            Assertions.assertEquals("Exception in getJsonBody():src/test/generated/resources", e.getMessage());
-        }
-    }
-//    @Test
-//    public void testGetJsonBody() {
-//        customClassLoader.getJsonBody(Language.class, "src/test/resources");
-//        File file = new File("src/test/resources/jsonFiles/Book.json");
-//        Assertions.assertTrue(file.exists());
-//    }
-//    @Test
-//    public void negTestGetJsonBody() {
-//        try {
-//            customClassLoader.getJsonBody(Language.class, "src/test/generated/resources");
-//        } catch (Exception e) {
-//            Assertions.assertEquals("Exception in getJsonBody():src/test/generated/resources", e.getMessage());
-//        }
-//    }
 
     @Test
     public void testGetFullyQualifiedClassName() {
         Class expected = com.gemini.testScript.entity.demo.tables.pojos.Language.class;
-        Class  actual=null;
+        Class actual = null;
         try {
             Method method = CustomClassLoader.class.getDeclaredMethod("getFullyQualifiedClassName", File.class);
             method.setAccessible(true);
-            actual= (Class) method.invoke(customClassLoader,new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos/Language.java"));
+            actual = (Class) method.invoke(customClassLoader, new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos/Language.java"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         Assertions.assertEquals(expected, actual);
 
     }
+
     @Test
     public void negTestGetFullyQualifiedClassName() {
         try {
             Method method = CustomClassLoader.class.getDeclaredMethod("getFullyQualifiedClassName", File.class);
             method.setAccessible(true);
-            method.invoke(customClassLoader,new File(""));
+            method.invoke(customClassLoader, new File(""));
         } catch (Exception e) {
             Assertions.assertEquals("Exception in getFullyQualifiedClassName: com.gemini.testScript.entity.demo.tables.pojos.", e.getMessage());
         }
     }
-
-//    @Test
-//    public void testGetFullyQualifiedClassName() {
-//        Class expected = com.gemini.testScript.entity.demo.tables.pojos.Language.class;
-//        Class actual = customClassLoader.getFullyQualifiedClassName(new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos/Language.java"));
-//        Assertions.assertEquals(expected, actual);
-//    }
-//    @Test
-//    public void negTestGetFullyQualifiedClassName() {
-//        try {
-//            customClassLoader.getFullyQualifiedClassName(new File(""));
-//        } catch (Exception e) {
-//            Assertions.assertEquals("Exception in getFullyQualifiedClassName: com.gemini.testScript.entity.demo.tables.pojos.", e.getMessage());
-//        }
-//    }
-
 
     @Test
     public void testGetFullyQualifiedClasses() {
@@ -250,6 +174,7 @@ public class CustomClassLoaderTest {
         Set<Class> actualClasses = customClassLoader.getFullyQualifiedClasses(new File("src/test/java/com/gemini/testScript/entity/demo/tables/pojos"));
         Assertions.assertEquals(expected, actualClasses);
     }
+
     @Test
     public void negTestGetFullyQualifiedClasses() {
         try {
@@ -258,7 +183,4 @@ public class CustomClassLoaderTest {
             Assertions.assertEquals("Exception in getFullyQualifiedClasses():src/test/java/com/gemini/generated/testScript/entity/demo/tables/pojos", e.getMessage());
         }
     }
-
-
-
 }

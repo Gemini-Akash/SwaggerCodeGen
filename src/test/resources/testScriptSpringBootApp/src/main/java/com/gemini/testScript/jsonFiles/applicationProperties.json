@@ -1,1 +1,7 @@
-{"url":"jdbc:mysql://localhost:3306/","dialect":"xyz","username":"root","driverClassName":"com.mysql.cj.jdbc.Driver","password":"gemini"}
+{
+  "url": "jdbc:mysql://localhost:3306/",
+  "dialect": "xyz",
+  "username": "root",
+  "driverClassName": "com.mysql.cj.jdbc.Driver",
+  "password": "gemini"
+}

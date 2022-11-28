@@ -24,6 +24,7 @@ public class JOOQTestCases {
             e.printStackTrace();
         }
     }
+
     @Test
     public void testEntityGenerator() {
         try {

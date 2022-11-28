@@ -23,12 +23,12 @@ public class JsonValidator {
         StringBuilder path = new StringBuilder();
         for (String className : classNames) {
             JSONObject jsonObject;
-                path.setLength(0);
-                path.append(CodeGenUtils.generateDirectoryPath());
-                path.append("/jsonFiles/");
-                path.append(className);
-                path.append(".json");
-            try(FileReader fileReader = new FileReader(path.toString())) {
+            path.setLength(0);
+            path.append(CodeGenUtils.generateDirectoryPath());
+            path.append("/jsonFiles/");
+            path.append(className);
+            path.append(".json");
+            try (FileReader fileReader = new FileReader(path.toString())) {
                 jsonObject = (JSONObject) new JSONParser().parse(fileReader);
                 if (jsonObject.get("primaryKeys").toString().equals("[]")) {
                     LOG.info("Empty Json File: {}.json", className);

@@ -16,7 +16,6 @@ public final class TemplateHandler {
     private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
 
 
-
     /**
      * generateClassFromTemplates() method is used for generating class from templates.
      *

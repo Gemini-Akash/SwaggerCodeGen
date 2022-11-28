@@ -25,7 +25,7 @@ public final class EntityClassGenerator {
      */
 
     public static void EntityGenerator(String scriptPath, String packageName, String directory) throws Exception {
-        PathValidator pathValidator=new PathValidator();
+        PathValidator pathValidator = new PathValidator();
         boolean scriptResult = pathValidator.isValidPath(scriptPath);
         boolean directoryResult = pathValidator.isValidPath(directory);
 

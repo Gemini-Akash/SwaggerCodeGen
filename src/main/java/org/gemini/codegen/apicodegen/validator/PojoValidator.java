@@ -1,7 +1,6 @@
 package org.gemini.codegen.apicodegen.validator;
 
 import org.apache.commons.io.FileUtils;
-
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +23,8 @@ public final class PojoValidator {
      */
     private int countTables() {
         int count = 0;
-        try(FileReader fileReader = new FileReader(CodeGenUtils.createMap().get("outerScriptDirectoryPath"));
-            BufferedReader  bufferedReader = new BufferedReader(fileReader)) {
+        try (FileReader fileReader = new FileReader(CodeGenUtils.createMap().get("outerScriptDirectoryPath"));
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line = bufferedReader.readLine();
             while (line != null) {
                 if (line.contains("CREATE TABLE") || line.contains("Create Table") || line.contains("create table")) {
@@ -49,8 +48,8 @@ public final class PojoValidator {
     private boolean validatePojoClassContent(final File filePath) {
         int leftCurlyBracesCount = 0;
         int rightCurlyBracesCount = 0;
-        try(FileReader fileReader = new FileReader(filePath);
-        BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+        try (FileReader fileReader = new FileReader(filePath);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line = bufferedReader.readLine();
             while (line != null) {
                 if (line.contains("{")) {
@@ -73,7 +72,7 @@ public final class PojoValidator {
      *
      * @return boolean value
      */
-    public  boolean validatePojoClasses(final File[] files) {
+    public boolean validatePojoClasses(final File[] files) {
         int count = 0;
         if (files.length == countTables()) {
             for (File file : files) {
