@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils.new FilenameFilter() {...},0,10,0,0,0,2,0,2,0,2
-SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils,12,106,2,2,3,21,3,6,1,6
+SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils,41,84,2,2,8,19,4,5,2,5
 SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,11,98,1,9,3,29,1,9,0,5
 SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,0,469,0,2,0,116,0,6,0,5
 SwaggerCodeGen,org.gemini.codegen.handler,DbJsonHandler,0,57,0,0,0,15,0,3,0,3
