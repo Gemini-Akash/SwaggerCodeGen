@@ -24,7 +24,7 @@ public final class TemplateHandler {
      * @param jsonPath
      * @param templatePath
      */
-    public void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
+    private void generateClassFromTemplates(final String templatePath, final String filePath, final String jsonPath) {
 
         try (FileReader fileReader = new FileReader(jsonPath);
              FileWriter fileWriter = new FileWriter(filePath)) {
@@ -46,7 +46,7 @@ public final class TemplateHandler {
      * @param filePath
      * @param templatePath
      */
-    public void generateFileFromTemplate(final String templatePath, final String filePath) {
+    private void generateFileFromTemplate(final String templatePath, final String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
             Template template = handlebars.compile(templatePath);

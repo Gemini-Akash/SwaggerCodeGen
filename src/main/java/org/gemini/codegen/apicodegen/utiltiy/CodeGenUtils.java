@@ -67,12 +67,8 @@ public class CodeGenUtils {
                 return new File(current, name).isDirectory();
             }
         });
-        try {
-            if (directories[0] == null) {
-                throw new NullPointerException("Script does not contain Schema Name.");
-            }
-        } catch (NullPointerException e) {
-            LOG.error("Script does not contain Schema Name: {}", e.getMessage());
+        if (directories[0] == null) {
+                throw new NullPointerException("Script does not contain Schema name.");
         }
         return directories[0];
     }

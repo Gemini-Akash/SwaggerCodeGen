@@ -28,7 +28,6 @@ public final class CustomClassLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
     PojoValidator pojoValidator=new PojoValidator();
-    DirectoryHandler directoryHandler=new DirectoryHandler();
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
@@ -38,7 +37,7 @@ public final class CustomClassLoader {
      * @param variableFieldsObject
      * @param filePath
      */
-    public void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
+    private void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
         StringBuilder path = new StringBuilder();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("className", className);
@@ -92,7 +91,7 @@ public final class CustomClassLoader {
      * @param classContent
      * @param filePath
      */
-    public void getJsonBody(final Class classContent, final String filePath) {
+    private void getJsonBody(final Class classContent, final String filePath) {
 
         JSONArray primaryKeysObject = null;
         JSONArray variableFieldsObject = null;
@@ -129,7 +128,7 @@ public final class CustomClassLoader {
      *
      * @param filePath
      */
-    public void compileJavaClasses(final File filePath) {
+    private void compileJavaClasses(final File filePath) {
         int compilationResult = 0;
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -150,7 +149,7 @@ public final class CustomClassLoader {
      * @param filePath
      */
 
-    public Class getFullyQualifiedClassName(final File filePath) {
+    private Class getFullyQualifiedClassName(final File filePath) {
         StringBuilder path = new StringBuilder();
         path.setLength(0);
         path.append(CodeGenUtils.createMap().get("outerDirectoryPath"));
