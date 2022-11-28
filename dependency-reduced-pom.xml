@@ -48,6 +48,12 @@
             <configuration>
               <destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
               <propertyName>surefireArgLine</propertyName>
+              <excludes>
+                <exclude>src/main/java/org/jooq/codegen/GeneratorWriter.java</exclude>
+                <exclude>src/main/java/org/json/simple/JSONObject.java</exclude>
+                <exclude>src/main/java/org/gemini/codegen/jooqpojogen/FileNotFoundException.java</exclude>
+                <exclude>src/main/java/org/gemini/codegen/CodeGeneratorApp.java</exclude>
+              </excludes>
             </configuration>
           </execution>
           <execution>
