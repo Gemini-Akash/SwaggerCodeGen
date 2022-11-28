@@ -9,8 +9,9 @@ org\gemini\codegen\CodeGeneratorApp.class
 org\jooq\codegen\GeneratorWriter.class
 org\gemini\codegen\handler\DbJsonHandler.class
 org\gemini\codegen\jooqpojogen\CustomJooqAutoGenerator.class
-org\gemini\codegen\handler\DirectoryHandler$1.class
+org\gemini\codegen\apicodegen\utiltiy\CodeGenUtils.class
 org\json\simple\JSONObject.class
 org\gemini\codegen\apicodegen\validator\PathValidator.class
+org\gemini\codegen\apicodegen\utiltiy\CodeGenUtils$1.class
 org\gemini\codegen\handler\DirectoryHandler.class
 org\gemini\codegen\jooqpojogen\FileNotFoundException.class

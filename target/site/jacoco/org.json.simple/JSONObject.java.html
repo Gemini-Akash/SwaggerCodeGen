@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JSONObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.json.simple</a> &gt; <span class="el_source">JSONObject.java</span></div><h1>JSONObject.java</h1><pre class="source lang-java linenums">package org.json.simple;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class JSONObject extends LinkedHashMap implements Map, JSONAware, JSONStreamAware {
+    private static final long serialVersionUID = -503443796854799292L;
+
+<span class="fc" id="L12">    public JSONObject() {</span>
+<span class="fc" id="L13">    }</span>
+
+    public JSONObject(Map map) {
+<span class="nc" id="L16">        super(map);</span>
+<span class="nc" id="L17">    }</span>
+
+    public static void writeJSONString(Map map, Writer out) throws IOException {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (map == null) {</span>
+<span class="nc" id="L21">            out.write(&quot;null&quot;);</span>
+        } else {
+<span class="nc" id="L23">            boolean first = true;</span>
+<span class="nc" id="L24">            Iterator iter = map.entrySet().iterator();</span>
+<span class="nc" id="L25">            out.write(123);</span>
+
+<span class="nc bnc" id="L27" title="All 2 branches missed.">            while (iter.hasNext()) {</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">                if (first) {</span>
+<span class="nc" id="L29">                    first = false;</span>
+                } else {
+<span class="nc" id="L31">                    out.write(44);</span>
+                }
+
+<span class="nc" id="L34">                Entry entry = (Entry) iter.next();</span>
+<span class="nc" id="L35">                out.write(34);</span>
+<span class="nc" id="L36">                out.write(escape(String.valueOf(entry.getKey())));</span>
+<span class="nc" id="L37">                out.write(34);</span>
+<span class="nc" id="L38">                out.write(58);</span>
+<span class="nc" id="L39">                JSONValue.writeJSONString(entry.getValue(), out);</span>
+<span class="nc" id="L40">            }</span>
+
+<span class="nc" id="L42">            out.write(125);</span>
+        }
+<span class="nc" id="L44">    }</span>
+
+    public static String toJSONString(Map map) {
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (map == null) {</span>
+<span class="nc" id="L48">            return &quot;null&quot;;</span>
+        } else {
+<span class="fc" id="L50">            StringBuffer sb = new StringBuffer();</span>
+<span class="fc" id="L51">            boolean first = true;</span>
+<span class="fc" id="L52">            Iterator iter = map.entrySet().iterator();</span>
+<span class="fc" id="L53">            sb.append('{');</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            while (iter.hasNext()) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                if (first) {</span>
+<span class="fc" id="L57">                    first = false;</span>
+                } else {
+<span class="fc" id="L59">                    sb.append(',');</span>
+                }
+
+<span class="fc" id="L62">                Entry entry = (Entry) iter.next();</span>
+<span class="fc" id="L63">                toJSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);</span>
+<span class="fc" id="L64">            }</span>
+
+<span class="fc" id="L66">            sb.append('}');</span>
+<span class="fc" id="L67">            return sb.toString();</span>
+        }
+    }
+
+    private static String toJSONString(String key, Object value, StringBuffer sb) {
+<span class="fc" id="L72">        sb.append('&quot;');</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (key == null) {</span>
+<span class="nc" id="L74">            sb.append(&quot;null&quot;);</span>
+        } else {
+<span class="fc" id="L76">            JSONValue.escape(key, sb);</span>
+        }
+
+<span class="fc" id="L79">        sb.append('&quot;').append(':');</span>
+<span class="fc" id="L80">        sb.append(JSONValue.toJSONString(value));</span>
+<span class="fc" id="L81">        return sb.toString();</span>
+    }
+
+    public static String toString(String key, Object value) {
+<span class="nc" id="L85">        StringBuffer sb = new StringBuffer();</span>
+<span class="nc" id="L86">        toJSONString(key, value, sb);</span>
+<span class="nc" id="L87">        return sb.toString();</span>
+    }
+
+    public static String escape(String s) {
+<span class="nc" id="L91">        return JSONValue.escape(s);</span>
+    }
+
+    public void writeJSONString(Writer out) throws IOException {
+<span class="nc" id="L95">        writeJSONString(this, out);</span>
+<span class="nc" id="L96">    }</span>
+
+    public String toJSONString() {
+<span class="fc" id="L99">        return toJSONString(this);</span>
+    }
+
+    public String toString() {
+<span class="fc" id="L103">        return this.toJSONString();</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
