@@ -1,0 +1,1 @@
+{"className":"Book","scriptName":"testScript","schemaName":"demo","variable":[{"datatype":"String","fieldName":"Cd"},{"datatype":"String","fieldName":"Description"}],"primaryKeys":[{"datatype":"Integer","fieldName":"Id"}]}

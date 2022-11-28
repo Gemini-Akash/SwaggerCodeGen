@@ -3,7 +3,6 @@ package org.gemini.codegen.apicodegen.loader;
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
 
-import org.gemini.codegen.handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

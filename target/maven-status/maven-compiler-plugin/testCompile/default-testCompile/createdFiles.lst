@@ -1,0 +1,12 @@
+Loader\CustomClassLoaderTest.class
+Validator\JsonValidatorTest.class
+Validator\PojoValidatorTest.class
+com\gemini\testScript\entity\demo\tables\pojos\Language.class
+Handler\DbJsonHandlerTest.class
+utility\CodeGenUtilsTest.class
+Handler\DirectoryHandlerTests.class
+Validator\DialectValidatorTest.class
+entity\demo\tables\pojos\Language.class
+Validator\PathValidatorTest.class
+Handler\TemplateHandlerTests.class
+Jooq\JOOQTestCases.class

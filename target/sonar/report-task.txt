@@ -2,5 +2,5 @@ projectKey=org.example:SwaggerCodeGen
 serverUrl=http://localhost:9000
 serverVersion=9.7.1.62043
 dashboardUrl=http://localhost:9000/dashboard?id=org.example%3ASwaggerCodeGen
-ceTaskId=AYSFnTCLUAmdLJ9OtCDp
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYSFnTCLUAmdLJ9OtCDp
+ceTaskId=AYS8-AgNomBiTEb5inuW
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYS8-AgNomBiTEb5inuW

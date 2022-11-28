@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntityClassGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SwaggerCodeGen</a> &gt; <a href="index.source.html" class="el_package">org.gemini.codegen.jooqpojogen</a> &gt; <span class="el_source">EntityClassGenerator.java</span></div><h1>EntityClassGenerator.java</h1><pre class="source lang-java linenums">package org.gemini.codegen.jooqpojogen;
+
+import org.gemini.codegen.apicodegen.validator.PathValidator;
+import org.jooq.codegen.GenerationTool;
+import org.jooq.meta.jaxb.*;
+
+
+/**
+ * This Class is for the Entity and POJOs class generation with the help of this class we can generate the required classes.
+ */
+<span class="nc" id="L11">public final class EntityClassGenerator {</span>
+
+
+    /**
+     * This Method will create the Entity and POJOs class with the given script,
+     * and also add the annotations acc. to the script,
+     * and store the classes with the given package name and directory.
+     * This Method also Validates the paths given by the Users.
+     * Return NULL
+     *
+     * @param scriptPath  Containing the path of script
+     * @param packageName Containing the package name
+     * @param directory   Containing the directory where it stores the classes
+     * @return null
+     */
+
+    public static void EntityGenerator(String scriptPath, String packageName, String directory) throws Exception {
+<span class="fc" id="L28">        PathValidator pathValidator=new PathValidator();</span>
+<span class="fc" id="L29">        boolean scriptResult = pathValidator.isValidPath(scriptPath);</span>
+<span class="fc" id="L30">        boolean directoryResult = pathValidator.isValidPath(directory);</span>
+
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (!scriptResult) {</span>
+<span class="nc" id="L33">            throw new FileNotFoundException(&quot;Script Not found....&quot;);</span>
+        }
+
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (!directoryResult) {</span>
+<span class="nc" id="L37">            throw new FileNotFoundException(&quot;Directory Not found....&quot;);</span>
+        }
+
+<span class="fc" id="L40">        Configuration configuration = new Configuration();</span>
+
+<span class="fc" id="L42">        configuration.withGenerator(new Generator()</span>
+<span class="fc" id="L43">                .withName(CustomJooqAutoGenerator.class.getCanonicalName())</span>
+<span class="fc" id="L44">                .withStrategy(new Strategy()</span>
+<span class="fc" id="L45">                        .withMatchers(new Matchers()</span>
+<span class="fc" id="L46">                                .withFields(</span>
+                                        new MatchersFieldType()
+<span class="fc" id="L48">                                                .withFieldMember(new MatcherRule()</span>
+<span class="fc" id="L49">                                                        .withTransform(MatcherTransformType.PASCAL))</span>
+
+                                )))
+<span class="fc" id="L52">                .withDatabase(new Database()</span>
+<span class="fc" id="L53">                        .withName(&quot;org.jooq.meta.extensions.ddl.DDLDatabase&quot;)</span>
+<span class="fc" id="L54">                        .withProperties(new Property().</span>
+<span class="fc" id="L55">                                withKey(&quot;scripts&quot;).</span>
+<span class="fc" id="L56">                                withValue(scriptPath)</span>
+                        )
+                )
+<span class="fc" id="L59">                .withGenerate(new Generate()</span>
+<span class="fc" id="L60">                        .withPojos(true)</span>
+<span class="fc" id="L61">                        .withDaos(true)</span>
+<span class="fc" id="L62">                        .withSpringAnnotations(true)</span>
+<span class="fc" id="L63">                        .withJpaAnnotations(true)</span>
+<span class="fc" id="L64">                        .withJpaVersion(String.valueOf(2.2))</span>
+<span class="fc" id="L65">                        .withValidationAnnotations(true)</span>
+<span class="fc" id="L66">                        .withConstructorPropertiesAnnotation(true)</span>
+<span class="fc" id="L67">                        .withConstructorPropertiesAnnotationOnPojos(true)</span>
+                )
+<span class="fc" id="L69">                .withTarget(new Target()</span>
+<span class="fc" id="L70">                        .withPackageName(packageName)</span>
+<span class="fc" id="L71">                        .withDirectory(directory))</span>
+
+<span class="fc" id="L73">        ).withOnError(OnError.FAIL);</span>
+<span class="fc" id="L74">        GenerationTool.generate(configuration);</span>
+<span class="fc" id="L75">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

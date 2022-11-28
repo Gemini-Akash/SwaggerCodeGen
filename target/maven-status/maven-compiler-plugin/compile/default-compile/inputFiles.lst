@@ -11,6 +11,7 @@ D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\jooqpojogen\
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\loader\DummyClassLoader.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\CodeGeneratorApp.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\validator\PojoValidator.java
+D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\utiltiy\CodeGenUtils.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\apicodegen\validator\DialectValidator.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\handler\DirectoryHandler.java
 D:\Intellj Projects\SwaggerCodeGen\src\main\java\org\gemini\codegen\jooqpojogen\FileNotFoundException.java
