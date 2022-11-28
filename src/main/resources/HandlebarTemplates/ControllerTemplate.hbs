@@ -59,7 +59,7 @@ public class {{className}}Controller {
        {{className}} result=objectService.patchUpdate{{className}}(body);
        if(result!=null){
                 log.info("Updated successfully");
-                return new ResponseEntity<>(body, HttpStatus.OK);
+                return new ResponseEntity<>(result, HttpStatus.OK);
            }
            else{
                 log.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
