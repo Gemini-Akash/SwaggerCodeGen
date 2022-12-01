@@ -22,7 +22,7 @@ public final class PojoValidator {
      *
      * @return count
      */
-    private int countTables() {
+    public int countTables() {
         int count = 0;
         try(FileReader fileReader = new FileReader(CodeGenUtils.createMap().get("outerScriptDirectoryPath"));
             BufferedReader  bufferedReader = new BufferedReader(fileReader)) {

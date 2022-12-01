@@ -3,6 +3,7 @@ package Handler;
 import org.apache.commons.io.FileUtils;
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.handler.TemplateHandler;
+import org.json.simple.parser.ParseException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -129,8 +131,8 @@ public class TemplateHandlerTests {
     }
 
     @Test
-    public void testGenerateSpringBootProject() {
-        templateHandler.generateSpringBootProject(Arrays.asList("Author"));
+    public void testGenerateSpringBootProject()  {
+        templateHandler.generateSpringBootProject();
         File directory = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service");
         File file = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service/AuthorService.java");
         Assertions.assertTrue(directory.exists() && file.exists());

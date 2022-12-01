@@ -3,7 +3,6 @@ package org.gemini.codegen.apicodegen.loader;
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
 
-import org.gemini.codegen.handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -28,6 +27,8 @@ public final class CustomClassLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);
     PojoValidator pojoValidator=new PojoValidator();
+    JSONArray jsonArrayObject =new JSONArray();
+    int createApiJsonCount =0;
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
@@ -39,22 +40,25 @@ public final class CustomClassLoader {
      */
     private void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
         StringBuilder path = new StringBuilder();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("className", className);
-        jsonObject.put("scriptName", CodeGenUtils.getScriptName());
-        jsonObject.put("schemaName", CodeGenUtils.getSchemaName());
-        jsonObject.put("variable", variableFieldsObject);
-        jsonObject.put("primaryKeys", primaryKeysObject);
-        LOG.info("Required json: {}", jsonObject);
-        path.setLength(0);
-        path.append(filePath);
-        path.append("/jsonFiles/");
-        path.append(className);
-        path.append(".json");
-        try (FileWriter fileWriter = new FileWriter(path.toString())) {
-            fileWriter.write(jsonObject.toJSONString());
-        } catch (Exception e) {
-            LOG.error("Exception in  writing JSON file / createApiJson(): {}", e.getMessage());
+        JSONObject jsonObject1 = new JSONObject();
+        JSONObject jsonObject2 = new JSONObject();
+        createApiJsonCount++;
+        jsonObject2.put("className", className);
+        jsonObject2.put("scriptName", CodeGenUtils.getScriptName());
+        jsonObject2.put("schemaName", CodeGenUtils.getSchemaName());
+        jsonObject2.put("variable", variableFieldsObject);
+        jsonObject2.put("primaryKeys", primaryKeysObject);
+        jsonObject1.put("classes", jsonArrayObject.put(jsonObject2));
+        if (createApiJsonCount ==pojoValidator.countTables()) {
+            LOG.info("Required json: {}", jsonObject1);
+            path.setLength(0);
+            path.append(filePath);
+            path.append("/jsonFiles/Loader.json");
+            try (FileWriter fileWriter = new FileWriter(path.toString())) {
+                fileWriter.write(jsonObject1.toJSONString());
+            } catch (Exception e) {
+                LOG.error("Exception in  writing JSON file / createApiJson(): {}", e.getMessage());
+            }
         }
     }
 

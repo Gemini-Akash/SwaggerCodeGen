@@ -10,17 +10,19 @@ import org.gemini.codegen.handler.DirectoryHandler;
 import org.gemini.codegen.handler.TemplateHandler;
 import org.gemini.codegen.jooqpojogen.EntityClassGenerator;
 import org.gemini.codegen.jooqpojogen.FileNotFoundException;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class CodeGeneratorApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(CodeGeneratorApp.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
         DbJsonHandler dbJsonHandler=new DbJsonHandler();
         TemplateHandler templateHandler=new TemplateHandler();
         CustomClassLoader customClassLoader=new CustomClassLoader();
@@ -60,16 +62,16 @@ public class CodeGeneratorApp {
         LOG.info(" ClassNames------>{}", classNames);
         jsonValidator.validateJsonFiles(classNames);
         dbJsonHandler.createDbJson(new File(CodeGenUtils.generateDirectoryPath() + "/jsonFiles/applicationProperties.json"), CodeGenUtils.createMap().get("url"), CodeGenUtils.createMap().get("dialect"), CodeGenUtils.createMap().get("username"), CodeGenUtils.createMap().get("password"), CodeGenUtils.createMap().get("driverClassName"));
-        templateHandler.generateSpringBootProject(classNames);
+        templateHandler.generateSpringBootProject();
 
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/com");
         directoryHandler.deleteDirectory(path.toString());
-        path.setLength(0);
-        path.append(CodeGenUtils.generateDirectoryPath());
-        path.append("/jsonFiles");
-        directoryHandler.deleteDirectory(path.toString());
+//        path.setLength(0);
+//        path.append(CodeGenUtils.generateDirectoryPath());
+//        path.append("/jsonFiles");
+//        directoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");
