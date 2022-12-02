@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RestController
 public class {{className}}Controller {
 
-    private static final Logger log = LoggerFactory.getLogger({{className}}Controller.class);
+    private static final Logger LOG = LoggerFactory.getLogger({{className}}Controller.class);
 
     @Autowired
     {{className}}Service objectService;
@@ -28,11 +28,11 @@ public class {{className}}Controller {
             com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
             com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
                 if(result!=null){
-                    log.info("Data fetched successfully");
+                    LOG.info("Data fetched successfully");
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 }
                 else{
-                     log.info("Data not found : {}",{{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+                     LOG.info("Data not found : {}",{{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
                      return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
                 }
     }
@@ -43,11 +43,11 @@ public class {{className}}Controller {
        {{#each primaryKeys}}body.set{{fieldName}}({{fieldName}});{{/each}}
        int result=objectService.update{{className}}(body);
        if(result == 1){
-                log.info("Updated successfully");
+                LOG.info("Updated successfully");
                 return new ResponseEntity<>(body, HttpStatus.OK);
            }
            else{
-                log.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+                LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
                 return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
            }
     }
@@ -58,11 +58,11 @@ public class {{className}}Controller {
        {{#each primaryKeys}}body.set{{fieldName}}({{fieldName}});{{/each}}
        {{className}} result=objectService.patchUpdate{{className}}(body);
        if(result!=null){
-                log.info("Updated successfully");
+                LOG.info("Updated successfully");
                 return new ResponseEntity<>(result, HttpStatus.OK);
            }
            else{
-                log.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+                LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
                 return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
            }
     }
@@ -70,7 +70,7 @@ public class {{className}}Controller {
 
     @PostMapping({"/{{className}}"})
     public ResponseEntity<{{className}}> add{{className}}(@Valid @RequestBody {{className}} body) {
-        log.info("Record inserted successfully");
+        LOG.info("Record inserted successfully");
         return new ResponseEntity<>(objectService.add{{className}}(body), HttpStatus.CREATED);
     }
 
@@ -78,11 +78,11 @@ public class {{className}}Controller {
     public ResponseEntity delete{{className}}({{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}) {
         int result=objectService.delete{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
         if(result==1){
-            log.info("Deleted successfully : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+            LOG.info("Deleted successfully : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
         }
         else{
-            log.info("Data to be deleted does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+            LOG.info("Data to be deleted does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data to be deleted does not exist");
         }
     }
