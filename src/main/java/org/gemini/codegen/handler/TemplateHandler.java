@@ -177,8 +177,6 @@ public final class TemplateHandler {
         } catch (IOException | ParseException e) {
             LOG.info("Exception in generateSpringBootProject(): {}", e.getMessage());
         }
-
-
     }
 
 }
