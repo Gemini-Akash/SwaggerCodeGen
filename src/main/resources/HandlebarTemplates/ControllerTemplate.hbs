@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -69,7 +70,7 @@ public class {{className}}Controller {
 
 
     @PostMapping({"/{{className}}"})
-    public ResponseEntity<{{className}}> add{{className}}(@Valid @RequestBody {{className}} body) {
+    public ResponseEntity<List<{{className}}>> add{{className}}(@Valid @RequestBody List<{{className}}> body) {
         LOG.info("Record inserted successfully");
         return new ResponseEntity<>(objectService.add{{className}}(body), HttpStatus.CREATED);
     }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.gemini.{{scriptName}}.Exception.ServiceException;
+import java.util.List;
 
 @Service
 public class {{className}}Service {
@@ -28,7 +28,7 @@ public class {{className}}Service {
         return objectDao.fetchRecord({{#each primaryKeys}}classObject.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
     }
 
-    public {{className}} add{{className}}({{className}} classObject){
+    public List<{{className}}> add{{className}}(List<{{className}}> classObject){
          return objectDao.insertRecord(classObject);
     }
 

@@ -569,6 +569,8 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         printPackage(out, table, GeneratorStrategy.Mode.DAO);
         tType = out.ref(tType);
         out.println("import org.jooq.impl.DefaultConfiguration;");
+        out.println("import java.util.ArrayList;");
+        out.println("import java.util.List;");
         generateDaoClassJavadoc(table, out);
         printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);
 
@@ -726,21 +728,25 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
         //For Insert Method
         out.javadoc("Created custom Insert records Method");
-        out.println("public %s insertRecord(%s classObject) {", pType, pType);
+        out.println("public List<%s> insertRecord(List<%s> classObject) {", pType, pType);
+        out.println("List<%s> resultArray=new ArrayList<>();",pType);
+        out.println("for (%s object:classObject) {",pType);
         out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass = getStrategy().getJavaClassName(column);
             if (size == 1) {
                 if (key != column.getPrimaryKey()) {
-                    out.println("record.set%s(classObject.get%s());", colClass, colClass);
+                    out.println("record.set%s(object.get%s());", colClass, colClass);
                 }
             } else {
-                out.println("record.set%s(classObject.get%s());", colClass, colClass);
+                out.println("record.set%s(object.get%s());", colClass, colClass);
             }
         }
         out.println("record.store();");
         out.println("%s result=record.into(%s.class);", pType, pType);
-        out.println("return result;");
+        out.println("resultArray.add(result);");
+        out.println("}");
+        out.println("return resultArray;");
         out.println("}");
 
 
