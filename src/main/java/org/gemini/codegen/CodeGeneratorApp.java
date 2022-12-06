@@ -51,6 +51,7 @@ public class CodeGeneratorApp {
         path.append("/com/gemini/");
         path.append(CodeGenUtils.getScriptName());
         path.append("/entity");
+        directoryHandler.deleteDirectory(CodeGenUtils.generateDirectoryPath() + "/entity");
         directoryHandler.renameDirectory(new File(path.toString()), new File(CodeGenUtils.generateDirectoryPath() + "/entity"));
 
         path.setLength(0);

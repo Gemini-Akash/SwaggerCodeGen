@@ -1,4 +1,4 @@
-1.MULTIPLE JSON:-
+1. (Resolved) MULTIPLE JSON:-
 	For the Generation of the Service and Controller layer files we are using the json file to fill the templates
 	and as of now we are creating the multiple json from the pojos class so the total number of json file is equal
 	to the number of pojos classes.
