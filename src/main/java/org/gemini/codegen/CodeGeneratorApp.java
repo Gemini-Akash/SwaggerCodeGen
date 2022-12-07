@@ -14,8 +14,8 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CodeGeneratorApp {
@@ -40,7 +40,81 @@ public class CodeGeneratorApp {
             path.append("com.gemini.");
             path.append(CodeGenUtils.getScriptName());
             path.append(".entity");
-            EntityClassGenerator.EntityGenerator(CodeGenUtils.createMap().get("outerScriptDirectoryPath"), path.toString(), CodeGenUtils.generateDirectoryPath());
+            if(!(new File(CodeGenUtils.generateDirectoryPath()+"/entity").exists())) {
+
+                EntityClassGenerator.EntityGenerator(CodeGenUtils.createMap().get("outerScriptDirectoryPath"), path.toString(), CodeGenUtils.generateDirectoryPath());
+            }
+
+
+            else{
+
+
+
+                File daoExistFiles[]=(new File(CodeGenUtils.generateDirectoryPath()+"/entity"+ "/items/tables/daos")).listFiles();
+                List<BufferedReader> bufferedReaderExistList=new ArrayList<>();
+                for(File file:daoExistFiles){
+
+                    bufferedReaderExistList.add(new BufferedReader(new FileReader(file)));
+
+                }
+
+
+
+                EntityClassGenerator.EntityGenerator(CodeGenUtils.createMap().get("outerScriptDirectoryPath"), path.toString(), CodeGenUtils.generateDirectoryPath());
+
+
+
+
+
+                File daoNewFiles[]=(new File(CodeGenUtils.generateDirectoryPath()+path+ "/items/tables/daos")).listFiles();
+
+                List<BufferedReader> bufferedReaderNewList=new ArrayList<>();
+                for(File file:daoNewFiles){
+                    bufferedReaderNewList.add(new BufferedReader(new FileReader(file)));
+
+                }
+
+
+
+                for(int i=0;i<bufferedReaderExistList.size();i++){
+                    BufferedReader reader1=bufferedReaderExistList.get(i);
+                    BufferedReader reader2=bufferedReaderNewList.get(i);
+                    if(!(CodeGenUtils.checksClassContent(reader1,reader2))){
+                        StringBuilder add=new StringBuilder();
+                        String line;
+                        while ( (line =reader1.readLine())!=null)
+                        {
+                            add.append(line+"\n");
+                        }
+                        FileWriter writer=new FileWriter(daoNewFiles[i]);
+                        writer.write(add.toString());
+                        writer.close();
+                        reader1.close();
+                        reader2.close();
+
+                    }
+                }
+
+
+
+                bufferedReaderExistList.stream().forEach(bufferedReader -> {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                bufferedReaderNewList.stream().forEach(bufferedReader -> {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+
+            }
+
         }catch (FileNotFoundException e){
             LOG.error("Exception in generating POJO classes: {}", e.message);
         } catch (Exception e) {

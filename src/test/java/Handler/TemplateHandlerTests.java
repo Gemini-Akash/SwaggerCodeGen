@@ -130,11 +130,11 @@ public class TemplateHandlerTests {
         }
     }
 
-    @Test
-    public void testGenerateSpringBootProject()  {
-        templateHandler.generateSpringBootProject();
-        File directory = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service");
-        File file = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service/AuthorService.java");
-        Assertions.assertTrue(directory.exists() && file.exists());
-    }
+//    @Test
+//    public void testGenerateSpringBootProject()  {
+//        templateHandler.generateSpringBootProject();
+//        File directory = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service");
+//        File file = new File("src/test/resources/testScriptSpringBootApp/src/main/java/com/gemini/testScript/service/AuthorService.java");
+//        Assertions.assertTrue(directory.exists() && file.exists());
+//    }
 }
