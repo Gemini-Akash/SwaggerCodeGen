@@ -1,0 +1,34 @@
+1.  MULTIPLE JSON:-(Resolved)
+	For the Generation of the Service and Controller layer files we are using the json file to fill the templates
+	and as of now we are creating the multiple json from the pojos class so the total number of json file is equal
+	to the number of pojos classes.
+
+	Solution:
+		we have to reduce the json file to one so we can use the only one json to fill the multiple templates or we should use YAML.
+
+2.Patch Operations:-
+	For the Patch operation we are using two queries, so can user hit the patch operation we will hit the database
+	two times which is costly operation.
+
+	Solution:- For the patch operation in MYSQL we have to use two Queries as MySql does'nt provide the Returning clause in the
+	            Update method like in PostgreSQL or Oracle.
+	            Link of issue in JOOQ:- https://github.com/jOOQ/jOOQ/issues/6865
+	            PostgreSQL Update Sql Command: https://www.postgresql.org/docs/current/sql-update.html
+
+		
+3. Our current version is only supporting the batch insertion operation.
+	 
+4. Multiple schema is not supported in this version.
+
+5. There should be no same table name in different multiple schema.
+
+6. Script Should not have Multiple AutoIncrement statment (JOOQ throws parsing error).
+
+7. Composite primary key. (i.e CRUD operation from single primary key is not allowed in case of composite primary keys).
+
+8. Mapping annotations between two tables as of now JOOQ is not able to put the mapping annotations on the generated POJOS(i.e @OneToOne, @OneToMany, @ManyToMany).
+
+9. Issues raise to JOOQ team (Github).
+	https://github.com/jOOQ/jOOQ/issues/14012 (For returning void in insert() and update()).
+	
+	
