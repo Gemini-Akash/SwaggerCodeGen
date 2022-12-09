@@ -5,6 +5,7 @@ import org.gemini.codegen.apicodegen.validator.PojoValidator;
 
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +35,12 @@ public final class CustomClassLoader {
      * createAPIJson() method to convert into json file for creating multiple json.
      *
      * @param className
+     * @param subsequencePrimaryKeysObject
      * @param primaryKeysObject
      * @param variableFieldsObject
      * @param filePath
      */
-    private void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
+    private void createAPIJson(final String className, final JSONArray subsequencePrimaryKeysObject, JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
         StringBuilder path = new StringBuilder();
         JSONObject jsonObject1 = new JSONObject();
         JSONObject jsonObject2 = new JSONObject();
@@ -47,7 +49,8 @@ public final class CustomClassLoader {
         jsonObject2.put("scriptName", CodeGenUtils.getScriptName());
         jsonObject2.put("schemaName", CodeGenUtils.getSchemaName());
         jsonObject2.put("variable", variableFieldsObject);
-        jsonObject2.put("primaryKeys", primaryKeysObject);
+        jsonObject2.put("primaryKeys",primaryKeysObject);
+        jsonObject2.put("subsequencePrimaryKeys", subsequencePrimaryKeysObject);
         jsonObject1.put("classes", jsonArrayObject.put(jsonObject2));
         if (createApiJsonCount ==pojoValidator.countTables()) {
             LOG.info("Required json: {}", jsonObject1);
@@ -88,6 +91,26 @@ public final class CustomClassLoader {
         }
         return classNames;
     }
+    /**
+     * getSubSequences method is used to get subsets of input JsonArray.
+     *
+     * @param outputPrimaryKeysJsonArray
+     * @param primaryKeysObject
+     * @param  emptyJsonArray
+     * @param  index
+     */
+
+    public static void getSubSequences(JSONArray outputPrimaryKeysJsonArray, JSONArray primaryKeysObject, JSONArray emptyJsonArray, int index)
+    {
+        if (index==primaryKeysObject.length())
+        {
+            outputPrimaryKeysJsonArray.put(emptyJsonArray);
+            return;
+        }
+        getSubSequences(outputPrimaryKeysJsonArray,primaryKeysObject,new JSONArray(emptyJsonArray), index+1);
+        emptyJsonArray.put(primaryKeysObject.get(index));
+        getSubSequences(outputPrimaryKeysJsonArray,primaryKeysObject,new JSONArray(emptyJsonArray), index+1);
+    }
 
     /**
      * getJsonBody() method is used to get json object.
@@ -124,7 +147,12 @@ public final class CustomClassLoader {
         } catch (Exception e) {
             LOG.error("Exception in getJsonBody(): {}", e.getMessage());
         }
-        createAPIJson(classContent.getSimpleName(), primaryKeysObject, variableFieldsObject, filePath);
+        JSONArray subsequencePrimaryKeysJsonArray=new JSONArray().put(new JSONArray());
+        getSubSequences(subsequencePrimaryKeysJsonArray,primaryKeysObject,new JSONArray(),0);
+        subsequencePrimaryKeysJsonArray.remove(0);
+        subsequencePrimaryKeysJsonArray.remove(0);
+        LOG.info("primaryKeys array of {} -----> {}",classContent.getSimpleName(),subsequencePrimaryKeysJsonArray);
+        createAPIJson(classContent.getSimpleName(), subsequencePrimaryKeysJsonArray,primaryKeysObject, variableFieldsObject, filePath);
     }
 
     /**

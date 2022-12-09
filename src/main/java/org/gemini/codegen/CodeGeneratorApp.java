@@ -57,7 +57,7 @@ public class CodeGeneratorApp {
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");
-        path.append(CodeGenUtils.getSchemaName());
+        path.append(CodeGenUtils    .getSchemaName());
         path.append("/tables/pojos/");
         List<String> classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), CodeGenUtils.generateDirectoryPath());
         LOG.info(" ClassNames------>{}", classNames);

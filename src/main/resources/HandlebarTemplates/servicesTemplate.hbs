@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,12 +16,25 @@ public class {{className}}Service {
     @Autowired
     {{className}}Dao objectDao ;
 
-    public {{className}} get{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
-         return objectDao.fetchRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+    {{#each subsequencePrimaryKeys}}public {{className}} get{{className}}({{#each}}{{this.datatype}} {{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+         return objectDao.fetchRecord({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
+    {{/each}}
 
+    public int update{{className}}(List<{{className}}> classObject){
+         objectDao.updateRecord(classObject);
+    }
     public int update{{className}}({{className}} classObject){
          return objectDao.updateRecord(classObject);
+    }
+
+    public List<{{className}}> patchUpdate{{className}}(List<{{className}}> classObject){
+        objectDao.update(classObject);
+        List<{{className}}> result = new ArrayList<>();
+        for({{className}} object: classObject){
+            result.add(objectDao.fetchRecord({{#each primaryKeys}}object.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+        }
+        return result;
     }
 
     public {{className}} patchUpdate{{className}}({{className}} classObject){
@@ -33,9 +47,7 @@ public class {{className}}Service {
     }
 
     public int delete{{className}}({{#each primaryKeys}}{{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
-          return objectDao.deleteRecord({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+          return objectDao.deleteRecord(({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
 
-
 }
-
