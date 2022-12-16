@@ -9,14 +9,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonarsource.scanner.api.internal.shaded.minimaljson.JsonObject;
 
 import java.io.*;
 
 
 public final class TemplateHandler {
     private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
-
 
 
 //    private void generateClassFromTemplates2(final String templatePath, final String filePath, final String jsonPath) {
@@ -68,44 +66,48 @@ public final class TemplateHandler {
 //    }
 
 
-    public void generateClassFromTemplates(final String templatePath, final String filePath,final JSONObject jsonObject) throws IOException {
+    public void generateClassFromTemplates(final String templatePath, final String filePath, final JSONObject jsonObject) throws IOException {
 
         if (!(new File(filePath).exists())) {
-            generateClass(templatePath,filePath,jsonObject);
+            generateClass(templatePath, filePath, jsonObject);
 
-        }
-        else {
-            BufferedReader reader1 = new BufferedReader(new FileReader(filePath));
-            StringBuilder add=new StringBuilder();
+        } else {
+
+            BufferedReader readExistFile = new BufferedReader(new FileReader(filePath));
+            StringBuilder addExistFile = new StringBuilder();
             String line;
-            while ( (line =reader1.readLine())!=null)
-            {
-                add.append(line+"\n");
+            while ((line = readExistFile.readLine()) != null) {
+
+                addExistFile.append(line + "\n");
             }
 
-            generateClass(templatePath,filePath,jsonObject);
+            generateClass(templatePath, filePath, jsonObject);
 
-            BufferedReader reader2 = new BufferedReader(new FileReader(filePath));
+            BufferedReader readNewFile = new BufferedReader(new FileReader(filePath));
 
-            if ((CodeGenUtils.checksClassContent(reader1, reader2))){
+            StringBuilder addNewFile = new StringBuilder();
+            String line2;
+            while ((line2 = readNewFile.readLine()) != null) {
+                addNewFile.append(line2 + "\n");
 
-                generateClass(templatePath,filePath,jsonObject);
             }
-            else{
-                FileWriter writer=new FileWriter(filePath);
-                writer.write(add.toString());
+
+
+            if (!(addExistFile.toString().equals(addNewFile.toString()))) {
+
+                FileWriter writer = new FileWriter(filePath);
+                writer.write(addExistFile.toString());
                 writer.close();
-                reader1.close();
-                reader2.close();
-
+                readExistFile.close();
+                readNewFile.close();
             }
-        }
 
+
+        }
     }
 
 
-
-    public void generateClass(final String templatePath, final String filePath, final JSONObject jsonObject){
+    public static void generateClass(final String templatePath, final String filePath, final JSONObject jsonObject) {
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
@@ -118,8 +120,6 @@ public final class TemplateHandler {
     }
 
 
-
-
     /**
      * generateFileFromTemplate() method is used for generating file from templates.
      *
@@ -130,20 +130,20 @@ public final class TemplateHandler {
 
         if (!(new File(filePath).exists())) {
 
-            generateFile(templatePath,filePath);
+            generateFile(templatePath, filePath);
 
         } else {
 
             if (CodeGenUtils.checksFileContent(new File(filePath), new File("src/main/resources/HandlebarTemplates/controllerExceptionHandlerJsonTemplate.hbs"))) {
 
-                generateFile(templatePath,filePath);
+                generateFile(templatePath, filePath);
             }
 
         }
     }
 
 
-    public void generateFile(final String templatePath, final String filePath){
+    public void generateFile(final String templatePath, final String filePath) {
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             Handlebars handlebars = new Handlebars();
@@ -154,6 +154,7 @@ public final class TemplateHandler {
         }
 
     }
+
     /**
      * generateSpringBootProject() method is used for generating output in outerDirectoryPath.
      */
@@ -254,11 +255,11 @@ public final class TemplateHandler {
         path.append("/");
         path.append(CodeGenUtils.getScriptName());
         path.append("SpringBootApp/src/main/resources/application.properties");
-        try (FileReader fileReader = new FileReader(jsonPath.toString())){
+        try (FileReader fileReader = new FileReader(jsonPath.toString())) {
             JSONParser jsonParser = new JSONParser();
             Object obj = jsonParser.parse(fileReader);
-            JSONObject jsonObject=new JSONObject(obj.toString());
-            generateClassFromTemplates("HandlebarTemplates/applicationPropertiesTemplate", path.toString(),jsonObject);
+            JSONObject jsonObject = new JSONObject(obj.toString());
+            generateClassFromTemplates("HandlebarTemplates/applicationPropertiesTemplate", path.toString(), jsonObject);
         } catch (IOException | ParseException e) {
             LOG.info("Exception in generateSpringBootProject(): {}", e.getMessage());
         }

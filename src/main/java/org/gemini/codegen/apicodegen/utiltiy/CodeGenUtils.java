@@ -1,5 +1,6 @@
 package org.gemini.codegen.apicodegen.utiltiy;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,12 +96,6 @@ public class CodeGenUtils {
 
         return IOUtils.contentEqualsIgnoreEOL(reader1, reader2);
 
-
-    }
-
-    public static boolean checksClassContent(Reader reader1 ,Reader reader2) throws IOException {
-
-        return IOUtils.contentEqualsIgnoreEOL(reader1,reader2);
 
     }
 
