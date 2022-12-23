@@ -70,18 +70,18 @@ public class {{className}}Controller {
     }
 
     @PatchMapping({"/{{className}}/"})
-        public ResponseEntity<List<{{className}}>> patchUpdate{{className}}(@Valid @RequestBody List<{{className}}> body){
-           {{className}} dummyBody = null;
-           {{className}} result=objectService.patchUpdate{{className}}(body);
-           if(result!=null){
-                    LOG.info("Updated successfully");
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-               }
-               else{
-                    LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
-                    return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-               }
-        }
+    public ResponseEntity<List<{{className}}>> patchUpdate{{className}}(@Valid @RequestBody List<{{className}}> body){
+       {{className}} dummyBody = null;
+       {{className}} result=objectService.patchUpdate{{className}}(body);
+       if(result!=null){
+                LOG.info("Updated successfully");
+                return new ResponseEntity<>(result, HttpStatus.OK);
+           }
+           else{
+                LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+           }
+    }
 
     @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> patchUpdate{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){

@@ -527,6 +527,16 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         closeJavaWriter(out);
     }
 
+    protected void getSubSequences(List<List<ColumnDefinition>> outputPrimaryKeysJsonArray, List<ColumnDefinition> primaryKeysObject, List<ColumnDefinition> emptyJsonArray, int index) {
+        if (index == primaryKeysObject.size()) {
+            outputPrimaryKeysJsonArray.add(emptyJsonArray);
+            return;
+        }
+        getSubSequences(outputPrimaryKeysJsonArray, primaryKeysObject, new ArrayList<>(emptyJsonArray), index + 1);
+        emptyJsonArray.add(primaryKeysObject.get(index));
+        getSubSequences(outputPrimaryKeysJsonArray, primaryKeysObject, new ArrayList<>(emptyJsonArray), index + 1);
+    }
+
     protected void generateDao(TableDefinition table, JavaWriter out) {
         UniqueKeyDefinition key = table.getPrimaryKey();
         int size = key.getKeyColumns().size();
@@ -684,30 +694,42 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             }
         }
 
+
         //For GET method for composite primary key.
+        List<List<ColumnDefinition>> subsequencePrimaryKeysJsonArray = new ArrayList<>();
+        getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList<>(), 0);
+//        System.out.println(subsequencePrimaryKeysJsonArray);
+//        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
+//            for (ColumnDefinition column1 : column) {
+//                final String colClass = getStrategy().getJavaClassName(column1);
+//                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
+//                final String colType1 = out.ref(colTypeFull);
+//                System.out.println(colType1 + "   " + colClass);
+//            }
+//        }
+        subsequencePrimaryKeysJsonArray.remove(0);
         out.javadoc("Created custom fetchRecord Method");
-        out.print("public %s fetchRecord(", pType);
-        int flag = 0;
-        for (ColumnDefinition column : table.getColumns()) {
-            final String colClass = getStrategy().getJavaClassName(column);
-            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
-            final String colType1 = out.ref(colTypeFull);
-            if (key == column.getPrimaryKey()) {
-                if (flag != size - 1) {
+        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
+            int flag = 0;
+            out.print("public %s fetchRecord(", pType);
+            for (ColumnDefinition column1 : column) {
+                final String colClass = getStrategy().getJavaClassName(column1);
+                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
+                final String colType1 = out.ref(colTypeFull);
+                if (flag != column.size() - 1) {
                     out.print("%s %s,", colType1, colClass);
                     flag++;
                 } else {
                     out.println("%s %s){", colType1, colClass);
                 }
             }
-        }
-        out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
-        int flag2 = 0;
-        for (ColumnDefinition column : table.getColumns()) {
-            final String colClass1 = getStrategy().getJavaClassName(column);
-            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
-            if (key == column.getPrimaryKey()) {
-                if (flag2 != size - 1) {
+            out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
+            int flag2 = 0;
+            for (ColumnDefinition column1 : column) {
+                final String colClass1 = getStrategy().getJavaClassName(column1);
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
+
+                if (flag2 != column.size() - 1) {
                     if (flag2 == 0) {
                         out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
                     } else {
@@ -715,7 +737,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                     }
                     flag2++;
                 } else {
-                    if (size == 1) {
+                    if (column.size() == 1) {
                         out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
                         out.println("}");
                     } else {
@@ -723,14 +745,76 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                         out.println("}");
                     }
                 }
+
+
             }
         }
 
+//        out.javadoc("Created custom fetchRecord Method");
+//        out.print("public %s fetchRecord(", pType);
+//        int flag = 0;
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass = getStrategy().getJavaClassName(column);
+//            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+//            final String colType1 = out.ref(colTypeFull);
+//            if (key == column.getPrimaryKey()) {
+//                if (flag != size - 1) {
+//                    out.print("%s %s,", colType1, colClass);
+//                    flag++;
+//                } else {
+//                    out.println("%s %s){", colType1, colClass);
+//                }
+//            }
+//        }
+//        out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
+//        int flag2 = 0;
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass1 = getStrategy().getJavaClassName(column);
+//            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
+//            if (key == column.getPrimaryKey()) {
+//                if (flag2 != size - 1) {
+//                    if (flag2 == 0) {
+//                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+//                    } else {
+//                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+//                    }
+//                    flag2++;
+//                } else {
+//                    if (size == 1) {
+//                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+//                        out.println("}");
+//                    } else {
+//                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+//                        out.println("}");
+//                    }
+//                }
+//            }
+//        }
+
         //For Insert Method
         out.javadoc("Created custom Insert records Method");
+        out.println("public %s insertRecord(%s classObject) {", pType, pType);
+        out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+            if (size == 1) {
+                if (key != column.getPrimaryKey()) {
+                    out.println("record.set%s(object.get%s());", colClass, colClass);
+                }
+            } else {
+                out.println("record.set%s(object.get%s());", colClass, colClass);
+            }
+        }
+        out.println("record.store();");
+        out.println("%s result=record.into(%s.class);", pType, pType);
+        out.println("return result");
+        out.println("}");
+
+        //For BatchInsert Method
+        out.javadoc("Created custom Insert records Method");
         out.println("public List<%s> insertRecord(List<%s> classObject) {", pType, pType);
-        out.println("List<%s> resultArray=new ArrayList<>();",pType);
-        out.println("for (%s object:classObject) {",pType);
+        out.println("List<%s> resultArray=new ArrayList<>();", pType);
+        out.println("for (%s object:classObject) {", pType);
         out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
         for (ColumnDefinition column : table.getColumns()) {
             final String colClass = getStrategy().getJavaClassName(column);
