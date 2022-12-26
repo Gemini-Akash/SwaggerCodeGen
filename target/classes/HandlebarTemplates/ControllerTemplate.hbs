@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -25,8 +26,8 @@ public class {{className}}Controller {
     ObjectMapper objectMapper;
 
     {{#each subsequencePrimaryKeys}}@GetMapping({"/{{className}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-        public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
-            com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}({{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
+        public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+            com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
             com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
                 if(result!=null){
                     LOG.info("Data fetched successfully");
@@ -38,21 +39,6 @@ public class {{className}}Controller {
                 }
     }
     {{/each}}
-
-    @PutMapping({"/{{className}}/"})
-    public ResponseEntity<List<{{className}}>> update{{className}}(@Valid @RequestBody List<{{className}}> body){
-       {{className}} dummyBody = null;
-       int result=objectService.update{{className}}(body);
-       if(result == 1){
-                LOG.info("Updated successfully");
-                return new ResponseEntity<>(body, HttpStatus.OK);
-           }
-           else{
-                LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}}, {{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
-                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-           }
-    }
-
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
        {{className}} dummyBody = null;
@@ -69,18 +55,20 @@ public class {{className}}Controller {
            }
     }
 
-    @PatchMapping({"/{{className}}/"})
-    public ResponseEntity<List<{{className}}>> patchUpdate{{className}}(@Valid @RequestBody List<{{className}}> body){
-       {{className}} dummyBody = null;
-       {{className}} result=objectService.patchUpdate{{className}}(body);
-       if(result!=null){
-                LOG.info("Updated successfully");
-                return new ResponseEntity<>(result, HttpStatus.OK);
-           }
-           else{
-                LOG.info("Data to be updated does not exist : {{#each primaryKeys}}{}{{#unless @last}},{{/unless}} {{/each}}", {{#each primaryKeys}}body.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
-                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-           }
+    @PutMapping({"/batch/{{className}}/"})
+    public ResponseEntity updateBatch{{className}}(@Valid @RequestBody List<{{className}}> body){
+       Map<Integer,List<{{className}}>> result=objectService.updateBatch{{className}}(body);
+       if(result.containsKey(0) && result.get(0).size()==0){
+           LOG.info("Data updated successfully");
+           return ResponseEntity.status(HttpStatus.OK).body("Data successfully updated: \n"+body);
+       }
+       else if(result.containsKey(0) && result.get(0).size()>0){
+           LOG.info("Data does not updated successfully: \n",result.get(0));
+           return ResponseEntity.status(HttpStatus.OK).body("Data which does not updated successfully: \n"+result.get(0));
+       }else {
+           LOG.info("None of your data updated successfully: \n",body);
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("None of your data updated successfully: \n"+body);
+       }
     }
 
     @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
@@ -100,9 +88,25 @@ public class {{className}}Controller {
     }
 
     @PostMapping({"/{{className}}"})
-    public ResponseEntity<List<{{className}}>> add{{className}}(@Valid @RequestBody List<{{className}}> body) {
+    public ResponseEntity<{{className}}> add{{className}}(@Valid @RequestBody {{className}} body) {
         LOG.info("Record inserted successfully");
         return new ResponseEntity<>(objectService.add{{className}}(body), HttpStatus.CREATED);
+    }
+
+    @PostMapping({"/batch/{{className}}"})
+    public ResponseEntity addBatch{{className}}(@Valid @RequestBody List<{{className}}> body) {
+        Map<Integer,List<{{className}}>> result=objectService.addBatch{{className}}(body);
+        if(result.containsKey(0) && result.get(0).size()==0){
+            LOG.info("Data inserted successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Data successfully inserted.");
+        }
+        else if(result.containsKey(0) && result.get(0).size()>0){
+            LOG.info("Data does not inserted successfully: \n",result.get(0));
+            return ResponseEntity.status(HttpStatus.OK).body("Data which does not inserted successfully: \n"+result.get(0));
+        }else {
+            LOG.info("None of your data inserted successfully: \n",body);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("None of your data inserted successfully: \n"+body);
+        }
     }
 
     @DeleteMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
@@ -117,7 +121,21 @@ public class {{className}}Controller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data to be deleted does not exist");
         }
     }
-    
 
+    @DeleteMapping({"/batch/{{className}}"})
+    public ResponseEntity deleteBatch{{className}}(@Valid @RequestBody List<{{className}}> body) {
+        Map<Integer,List<{{className}}>> result=objectService.deleteBatch{{className}}(body);
+        if(result.containsKey(0) && result.get(0).size()==0){
+            LOG.info("Data deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("Data successfully deleted.");
+        }
+        else if(result.containsKey(0) && result.get(0).size()>0){
+            LOG.info("Data does not deleted successfully: \n",result.get(0));
+            return ResponseEntity.status(HttpStatus.OK).body("Data which does not deleted successfully: \n"+result.get(0));
+        }else {
+            LOG.info("None of your data deleted successfully: \n",body);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("None of your data deleted successfully: \n"+body);
+        }
+    }
 }
 

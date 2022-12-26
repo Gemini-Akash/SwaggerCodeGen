@@ -12,10 +12,9 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class CustomJooqAutoGenerator extends JavaGenerator {
@@ -578,9 +577,11 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
         printPackage(out, table, GeneratorStrategy.Mode.DAO);
         tType = out.ref(tType);
-        out.println("import org.jooq.impl.DefaultConfiguration;");
         out.println("import java.util.ArrayList;");
-        out.println("import java.util.List;");
+        out.println("import java.util.*;");
+        out.println("import java.util.stream.Collectors;");
+        out.println("import java.sql.SQLException;");
+        out.println("import org.springframework.beans.factory.annotation.Value;");
         generateDaoClassJavadoc(table, out);
         printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);
 
@@ -695,60 +696,6 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         }
 
 
-        //For GET method for composite primary key.
-        List<List<ColumnDefinition>> subsequencePrimaryKeysJsonArray = new ArrayList<>();
-        getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList<>(), 0);
-//        System.out.println(subsequencePrimaryKeysJsonArray);
-//        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
-//            for (ColumnDefinition column1 : column) {
-//                final String colClass = getStrategy().getJavaClassName(column1);
-//                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
-//                final String colType1 = out.ref(colTypeFull);
-//                System.out.println(colType1 + "   " + colClass);
-//            }
-//        }
-        subsequencePrimaryKeysJsonArray.remove(0);
-        out.javadoc("Created custom fetchRecord Method");
-        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
-            int flag = 0;
-            out.print("public %s fetchRecord(", pType);
-            for (ColumnDefinition column1 : column) {
-                final String colClass = getStrategy().getJavaClassName(column1);
-                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull);
-                if (flag != column.size() - 1) {
-                    out.print("%s %s,", colType1, colClass);
-                    flag++;
-                } else {
-                    out.println("%s %s){", colType1, colClass);
-                }
-            }
-            out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
-            int flag2 = 0;
-            for (ColumnDefinition column1 : column) {
-                final String colClass1 = getStrategy().getJavaClassName(column1);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
-
-                if (flag2 != column.size() - 1) {
-                    if (flag2 == 0) {
-                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
-                    } else {
-                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
-                    }
-                    flag2++;
-                } else {
-                    if (column.size() == 1) {
-                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
-                        out.println("}");
-                    } else {
-                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
-                        out.println("}");
-                    }
-                }
-
-
-            }
-        }
 
 //        out.javadoc("Created custom fetchRecord Method");
 //        out.print("public %s fetchRecord(", pType);
@@ -791,6 +738,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 //            }
 //        }
 
+
         //For Insert Method
         out.javadoc("Created custom Insert records Method");
         out.println("public %s insertRecord(%s classObject) {", pType, pType);
@@ -799,39 +747,80 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             final String colClass = getStrategy().getJavaClassName(column);
             if (size == 1) {
                 if (key != column.getPrimaryKey()) {
-                    out.println("record.set%s(object.get%s());", colClass, colClass);
+                    out.println("record.set%s(classObject.get%s());", colClass, colClass);
                 }
             } else {
-                out.println("record.set%s(object.get%s());", colClass, colClass);
+                out.println("record.set%s(classObject.get%s());", colClass, colClass);
             }
         }
         out.println("record.store();");
         out.println("%s result=record.into(%s.class);", pType, pType);
-        out.println("return result");
+        out.println("return result;");
         out.println("}");
 
         //For BatchInsert Method
-        out.javadoc("Created custom Insert records Method");
-        out.println("public List<%s> insertRecord(List<%s> classObject) {", pType, pType);
-        out.println("List<%s> resultArray=new ArrayList<>();", pType);
-        out.println("for (%s object:classObject) {", pType);
-        out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
-        for (ColumnDefinition column : table.getColumns()) {
-            final String colClass = getStrategy().getJavaClassName(column);
-            if (size == 1) {
-                if (key != column.getPrimaryKey()) {
-                    out.println("record.set%s(object.get%s());", colClass, colClass);
-                }
-            } else {
-                out.println("record.set%s(object.get%s());", colClass, colClass);
-            }
-        }
-        out.println("record.store();");
-        out.println("%s result=record.into(%s.class);", pType, pType);
-        out.println("resultArray.add(result);");
+        out.javadoc("Created custom BatchInsert records Method");
+        out.println("@Value(\"${batch.size}\")");
+        out.println(" private int batchSize;");
+        out.println("public Map<Integer,List<%s>> insertBatchRecord(List<%s> classObjects) {", pType, pType);
+        out.println("  List<%s> records = classObjects.stream().map(classObject -> {",tableRecord);
+        out.println("%s record = new %s();",tableRecord,tableRecord);
+        out.println("record.from(classObject);");
+        out.println("return record;");
+        out.println("}).collect(Collectors.toList());");
+        out.println(" Map<Integer,List<%s>> resultMap= (Map<Integer, List<%s>>) this.ctx().transactionResult((Configuration txr)->{",pType,pType);
+        out.println("int flag=0;");
+        out.println("Map<Integer, List<%s>> map=new HashMap<>();",pType);
+        out.println(" List<%s> result=new ArrayList<>();",pType);
+        out.println("try{");
+        out.println("txr.dsl().settings().setBatchSize(batchSize);");
+        out.println("txr.connectionProvider().acquire().setAutoCommit(false);");
+        out.println("int[] affectedCountArr=txr.dsl().batchInsert(records).execute();");
+        out.println("for (int i=0;i<records.size();i++){");
+        out.println("if(affectedCountArr[i]==0){");
+        out.println("%s a=records.get(i).into(%s.class);",pType,pType);
+        out.println("result.add(a);");
         out.println("}");
-        out.println("return resultArray;");
         out.println("}");
+        out.println("}catch (Exception e){");
+        out.println("flag=1;");
+        out.println("try {");
+        out.println("txr.dsl().configuration().connectionProvider().acquire().rollback();");
+        out.println("} catch (SQLException ex) {");
+        out.println("throw new RuntimeException(\"Error in insertBatchRecord() at Dao Layer..\");");
+        out.println("}");
+        out.println("}");
+        out.println("if(flag==0 && result.size()>=0) {");
+        out.println("map.put(0,result);");
+        out.println("return map;");
+        out.println("}  else {");
+        out.println("map.put(1,result);");
+        out.println("return map;");
+        out.println("}");
+        out.println("});");
+        out.println("return resultMap;");
+        out.println("}");
+
+
+//        out.println("List<%s> resultArray=new ArrayList<>();", pType);
+//        out.println("for (%s object:classObject) {", pType);
+//        out.println("%s record=this.ctx().newRecord(%s);", tableRecord, tableIdentifier);
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass = getStrategy().getJavaClassName(column);
+//            if (size == 1) {
+//                if (key != column.getPrimaryKey()) {
+//                    out.println("record.set%s(object.get%s());", colClass, colClass);
+//                }
+//            } else {
+//                out.println("record.set%s(object.get%s());", colClass, colClass);
+//            }
+//        }
+//        out.println("record.store();");
+//        out.println("%s result=record.into(%s.class);", pType, pType);
+//        out.println("resultArray.add(result);");
+//        out.println("}");
+//        out.println("return resultArray;");
+//        out.println("}");
 
 
         if (size > 1) {
@@ -935,8 +924,140 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
             out.println(".where(%s.eq(classObject.get%s())).execute();", colIdentifier, colClass);
             out.println("return result;");
             out.println("}");
-
         }
+
+        //Create custom BatchUpdate Method
+        out.javadoc("Created custom BatchUpdate records Method");
+        out.println("public Map<Integer,List<%s>> updateBatchRecord(List<%s> classObjects) {", pType, pType);
+        out.println("  List<%s> records = classObjects.stream().map(classObject -> {",tableRecord);
+        out.println("%s record = new %s();",tableRecord,tableRecord);
+        out.println("record.from(classObject);");
+        out.println("return record;");
+        out.println("}).collect(Collectors.toList());");
+        out.println(" Map<Integer,List<%s>> resultMap= (Map<Integer, List<%s>>) this.ctx().transactionResult((Configuration txr)->{",pType,pType);
+        out.println("int flag=0;");
+        out.println("Map<Integer, List<%s>> map=new HashMap<>();",pType);
+        out.println(" List<%s> result=new ArrayList<>();",pType);
+        out.println("try{");
+        out.println("txr.dsl().settings().setBatchSize(batchSize);");
+        out.println("txr.connectionProvider().acquire().setAutoCommit(false);");
+        out.println("int[] affectedCountArr=txr.dsl().batchUpdate(records).execute();");
+        out.println("for (int i=0;i<records.size();i++){");
+        out.println("if(affectedCountArr[i]==0){");
+        out.println("%s a=records.get(i).into(%s.class);",pType,pType);
+        out.println("result.add(a);");
+        out.println("}");
+        out.println("}");
+        out.println("}catch (Exception e){");
+        out.println("flag=1;");
+        out.println("try {");
+        out.println("txr.dsl().configuration().connectionProvider().acquire().rollback();");
+        out.println("} catch (SQLException ex) {");
+        out.println("throw new RuntimeException(\"Error in updateBatchRecord() at Dao Layer..\");");
+        out.println("}");
+        out.println("}");
+        out.println("if(flag==0 && result.size()>=0) {");
+        out.println("map.put(0,result);");
+        out.println("return map;");
+        out.println("}  else {");
+        out.println("map.put(1,result);");
+        out.println("return map;");
+        out.println("}");
+        out.println("});");
+        out.println("return resultMap;");
+        out.println("}");
+
+        //Create custom BatchDelete Method
+        out.javadoc("Created custom BatchDelete records Method");
+        out.println("public Map<Integer,List<%s>> deleteBatchRecord(List<%s> classObjects) {", pType, pType);
+        out.println("  List<%s> records = classObjects.stream().map(classObject -> {",tableRecord);
+        out.println("%s record = new %s();",tableRecord,tableRecord);
+        out.println("record.from(classObject);");
+        out.println("return record;");
+        out.println("}).collect(Collectors.toList());");
+        out.println(" Map<Integer,List<%s>> resultMap= (Map<Integer, List<%s>>) this.ctx().transactionResult((Configuration txr)->{",pType,pType);
+        out.println("int flag=0;");
+        out.println("Map<Integer, List<%s>> map=new HashMap<>();",pType);
+        out.println(" List<%s> result=new ArrayList<>();",pType);
+        out.println("try{");
+        out.println("txr.dsl().settings().setBatchSize(batchSize);");
+        out.println("txr.connectionProvider().acquire().setAutoCommit(false);");
+        out.println("int[] affectedCountArr=txr.dsl().batchDelete(records).execute();");
+        out.println("for (int i=0;i<records.size();i++){");
+        out.println("if(affectedCountArr[i]==0){");
+        out.println("%s a=records.get(i).into(%s.class);",pType,pType);
+        out.println("result.add(a);");
+        out.println("}");
+        out.println("}");
+        out.println("}catch (Exception e){");
+        out.println("flag=1;");
+        out.println("try {");
+        out.println("txr.dsl().configuration().connectionProvider().acquire().rollback();");
+        out.println("} catch (SQLException ex) {");
+        out.println("throw new RuntimeException(\"Error in deleteBatchRecord() at Dao Layer..\");");
+        out.println("}");
+        out.println("}");
+        out.println("if(flag==0 && result.size()>=0) {");
+        out.println("map.put(0,result);");
+        out.println("return map;");
+        out.println("}  else {");
+        out.println("map.put(1,result);");
+        out.println("return map;");
+        out.println("}");
+        out.println("});");
+        out.println("return resultMap;");
+        out.println("}");
+
+        //For GET method for composite primary key.
+        List<List<ColumnDefinition>> subsequencePrimaryKeysJsonArray = new ArrayList<>();
+        getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList<>(), 0);
+        subsequencePrimaryKeysJsonArray.remove(0);
+        out.javadoc("Created custom fetchRecord Method");
+        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
+            int flag = 0;
+            out.print("public %s fetchRecordBy", pType);
+            for (ColumnDefinition column1 : column) {
+                final String colClass = getStrategy().getJavaClassName(column1);
+                out.print("%s",colClass);
+            }
+            out.print("(");
+            for (ColumnDefinition column1 : column) {
+                final String colClass = getStrategy().getJavaClassName(column1);
+                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
+                final String colType1 = out.ref(colTypeFull);
+                if (flag != column.size() - 1) {
+                    out.print("%s %s,", colType1, colClass);
+                    flag++;
+                } else {
+                    out.println("%s %s){", colType1, colClass);
+                }
+            }
+            out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
+            int flag2 = 0;
+            for (ColumnDefinition column1 : column) {
+                final String colClass1 = getStrategy().getJavaClassName(column1);
+                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
+
+                if (flag2 != column.size() - 1) {
+                    if (flag2 == 0) {
+                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+                    } else {
+                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                    }
+                    flag2++;
+                } else {
+                    if (column.size() == 1) {
+                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("}");
+                    } else {
+                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("}");
+                    }
+                }
+            }
+        }
+
+
         generateDaoClassFooter(table, out);
         out.println("}");
     }

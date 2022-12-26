@@ -97,7 +97,6 @@ public final class TemplateHandler {
         path.append(CodeGenUtils.getScriptName());
         path.append("SpringBootApp/src/main/resources");
         CodeGenUtils.createDirectory(path.toString());
-
         jsonPath.setLength(0);
         jsonPath.append(CodeGenUtils.generateDirectoryPath());
         jsonPath.append("/jsonFiles/Loader.json");
