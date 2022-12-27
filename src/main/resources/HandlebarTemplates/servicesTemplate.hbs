@@ -15,7 +15,7 @@ public class {{className}}Service {
     @Autowired
     {{className}}Dao objectDao ;
 
-    {{#each subsequencePrimaryKeys}}public {{className}} get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.datatype}} {{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+    {{#each subsequencePrimaryKeys}}public List<{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.datatype}} {{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
          return objectDao.fetchRecordBy{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
     {{/each}}
@@ -28,7 +28,7 @@ public class {{className}}Service {
          return objectDao.updateBatchRecord(classObjects);
     }
 
-    public {{className}} patchUpdate{{className}}({{className}} classObject){
+    public List<{{className}}> patchUpdate{{className}}({{className}} classObject){
         objectDao.update(classObject);
         return objectDao.fetchRecordBy{{#each primaryKeys}}{{fieldName}}{{/each}}({{#each primaryKeys}}classObject.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
     }

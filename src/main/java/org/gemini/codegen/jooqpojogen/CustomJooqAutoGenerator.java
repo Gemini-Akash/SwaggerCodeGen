@@ -1015,7 +1015,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         out.javadoc("Created custom fetchRecord Method");
         for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
             int flag = 0;
-            out.print("public %s fetchRecordBy", pType);
+            out.print("public List<%s> fetchRecordBy", pType);
             for (ColumnDefinition column1 : column) {
                 final String colClass = getStrategy().getJavaClassName(column1);
                 out.print("%s",colClass);
@@ -1032,7 +1032,8 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                     out.println("%s %s){", colType1, colClass);
                 }
             }
-            out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
+            out.println("List<%s> result =new ArrayList<>();",pType);
+            out.print("result.add(this.ctx().selectFrom(%s).where(", tableIdentifier);
             int flag2 = 0;
             for (ColumnDefinition column1 : column) {
                 final String colClass1 = getStrategy().getJavaClassName(column1);
@@ -1047,10 +1048,12 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                     flag2++;
                 } else {
                     if (column.size() == 1) {
-                        out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("%s.eq(%s)).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
+                        out.println("return result;");
                         out.println("}");
                     } else {
-                        out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                        out.println("%s.eq(%s))).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
+                        out.println("return result;");
                         out.println("}");
                     }
                 }
