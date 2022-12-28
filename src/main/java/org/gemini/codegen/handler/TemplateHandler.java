@@ -19,21 +19,6 @@ import java.io.IOException;
 public final class TemplateHandler {
     private static final Logger LOG = LoggerFactory.getLogger(TemplateHandler.class);
 
-
-
-//    private void generateClassFromTemplates2(final String templatePath, final String filePath, final String jsonPath) {
-//
-//        try (FileWriter fileWriter = new FileWriter(filePath)) {
-//            Handlebars handlebars = new Handlebars();
-//            Template template = handlebars.compile(templatePath);
-//
-//
-//
-//            fileWriter.write(template.apply(obj));
-//        } catch (Exception e) {
-//            LOG.error("Exception in generateClassFromTemplates() :{}", e.getMessage());
-//        }
-//    }
     /**
      * generateClassFromTemplates() method is used for generating class from templates.
      *
@@ -89,7 +74,11 @@ public final class TemplateHandler {
         CodeGenUtils.createDirectory(path.toString());
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
-        path.append("/Exception");
+        path.append("/exception");
+        CodeGenUtils.createDirectory(path.toString());
+        path.setLength(0);
+        path.append(CodeGenUtils.generateDirectoryPath());
+        path.append("/configuration");
         CodeGenUtils.createDirectory(path.toString());
         path.setLength(0);
         path.append(CodeGenUtils.createMap().get("outerDirectoryPath"));
@@ -119,16 +108,16 @@ public final class TemplateHandler {
             generateClassFromTemplates("HandlebarTemplates/pomTemplate", path.toString(), jsonObject);
             path.setLength(0);
             path.append(CodeGenUtils.generateDirectoryPath());
-            path.append("/Exception/ServiceException.java");
-            generateClassFromTemplates("HandlebarTemplates/ServiceExceptionTemplate", path.toString(), jsonObject);
-            path.setLength(0);
-            path.append(CodeGenUtils.generateDirectoryPath());
-            path.append("/Exception/ErrorMessage.java");
+            path.append("/exception/ErrorMessage.java");
             generateClassFromTemplates("HandlebarTemplates/ErrorMessageTemplate", path.toString(), jsonObject);
             path.setLength(0);
             path.append(CodeGenUtils.generateDirectoryPath());
-            path.append("/Exception/ControllerExceptionHandler.java");
+            path.append("/exception/ControllerExceptionHandler.java");
             generateClassFromTemplates("HandlebarTemplates/controllerExceptionHandlerTemplate", path.toString(), jsonObject);
+            path.setLength(0);
+            path.append(CodeGenUtils.generateDirectoryPath());
+            path.append("/configuration/MetricConfiguration.java");
+            generateClassFromTemplates("HandlebarTemplates/MetricConfigurationTemplate", path.toString(), jsonObject);
             for (Object obj : jsonArray) {
                 jsonObject = (JSONObject) obj;
                 path.setLength(0);

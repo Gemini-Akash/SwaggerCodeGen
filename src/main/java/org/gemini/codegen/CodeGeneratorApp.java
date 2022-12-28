@@ -69,10 +69,10 @@ public class CodeGeneratorApp {
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/com");
         directoryHandler.deleteDirectory(path.toString());
-        path.setLength(0);
-        path.append(CodeGenUtils.generateDirectoryPath());
-        path.append("/jsonFiles");
-        directoryHandler.deleteDirectory(path.toString());
+//        path.setLength(0);
+//        path.append(CodeGenUtils.generateDirectoryPath());
+//        path.append("/jsonFiles");
+//        directoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");

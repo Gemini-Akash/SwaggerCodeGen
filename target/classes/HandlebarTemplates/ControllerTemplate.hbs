@@ -1,5 +1,6 @@
 package com.gemini.{{scriptName}}.controller;
 
+import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gemini.{{scriptName}}.entity.{{schemaName}}.tables.pojos.{{className}};
 import com.gemini.{{scriptName}}.service.{{className}}Service;
@@ -26,20 +27,22 @@ public class {{className}}Controller {
     @Autowired
     ObjectMapper objectMapper;
 
-    {{#each subsequencePrimaryKeys}}@GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-        public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
-            List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
-            objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.DummyScript.model.{{className}}.class));});
-            List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
-                if(result!=null){
-                    LOG.info("Data fetched successfully.");
-                    return new ResponseEntity<>(result, HttpStatus.OK);
-                }else{
-                     LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
-                     return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-                }
+    {{#each subsequencePrimaryKeys}}@Timed
+    @GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
+    public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+       List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
+       objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.DummyScript.model.{{className}}.class));});
+       List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
+           if(result!=null){
+               LOG.info("Data fetched successfully.");
+               return new ResponseEntity<>(result, HttpStatus.OK);
+           }else{
+                LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
+                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+           }
     }
     {{/each}}
+    @Timed
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
        {{className}} dummyBody = null;
@@ -55,6 +58,7 @@ public class {{className}}Controller {
            }
     }
 
+    @Timed
     @PutMapping({"/batch/{{className}}/"})
     public ResponseEntity updateBatch{{className}}(@Valid @RequestBody List<{{className}}> body){
        Map<Integer,List<{{className}}>> result=objectService.updateBatch{{className}}(body);
@@ -70,6 +74,7 @@ public class {{className}}Controller {
        }
     }
 
+    @Timed
     @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<List<{{className}}>> patchUpdate{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
        List<{{className}}> dummyBody = null;
@@ -85,12 +90,14 @@ public class {{className}}Controller {
            }
     }
 
+    @Timed
     @PostMapping({"/{{className}}"})
     public ResponseEntity<{{className}}> add{{className}}(@Valid @RequestBody {{className}} body) {
         LOG.info("Record inserted successfully.");
         return new ResponseEntity<>(objectService.add{{className}}(body), HttpStatus.CREATED);
     }
 
+    @Timed
     @PostMapping({"/batch/{{className}}"})
     public ResponseEntity addBatch{{className}}(@Valid @RequestBody List<{{className}}> body) {
         Map<Integer,List<{{className}}>> result=objectService.addBatch{{className}}(body);
@@ -103,6 +110,7 @@ public class {{className}}Controller {
         }
     }
 
+    @Timed
     @DeleteMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity delete{{className}}({{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
         int result=objectService.delete{{className}}({{#each primaryKeys}}{{fieldName}}{{#unless @last}},{{/unless}}{{/each}});
@@ -115,6 +123,7 @@ public class {{className}}Controller {
         }
     }
 
+    @Timed
     @DeleteMapping({"/batch/{{className}}"})
     public ResponseEntity deleteBatch{{className}}(@Valid @RequestBody List<{{className}}> body) {
         Map<Integer,List<{{className}}>> result=objectService.deleteBatch{{className}}(body);
