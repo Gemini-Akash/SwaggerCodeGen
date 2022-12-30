@@ -51,6 +51,11 @@ public final class CustomClassLoader {
         jsonObject2.put("variable", variableFieldsObject);
         jsonObject2.put("primaryKeys",primaryKeysObject);
         jsonObject2.put("subsequencePrimaryKeys", subsequencePrimaryKeysObject);
+        if (subsequencePrimaryKeysObject.length()==1){
+            jsonObject2.put("primaryKeysFlag",true);
+        } else {
+            jsonObject2.put("primaryKeysFlag",false);
+        }
         jsonObject1.put("classes", jsonArrayObject.put(jsonObject2));
         if (createApiJsonCount ==pojoValidator.countTables()) {
             LOG.info("Required json: {}", jsonObject1);

@@ -14,12 +14,17 @@ public class {{className}}Service {
 
     @Autowired
     {{className}}Dao objectDao ;
-
+    {{#if primaryKeysFlag}}
+    {{#each subsequencePrimaryKeys}}public {{className}} get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.datatype}} {{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+         return objectDao.fetchRecordBy{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}});
+    }
+    {{/each}}
+    {{else}}
     {{#each subsequencePrimaryKeys}}public List<{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.datatype}} {{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
          return objectDao.fetchRecordBy{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}});
     }
     {{/each}}
-
+    {{/if}}
     public int update{{className}}({{className}} classObject){
          return objectDao.updateRecord(classObject);
     }

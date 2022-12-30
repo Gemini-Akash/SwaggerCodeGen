@@ -26,7 +26,22 @@ public class {{className}}Controller {
 
     @Autowired
     ObjectMapper objectMapper;
-
+    {{#if primaryKeysFlag}}
+    {{#each subsequencePrimaryKeys}}@Timed
+    @GetMapping({"/{{className}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
+    public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+       com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
+       com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
+           if(result!=null){
+               LOG.info("Data fetched successfully.");
+               return new ResponseEntity<>(result, HttpStatus.OK);
+           }else{
+                LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
+                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+           }
+    }
+    {{/each}}
+    {{else}}
     {{#each subsequencePrimaryKeys}}@Timed
     @GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
@@ -42,6 +57,7 @@ public class {{className}}Controller {
            }
     }
     {{/each}}
+    {{/if}}
     @Timed
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){

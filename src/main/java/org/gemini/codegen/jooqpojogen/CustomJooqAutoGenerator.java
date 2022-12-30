@@ -1012,49 +1012,96 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         List<List<ColumnDefinition>> subsequencePrimaryKeysJsonArray = new ArrayList<>();
         getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList<>(), 0);
         subsequencePrimaryKeysJsonArray.remove(0);
-        out.javadoc("Created custom fetchRecord Method");
-        for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
-            int flag = 0;
-            out.print("public List<%s> fetchRecordBy", pType);
-            for (ColumnDefinition column1 : column) {
-                final String colClass = getStrategy().getJavaClassName(column1);
-                out.print("%s",colClass);
-            }
-            out.print("(");
-            for (ColumnDefinition column1 : column) {
-                final String colClass = getStrategy().getJavaClassName(column1);
-                final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
-                final String colType1 = out.ref(colTypeFull);
-                if (flag != column.size() - 1) {
-                    out.print("%s %s,", colType1, colClass);
-                    flag++;
-                } else {
-                    out.println("%s %s){", colType1, colClass);
+        if(subsequencePrimaryKeysJsonArray.size()==1) {
+            out.javadoc("Created custom fetchRecord Method");
+            for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
+                int flag = 0;
+                out.print("public %s fetchRecordBy", pType);
+                for (ColumnDefinition column1 : column) {
+                    final String colClass = getStrategy().getJavaClassName(column1);
+                    out.print("%s", colClass);
+                }
+                out.print("(");
+                for (ColumnDefinition column1 : column) {
+                    final String colClass = getStrategy().getJavaClassName(column1);
+                    final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
+                    final String colType1 = out.ref(colTypeFull);
+                    if (flag != column.size() - 1) {
+                        out.print("%s %s,", colType1, colClass);
+                        flag++;
+                    } else {
+                        out.println("%s %s){", colType1, colClass);
+                    }
+                }
+                out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
+                int flag2 = 0;
+                for (ColumnDefinition column1 : column) {
+                    final String colClass1 = getStrategy().getJavaClassName(column1);
+                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
+
+                    if (flag2 != column.size() - 1) {
+                        if (flag2 == 0) {
+                            out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+                        } else {
+                            out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                        }
+                        flag2++;
+                    } else {
+                        if (column.size() == 1) {
+                            out.println("%s.eq(%s)).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                            out.println("}");
+                        } else {
+                            out.println("%s.eq(%s))).fetchOneInto(%s.class);", colIdentifier1, colClass1, pType);
+                            out.println("}");
+                        }
+                    }
                 }
             }
-            out.println("List<%s> result =new ArrayList<>();",pType);
-            out.print("result.add(this.ctx().selectFrom(%s).where(", tableIdentifier);
-            int flag2 = 0;
-            for (ColumnDefinition column1 : column) {
-                final String colClass1 = getStrategy().getJavaClassName(column1);
-                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
-
-                if (flag2 != column.size() - 1) {
-                    if (flag2 == 0) {
-                        out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+        }else{
+            out.javadoc("Created custom fetchRecord Method");
+            for (List<ColumnDefinition> column : subsequencePrimaryKeysJsonArray) {
+                int flag = 0;
+                out.print("public List<%s> fetchRecordBy", pType);
+                for (ColumnDefinition column1 : column) {
+                    final String colClass = getStrategy().getJavaClassName(column1);
+                    out.print("%s", colClass);
+                }
+                out.print("(");
+                for (ColumnDefinition column1 : column) {
+                    final String colClass = getStrategy().getJavaClassName(column1);
+                    final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);
+                    final String colType1 = out.ref(colTypeFull);
+                    if (flag != column.size() - 1) {
+                        out.print("%s %s,", colType1, colClass);
+                        flag++;
                     } else {
-                        out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                        out.println("%s %s){", colType1, colClass);
                     }
-                    flag2++;
-                } else {
-                    if (column.size() == 1) {
-                        out.println("%s.eq(%s)).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
-                        out.println("return result;");
-                        out.println("}");
+                }
+                out.println("List<%s> result =new ArrayList<>();", pType);
+                out.print("result.add(this.ctx().selectFrom(%s).where(", tableIdentifier);
+                int flag2 = 0;
+                for (ColumnDefinition column1 : column) {
+                    final String colClass1 = getStrategy().getJavaClassName(column1);
+                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
+
+                    if (flag2 != column.size() - 1) {
+                        if (flag2 == 0) {
+                            out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
+                        } else {
+                            out.print("%s.eq(%s)).and(", colIdentifier1, colClass1);
+                        }
+                        flag2++;
                     } else {
-                        out.println("%s.eq(%s))).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
-                        out.println("return result;");
-                        out.println("}");
+                        if (column.size() == 1) {
+                            out.println("%s.eq(%s)).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
+                            out.println("return result;");
+                            out.println("}");
+                        } else {
+                            out.println("%s.eq(%s))).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
+                            out.println("return result;");
+                            out.println("}");
+                        }
                     }
                 }
             }
