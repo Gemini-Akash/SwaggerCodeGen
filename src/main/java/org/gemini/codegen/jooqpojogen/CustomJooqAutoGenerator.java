@@ -824,17 +824,73 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 
         //custom patch method
         out.javadoc("Created custom patchUpdate record Method");
-        out.println("public %s updatePatchRecord(%s classObject){", pType,pType);
-        out.println("%s obj = fetchRecordById(classObject.getId());", pType);
-        for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {
-            final String colClass = getStrategy().getJavaClassName(column);
-                out.println(" if(classObject.get%s!=null){",colClass);
-                out.println("obj.set%s(classObject.get%s());");
-                out.println("}");
+        out.println("public %s patchUpdateRecord(%s classObject){", pType,pType);
+        if(size>1){
+            out.print("List<%s> obj = fetchRecordBy", pType);
+            for (ColumnDefinition column : table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if(key==column.getPrimaryKey()) {
+                    out.print("%s", colClass);
+                }
+            }
+            out.print("(");
+            int f=0;
+            for (ColumnDefinition column :table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if(key==column.getPrimaryKey()) {
+                    if (f!=size-1) {
+                        out.print("classObject.get%s(),", colClass);
+                        f++;
+                    }else {
+                        out.println("classObject.get%s());",colClass);
+                    }
+                }
+            }
+            for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if (key != column.getPrimaryKey()) {
+                    out.println(" if(classObject.get%s()!=null){", colClass);
+                    out.println("obj.get(0).set%s(classObject.get%s());",colClass,colClass);
+                    out.println("}");
+                }
+            }
+            out.println("update(obj);");
+            out.println("return obj.get(0);");
+            out.println("}");
+        }else {
+            out.print("%s obj = fetchRecordBy", pType);
+            for (ColumnDefinition column : table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if(key==column.getPrimaryKey()) {
+                    out.print("%s", colClass);
+                }
+            }
+            out.print("(");
+            int f=0;
+            for (ColumnDefinition column :table.getColumns()) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if(key==column.getPrimaryKey()) {
+                    if (f!=size-1) {
+                        out.print("classObject.get%s(),", colClass);
+                        f++;
+                    }else {
+                        out.println("classObject.get%s());",colClass);
+                    }
+                }
+            }
+            for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {
+                final String colClass = getStrategy().getJavaClassName(column);
+                if (key != column.getPrimaryKey()) {
+                    out.println(" if(classObject.get%s()!=null){", colClass);
+                    out.println("obj.set%s(classObject.get%s());",colClass,colClass);
+                    out.println("}");
+                }
+            }
+            out.println("update(obj);");
+            out.println("return obj;");
+            out.println("}");
         }
-        out.println("update(obj);");
-        out.println("return obj;");
-        out.println("}");
+
 
         if (size > 1) {
             //For Update COMPOSITE KEYS
