@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
      *
      * @return count
      */
-    private int countTables() {
+    public int countTables() {
 <span class="fc" id="L26">        int count = 0;</span>
 <span class="fc" id="L27">        try(FileReader fileReader = new FileReader(CodeGenUtils.createMap().get(&quot;outerScriptDirectoryPath&quot;));</span>
 <span class="fc" id="L28">            BufferedReader  bufferedReader = new BufferedReader(fileReader)) {</span>

@@ -1,13 +1,13 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils.new FilenameFilter() {...},0,10,0,0,0,2,0,2,0,2
-SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils,41,84,2,2,8,19,4,5,2,5
+SwaggerCodeGen,org.gemini.codegen.apicodegen.utiltiy,CodeGenUtils,37,88,1,3,7,20,3,6,2,5
 SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,11,98,1,9,3,29,1,9,0,5
-SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,0,469,0,2,0,116,0,6,0,5
+SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,238,267,2,0,55,71,1,5,0,5
 SwaggerCodeGen,org.gemini.codegen.handler,DbJsonHandler,0,57,0,0,0,15,0,3,0,3
-SwaggerCodeGen,org.gemini.codegen.apicodegen.loader,CustomClassLoader,27,447,2,16,9,107,2,17,0,10
-SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,239,0,0,0,54,0,3,0,3,0
+SwaggerCodeGen,org.gemini.codegen.apicodegen.loader,CustomClassLoader,39,547,4,20,12,124,4,19,0,11
+SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,227,0,0,0,51,0,3,0,3,0
 SwaggerCodeGen,org.gemini.codegen.jooqpojogen,EntityClassGenerator,13,112,2,2,3,33,3,1,1,1
-SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,939,2174,166,132,144,357,122,58,4,27
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,1382,3113,199,149,211,523,140,66,4,28
 SwaggerCodeGen,org.gemini.codegen.jooqpojogen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0
 SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,0,9,0,0,0,4,0,1,0,1
 SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,163,555,31,57,34,111,41,39,15,21

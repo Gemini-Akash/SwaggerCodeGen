@@ -12,11 +12,10 @@ import java.util.concurrent.TimeUnit;
 @EnableMetrics
 public class MetricConfiguration extends MetricsConfigurerAdapter {
 
-    @Override
-    public void configureReporters(MetricRegistry metricRegistry){
-        registerReporter(ConsoleReporter.forRegistry(metricRegistry)
-                .build()).start(10, TimeUnit.SECONDS);
-    }
-
+//    @Override
+//    public void configureReporters(MetricRegistry metricRegistry){
+//        registerReporter(ConsoleReporter.forRegistry(metricRegistry)
+//                .build()).start(10, TimeUnit.SECONDS);
+//    }
 
 }

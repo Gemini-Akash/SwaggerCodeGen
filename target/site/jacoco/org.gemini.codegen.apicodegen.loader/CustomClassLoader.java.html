@@ -3,9 +3,9 @@
 import org.gemini.codegen.apicodegen.utiltiy.CodeGenUtils;
 import org.gemini.codegen.apicodegen.validator.PojoValidator;
 
-import org.gemini.codegen.handler.DirectoryHandler;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,35 +28,47 @@ import java.util.stream.Collectors;
 
 <span class="fc" id="L29">    private static final Logger LOG = LoggerFactory.getLogger(CustomClassLoader.class);</span>
 <span class="fc" id="L30">    PojoValidator pojoValidator=new PojoValidator();</span>
+<span class="fc" id="L31">    JSONArray jsonArrayObject =new JSONArray();</span>
+<span class="fc" id="L32">    int createApiJsonCount =0;</span>
 
     /**
      * createAPIJson() method to convert into json file for creating multiple json.
      *
      * @param className
+     * @param subsequencePrimaryKeysObject
      * @param primaryKeysObject
      * @param variableFieldsObject
      * @param filePath
      */
-    private void createAPIJson(final String className, final JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
-<span class="fc" id="L41">        StringBuilder path = new StringBuilder();</span>
-<span class="fc" id="L42">        JSONObject jsonObject = new JSONObject();</span>
-<span class="fc" id="L43">        jsonObject.put(&quot;className&quot;, className);</span>
-<span class="fc" id="L44">        jsonObject.put(&quot;scriptName&quot;, CodeGenUtils.getScriptName());</span>
-<span class="fc" id="L45">        jsonObject.put(&quot;schemaName&quot;, CodeGenUtils.getSchemaName());</span>
-<span class="fc" id="L46">        jsonObject.put(&quot;variable&quot;, variableFieldsObject);</span>
-<span class="fc" id="L47">        jsonObject.put(&quot;primaryKeys&quot;, primaryKeysObject);</span>
-<span class="fc" id="L48">        LOG.info(&quot;Required json: {}&quot;, jsonObject);</span>
-<span class="fc" id="L49">        path.setLength(0);</span>
-<span class="fc" id="L50">        path.append(filePath);</span>
-<span class="fc" id="L51">        path.append(&quot;/jsonFiles/&quot;);</span>
-<span class="fc" id="L52">        path.append(className);</span>
-<span class="fc" id="L53">        path.append(&quot;.json&quot;);</span>
-<span class="fc" id="L54">        try (FileWriter fileWriter = new FileWriter(path.toString())) {</span>
-<span class="fc" id="L55">            fileWriter.write(jsonObject.toJSONString());</span>
-<span class="fc" id="L56">        } catch (Exception e) {</span>
-<span class="fc" id="L57">            LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L58">        }</span>
-<span class="fc" id="L59">    }</span>
+    private void createAPIJson(final String className, final JSONArray subsequencePrimaryKeysObject, JSONArray primaryKeysObject, final JSONArray variableFieldsObject, final String filePath) {
+<span class="fc" id="L44">        StringBuilder path = new StringBuilder();</span>
+<span class="fc" id="L45">        JSONObject jsonObject1 = new JSONObject();</span>
+<span class="fc" id="L46">        JSONObject jsonObject2 = new JSONObject();</span>
+<span class="fc" id="L47">        createApiJsonCount++;</span>
+<span class="fc" id="L48">        jsonObject2.put(&quot;className&quot;, className);</span>
+<span class="fc" id="L49">        jsonObject2.put(&quot;scriptName&quot;, CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L50">        jsonObject2.put(&quot;schemaName&quot;, CodeGenUtils.getSchemaName());</span>
+<span class="fc" id="L51">        jsonObject2.put(&quot;variable&quot;, variableFieldsObject);</span>
+<span class="fc" id="L52">        jsonObject2.put(&quot;primaryKeys&quot;,primaryKeysObject);</span>
+<span class="fc" id="L53">        jsonObject2.put(&quot;subsequencePrimaryKeys&quot;, subsequencePrimaryKeysObject);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (subsequencePrimaryKeysObject.length()==1){</span>
+<span class="fc" id="L55">            jsonObject2.put(&quot;primaryKeysFlag&quot;,true);</span>
+        } else {
+<span class="nc" id="L57">            jsonObject2.put(&quot;primaryKeysFlag&quot;,false);</span>
+        }
+<span class="fc" id="L59">        jsonObject1.put(&quot;classes&quot;, jsonArrayObject.put(jsonObject2));</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (createApiJsonCount ==pojoValidator.countTables()) {</span>
+<span class="fc" id="L61">            LOG.info(&quot;Required json: {}&quot;, jsonObject1);</span>
+<span class="fc" id="L62">            path.setLength(0);</span>
+<span class="fc" id="L63">            path.append(filePath);</span>
+<span class="fc" id="L64">            path.append(&quot;/jsonFiles/Loader.json&quot;);</span>
+<span class="fc" id="L65">            try (FileWriter fileWriter = new FileWriter(path.toString())) {</span>
+<span class="fc" id="L66">                fileWriter.write(jsonObject1.toJSONString());</span>
+<span class="nc" id="L67">            } catch (Exception e) {</span>
+<span class="nc" id="L68">                LOG.error(&quot;Exception in  writing JSON file / createApiJson(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L69">            }</span>
+        }
+<span class="fc" id="L71">    }</span>
 
     /**
      * loadClass() method is used to load class from fully qualified classname
@@ -66,24 +78,44 @@ import java.util.stream.Collectors;
      * @return classNames
      */
     public List&lt;String&gt; loadClass(final Set&lt;Class&gt; classObject, final String filePath) {
-<span class="fc" id="L69">        StringBuilder path = new StringBuilder();</span>
-<span class="fc" id="L70">        List&lt;String&gt; classNames = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L71">        path.setLength(0);</span>
-<span class="fc" id="L72">        path.append(CodeGenUtils.generateDirectoryPath());</span>
-<span class="fc" id="L73">        path.append(&quot;/jsonFiles&quot;);</span>
-<span class="fc" id="L74">       CodeGenUtils.createDirectory(path.toString());</span>
+<span class="fc" id="L81">        StringBuilder path = new StringBuilder();</span>
+<span class="fc" id="L82">        List&lt;String&gt; classNames = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L83">        path.setLength(0);</span>
+<span class="fc" id="L84">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="fc" id="L85">        path.append(&quot;/jsonFiles&quot;);</span>
+<span class="fc" id="L86">       CodeGenUtils.createDirectory(path.toString());</span>
         try {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (Class classContent : classObject) {</span>
-<span class="fc" id="L77">                String className = classContent.getSimpleName();</span>
-<span class="fc" id="L78">                classNames.add(className);</span>
-<span class="fc" id="L79">                LOG.info(&quot;Pojo ClassName : {}&quot;, className);</span>
-<span class="fc" id="L80">                getJsonBody(classContent, filePath);</span>
-<span class="fc" id="L81">            }</span>
-<span class="nc" id="L82">        } catch (Exception e) {</span>
-<span class="nc" id="L83">            LOG.error(&quot;Exception in loadClass(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L84">        }</span>
-<span class="fc" id="L85">        return classNames;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            for (Class classContent : classObject) {</span>
+<span class="fc" id="L89">                String className = classContent.getSimpleName();</span>
+<span class="fc" id="L90">                classNames.add(className);</span>
+<span class="fc" id="L91">                LOG.info(&quot;Pojo ClassName : {}&quot;, className);</span>
+<span class="fc" id="L92">                getJsonBody(classContent, filePath);</span>
+<span class="fc" id="L93">            }</span>
+<span class="nc" id="L94">        } catch (Exception e) {</span>
+<span class="nc" id="L95">            LOG.error(&quot;Exception in loadClass(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">        return classNames;</span>
     }
+    /**
+     * getSubSequences method is used to get subsets of input JsonArray.
+     *
+     * @param outputPrimaryKeysJsonArray
+     * @param primaryKeysObject
+     * @param  emptyJsonArray
+     * @param  index
+     */
+
+    public static void getSubSequences(JSONArray outputPrimaryKeysJsonArray, JSONArray primaryKeysObject, JSONArray emptyJsonArray, int index)
+    {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (index==primaryKeysObject.length())</span>
+        {
+<span class="fc" id="L112">            outputPrimaryKeysJsonArray.put(emptyJsonArray);</span>
+<span class="fc" id="L113">            return;</span>
+        }
+<span class="fc" id="L115">        getSubSequences(outputPrimaryKeysJsonArray,primaryKeysObject,new JSONArray(emptyJsonArray), index+1);</span>
+<span class="fc" id="L116">        emptyJsonArray.put(primaryKeysObject.get(index));</span>
+<span class="fc" id="L117">        getSubSequences(outputPrimaryKeysJsonArray,primaryKeysObject,new JSONArray(emptyJsonArray), index+1);</span>
+<span class="fc" id="L118">    }</span>
 
     /**
      * getJsonBody() method is used to get json object.
@@ -93,35 +125,40 @@ import java.util.stream.Collectors;
      */
     private void getJsonBody(final Class classContent, final String filePath) {
 
-<span class="fc" id="L96">        JSONArray primaryKeysObject = null;</span>
-<span class="fc" id="L97">        JSONArray variableFieldsObject = null;</span>
+<span class="fc" id="L128">        JSONArray primaryKeysObject = null;</span>
+<span class="fc" id="L129">        JSONArray variableFieldsObject = null;</span>
         try {
-<span class="fc" id="L99">            primaryKeysObject = new JSONArray();</span>
-<span class="fc" id="L100">            variableFieldsObject = new JSONArray();</span>
-<span class="fc" id="L101">            JSONObject jsonObject = new JSONObject();</span>
-<span class="fc" id="L102">            Field[] fields = classContent.getDeclaredFields();</span>
+<span class="fc" id="L131">            primaryKeysObject = new JSONArray();</span>
+<span class="fc" id="L132">            variableFieldsObject = new JSONArray();</span>
+<span class="fc" id="L133">            JSONObject jsonObject = new JSONObject();</span>
+<span class="fc" id="L134">            Field[] fields = classContent.getDeclaredFields();</span>
 
-<span class="fc bfc" id="L104" title="All 2 branches covered.">            List&lt;Field&gt; primaryKeysList = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) != null).collect(Collectors.toList());</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">            List&lt;Field&gt; variableFieldsList = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) == null).skip(1).collect(Collectors.toList());</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">            for (Field field : variableFieldsList) {</span>
-<span class="fc" id="L107">                String fieldName = field.getName();</span>
-<span class="fc" id="L108">                String fieldType = field.getType().getSimpleName();</span>
-<span class="fc" id="L109">                jsonObject.put(&quot;fieldName&quot;, fieldName);</span>
-<span class="fc" id="L110">                jsonObject.put(&quot;datatype&quot;, fieldType);</span>
-<span class="fc" id="L111">                variableFieldsObject.put(jsonObject);</span>
-<span class="fc" id="L112">            }</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">            for (Field field : primaryKeysList) {</span>
-<span class="fc" id="L114">                String fieldName = field.getName();</span>
-<span class="fc" id="L115">                String fieldType = field.getType().getSimpleName();</span>
-<span class="fc" id="L116">                jsonObject.put(&quot;fieldName&quot;, fieldName);</span>
-<span class="fc" id="L117">                jsonObject.put(&quot;datatype&quot;, fieldType);</span>
-<span class="fc" id="L118">                primaryKeysObject.put(jsonObject);</span>
-<span class="fc" id="L119">            }</span>
-<span class="nc" id="L120">        } catch (Exception e) {</span>
-<span class="nc" id="L121">            LOG.error(&quot;Exception in getJsonBody(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L122">        }</span>
-<span class="fc" id="L123">        createAPIJson(classContent.getSimpleName(), primaryKeysObject, variableFieldsObject, filePath);</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            List&lt;Field&gt; primaryKeysList = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) != null).collect(Collectors.toList());</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            List&lt;Field&gt; variableFieldsList = Arrays.stream(fields).filter(field -&gt; field.getAnnotation(Id.class) == null).skip(1).collect(Collectors.toList());</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            for (Field field : variableFieldsList) {</span>
+<span class="fc" id="L139">                String fieldName = field.getName();</span>
+<span class="fc" id="L140">                String fieldType = field.getType().getSimpleName();</span>
+<span class="fc" id="L141">                jsonObject.put(&quot;fieldName&quot;, fieldName);</span>
+<span class="fc" id="L142">                jsonObject.put(&quot;datatype&quot;, fieldType);</span>
+<span class="fc" id="L143">                variableFieldsObject.put(jsonObject);</span>
+<span class="fc" id="L144">            }</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            for (Field field : primaryKeysList) {</span>
+<span class="fc" id="L146">                String fieldName = field.getName();</span>
+<span class="fc" id="L147">                String fieldType = field.getType().getSimpleName();</span>
+<span class="fc" id="L148">                jsonObject.put(&quot;fieldName&quot;, fieldName);</span>
+<span class="fc" id="L149">                jsonObject.put(&quot;datatype&quot;, fieldType);</span>
+<span class="fc" id="L150">                primaryKeysObject.put(jsonObject);</span>
+<span class="fc" id="L151">            }</span>
+<span class="nc" id="L152">        } catch (Exception e) {</span>
+<span class="nc" id="L153">            LOG.error(&quot;Exception in getJsonBody(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">        JSONArray subsequencePrimaryKeysJsonArray=new JSONArray().put(new JSONArray());</span>
+<span class="fc" id="L156">        getSubSequences(subsequencePrimaryKeysJsonArray,primaryKeysObject,new JSONArray(),0);</span>
+<span class="fc" id="L157">        subsequencePrimaryKeysJsonArray.remove(0);</span>
+<span class="fc" id="L158">        subsequencePrimaryKeysJsonArray.remove(0);</span>
+<span class="fc" id="L159">        LOG.info(&quot;primaryKeys array of {} -----&gt; {}&quot;,classContent.getSimpleName(),subsequencePrimaryKeysJsonArray);</span>
+<span class="fc" id="L160">        createAPIJson(classContent.getSimpleName(), subsequencePrimaryKeysJsonArray,primaryKeysObject, variableFieldsObject, filePath);</span>
+<span class="fc" id="L161">    }</span>
 
     /**
      * javaCompileClass() method is used for loading class file into JVM.
@@ -129,19 +166,19 @@ import java.util.stream.Collectors;
      * @param filePath
      */
     private void compileJavaClasses(final File filePath) {
-<span class="fc" id="L132">        int compilationResult = 0;</span>
+<span class="fc" id="L169">        int compilationResult = 0;</span>
         try {
-<span class="fc" id="L134">            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();</span>
-<span class="fc" id="L135">            compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());</span>
-<span class="nc" id="L136">        } catch (Exception e) {</span>
-<span class="nc" id="L137">            LOG.info(&quot;Exception in compileJavaClasses(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L138">        }</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (compilationResult == 0) {</span>
-<span class="fc" id="L140">            LOG.info(&quot;Compilation is successful&quot;);</span>
+<span class="fc" id="L171">            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();</span>
+<span class="fc" id="L172">            compilationResult = compiler.run(null, null, null, filePath.getAbsolutePath());</span>
+<span class="nc" id="L173">        } catch (Exception e) {</span>
+<span class="nc" id="L174">            LOG.info(&quot;Exception in compileJavaClasses(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L175">        }</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (compilationResult == 0) {</span>
+<span class="fc" id="L177">            LOG.info(&quot;Compilation is successful&quot;);</span>
         } else {
-<span class="fc" id="L142">            LOG.info(&quot;Compilation Failed at: {} &quot;, filePath.getName());</span>
+<span class="fc" id="L179">            LOG.info(&quot;Compilation Failed at: {} &quot;, filePath.getName());</span>
         }
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L181">    }</span>
 
     /**
      * getFullyQualifiedClassName() method is used to get fullyQualifiedClassName.
@@ -150,42 +187,42 @@ import java.util.stream.Collectors;
      */
 
     private Class getFullyQualifiedClassName(final File filePath) {
-<span class="fc" id="L153">        StringBuilder path = new StringBuilder();</span>
-<span class="fc" id="L154">        path.setLength(0);</span>
-<span class="fc" id="L155">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
-<span class="fc" id="L156">        path.append(&quot;/&quot;);</span>
-<span class="fc" id="L157">        path.append(CodeGenUtils.getScriptName());</span>
-<span class="fc" id="L158">        path.append(&quot;SpringBootApp/src/main/java&quot;);</span>
-<span class="fc" id="L159">        File directoryPath = new File(path.toString());</span>
-<span class="fc" id="L160">        Class cls = null;</span>
-<span class="fc" id="L161">        URLClassLoader urlClassLoader = null;</span>
-<span class="fc" id="L162">            path.setLength(0);</span>
-<span class="fc" id="L163">            path.append(&quot;com.gemini.&quot;);</span>
-<span class="fc" id="L164">            path.append(CodeGenUtils.getScriptName());</span>
-<span class="fc" id="L165">            path.append(&quot;.entity.&quot;);</span>
-<span class="fc" id="L166">            path.append(CodeGenUtils.getSchemaName());</span>
-<span class="fc" id="L167">            path.append(&quot;.tables.pojos.&quot;);</span>
-<span class="fc" id="L168">            path.append(filePath.getName().replaceAll(&quot;.java&quot;, &quot;&quot;));</span>
+<span class="fc" id="L190">        StringBuilder path = new StringBuilder();</span>
+<span class="fc" id="L191">        path.setLength(0);</span>
+<span class="fc" id="L192">        path.append(CodeGenUtils.createMap().get(&quot;outerDirectoryPath&quot;));</span>
+<span class="fc" id="L193">        path.append(&quot;/&quot;);</span>
+<span class="fc" id="L194">        path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L195">        path.append(&quot;SpringBootApp/src/main/java&quot;);</span>
+<span class="fc" id="L196">        File directoryPath = new File(path.toString());</span>
+<span class="fc" id="L197">        Class cls = null;</span>
+<span class="fc" id="L198">        URLClassLoader urlClassLoader = null;</span>
+<span class="fc" id="L199">            path.setLength(0);</span>
+<span class="fc" id="L200">            path.append(&quot;com.gemini.&quot;);</span>
+<span class="fc" id="L201">            path.append(CodeGenUtils.getScriptName());</span>
+<span class="fc" id="L202">            path.append(&quot;.entity.&quot;);</span>
+<span class="fc" id="L203">            path.append(CodeGenUtils.getSchemaName());</span>
+<span class="fc" id="L204">            path.append(&quot;.tables.pojos.&quot;);</span>
+<span class="fc" id="L205">            path.append(filePath.getName().replaceAll(&quot;.java&quot;, &quot;&quot;));</span>
         try{
-<span class="fc" id="L170">            URL url = directoryPath.toURI().toURL();</span>
-<span class="fc" id="L171">            URL[] urls = new URL[]{url};</span>
-<span class="fc" id="L172">            urlClassLoader = new URLClassLoader(urls);</span>
-<span class="fc" id="L173">            ClassLoader cl = urlClassLoader;</span>
-<span class="fc" id="L174">            cls = cl.loadClass(path.toString());</span>
-<span class="fc" id="L175">        } catch (Exception e) {</span>
-<span class="fc" id="L176">            LOG.error(&quot;Exception in getFullyQualifiedClassName: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L207">            URL url = directoryPath.toURI().toURL();</span>
+<span class="fc" id="L208">            URL[] urls = new URL[]{url};</span>
+<span class="fc" id="L209">            urlClassLoader = new URLClassLoader(urls);</span>
+<span class="fc" id="L210">            ClassLoader cl = urlClassLoader;</span>
+<span class="fc" id="L211">            cls = cl.loadClass(path.toString());</span>
+<span class="fc" id="L212">        } catch (Exception e) {</span>
+<span class="fc" id="L213">            LOG.error(&quot;Exception in getFullyQualifiedClassName: {}&quot;, e.getMessage());</span>
         } finally {
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if (urlClassLoader != null) {</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">            if (urlClassLoader != null) {</span>
                 try {
-<span class="fc" id="L180">                    urlClassLoader.close();</span>
-<span class="nc" id="L181">                } catch (IOException e) {</span>
-<span class="nc" id="L182">                    LOG.error(&quot;Exception in closing the urlClassLoader of getFullyQualifiedClassName(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L183">                }</span>
+<span class="fc" id="L217">                    urlClassLoader.close();</span>
+<span class="nc" id="L218">                } catch (IOException e) {</span>
+<span class="nc" id="L219">                    LOG.error(&quot;Exception in closing the urlClassLoader of getFullyQualifiedClassName(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L220">                }</span>
             }
         }
 
-<span class="fc" id="L187">        LOG.info(&quot;getFullyQualifiedClassName-----&gt;{}&quot;, cls);</span>
-<span class="fc" id="L188">        return cls;</span>
+<span class="fc" id="L224">        LOG.info(&quot;getFullyQualifiedClassName-----&gt;{}&quot;, cls);</span>
+<span class="fc" id="L225">        return cls;</span>
     }
 
     /**
@@ -195,21 +232,21 @@ import java.util.stream.Collectors;
      * @return set of classes
      */
     public Set&lt;Class&gt; getFullyQualifiedClasses(final File filePath) {
-<span class="fc" id="L198">        File[] files = filePath.listFiles();</span>
-<span class="fc" id="L199">        Set&lt;Class&gt; classes = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L235">        File[] files = filePath.listFiles();</span>
+<span class="fc" id="L236">        Set&lt;Class&gt; classes = new HashSet&lt;&gt;();</span>
         try {
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">            if (pojoValidator.validatePojoClasses(files)) {</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                for (File file : files) {</span>
-<span class="fc" id="L203">                    compileJavaClasses(file);</span>
-<span class="fc" id="L204">                    classes.add(getFullyQualifiedClassName(file));</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            if (pojoValidator.validatePojoClasses(files)) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                for (File file : files) {</span>
+<span class="fc" id="L240">                    compileJavaClasses(file);</span>
+<span class="fc" id="L241">                    classes.add(getFullyQualifiedClassName(file));</span>
                 }
             } else {
-<span class="nc" id="L207">                LOG.info(&quot;Any of your pojoClass is Empty&quot;);</span>
+<span class="nc" id="L244">                LOG.info(&quot;Any of your pojoClass is Empty&quot;);</span>
             }
-<span class="fc" id="L209">        } catch (Exception e) {</span>
-<span class="fc" id="L210">            LOG.error(&quot;Exception in getFullyQualifiedClasses(): {}&quot;, e.getMessage());</span>
-<span class="fc" id="L211">        }</span>
-<span class="fc" id="L212">        return classes;</span>
+<span class="fc" id="L246">        } catch (Exception e) {</span>
+<span class="fc" id="L247">            LOG.error(&quot;Exception in getFullyQualifiedClasses(): {}&quot;, e.getMessage());</span>
+<span class="fc" id="L248">        }</span>
+<span class="fc" id="L249">        return classes;</span>
     }
 
 

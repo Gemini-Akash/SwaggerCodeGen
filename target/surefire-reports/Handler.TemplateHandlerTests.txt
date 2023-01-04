@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: Handler.TemplateHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.173 s - in Handler.TemplateHandlerTests
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 17.202 s <<< FAILURE! - in Handler.TemplateHandlerTests
+testGenerateSpringBootProject(Handler.TemplateHandlerTests)  Time elapsed: 16.817 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at Handler.TemplateHandlerTests.testGenerateSpringBootProject(TemplateHandlerTests.java:138)
+
+testGenerateClassFromTemplates(Handler.TemplateHandlerTests)  Time elapsed: 0.057 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at Handler.TemplateHandlerTests.testGenerateClassFromTemplates(TemplateHandlerTests.java:95)
+
+negTestGenerateClassFromTemplates(Handler.TemplateHandlerTests)  Time elapsed: 0.06 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Exception in generateClassFromTemplates() : (The system cannot find the path specified)> but was: <org.gemini.codegen.handler.TemplateHandler.generateClassFromTemplates(java.lang.String, java.lang.String, java.lang.String)>
+	at Handler.TemplateHandlerTests.negTestGenerateClassFromTemplates(TemplateHandlerTests.java:105)
+

@@ -1,0 +1,1 @@
+{"classes":[{"primaryKeys":[{"datatype":"Integer","fieldName":"Id"}],"primaryKeysFlag":true,"variable":[{"datatype":"String","fieldName":"Cd"},{"datatype":"String","fieldName":"Description"}],"scriptName":"testScript","className":"Language","schemaName":"demo","subsequencePrimaryKeys":[[{"datatype":"Integer","fieldName":"Id"}]]}]}

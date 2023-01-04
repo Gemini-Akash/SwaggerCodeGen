@@ -12,852 +12,1182 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
-<span class="fc" id="L21">public class CustomJooqAutoGenerator extends JavaGenerator {</span>
+<span class="fc" id="L20">public class CustomJooqAutoGenerator extends JavaGenerator {</span>
 
-<span class="fc" id="L23">    private static final JooqLogger LOG = JooqLogger.getLogger(CustomJooqAutoGenerator.class);</span>
+<span class="fc" id="L22">    private static final JooqLogger LOG = JooqLogger.getLogger(CustomJooqAutoGenerator.class);</span>
 
     private static final &lt;T&gt; List&lt;T&gt; list(T first, List&lt;T&gt; remaining) {
-<span class="nc" id="L26">        List&lt;T&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L25">        List&lt;T&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L28">        result.addAll(list(first));</span>
-<span class="nc" id="L29">        result.addAll(remaining);</span>
+<span class="nc" id="L27">        result.addAll(list(first));</span>
+<span class="nc" id="L28">        result.addAll(remaining);</span>
 
-<span class="nc" id="L31">        return result;</span>
+<span class="nc" id="L30">        return result;</span>
     }
 
     private static final &lt;T&gt; List&lt;T&gt; list(T... objects) {
-<span class="fc" id="L35">        List&lt;T&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">        List&lt;T&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (objects != null) {</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">            for (T object : objects) {</span>
-<span class="pc bpc" id="L39" title="1 of 4 branches missed.">                if (object != null &amp;&amp; !&quot;&quot;.equals(object)) {</span>
-<span class="nc" id="L40">                    result.add(object);</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (objects != null) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            for (T object : objects) {</span>
+<span class="pc bpc" id="L38" title="1 of 4 branches missed.">                if (object != null &amp;&amp; !&quot;&quot;.equals(object)) {</span>
+<span class="nc" id="L39">                    result.add(object);</span>
                 }
             }
         }
 
-<span class="fc" id="L45">        return result;</span>
+<span class="fc" id="L44">        return result;</span>
     }
 
     @Override
     protected void generatePojo(TableDefinition table) {
-<span class="fc" id="L50">        JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.POJO));</span>
-<span class="fc" id="L51">        LOG.info(&quot;Generating POJO &quot;, out.file().getName());</span>
-<span class="fc" id="L52">        generatePojo(table, out);</span>
-<span class="fc" id="L53">        closeJavaWriter(out);</span>
-<span class="fc" id="L54">        super.generatePojo(table);</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L49">        JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L50">        LOG.info(&quot;Generating POJO &quot;, out.file().getName());</span>
+<span class="fc" id="L51">        generatePojo(table, out);</span>
+<span class="fc" id="L52">        closeJavaWriter(out);</span>
+<span class="fc" id="L53">        super.generatePojo(table);</span>
+<span class="fc" id="L54">    }</span>
 
     protected void generatePojo(TableDefinition table, JavaWriter out) {
-<span class="fc" id="L58">        generatePojoClass(table, out);</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L57">        generatePojoClass(table, out);</span>
+<span class="fc" id="L58">    }</span>
 
     private final void generatePojoClass(Definition tableUdtOrEmbeddable, JavaWriter out) {
-<span class="fc" id="L62">        final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        final String interfaceName = generateInterfaces()</span>
-<span class="nc" id="L64">                ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.INTERFACE))</span>
-<span class="fc" id="L65">                : &quot;&quot;;</span>
-<span class="fc" id="L66">        final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));</span>
-<span class="fc" id="L67">        final List&lt;String&gt; interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L61">        final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        final String interfaceName = generateInterfaces()</span>
+<span class="nc" id="L63">                ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, GeneratorStrategy.Mode.INTERFACE))</span>
+<span class="fc" id="L64">                : &quot;&quot;;</span>
+<span class="fc" id="L65">        final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L66">        final List&lt;String&gt; interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO));</span>
 
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (generateInterfaces()) {</span>
-<span class="nc" id="L70">            interfaces.add(interfaceName);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (generateInterfaces()) {</span>
+<span class="nc" id="L69">            interfaces.add(interfaceName);</span>
         }
 
 //        final List&lt;String&gt; superTypes = list(superName, interfaces);
-<span class="fc" id="L74">        printPackage(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L73">        printPackage(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L77">            generatePojoClassJavadoc((TableDefinition) tableUdtOrEmbeddable, out);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {</span>
-<span class="nc" id="L79">            generateEmbeddableClassJavadoc((EmbeddableDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L76">            generatePojoClassJavadoc((TableDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {</span>
+<span class="nc" id="L78">            generateEmbeddableClassJavadoc((EmbeddableDefinition) tableUdtOrEmbeddable, out);</span>
         } else {
-<span class="nc" id="L81">            generateUDTPojoClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="nc" id="L80">            generateUDTPojoClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);</span>
         }
 
-<span class="fc" id="L84">        printClassAnnotations(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L83">        printClassAnnotations(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L87">            printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L86">            printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);</span>
         }
 
-<span class="fc" id="L90">        int maxLength = 0;</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableUdtOrEmbeddable)) {</span>
-<span class="fc" id="L92">            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());</span>
-<span class="fc" id="L93">        }</span>
+<span class="fc" id="L89">        int maxLength = 0;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableUdtOrEmbeddable)) {</span>
+<span class="fc" id="L91">            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());</span>
+<span class="fc" id="L92">        }</span>
 
-<span class="fc" id="L95">        out.println(&quot;public class %s[[before= extends ][%s]][[before= implements ][%s]] {&quot;, className, list(superName), interfaces);</span>
+<span class="fc" id="L94">        out.println(&quot;public class %s[[before= extends ][%s]][[before= implements ][%s]] {&quot;, className, list(superName), interfaces);</span>
 
-<span class="pc bpc" id="L97" title="3 of 4 branches missed.">        if (generateSerializablePojos() || generateSerializableInterfaces()) {</span>
-<span class="fc" id="L98">            out.printSerial();</span>
+<span class="pc bpc" id="L96" title="3 of 4 branches missed.">        if (generateSerializablePojos() || generateSerializableInterfaces()) {</span>
+<span class="fc" id="L97">            out.printSerial();</span>
         }
 
-<span class="fc" id="L101">        out.println();</span>
+<span class="fc" id="L100">        out.println();</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableUdtOrEmbeddable)) {</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if (column instanceof ColumnDefinition) {</span>
-<span class="fc" id="L105">                printColumnJPAAnnotation(out, (ColumnDefinition) column);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableUdtOrEmbeddable)) {</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if (column instanceof ColumnDefinition) {</span>
+<span class="fc" id="L104">                printColumnJPAAnnotation(out, (ColumnDefinition) column);</span>
             }
 
-<span class="fc" id="L108">            out.println(&quot;private %s%s %s;&quot;,</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                    generateImmutablePojos() ? &quot;final &quot; : &quot;&quot;,</span>
-<span class="fc" id="L110">                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)), maxLength),</span>
-<span class="fc" id="L111">                    getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L107">            out.println(&quot;private %s%s %s;&quot;,</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                    generateImmutablePojos() ? &quot;final &quot; : &quot;&quot;,</span>
+<span class="fc" id="L109">                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)), maxLength),</span>
+<span class="fc" id="L110">                    getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO));</span>
 
-<span class="fc" id="L113">        }</span>
+<span class="fc" id="L112">        }</span>
 
         // Constructors
         // ---------------------------------------------------------------------
 
         // Default constructor
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (!generateImmutablePojos()) {</span>
-<span class="fc" id="L120">            generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (!generateImmutablePojos()) {</span>
+<span class="fc" id="L119">            generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);</span>
         }
 
 
         // [#1363] [#7055] copy constructor
-<span class="fc" id="L125">        generatePojoCopyConstructor(tableUdtOrEmbeddable, out);</span>
+<span class="fc" id="L124">        generatePojoCopyConstructor(tableUdtOrEmbeddable, out);</span>
 
         // Multi-constructor
-<span class="fc" id="L128">        generatePojoMultiConstructor(tableUdtOrEmbeddable, out);</span>
+<span class="fc" id="L127">        generatePojoMultiConstructor(tableUdtOrEmbeddable, out);</span>
 
-<span class="fc" id="L130">        List&lt;? extends TypedElementDefinition&lt;?&gt;&gt; elements = getTypedElementsMethod(tableUdtOrEmbeddable);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; elements.size(); i++) {</span>
-<span class="fc" id="L132">            TypedElementDefinition&lt;?&gt; column = elements.get(i);</span>
+<span class="fc" id="L129">        List&lt;? extends TypedElementDefinition&lt;?&gt;&gt; elements = getTypedElementsMethod(tableUdtOrEmbeddable);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (int i = 0; i &lt; elements.size(); i++) {</span>
+<span class="fc" id="L131">            TypedElementDefinition&lt;?&gt; column = elements.get(i);</span>
 
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">            if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L135">                generatePojoGetter(column, i, out);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">            if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L134">                generatePojoGetter(column, i, out);</span>
             } else {
-<span class="nc" id="L137">                generateUDTPojoGetter(column, i, out);</span>
+<span class="nc" id="L136">                generateUDTPojoGetter(column, i, out);</span>
             }
 
             // Setter
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (!generateImmutablePojos()) {</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">                if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L143">                    generatePojoSetter(column, i, out);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            if (!generateImmutablePojos()) {</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">                if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L142">                    generatePojoSetter(column, i, out);</span>
                 } else {
-<span class="nc" id="L145">                    generateUDTPojoSetter(column, i, out);</span>
+<span class="nc" id="L144">                    generateUDTPojoSetter(column, i, out);</span>
                 }
             }
         }
 
 
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L152">            List&lt;EmbeddableDefinition&gt; embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L151">            List&lt;EmbeddableDefinition&gt; embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();</span>
 
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">            for (int i = 0; i &lt; embeddables.size(); i++) {</span>
-<span class="nc" id="L155">                EmbeddableDefinition embeddable = embeddables.get(i);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">            for (int i = 0; i &lt; embeddables.size(); i++) {</span>
+<span class="nc" id="L154">                EmbeddableDefinition embeddable = embeddables.get(i);</span>
 
-<span class="nc" id="L157">                generateEmbeddablePojoSetter(embeddable, i, out);</span>
-<span class="nc" id="L158">                generateEmbeddablePojoGetter(embeddable, i, out);</span>
+<span class="nc" id="L156">                generateEmbeddablePojoSetter(embeddable, i, out);</span>
+<span class="nc" id="L157">                generateEmbeddablePojoGetter(embeddable, i, out);</span>
             }
         }
 
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (generatePojosEqualsAndHashCode()) {</span>
-<span class="nc" id="L163">            generatePojoEqualsAndHashCode(tableUdtOrEmbeddable, out);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (generatePojosEqualsAndHashCode()) {</span>
+<span class="nc" id="L162">            generatePojoEqualsAndHashCode(tableUdtOrEmbeddable, out);</span>
         }
 
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (generatePojosToString()) {</span>
-<span class="fc" id="L167">            generatePojoToString(tableUdtOrEmbeddable, out);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (generatePojosToString()) {</span>
+<span class="fc" id="L166">            generatePojoToString(tableUdtOrEmbeddable, out);</span>
         }
 
-<span class="pc bpc" id="L170" title="3 of 4 branches missed.">        if (generateInterfaces() &amp;&amp; !generateImmutablePojos()) {</span>
-<span class="nc" id="L171">            printFromAndIntoMethod(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">        if (generateInterfaces() &amp;&amp; !generateImmutablePojos()) {</span>
+<span class="nc" id="L170">            printFromAndIntoMethod(out, tableUdtOrEmbeddable, GeneratorStrategy.Mode.POJO);</span>
         }
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
-<span class="fc" id="L175">            generatePojoClassFooter((TableDefinition) tableUdtOrEmbeddable, out);</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {</span>
-<span class="nc" id="L177">            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (tableUdtOrEmbeddable instanceof TableDefinition) {</span>
+<span class="fc" id="L174">            generatePojoClassFooter((TableDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        } else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {</span>
+<span class="nc" id="L176">            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);</span>
         } else {
-<span class="nc" id="L179">            generateUDTPojoClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);</span>
+<span class="nc" id="L178">            generateUDTPojoClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);</span>
         }
 
-<span class="fc" id="L182">        out.println(&quot;}&quot;);</span>
-<span class="fc" id="L183">        closeJavaWriter(out);</span>
-<span class="fc" id="L184">    }</span>
+<span class="fc" id="L181">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L182">        closeJavaWriter(out);</span>
+<span class="fc" id="L183">    }</span>
 
     protected void printColumnJPAAnnotation(JavaWriter out, ColumnDefinition column) {
-<span class="fc" id="L187">        int indent = out.indent();</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (this.generateJPAAnnotations()) {</span>
-<span class="fc" id="L189">            String prefix = &quot;&quot;;</span>
-<span class="fc" id="L190">            UniqueKeyDefinition pk = column.getPrimaryKey();</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">            if (pk != null) {</span>
-<span class="fc" id="L192">                out.println(&quot;@%s%s&quot;, prefix, out.ref(&quot;javax.persistence.Id&quot;));</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">                for (ColumnDefinition s : pk.getKeyColumns()) {</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">                    if (s.isIdentity()) {</span>
-<span class="fc" id="L195">                        out.println(&quot;@%s%s(strategy = %s.IDENTITY)&quot;, prefix, out.ref(&quot;javax.persistence.GeneratedValue&quot;), out.ref(&quot;javax.persistence.GenerationType&quot;));</span>
+<span class="fc" id="L186">        int indent = out.indent();</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (this.generateJPAAnnotations()) {</span>
+<span class="fc" id="L188">            String prefix = &quot;&quot;;</span>
+<span class="fc" id="L189">            UniqueKeyDefinition pk = column.getPrimaryKey();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (pk != null) {</span>
+<span class="fc" id="L191">                out.println(&quot;@%s%s&quot;, prefix, out.ref(&quot;javax.persistence.Id&quot;));</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                for (ColumnDefinition s : pk.getKeyColumns()) {</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">                    if (s.isIdentity()) {</span>
+<span class="fc" id="L194">                        out.println(&quot;@%s%s(strategy = %s.IDENTITY)&quot;, prefix, out.ref(&quot;javax.persistence.GeneratedValue&quot;), out.ref(&quot;javax.persistence.GenerationType&quot;));</span>
                     }
-<span class="fc" id="L197">                }</span>
+<span class="fc" id="L196">                }</span>
             }
 
-<span class="fc" id="L200">            String nullable = &quot;&quot;;</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (!column.getType(this.resolver(out)).isNullable()) {</span>
-<span class="fc" id="L202">                nullable = &quot;, nullable = false&quot;;</span>
+<span class="fc" id="L199">            String nullable = &quot;&quot;;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            if (!column.getType(this.resolver(out)).isNullable()) {</span>
+<span class="fc" id="L201">                nullable = &quot;, nullable = false&quot;;</span>
             }
 
-<span class="fc" id="L205">            String length = &quot;&quot;;</span>
-<span class="fc" id="L206">            String precision = &quot;&quot;;</span>
-<span class="fc" id="L207">            String scale = &quot;&quot;;</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (column.getType(this.resolver(out)).getLength() &gt; 0) {</span>
-<span class="fc" id="L209">                length = &quot;, length = &quot; + column.getType(this.resolver(out)).getLength();</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">            } else if (column.getType(this.resolver(out)).getPrecision() &gt; 0) {</span>
-<span class="fc" id="L211">                precision = &quot;, precision = &quot; + column.getType(this.resolver(out)).getPrecision();</span>
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">                if (column.getType(this.resolver(out)).getScale() &gt; 0) {</span>
-<span class="nc" id="L213">                    scale = &quot;, scale = &quot; + column.getType(this.resolver(out)).getScale();</span>
+<span class="fc" id="L204">            String length = &quot;&quot;;</span>
+<span class="fc" id="L205">            String precision = &quot;&quot;;</span>
+<span class="fc" id="L206">            String scale = &quot;&quot;;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (column.getType(this.resolver(out)).getLength() &gt; 0) {</span>
+<span class="fc" id="L208">                length = &quot;, length = &quot; + column.getType(this.resolver(out)).getLength();</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">            } else if (column.getType(this.resolver(out)).getPrecision() &gt; 0) {</span>
+<span class="fc" id="L210">                precision = &quot;, precision = &quot; + column.getType(this.resolver(out)).getPrecision();</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                if (column.getType(this.resolver(out)).getScale() &gt; 0) {</span>
+<span class="nc" id="L212">                    scale = &quot;, scale = &quot; + column.getType(this.resolver(out)).getScale();</span>
                 }
             }
 
-<span class="fc" id="L217">            out.print(&quot;@%s%s(name = \&quot;&quot;, prefix, out.ref(&quot;javax.persistence.Column&quot;));</span>
-<span class="fc" id="L218">            out.print(this.escapeStringMethod(column.getName()));</span>
-<span class="fc" id="L219">            out.print(&quot;\&quot;&quot;);</span>
-<span class="fc" id="L220">            out.print(nullable);</span>
-<span class="fc" id="L221">            out.print(length);</span>
-<span class="fc" id="L222">            out.print(precision);</span>
-<span class="fc" id="L223">            out.print(scale);</span>
-<span class="fc" id="L224">            out.println(&quot;)&quot;);</span>
+<span class="fc" id="L216">            out.print(&quot;@%s%s(name = \&quot;&quot;, prefix, out.ref(&quot;javax.persistence.Column&quot;));</span>
+<span class="fc" id="L217">            out.print(this.escapeStringMethod(column.getName()));</span>
+<span class="fc" id="L218">            out.print(&quot;\&quot;&quot;);</span>
+<span class="fc" id="L219">            out.print(nullable);</span>
+<span class="fc" id="L220">            out.print(length);</span>
+<span class="fc" id="L221">            out.print(precision);</span>
+<span class="fc" id="L222">            out.print(scale);</span>
+<span class="fc" id="L223">            out.println(&quot;)&quot;);</span>
         }
 
-<span class="fc" id="L227">        out.indent(indent);</span>
-<span class="fc" id="L228">    }</span>
+<span class="fc" id="L226">        out.indent(indent);</span>
+<span class="fc" id="L227">    }</span>
 
     protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
-<span class="fc" id="L231">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
-<span class="fc" id="L232">        final List&lt;String&gt; properties = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L230">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L231">        final List&lt;String&gt; properties = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L234">        int maxLength = 0;</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
-<span class="fc" id="L236">            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());</span>
-<span class="fc" id="L237">            properties.add(&quot;\&quot;&quot; + escapeStringMethod(getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO)) + &quot;\&quot;&quot;);</span>
-<span class="fc" id="L238">        }</span>
+<span class="fc" id="L233">        int maxLength = 0;</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
+<span class="fc" id="L235">            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)).length());</span>
+<span class="fc" id="L236">            properties.add(&quot;\&quot;&quot; + escapeStringMethod(getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO)) + &quot;\&quot;&quot;);</span>
+<span class="fc" id="L237">        }</span>
 
 
         // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        if (getTypedElementsMethod(tableOrUDT).size() &gt; 0 &amp;&amp;</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">                getTypedElementsMethod(tableOrUDT).size() &lt; 256) {</span>
-<span class="fc" id="L245">            out.println();</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (getTypedElementsMethod(tableOrUDT).size() &gt; 0 &amp;&amp;</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">                getTypedElementsMethod(tableOrUDT).size() &lt; 256) {</span>
+<span class="fc" id="L244">            out.println();</span>
 
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            if (generateConstructorPropertiesAnnotationOnPojos()) {</span>
-<span class="fc" id="L248">                out.println(&quot;@%s({ [[%s]] })&quot;, ConstructorProperties.class, properties);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">            if (generateConstructorPropertiesAnnotationOnPojos()) {</span>
+<span class="fc" id="L247">                out.println(&quot;@%s({ [[%s]] })&quot;, ConstructorProperties.class, properties);</span>
             }
 
-<span class="fc" id="L251">            out.print(&quot;public %s(&quot;, className);</span>
+<span class="fc" id="L250">            out.print(&quot;public %s(&quot;, className);</span>
 
-<span class="fc" id="L253">            String separator1 = &quot;&quot;;</span>
-<span class="fc bfc" id="L254" title="All 2 branches covered.">            for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
-<span class="fc" id="L255">                final String nullableAnnotation = nullableOrNonnullAnnotationMethod(out, column);</span>
+<span class="fc" id="L252">            String separator1 = &quot;&quot;;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">            for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
+<span class="fc" id="L254">                final String nullableAnnotation = nullableOrNonnullAnnotationMethod(out, column);</span>
 
-<span class="fc" id="L257">                out.println(separator1);</span>
-<span class="fc" id="L258">                out.print(&quot;[[before=@][after= ][%s]]%s %s&quot;,</span>
-<span class="fc" id="L259">                        list(nullableAnnotation),</span>
-<span class="fc" id="L260">                        StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)), maxLength),</span>
-<span class="fc" id="L261">                        getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO));</span>
-<span class="fc" id="L262">                separator1 = &quot;,&quot;;</span>
-<span class="fc" id="L263">            }</span>
+<span class="fc" id="L256">                out.println(separator1);</span>
+<span class="fc" id="L257">                out.print(&quot;[[before=@][after= ][%s]]%s %s&quot;,</span>
+<span class="fc" id="L258">                        list(nullableAnnotation),</span>
+<span class="fc" id="L259">                        StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO)), maxLength),</span>
+<span class="fc" id="L260">                        getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L261">                separator1 = &quot;,&quot;;</span>
+<span class="fc" id="L262">            }</span>
 
-<span class="fc" id="L265">            out.println();</span>
-<span class="fc" id="L266">            out.println(&quot;) {&quot;);</span>
+<span class="fc" id="L264">            out.println();</span>
+<span class="fc" id="L265">            out.println(&quot;) {&quot;);</span>
 
-<span class="fc bfc" id="L268" title="All 2 branches covered.">            for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
-<span class="fc" id="L269">                final String columnMember = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">            for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
+<span class="fc" id="L268">                final String columnMember = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);</span>
 
-<span class="fc" id="L271">                out.println(&quot;this.%s = %s;&quot;, columnMember, columnMember);</span>
-<span class="fc" id="L272">            }</span>
+<span class="fc" id="L270">                out.println(&quot;this.%s = %s;&quot;, columnMember, columnMember);</span>
+<span class="fc" id="L271">            }</span>
 
-<span class="fc" id="L274">            out.println(&quot;}&quot;);</span>
+<span class="fc" id="L273">            out.println(&quot;}&quot;);</span>
         }
-<span class="fc" id="L276">    }</span>
+<span class="fc" id="L275">    }</span>
 
     /**
      * Subclasses may override this method to provide their own pojo copy constructors.
      */
     protected void generatePojoCopyConstructor(Definition tableOrUDT, JavaWriter out) {
-<span class="fc" id="L282">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">        final String interfaceName = generateInterfaces()</span>
-<span class="nc" id="L284">                ? out.ref(getStrategy().getFullJavaClassName(tableOrUDT, GeneratorStrategy.Mode.INTERFACE))</span>
-<span class="fc" id="L285">                : &quot;&quot;;</span>
+<span class="fc" id="L281">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">        final String interfaceName = generateInterfaces()</span>
+<span class="nc" id="L283">                ? out.ref(getStrategy().getFullJavaClassName(tableOrUDT, GeneratorStrategy.Mode.INTERFACE))</span>
+<span class="fc" id="L284">                : &quot;&quot;;</span>
 
-<span class="fc" id="L287">        out.println();</span>
+<span class="fc" id="L286">        out.println();</span>
 
-<span class="pc bpc" id="L289" title="1 of 2 branches missed.">        out.println(&quot;public %s(%s value) {&quot;, className, generateInterfaces() ? interfaceName : className);</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">        out.println(&quot;public %s(%s value) {&quot;, className, generateInterfaces() ? interfaceName : className);</span>
 
-<span class="fc bfc" id="L291" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
-<span class="fc" id="L292">            out.println(&quot;this.%s = value.%s%s;&quot;,</span>
-<span class="fc" id="L293">                    getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO),</span>
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">                    generateInterfaces()</span>
-<span class="nc" id="L295">                            ? getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.INTERFACE)</span>
-<span class="fc" id="L296">                            : getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO),</span>
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">                    generateInterfaces()</span>
-<span class="nc" id="L298">                            ? &quot;()&quot;</span>
-<span class="fc" id="L299">                            : &quot;&quot;);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
+<span class="fc" id="L291">            out.println(&quot;this.%s = value.%s%s;&quot;,</span>
+<span class="fc" id="L292">                    getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO),</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">                    generateInterfaces()</span>
+<span class="nc" id="L294">                            ? getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.INTERFACE)</span>
+<span class="fc" id="L295">                            : getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO),</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">                    generateInterfaces()</span>
+<span class="nc" id="L297">                            ? &quot;()&quot;</span>
+<span class="fc" id="L298">                            : &quot;&quot;);</span>
 
 
-<span class="fc" id="L302">        }</span>
-<span class="fc" id="L303">        out.println(&quot;}&quot;);</span>
-<span class="fc" id="L304">    }</span>
+<span class="fc" id="L301">        }</span>
+<span class="fc" id="L302">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L303">    }</span>
 
     /**
      * Subclasses may override this method to provide their own pojo default constructors.
      */
     protected void generatePojoDefaultConstructor(Definition tableOrUDT, JavaWriter out) {
-<span class="fc" id="L310">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L309">        final String className = getStrategy().getJavaClassName(tableOrUDT, GeneratorStrategy.Mode.POJO);</span>
 
-<span class="fc" id="L312">        out.println();</span>
+<span class="fc" id="L311">        out.println();</span>
 //        int size = getTypedElements(tableOrUDT).size();
         // [#6248] [#10288] The no-args constructor isn't needed because we have named, defaulted parameters
-<span class="fc" id="L315">        out.println(&quot;public %s() {}&quot;, className);</span>
+<span class="fc" id="L314">        out.println(&quot;public %s() {}&quot;, className);</span>
 
-<span class="fc" id="L317">    }</span>
+<span class="fc" id="L316">    }</span>
 
     @Override
     protected void generatePojoGetter(TypedElementDefinition&lt;?&gt; column, int index, JavaWriter out) {
-<span class="fc" id="L321">        generatePojoGetterClass(column, index, out);</span>
-<span class="fc" id="L322">    }</span>
+<span class="fc" id="L320">        generatePojoGetterClass(column, index, out);</span>
+<span class="fc" id="L321">    }</span>
 
     /**
      * Subclasses may override this method to provide their own pojo getters.
      */
 
     private final void generatePojoGetterClass(TypedElementDefinition&lt;?&gt; column, @SuppressWarnings(&quot;unused&quot;) int index, JavaWriter out) {
-<span class="fc" id="L329">        final String columnTypeFull = getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO);</span>
-<span class="fc" id="L330">        final String columnType = out.ref(columnTypeFull);</span>
-<span class="fc" id="L331">        final String columnGetter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.POJO);</span>
-<span class="fc" id="L332">        final String columnMember = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);</span>
-<span class="fc" id="L333">        final String name = column.getQualifiedOutputName();</span>
+<span class="fc" id="L328">        final String columnTypeFull = getJavaType(column.getType(resolver(out, GeneratorStrategy.Mode.POJO)), out, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L329">        final String columnType = out.ref(columnTypeFull);</span>
+<span class="fc" id="L330">        final String columnGetter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L331">        final String columnMember = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);</span>
+<span class="fc" id="L332">        final String name = column.getQualifiedOutputName();</span>
 
         // Getter
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">        if (!printDeprecationIfUnknownTypeMethod(out, columnTypeFull)) {</span>
-<span class="fc" id="L337">            out.javadoc(&quot;Getter for &lt;code&gt;%s&lt;/code&gt;.[[before= ][%s]]&quot;, name, list(escapeEntities(commentMethod(column))));</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if (!printDeprecationIfUnknownTypeMethod(out, columnTypeFull)) {</span>
+<span class="fc" id="L336">            out.javadoc(&quot;Getter for &lt;code&gt;%s&lt;/code&gt;.[[before= ][%s]]&quot;, name, list(escapeEntities(commentMethod(column))));</span>
         }
 
-<span class="fc" id="L340">        printValidationAnnotationClass(out, column);</span>
-<span class="fc" id="L341">        printNullableOrNonnullAnnotationClass(out, column);</span>
+<span class="fc" id="L339">        printValidationAnnotationClass(out, column);</span>
+<span class="fc" id="L340">        printNullableOrNonnullAnnotationClass(out, column);</span>
 
 
-<span class="fc" id="L344">        out.overrideIf(generateInterfaces());</span>
-<span class="fc" id="L345">        out.println(&quot;public %s %s() {&quot;, columnType, columnGetter);</span>
-<span class="fc" id="L346">        out.println(&quot;return this.%s;&quot;, columnMember);</span>
-<span class="fc" id="L347">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L343">        out.overrideIf(generateInterfaces());</span>
+<span class="fc" id="L344">        out.println(&quot;public %s %s() {&quot;, columnType, columnGetter);</span>
+<span class="fc" id="L345">        out.println(&quot;return this.%s;&quot;, columnMember);</span>
+<span class="fc" id="L346">        out.println(&quot;}&quot;);</span>
 
-<span class="fc" id="L349">    }</span>
+<span class="fc" id="L348">    }</span>
 
     private void printValidationAnnotationClass(JavaWriter out, TypedElementDefinition&lt;?&gt; column) {
-<span class="pc bpc" id="L352" title="1 of 2 branches missed.">        if (generateValidationAnnotations()) {</span>
-<span class="fc" id="L353">            String prefix = &quot;&quot;;</span>
-<span class="fc" id="L354">            DataTypeDefinition type = column.getType(resolver(out));</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">        if (generateValidationAnnotations()) {</span>
+<span class="fc" id="L352">            String prefix = &quot;&quot;;</span>
+<span class="fc" id="L353">            DataTypeDefinition type = column.getType(resolver(out));</span>
 
             // [#5128] defaulted columns are nullable in Java
-<span class="fc bfc" id="L357" title="All 2 branches covered.">            if (!column.getType(resolver(out)).isNullable() &amp;&amp;</span>
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">                    !column.getType(resolver(out)).isDefaulted() &amp;&amp;</span>
-<span class="fc bfc" id="L359" title="All 2 branches covered.">                    !column.getType(resolver(out)).isIdentity()) {</span>
-<span class="fc" id="L360">                out.println(&quot;@%s%s&quot;, prefix, out.ref(&quot;javax.validation.constraints.NotNull&quot;));</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">            if (!column.getType(resolver(out)).isNullable() &amp;&amp;</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">                    !column.getType(resolver(out)).isDefaulted() &amp;&amp;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">                    !column.getType(resolver(out)).isIdentity()) {</span>
+<span class="fc" id="L359">                out.println(&quot;@%s%s&quot;, prefix, out.ref(&quot;javax.validation.constraints.NotNull&quot;));</span>
             }
-<span class="fc" id="L362">            String javaType = getJavaType(type, out);</span>
-<span class="pc bpc" id="L363" title="1 of 4 branches missed.">            if (&quot;java.lang.String&quot;.equals(javaType) || &quot;byte[]&quot;.equals(javaType)) {</span>
-<span class="fc" id="L364">                int length = type.getLength();</span>
+<span class="fc" id="L361">            String javaType = getJavaType(type, out);</span>
+<span class="pc bpc" id="L362" title="1 of 4 branches missed.">            if (&quot;java.lang.String&quot;.equals(javaType) || &quot;byte[]&quot;.equals(javaType)) {</span>
+<span class="fc" id="L363">                int length = type.getLength();</span>
 
-<span class="pc bpc" id="L366" title="1 of 2 branches missed.">                if (length &gt; 0) {</span>
-<span class="fc" id="L367">                    out.println(&quot;@%s%s(max = %s)&quot;, prefix, out.ref(&quot;javax.validation.constraints.Size&quot;), length);</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">                if (length &gt; 0) {</span>
+<span class="fc" id="L366">                    out.println(&quot;@%s%s(max = %s)&quot;, prefix, out.ref(&quot;javax.validation.constraints.Size&quot;), length);</span>
                 }
             }
         }
-<span class="fc" id="L371">    }</span>
+<span class="fc" id="L370">    }</span>
 
     private void printNullableOrNonnullAnnotationClass(JavaWriter out, Definition column) {
-<span class="pc bpc" id="L374" title="1 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getType().isNullable()) {</span>
-<span class="fc" id="L375">            printNullableAnnotation(out);</span>
+<span class="pc bpc" id="L373" title="1 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getType().isNullable()) {</span>
+<span class="fc" id="L374">            printNullableAnnotation(out);</span>
         } else {
-<span class="fc" id="L377">            printNonnullAnnotation(out);</span>
+<span class="fc" id="L376">            printNonnullAnnotation(out);</span>
         }
-<span class="fc" id="L379">    }</span>
+<span class="fc" id="L378">    }</span>
 
     protected void printNullableAnnotation(JavaWriter out) {
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">        if (generateNullableAnnotation()) {</span>
-<span class="nc" id="L383">            out.println(&quot;@%s&quot;, out.ref(generatedNullableAnnotationType()));</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">        if (generateNullableAnnotation()) {</span>
+<span class="nc" id="L382">            out.println(&quot;@%s&quot;, out.ref(generatedNullableAnnotationType()));</span>
         }
-<span class="fc" id="L385">    }</span>
+<span class="fc" id="L384">    }</span>
 
     protected void printNonnullAnnotation(JavaWriter out) {
-<span class="pc bpc" id="L388" title="1 of 2 branches missed.">        if (generateNonnullAnnotation()) {</span>
-<span class="nc" id="L389">            out.println(&quot;@%s&quot;, out.ref(generatedNonnullAnnotationType()));</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">        if (generateNonnullAnnotation()) {</span>
+<span class="nc" id="L388">            out.println(&quot;@%s&quot;, out.ref(generatedNonnullAnnotationType()));</span>
         }
-<span class="fc" id="L391">    }</span>
+<span class="fc" id="L390">    }</span>
 
     private String commentMethod(Definition definition) {
-<span class="pc bpc" id="L394" title="3 of 4 branches missed.">        return definition instanceof CatalogDefinition &amp;&amp; generateCommentsOnCatalogs()</span>
-<span class="pc bpc" id="L395" title="3 of 4 branches missed.">                || definition instanceof SchemaDefinition &amp;&amp; generateCommentsOnSchemas()</span>
-<span class="pc bpc" id="L396" title="3 of 4 branches missed.">                || definition instanceof TableDefinition &amp;&amp; generateCommentsOnTables()</span>
-<span class="pc bpc" id="L397" title="3 of 4 branches missed.">                || definition instanceof ColumnDefinition &amp;&amp; generateCommentsOnColumns()</span>
-<span class="nc bnc" id="L398" title="All 4 branches missed.">                || definition instanceof EmbeddableDefinition &amp;&amp; generateCommentsOnEmbeddables()</span>
-<span class="nc bnc" id="L399" title="All 4 branches missed.">                || definition instanceof UDTDefinition &amp;&amp; generateCommentsOnUDTs()</span>
-<span class="nc bnc" id="L400" title="All 4 branches missed.">                || definition instanceof AttributeDefinition &amp;&amp; generateCommentsOnAttributes()</span>
-<span class="nc bnc" id="L401" title="All 4 branches missed.">                || definition instanceof PackageDefinition &amp;&amp; generateCommentsOnPackages()</span>
-<span class="nc bnc" id="L402" title="All 4 branches missed.">                || definition instanceof RoutineDefinition &amp;&amp; generateCommentsOnRoutines()</span>
-<span class="nc bnc" id="L403" title="All 4 branches missed.">                || definition instanceof ParameterDefinition &amp;&amp; generateCommentsOnParameters()</span>
-<span class="pc bpc" id="L404" title="3 of 4 branches missed.">                || definition instanceof SequenceDefinition &amp;&amp; generateCommentsOnSequences()</span>
-<span class="fc" id="L405">                ? StringUtils.defaultIfBlank(definition.getComment(), &quot;&quot;)</span>
-<span class="nc" id="L406">                : &quot;&quot;;</span>
+<span class="pc bpc" id="L393" title="3 of 4 branches missed.">        return definition instanceof CatalogDefinition &amp;&amp; generateCommentsOnCatalogs()</span>
+<span class="pc bpc" id="L394" title="3 of 4 branches missed.">                || definition instanceof SchemaDefinition &amp;&amp; generateCommentsOnSchemas()</span>
+<span class="pc bpc" id="L395" title="3 of 4 branches missed.">                || definition instanceof TableDefinition &amp;&amp; generateCommentsOnTables()</span>
+<span class="pc bpc" id="L396" title="3 of 4 branches missed.">                || definition instanceof ColumnDefinition &amp;&amp; generateCommentsOnColumns()</span>
+<span class="nc bnc" id="L397" title="All 4 branches missed.">                || definition instanceof EmbeddableDefinition &amp;&amp; generateCommentsOnEmbeddables()</span>
+<span class="nc bnc" id="L398" title="All 4 branches missed.">                || definition instanceof UDTDefinition &amp;&amp; generateCommentsOnUDTs()</span>
+<span class="nc bnc" id="L399" title="All 4 branches missed.">                || definition instanceof AttributeDefinition &amp;&amp; generateCommentsOnAttributes()</span>
+<span class="nc bnc" id="L400" title="All 4 branches missed.">                || definition instanceof PackageDefinition &amp;&amp; generateCommentsOnPackages()</span>
+<span class="nc bnc" id="L401" title="All 4 branches missed.">                || definition instanceof RoutineDefinition &amp;&amp; generateCommentsOnRoutines()</span>
+<span class="nc bnc" id="L402" title="All 4 branches missed.">                || definition instanceof ParameterDefinition &amp;&amp; generateCommentsOnParameters()</span>
+<span class="pc bpc" id="L403" title="3 of 4 branches missed.">                || definition instanceof SequenceDefinition &amp;&amp; generateCommentsOnSequences()</span>
+<span class="fc" id="L404">                ? StringUtils.defaultIfBlank(definition.getComment(), &quot;&quot;)</span>
+<span class="nc" id="L405">                : &quot;&quot;;</span>
     }
 
     private boolean printDeprecationIfUnknownTypeMethod(JavaWriter out, String type) {
-<span class="pc bpc" id="L410" title="4 of 6 branches missed.">        if (generateDeprecationOnUnknownTypes() &amp;&amp; Object.class.getName().equals(type) &amp;&amp; &quot;Any&quot;.equals(type)) {</span>
+<span class="pc bpc" id="L409" title="4 of 6 branches missed.">        if (generateDeprecationOnUnknownTypes() &amp;&amp; Object.class.getName().equals(type) &amp;&amp; &quot;Any&quot;.equals(type)) {</span>
 
-<span class="nc" id="L412">            out.javadoc(&quot;@deprecated Unknown data type. &quot;</span>
+<span class="nc" id="L411">            out.javadoc(&quot;@deprecated Unknown data type. &quot;</span>
                     + &quot;Please define an explicit {@link org.jooq.Binding} to specify how this &quot;
                     + &quot;type should be handled. Deprecation can be turned off using {@literal &lt;deprecationOnUnknownTypes/&gt;} &quot;
                     + &quot;in your code generator configuration.&quot;);
 
-<span class="nc" id="L417">            out.println(&quot;@%s&quot;, out.ref(Deprecated.class));</span>
+<span class="nc" id="L416">            out.println(&quot;@%s&quot;, out.ref(Deprecated.class));</span>
 
 
-<span class="nc" id="L420">            return true;</span>
+<span class="nc" id="L419">            return true;</span>
         } else {
-<span class="fc" id="L422">            return false;</span>
+<span class="fc" id="L421">            return false;</span>
         }
     }
 
     private List&lt;? extends TypedElementDefinition&lt;? extends Definition&gt;&gt; getTypedElementsMethod(Definition definition) {
-<span class="pc bpc" id="L427" title="1 of 2 branches missed.">        if (definition instanceof TableDefinition) {</span>
-<span class="fc" id="L428">            return ((TableDefinition) definition).getColumns();</span>
-<span class="nc bnc" id="L429" title="All 2 branches missed.">        } else if (definition instanceof EmbeddableDefinition) {</span>
-<span class="nc" id="L430">            return ((EmbeddableDefinition) definition).getColumns();</span>
-<span class="nc bnc" id="L431" title="All 2 branches missed.">        } else if (definition instanceof UDTDefinition) {</span>
-<span class="nc" id="L432">            return ((UDTDefinition) definition).getAttributes();</span>
-<span class="nc bnc" id="L433" title="All 2 branches missed.">        } else if (definition instanceof RoutineDefinition) {</span>
-<span class="nc" id="L434">            return ((RoutineDefinition) definition).getAllParameters();</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        if (definition instanceof TableDefinition) {</span>
+<span class="fc" id="L427">            return ((TableDefinition) definition).getColumns();</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">        } else if (definition instanceof EmbeddableDefinition) {</span>
+<span class="nc" id="L429">            return ((EmbeddableDefinition) definition).getColumns();</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">        } else if (definition instanceof UDTDefinition) {</span>
+<span class="nc" id="L431">            return ((UDTDefinition) definition).getAttributes();</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">        } else if (definition instanceof RoutineDefinition) {</span>
+<span class="nc" id="L433">            return ((RoutineDefinition) definition).getAllParameters();</span>
         } else {
-<span class="nc" id="L436">            throw new IllegalArgumentException(&quot;Unsupported type : &quot; + definition);</span>
+<span class="nc" id="L435">            throw new IllegalArgumentException(&quot;Unsupported type : &quot; + definition);</span>
         }
     }
 
     private void printFromAndIntoMethod(JavaWriter out, Definition tableOrUDT, GeneratorStrategy.Mode mode) {
-<span class="nc" id="L441">        String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, GeneratorStrategy.Mode.INTERFACE));</span>
+<span class="nc" id="L440">        String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, GeneratorStrategy.Mode.INTERFACE));</span>
 
-<span class="nc" id="L443">        out.header(&quot;FROM and INTO&quot;);</span>
-<span class="nc bnc" id="L444" title="All 4 branches missed.">        boolean override = generateInterfaces() &amp;&amp; !generateImmutableInterfaces();</span>
-
-
-<span class="nc" id="L447">        out.overrideInheritIf(override);</span>
-<span class="nc" id="L448">        out.println(&quot;public void from(%s from) {&quot;, qualified);</span>
+<span class="nc" id="L442">        out.header(&quot;FROM and INTO&quot;);</span>
+<span class="nc bnc" id="L443" title="All 4 branches missed.">        boolean override = generateInterfaces() &amp;&amp; !generateImmutableInterfaces();</span>
 
 
-<span class="nc bnc" id="L451" title="All 2 branches missed.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
-<span class="nc" id="L452">            final String setter = getStrategy().getJavaSetterName(column, GeneratorStrategy.Mode.INTERFACE);</span>
-<span class="nc" id="L453">            final String getter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.INTERFACE);</span>
+<span class="nc" id="L446">        out.overrideInheritIf(override);</span>
+<span class="nc" id="L447">        out.println(&quot;public void from(%s from) {&quot;, qualified);</span>
+
+
+<span class="nc bnc" id="L450" title="All 2 branches missed.">        for (TypedElementDefinition&lt;?&gt; column : getTypedElementsMethod(tableOrUDT)) {</span>
+<span class="nc" id="L451">            final String setter = getStrategy().getJavaSetterName(column, GeneratorStrategy.Mode.INTERFACE);</span>
+<span class="nc" id="L452">            final String getter = getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.INTERFACE);</span>
 
             // TODO: Use appropriate Mode here
 //            final String member = getStrategy().getJavaMemberName(column, GeneratorStrategy.Mode.POJO);
 
-<span class="nc" id="L458">            out.println(&quot;%s(from.%s());&quot;, setter, getter);</span>
-<span class="nc" id="L459">        }</span>
+<span class="nc" id="L457">            out.println(&quot;%s(from.%s());&quot;, setter, getter);</span>
+<span class="nc" id="L458">        }</span>
 
-<span class="nc" id="L461">        out.println(&quot;}&quot;);</span>
+<span class="nc" id="L460">        out.println(&quot;}&quot;);</span>
 
-<span class="nc bnc" id="L463" title="All 2 branches missed.">        if (override) {</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">        if (override) {</span>
             // [#10191] Java and Kotlin can produce overloads for this method despite
             // generic type erasure, but Scala cannot, see
             // https://twitter.com/lukaseder/status/1262652304773259264
 
-<span class="nc" id="L468">            out.overrideInherit();</span>
-<span class="nc" id="L469">            out.println(&quot;public &lt;E extends %s&gt; E into(E into) {&quot;, qualified);</span>
-<span class="nc" id="L470">            out.println(&quot;into.from(this);&quot;);</span>
-<span class="nc" id="L471">            out.println(&quot;return into;&quot;);</span>
-<span class="nc" id="L472">            out.println(&quot;}&quot;);</span>
+<span class="nc" id="L467">            out.overrideInherit();</span>
+<span class="nc" id="L468">            out.println(&quot;public &lt;E extends %s&gt; E into(E into) {&quot;, qualified);</span>
+<span class="nc" id="L469">            out.println(&quot;into.from(this);&quot;);</span>
+<span class="nc" id="L470">            out.println(&quot;return into;&quot;);</span>
+<span class="nc" id="L471">            out.println(&quot;}&quot;);</span>
 
         }
-<span class="nc" id="L475">    }</span>
+<span class="nc" id="L474">    }</span>
 
     private String nullableOrNonnullAnnotationMethod(JavaWriter out, Definition column) {
-<span class="pc bpc" id="L478" title="1 of 4 branches missed.">        return column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getType().isNullable()</span>
-<span class="fc" id="L479">                ? nullableAnnotationMethod(out)</span>
-<span class="fc" id="L480">                : nonnullAnnotationMethod(out);</span>
+<span class="pc bpc" id="L477" title="1 of 4 branches missed.">        return column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getType().isNullable()</span>
+<span class="fc" id="L478">                ? nullableAnnotationMethod(out)</span>
+<span class="fc" id="L479">                : nonnullAnnotationMethod(out);</span>
     }
 
     private String nullableAnnotationMethod(JavaWriter out) {
-<span class="pc bpc" id="L484" title="1 of 2 branches missed.">        return generateNullableAnnotation() ? out.ref(generatedNullableAnnotationType()) : null;</span>
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">        return generateNullableAnnotation() ? out.ref(generatedNullableAnnotationType()) : null;</span>
     }
 
     private String nonnullAnnotationMethod(JavaWriter out) {
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">        return generateNonnullAnnotation() ? out.ref(generatedNonnullAnnotationType()) : null;</span>
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">        return generateNonnullAnnotation() ? out.ref(generatedNonnullAnnotationType()) : null;</span>
     }
 
     private String escapeStringMethod(String string) {
 
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">        if (string == null) {</span>
-<span class="nc" id="L494">            return null;</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">        if (string == null) {</span>
+<span class="nc" id="L493">            return null;</span>
         }
 
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
-<span class="fc" id="L498">        String result = string.replace(&quot;\\&quot;, &quot;\\\\&quot;)</span>
-<span class="fc" id="L499">                .replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;)</span>
-<span class="fc" id="L500">                .replace(&quot;\n&quot;, &quot;\\n&quot;)</span>
-<span class="fc" id="L501">                .replace(&quot;\r&quot;, &quot;\\r&quot;);</span>
+<span class="fc" id="L497">        String result = string.replace(&quot;\\&quot;, &quot;\\\\&quot;)</span>
+<span class="fc" id="L498">                .replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;)</span>
+<span class="fc" id="L499">                .replace(&quot;\n&quot;, &quot;\\n&quot;)</span>
+<span class="fc" id="L500">                .replace(&quot;\r&quot;, &quot;\\r&quot;);</span>
 
         // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
-<span class="fc" id="L504">        int max = 16384;</span>
-<span class="pc bpc" id="L505" title="1 of 2 branches missed.">        if (result.length() &lt;= max) {</span>
-<span class="fc" id="L506">            return result;</span>
+<span class="fc" id="L503">        int max = 16384;</span>
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">        if (result.length() &lt;= max) {</span>
+<span class="fc" id="L505">            return result;</span>
         }
 
-<span class="nc" id="L509">        StringBuilder sb = new StringBuilder(&quot;\&quot; + \&quot;&quot;);</span>
-<span class="nc bnc" id="L510" title="All 2 branches missed.">        for (int i = 0; i &lt; result.length(); i += max) {</span>
-<span class="nc bnc" id="L511" title="All 2 branches missed.">            if (i &gt; 0) {</span>
-<span class="nc" id="L512">                sb.append(&quot;\&quot;.toString() + \&quot;&quot;);</span>
+<span class="nc" id="L508">        StringBuilder sb = new StringBuilder(&quot;\&quot; + \&quot;&quot;);</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">        for (int i = 0; i &lt; result.length(); i += max) {</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">            if (i &gt; 0) {</span>
+<span class="nc" id="L511">                sb.append(&quot;\&quot;.toString() + \&quot;&quot;);</span>
             }
 
-<span class="nc" id="L515">            sb.append(result, i, Math.min(i + max, result.length()));</span>
+<span class="nc" id="L514">            sb.append(result, i, Math.min(i + max, result.length()));</span>
         }
 
-<span class="nc" id="L518">        return sb.append(&quot;\&quot;.toString() + \&quot;&quot;).toString();</span>
+<span class="nc" id="L517">        return sb.append(&quot;\&quot;.toString() + \&quot;&quot;).toString();</span>
     }
 
 
     @Override
     protected void generateDao(TableDefinition table) {
-<span class="fc" id="L524">        JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.DAO));</span>
-<span class="fc" id="L525">        LOG.info(&quot;Generating DAO&quot;, out.file().getName());</span>
-<span class="fc" id="L526">        generateDao(table, out);</span>
-<span class="fc" id="L527">        closeJavaWriter(out);</span>
-<span class="fc" id="L528">    }</span>
+<span class="fc" id="L523">        JavaWriter out = newJavaWriter(getFile(table, GeneratorStrategy.Mode.DAO));</span>
+<span class="fc" id="L524">        LOG.info(&quot;Generating DAO&quot;, out.file().getName());</span>
+<span class="fc" id="L525">        generateDao(table, out);</span>
+<span class="fc" id="L526">        closeJavaWriter(out);</span>
+<span class="fc" id="L527">    }</span>
+
+    protected void getSubSequences(List&lt;List&lt;ColumnDefinition&gt;&gt; outputPrimaryKeysJsonArray, List&lt;ColumnDefinition&gt; primaryKeysObject, List&lt;ColumnDefinition&gt; emptyJsonArray, int index) {
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (index == primaryKeysObject.size()) {</span>
+<span class="fc" id="L531">            outputPrimaryKeysJsonArray.add(emptyJsonArray);</span>
+<span class="fc" id="L532">            return;</span>
+        }
+<span class="fc" id="L534">        getSubSequences(outputPrimaryKeysJsonArray, primaryKeysObject, new ArrayList&lt;&gt;(emptyJsonArray), index + 1);</span>
+<span class="fc" id="L535">        emptyJsonArray.add(primaryKeysObject.get(index));</span>
+<span class="fc" id="L536">        getSubSequences(outputPrimaryKeysJsonArray, primaryKeysObject, new ArrayList&lt;&gt;(emptyJsonArray), index + 1);</span>
+<span class="fc" id="L537">    }</span>
 
     protected void generateDao(TableDefinition table, JavaWriter out) {
-<span class="fc" id="L531">        UniqueKeyDefinition key = table.getPrimaryKey();</span>
-<span class="fc" id="L532">        int size = key.getKeyColumns().size();</span>
-<span class="pc bpc" id="L533" title="1 of 2 branches missed.">        if (key == null) {</span>
-<span class="nc" id="L534">            LOG.info(&quot;Skipping DAO generation&quot;, out.file().getName());</span>
-<span class="nc" id="L535">            return;</span>
+<span class="fc" id="L540">        UniqueKeyDefinition key = table.getPrimaryKey();</span>
+<span class="fc" id="L541">        int size = key.getKeyColumns().size();</span>
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">        if (key == null) {</span>
+<span class="nc" id="L543">            LOG.info(&quot;Skipping DAO generation&quot;, out.file().getName());</span>
+<span class="nc" id="L544">            return;</span>
         }
 
-<span class="fc" id="L538">        final String className = getStrategy().getJavaClassName(table, GeneratorStrategy.Mode.DAO);</span>
-<span class="fc" id="L539">        final List&lt;String&gt; interfaces = out.ref(getStrategy().getJavaClassImplements(table, GeneratorStrategy.Mode.DAO));</span>
-<span class="fc" id="L540">        final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, GeneratorStrategy.Mode.RECORD));</span>
-<span class="fc" id="L541">        final String daoImpl = out.ref(DAOImpl.class);</span>
-<span class="fc" id="L542">        final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);</span>
-<span class="fc" id="L543">        String tType = &quot;Void&quot;;</span>
+<span class="fc" id="L547">        final String className = getStrategy().getJavaClassName(table, GeneratorStrategy.Mode.DAO);</span>
+<span class="fc" id="L548">        final List&lt;String&gt; interfaces = out.ref(getStrategy().getJavaClassImplements(table, GeneratorStrategy.Mode.DAO));</span>
+<span class="fc" id="L549">        final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, GeneratorStrategy.Mode.RECORD));</span>
+<span class="fc" id="L550">        final String daoImpl = out.ref(DAOImpl.class);</span>
+<span class="fc" id="L551">        final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);</span>
+<span class="fc" id="L552">        String tType = &quot;Void&quot;;</span>
 
 
-<span class="fc" id="L546">        String pType = out.ref(getStrategy().getFullJavaClassName(table, GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L555">        String pType = out.ref(getStrategy().getFullJavaClassName(table, GeneratorStrategy.Mode.POJO));</span>
 
-<span class="fc" id="L548">        List&lt;ColumnDefinition&gt; keyColumns = key.getKeyColumns();</span>
+<span class="fc" id="L557">        List&lt;ColumnDefinition&gt; keyColumns = key.getKeyColumns();</span>
 
-<span class="pc bpc" id="L550" title="1 of 2 branches missed.">        if (keyColumns.size() == 1) {</span>
-<span class="fc" id="L551">            tType = getJavaType(keyColumns.get(0).getType(resolver(out)), out, GeneratorStrategy.Mode.POJO);</span>
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">        if (keyColumns.size() == 1) {</span>
+<span class="fc" id="L560">            tType = getJavaType(keyColumns.get(0).getType(resolver(out)), out, GeneratorStrategy.Mode.POJO);</span>
         }
-<span class="pc bpc" id="L553" title="1 of 2 branches missed.">        if (keyColumns.size() &lt;= Constants.MAX_ROW_DEGREE) {</span>
-<span class="fc" id="L554">            String generics = &quot;&quot;;</span>
-<span class="fc" id="L555">            String separator = &quot;&quot;;</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">        if (keyColumns.size() &lt;= Constants.MAX_ROW_DEGREE) {</span>
+<span class="fc" id="L563">            String generics = &quot;&quot;;</span>
+<span class="fc" id="L564">            String separator = &quot;&quot;;</span>
 
-<span class="fc bfc" id="L557" title="All 2 branches covered.">            for (ColumnDefinition column : keyColumns) {</span>
-<span class="fc" id="L558">                generics += separator + out.ref(getJavaType(column.getType(resolver(out)), out));</span>
-
-
-<span class="fc" id="L561">                separator = &quot;, &quot;;</span>
-<span class="fc" id="L562">            }</span>
-
-<span class="fc" id="L564">        } else {</span>
-<span class="nc" id="L565">            tType = Record.class.getName();</span>
-        }
+<span class="fc bfc" id="L566" title="All 2 branches covered.">            for (ColumnDefinition column : keyColumns) {</span>
+<span class="fc" id="L567">                generics += separator + out.ref(getJavaType(column.getType(resolver(out)), out));</span>
 
 
-<span class="fc" id="L569">        printPackage(out, table, GeneratorStrategy.Mode.DAO);</span>
-<span class="fc" id="L570">        tType = out.ref(tType);</span>
-<span class="fc" id="L571">        out.println(&quot;import org.jooq.impl.DefaultConfiguration;&quot;);</span>
-<span class="fc" id="L572">        generateDaoClassJavadoc(table, out);</span>
-<span class="fc" id="L573">        printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);</span>
+<span class="fc" id="L570">                separator = &quot;, &quot;;</span>
+<span class="fc" id="L571">            }</span>
 
-<span class="pc bpc" id="L575" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
-<span class="fc" id="L576">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.stereotype.Repository&quot;));</span>
+<span class="fc" id="L573">        } else {</span>
+<span class="nc" id="L574">            tType = Record.class.getName();</span>
         }
 
-<span class="fc" id="L579">        out.println(&quot;public class %s extends %s&lt;%s, %s, %s&gt;[[before= implements ][%s]] {&quot;, className, daoImpl, tableRecord, pType, tType, interfaces);</span>
+
+<span class="fc" id="L578">        printPackage(out, table, GeneratorStrategy.Mode.DAO);</span>
+<span class="fc" id="L579">        tType = out.ref(tType);</span>
+<span class="fc" id="L580">        out.println(&quot;import java.util.ArrayList;&quot;);</span>
+<span class="fc" id="L581">        out.println(&quot;import java.util.*;&quot;);</span>
+<span class="fc" id="L582">        out.println(&quot;import java.util.stream.Collectors;&quot;);</span>
+<span class="fc" id="L583">        out.println(&quot;import java.sql.SQLException;&quot;);</span>
+<span class="fc" id="L584">        out.println(&quot;import org.springframework.beans.factory.annotation.Value;&quot;);</span>
+<span class="fc" id="L585">        generateDaoClassJavadoc(table, out);</span>
+<span class="fc" id="L586">        printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);</span>
+
+<span class="pc bpc" id="L588" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
+<span class="fc" id="L589">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.stereotype.Repository&quot;));</span>
+        }
+
+<span class="fc" id="L592">        out.println(&quot;public class %s extends %s&lt;%s, %s, %s&gt;[[before= implements ][%s]] {&quot;, className, daoImpl, tableRecord, pType, tType, interfaces);</span>
 
         // Default constructor
         // -------------------
-<span class="fc" id="L583">        out.javadoc(&quot;Create a new %s without any configuration&quot;, className);</span>
+<span class="fc" id="L596">        out.javadoc(&quot;Create a new %s without any configuration&quot;, className);</span>
 
 
-<span class="fc" id="L586">        out.println(&quot;public %s() {&quot;, className);</span>
-<span class="fc" id="L587">        out.println(&quot;super(%s, %s.class);&quot;, tableIdentifier, pType);</span>
-<span class="fc" id="L588">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L599">        out.println(&quot;public %s() {&quot;, className);</span>
+<span class="fc" id="L600">        out.println(&quot;super(%s, %s.class);&quot;, tableIdentifier, pType);</span>
+<span class="fc" id="L601">        out.println(&quot;}&quot;);</span>
 
 
         // Initialising constructor
         // ------------------------
 
 
-<span class="fc" id="L595">        out.javadoc(&quot;Create a new %s with an attached configuration&quot;, className);</span>
+<span class="fc" id="L608">        out.javadoc(&quot;Create a new %s with an attached configuration&quot;, className);</span>
 
-<span class="fc" id="L597">        printDaoConstructorAnnotations(table, out);</span>
-<span class="fc" id="L598">        out.println(&quot;public %s(%s configuration) {&quot;, className, Configuration.class);</span>
-<span class="fc" id="L599">        out.println(&quot;super(%s, %s.class, configuration);&quot;, tableIdentifier, pType);</span>
-<span class="fc" id="L600">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L610">        printDaoConstructorAnnotations(table, out);</span>
+<span class="fc" id="L611">        out.println(&quot;public %s(%s configuration) {&quot;, className, Configuration.class);</span>
+<span class="fc" id="L612">        out.println(&quot;super(%s, %s.class, configuration);&quot;, tableIdentifier, pType);</span>
+<span class="fc" id="L613">        out.println(&quot;}&quot;);</span>
 
 
         // Template method implementations
         // -------------------------------
 
-<span class="fc" id="L606">        out.overrideInherit();</span>
-<span class="fc" id="L607">        printNonnullAnnotation(out);</span>
-<span class="fc" id="L608">        out.println(&quot;public %s getId(%s object) {&quot;, tType, pType);</span>
+<span class="fc" id="L619">        out.overrideInherit();</span>
+<span class="fc" id="L620">        printNonnullAnnotation(out);</span>
+<span class="fc" id="L621">        out.println(&quot;public %s getId(%s object) {&quot;, tType, pType);</span>
 
-<span class="pc bpc" id="L610" title="1 of 2 branches missed.">        if (keyColumns.size() == 1) {</span>
+<span class="pc bpc" id="L623" title="1 of 2 branches missed.">        if (keyColumns.size() == 1) {</span>
 
-<span class="fc" id="L612">            out.println(&quot;return object.%s();&quot;, getStrategy().getJavaGetterName(keyColumns.get(0), GeneratorStrategy.Mode.POJO));</span>
+<span class="fc" id="L625">            out.println(&quot;return object.%s();&quot;, getStrategy().getJavaGetterName(keyColumns.get(0), GeneratorStrategy.Mode.POJO));</span>
         }
         // [#2574] This should be replaced by a call to a method on the target table's Key type
         else {
-<span class="nc" id="L616">            String params = &quot;&quot;;</span>
-<span class="nc" id="L617">            String separator = &quot;&quot;;</span>
+<span class="nc" id="L629">            String params = &quot;&quot;;</span>
+<span class="nc" id="L630">            String separator = &quot;&quot;;</span>
 
-<span class="nc bnc" id="L619" title="All 2 branches missed.">            for (ColumnDefinition column : keyColumns) {</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">            for (ColumnDefinition column : keyColumns) {</span>
 
-<span class="nc" id="L621">                params += separator + &quot;object.&quot; + getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.POJO) + &quot;()&quot;;</span>
+<span class="nc" id="L634">                params += separator + &quot;object.&quot; + getStrategy().getJavaGetterName(column, GeneratorStrategy.Mode.POJO) + &quot;()&quot;;</span>
 
-<span class="nc" id="L623">                separator = &quot;, &quot;;</span>
-<span class="nc" id="L624">            }</span>
+<span class="nc" id="L636">                separator = &quot;, &quot;;</span>
+<span class="nc" id="L637">            }</span>
 
 
-<span class="nc" id="L627">            out.println(&quot;return compositeKeyRecord(%s);&quot;, params);</span>
+<span class="nc" id="L640">            out.println(&quot;return compositeKeyRecord(%s);&quot;, params);</span>
         }
 
 
-<span class="fc" id="L631">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L644">        out.println(&quot;}&quot;);</span>
 
-<span class="fc bfc" id="L633" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="fc" id="L634">            final String colName = column.getOutputName();</span>
-<span class="fc" id="L635">            final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="fc" id="L636">            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
-<span class="fc" id="L637">            final String colType = out.ref(colTypeFull);</span>
-<span class="fc" id="L638">            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="fc" id="L647">            final String colName = column.getOutputName();</span>
+<span class="fc" id="L648">            final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc" id="L649">            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
+<span class="fc" id="L650">            final String colType = out.ref(colTypeFull);</span>
+<span class="fc" id="L651">            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
 
             // fetchRangeOf[Column]([T]...)
             // -----------------------
-<span class="pc bpc" id="L642" title="1 of 2 branches missed.">            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
-<span class="fc" id="L643">                out.javadoc(&quot;Fetch records that have &lt;code&gt;%s BETWEEN lowerInclusive AND upperInclusive&lt;/code&gt;&quot;, colName);</span>
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
+<span class="fc" id="L656">                out.javadoc(&quot;Fetch records that have &lt;code&gt;%s BETWEEN lowerInclusive AND upperInclusive&lt;/code&gt;&quot;, colName);</span>
             }
-<span class="fc" id="L645">            printNonnullAnnotation(out);</span>
-<span class="fc" id="L646">            out.println(&quot;public %s&lt;%s&gt; fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {&quot;, List.class, pType, colClass, colType, colType);</span>
-<span class="fc" id="L647">            out.println(&quot;return fetchRange(%s, lowerInclusive, upperInclusive);&quot;, colIdentifier);</span>
-<span class="fc" id="L648">            out.println(&quot;}&quot;);</span>
+<span class="fc" id="L658">            printNonnullAnnotation(out);</span>
+<span class="fc" id="L659">            out.println(&quot;public %s&lt;%s&gt; fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {&quot;, List.class, pType, colClass, colType, colType);</span>
+<span class="fc" id="L660">            out.println(&quot;return fetchRange(%s, lowerInclusive, upperInclusive);&quot;, colIdentifier);</span>
+<span class="fc" id="L661">            out.println(&quot;}&quot;);</span>
 
 
             // fetchBy[Column]([T]...)
             // -----------------------
-<span class="pc bpc" id="L653" title="1 of 2 branches missed.">            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
-<span class="fc" id="L654">                out.javadoc(&quot;Fetch records that have &lt;code&gt;%s IN (values)&lt;/code&gt;&quot;, colName);</span>
+<span class="pc bpc" id="L666" title="1 of 2 branches missed.">            if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
+<span class="fc" id="L667">                out.javadoc(&quot;Fetch records that have &lt;code&gt;%s IN (values)&lt;/code&gt;&quot;, colName);</span>
             }
 
-<span class="fc" id="L657">            printNonnullAnnotation(out);</span>
-<span class="fc" id="L658">            out.println(&quot;public %s&lt;%s&gt; fetchBy%s(%s... values) {&quot;, List.class, pType, colClass, colType);</span>
-<span class="fc" id="L659">            out.println(&quot;return fetch(%s, values);&quot;, colIdentifier);</span>
-<span class="fc" id="L660">            out.println(&quot;}&quot;);</span>
+<span class="fc" id="L670">            printNonnullAnnotation(out);</span>
+<span class="fc" id="L671">            out.println(&quot;public %s&lt;%s&gt; fetchBy%s(%s... values) {&quot;, List.class, pType, colClass, colType);</span>
+<span class="fc" id="L672">            out.println(&quot;return fetch(%s, values);&quot;, colIdentifier);</span>
+<span class="fc" id="L673">            out.println(&quot;}&quot;);</span>
             //DeleteBy[columns](Void)
 
 
             // fetchOneBy[Column]([T])
             // -----------------------
             ukLoop:
-<span class="fc bfc" id="L667" title="All 2 branches covered.">            for (UniqueKeyDefinition uk : column.getUniqueKeys()) {</span>
+<span class="fc bfc" id="L680" title="All 2 branches covered.">            for (UniqueKeyDefinition uk : column.getUniqueKeys()) {</span>
 
                 // If column is part of a single-column unique key...
-<span class="pc bpc" id="L670" title="2 of 4 branches missed.">                if (uk.getKeyColumns().size() == 1 &amp;&amp; uk.getKeyColumns().get(0).equals(column)) {</span>
-<span class="pc bpc" id="L671" title="1 of 2 branches missed.">                    if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
-<span class="fc" id="L672">                        out.javadoc(&quot;Fetch a unique record that has &lt;code&gt;%s = value&lt;/code&gt;&quot;, colName);</span>
+<span class="pc bpc" id="L683" title="2 of 4 branches missed.">                if (uk.getKeyColumns().size() == 1 &amp;&amp; uk.getKeyColumns().get(0).equals(column)) {</span>
+<span class="pc bpc" id="L684" title="1 of 2 branches missed.">                    if (!printDeprecationIfUnknownTypeMethod(out, colTypeFull)) {</span>
+<span class="fc" id="L685">                        out.javadoc(&quot;Fetch a unique record that has &lt;code&gt;%s = value&lt;/code&gt;&quot;, colName);</span>
                     }
-<span class="fc" id="L674">                    printNullableAnnotation(out);</span>
-<span class="fc" id="L675">                    out.println(&quot;public %s fetchOneBy%s(%s value) {&quot;, pType, colClass, colType);</span>
-<span class="fc" id="L676">                    out.println(&quot;return fetchOne(%s, value);&quot;, colIdentifier);</span>
-<span class="fc" id="L677">                    out.println(&quot;}&quot;);</span>
+<span class="fc" id="L687">                    printNullableAnnotation(out);</span>
+<span class="fc" id="L688">                    out.println(&quot;public %s fetchOneBy%s(%s value) {&quot;, pType, colClass, colType);</span>
+<span class="fc" id="L689">                    out.println(&quot;return fetchOne(%s, value);&quot;, colIdentifier);</span>
+<span class="fc" id="L690">                    out.println(&quot;}&quot;);</span>
 
 
-<span class="fc" id="L680">                    break ukLoop;</span>
+<span class="fc" id="L693">                    break ukLoop;</span>
                 }
-<span class="nc" id="L682">            }</span>
-<span class="fc" id="L683">        }</span>
+<span class="nc" id="L695">            }</span>
+<span class="fc" id="L696">        }</span>
 
-        //For GET method for composite primary key.
-<span class="fc" id="L686">        out.javadoc(&quot;Created custom fetchRecord Method&quot;);</span>
-<span class="fc" id="L687">        out.print(&quot;public %s fetchRecord(&quot;, pType);</span>
-<span class="fc" id="L688">        int flag = 0;</span>
-<span class="fc bfc" id="L689" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="fc" id="L690">            final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="fc" id="L691">            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
-<span class="fc" id="L692">            final String colType1 = out.ref(colTypeFull);</span>
-<span class="fc bfc" id="L693" title="All 2 branches covered.">            if (key == column.getPrimaryKey()) {</span>
-<span class="pc bpc" id="L694" title="1 of 2 branches missed.">                if (flag != size - 1) {</span>
-<span class="nc" id="L695">                    out.print(&quot;%s %s,&quot;, colType1, colClass);</span>
-<span class="nc" id="L696">                    flag++;</span>
-                } else {
-<span class="fc" id="L698">                    out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
-                }
-            }
-<span class="fc" id="L701">        }</span>
-<span class="fc" id="L702">        out.print(&quot;return this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);</span>
-<span class="fc" id="L703">        int flag2 = 0;</span>
-<span class="fc bfc" id="L704" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="fc" id="L705">            final String colClass1 = getStrategy().getJavaClassName(column);</span>
-<span class="fc" id="L706">            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
-<span class="fc bfc" id="L707" title="All 2 branches covered.">            if (key == column.getPrimaryKey()) {</span>
-<span class="pc bpc" id="L708" title="1 of 2 branches missed.">                if (flag2 != size - 1) {</span>
-<span class="nc bnc" id="L709" title="All 2 branches missed.">                    if (flag2 == 0) {</span>
-<span class="nc" id="L710">                        out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
-                    } else {
-<span class="nc" id="L712">                        out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
-                    }
-<span class="nc" id="L714">                    flag2++;</span>
-                } else {
-<span class="pc bpc" id="L716" title="1 of 2 branches missed.">                    if (size == 1) {</span>
-<span class="fc" id="L717">                        out.println(&quot;%s.eq(%s)).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="fc" id="L718">                        out.println(&quot;}&quot;);</span>
-                    } else {
-<span class="nc" id="L720">                        out.println(&quot;%s.eq(%s))).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="nc" id="L721">                        out.println(&quot;}&quot;);</span>
-                    }
-                }
-            }
-<span class="fc" id="L725">        }</span>
+
+
+//        out.javadoc(&quot;Created custom fetchRecord Method&quot;);
+//        out.print(&quot;public %s fetchRecord(&quot;, pType);
+//        int flag = 0;
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass = getStrategy().getJavaClassName(column);
+//            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+//            final String colType1 = out.ref(colTypeFull);
+//            if (key == column.getPrimaryKey()) {
+//                if (flag != size - 1) {
+//                    out.print(&quot;%s %s,&quot;, colType1, colClass);
+//                    flag++;
+//                } else {
+//                    out.println(&quot;%s %s){&quot;, colType1, colClass);
+//                }
+//            }
+//        }
+//        out.print(&quot;return this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);
+//        int flag2 = 0;
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass1 = getStrategy().getJavaClassName(column);
+//            final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
+//            if (key == column.getPrimaryKey()) {
+//                if (flag2 != size - 1) {
+//                    if (flag2 == 0) {
+//                        out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);
+//                    } else {
+//                        out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);
+//                    }
+//                    flag2++;
+//                } else {
+//                    if (size == 1) {
+//                        out.println(&quot;%s.eq(%s)).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);
+//                        out.println(&quot;}&quot;);
+//                    } else {
+//                        out.println(&quot;%s.eq(%s))).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);
+//                        out.println(&quot;}&quot;);
+//                    }
+//                }
+//            }
+//        }
+
 
         //For Insert Method
-<span class="fc" id="L728">        out.javadoc(&quot;Created custom Insert records Method&quot;);</span>
-<span class="fc" id="L729">        out.println(&quot;public %s insertRecord(%s classObject) {&quot;, pType, pType);</span>
-<span class="fc" id="L730">        out.println(&quot;%s record=this.ctx().newRecord(%s);&quot;, tableRecord, tableIdentifier);</span>
-<span class="fc bfc" id="L731" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="fc" id="L732">            final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="pc bpc" id="L733" title="1 of 2 branches missed.">            if (size == 1) {</span>
-<span class="fc bfc" id="L734" title="All 2 branches covered.">                if (key != column.getPrimaryKey()) {</span>
-<span class="fc" id="L735">                    out.println(&quot;record.set%s(classObject.get%s());&quot;, colClass, colClass);</span>
+<span class="fc" id="L743">        out.javadoc(&quot;Created custom Insert records Method&quot;);</span>
+<span class="fc" id="L744">        out.println(&quot;public %s insertRecord(%s classObject) {&quot;, pType, pType);</span>
+<span class="fc" id="L745">        out.println(&quot;%s record=this.ctx().newRecord(%s);&quot;, tableRecord, tableIdentifier);</span>
+<span class="fc bfc" id="L746" title="All 2 branches covered.">        for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="fc" id="L747">            final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">            if (size == 1) {</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">                if (key != column.getPrimaryKey()) {</span>
+<span class="fc" id="L750">                    out.println(&quot;record.set%s(classObject.get%s());&quot;, colClass, colClass);</span>
                 }
             } else {
-<span class="nc" id="L738">                out.println(&quot;record.set%s(classObject.get%s());&quot;, colClass, colClass);</span>
+<span class="nc" id="L753">                out.println(&quot;record.set%s(classObject.get%s());&quot;, colClass, colClass);</span>
             }
-<span class="fc" id="L740">        }</span>
-<span class="fc" id="L741">        out.println(&quot;record.store();&quot;);</span>
-<span class="fc" id="L742">        out.println(&quot;%s result=record.into(%s.class);&quot;, pType, pType);</span>
-<span class="fc" id="L743">        out.println(&quot;return result;&quot;);</span>
-<span class="fc" id="L744">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L755">        }</span>
+<span class="fc" id="L756">        out.println(&quot;record.store();&quot;);</span>
+<span class="fc" id="L757">        out.println(&quot;%s result=record.into(%s.class);&quot;, pType, pType);</span>
+<span class="fc" id="L758">        out.println(&quot;return result;&quot;);</span>
+<span class="fc" id="L759">        out.println(&quot;}&quot;);</span>
+
+        //For BatchInsert Method
+<span class="fc" id="L762">        out.javadoc(&quot;Created custom BatchInsert records Method&quot;);</span>
+<span class="fc" id="L763">        out.println(&quot;@Value(\&quot;${batch.size}\&quot;)&quot;);</span>
+<span class="fc" id="L764">        out.println(&quot; private int batchSize;&quot;);</span>
+<span class="fc" id="L765">        out.println(&quot;public Map&lt;Integer,List&lt;%s&gt;&gt; insertBatchRecord(List&lt;%s&gt; classObjects) {&quot;, pType, pType);</span>
+<span class="fc" id="L766">        out.println(&quot;  List&lt;%s&gt; records = classObjects.stream().map(classObject -&gt; {&quot;,tableRecord);</span>
+<span class="fc" id="L767">        out.println(&quot;%s record = new %s();&quot;,tableRecord,tableRecord);</span>
+<span class="fc" id="L768">        out.println(&quot;record.from(classObject);&quot;);</span>
+<span class="fc" id="L769">        out.println(&quot;return record;&quot;);</span>
+<span class="fc" id="L770">        out.println(&quot;}).collect(Collectors.toList());&quot;);</span>
+<span class="fc" id="L771">        out.println(&quot; Map&lt;Integer,List&lt;%s&gt;&gt; resultMap= (Map&lt;Integer, List&lt;%s&gt;&gt;) this.ctx().transactionResult((Configuration txr)-&gt;{&quot;,pType,pType);</span>
+<span class="fc" id="L772">        out.println(&quot;int flag=0;&quot;);</span>
+<span class="fc" id="L773">        out.println(&quot;Map&lt;Integer, List&lt;%s&gt;&gt; map=new HashMap&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L774">        out.println(&quot; List&lt;%s&gt; result=new ArrayList&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L775">        out.println(&quot;try{&quot;);</span>
+<span class="fc" id="L776">        out.println(&quot;txr.dsl().settings().setBatchSize(batchSize);&quot;);</span>
+<span class="fc" id="L777">        out.println(&quot;txr.connectionProvider().acquire().setAutoCommit(false);&quot;);</span>
+<span class="fc" id="L778">        out.println(&quot;int[] affectedCountArr=txr.dsl().batchInsert(records).execute();&quot;);</span>
+<span class="fc" id="L779">        out.println(&quot;for (int i=0;i&lt;records.size();i++){&quot;);</span>
+<span class="fc" id="L780">        out.println(&quot;if(affectedCountArr[i]==0){&quot;);</span>
+<span class="fc" id="L781">        out.println(&quot;%s a=records.get(i).into(%s.class);&quot;,pType,pType);</span>
+<span class="fc" id="L782">        out.println(&quot;result.add(a);&quot;);</span>
+<span class="fc" id="L783">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L784">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L785">        out.println(&quot;}catch (Exception e){&quot;);</span>
+<span class="fc" id="L786">        out.println(&quot;flag=1;&quot;);</span>
+<span class="fc" id="L787">        out.println(&quot;try {&quot;);</span>
+<span class="fc" id="L788">        out.println(&quot;txr.dsl().configuration().connectionProvider().acquire().rollback();&quot;);</span>
+<span class="fc" id="L789">        out.println(&quot;} catch (SQLException ex) {&quot;);</span>
+<span class="fc" id="L790">        out.println(&quot;throw new RuntimeException(\&quot;Error in insertBatchRecord() at Dao Layer..\&quot;);&quot;);</span>
+<span class="fc" id="L791">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L792">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L793">        out.println(&quot;if(flag==0 &amp;&amp; result.size()&gt;=0) {&quot;);</span>
+<span class="fc" id="L794">        out.println(&quot;map.put(0,result);&quot;);</span>
+<span class="fc" id="L795">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L796">        out.println(&quot;}  else {&quot;);</span>
+<span class="fc" id="L797">        out.println(&quot;map.put(1,result);&quot;);</span>
+<span class="fc" id="L798">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L799">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L800">        out.println(&quot;});&quot;);</span>
+<span class="fc" id="L801">        out.println(&quot;return resultMap;&quot;);</span>
+<span class="fc" id="L802">        out.println(&quot;}&quot;);</span>
 
 
-<span class="pc bpc" id="L747" title="1 of 2 branches missed.">        if (size &gt; 1) {</span>
-            //For Update COMPOSITE KEYS
-<span class="nc" id="L749">            out.javadoc(&quot;Created custom Update record Method&quot;);</span>
-<span class="nc" id="L750">            out.println(&quot;public int updateRecord(%s classObject){&quot;, pType);</span>
-<span class="nc" id="L751">            out.println(&quot;int result=this.ctx().update(%s)&quot;, tableIdentifier);</span>
-<span class="nc bnc" id="L752" title="All 2 branches missed.">            for (ColumnDefinition column1 : table.getColumns()) {</span>
-<span class="nc" id="L753">                final String colClass1 = getStrategy().getJavaClassName(column1);</span>
-<span class="nc" id="L754">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
-<span class="nc bnc" id="L755" title="All 2 branches missed.">                if (key != column1.getPrimaryKey()) {</span>
-<span class="nc" id="L756">                    out.println(&quot;.set(%s,classObject.get%s())&quot;, colIdentifier1, colClass1);</span>
+//        out.println(&quot;List&lt;%s&gt; resultArray=new ArrayList&lt;&gt;();&quot;, pType);
+//        out.println(&quot;for (%s object:classObject) {&quot;, pType);
+//        out.println(&quot;%s record=this.ctx().newRecord(%s);&quot;, tableRecord, tableIdentifier);
+//        for (ColumnDefinition column : table.getColumns()) {
+//            final String colClass = getStrategy().getJavaClassName(column);
+//            if (size == 1) {
+//                if (key != column.getPrimaryKey()) {
+//                    out.println(&quot;record.set%s(object.get%s());&quot;, colClass, colClass);
+//                }
+//            } else {
+//                out.println(&quot;record.set%s(object.get%s());&quot;, colClass, colClass);
+//            }
+//        }
+//        out.println(&quot;record.store();&quot;);
+//        out.println(&quot;%s result=record.into(%s.class);&quot;, pType, pType);
+//        out.println(&quot;resultArray.add(result);&quot;);
+//        out.println(&quot;}&quot;);
+//        out.println(&quot;return resultArray;&quot;);
+//        out.println(&quot;}&quot;);
+
+        //custom patch method
+<span class="fc" id="L826">        out.javadoc(&quot;Created custom patchUpdate record Method&quot;);</span>
+<span class="fc" id="L827">        out.println(&quot;public %s patchUpdateRecord(%s classObject){&quot;, pType,pType);</span>
+<span class="pc bpc" id="L828" title="1 of 2 branches missed.">        if(size&gt;1){</span>
+<span class="nc" id="L829">            out.print(&quot;List&lt;%s&gt; obj = fetchRecordBy&quot;, pType);</span>
+<span class="nc bnc" id="L830" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="nc" id="L831">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="nc bnc" id="L832" title="All 2 branches missed.">                if(key==column.getPrimaryKey()) {</span>
+<span class="nc" id="L833">                    out.print(&quot;%s&quot;, colClass);</span>
                 }
-<span class="nc" id="L758">            }</span>
-<span class="nc" id="L759">            out.print(&quot;.where(&quot;);</span>
-<span class="nc" id="L760">            int flag1 = 0;</span>
-<span class="nc bnc" id="L761" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="nc" id="L762">                final String colClass1 = getStrategy().getJavaClassName(column);</span>
-<span class="nc" id="L763">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
-
-<span class="nc bnc" id="L765" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
-<span class="nc bnc" id="L766" title="All 2 branches missed.">                    if (flag1 != size - 1) {</span>
-<span class="nc bnc" id="L767" title="All 2 branches missed.">                        if (flag1 == 0) {</span>
-<span class="nc" id="L768">                            out.print(&quot;%s.eq(classObject.get%s()).and(&quot;, colIdentifier1, colClass1);</span>
-                        } else {
-<span class="nc" id="L770">                            out.print(&quot;%s.eq(classObject.get%s())).and(&quot;, colIdentifier1, colClass1);</span>
-                        }
-<span class="nc" id="L772">                        flag1++;</span>
-                    } else {
-<span class="nc" id="L774">                        out.println(&quot;%s.eq(classObject.get%s()))).execute();&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="nc" id="L775">                        out.println(&quot;return result;&quot;);</span>
-<span class="nc" id="L776">                        out.println(&quot;}&quot;);</span>
+<span class="nc" id="L835">            }</span>
+<span class="nc" id="L836">            out.print(&quot;(&quot;);</span>
+<span class="nc" id="L837">            int f=0;</span>
+<span class="nc bnc" id="L838" title="All 2 branches missed.">            for (ColumnDefinition column :table.getColumns()) {</span>
+<span class="nc" id="L839">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="nc bnc" id="L840" title="All 2 branches missed.">                if(key==column.getPrimaryKey()) {</span>
+<span class="nc bnc" id="L841" title="All 2 branches missed.">                    if (f!=size-1) {</span>
+<span class="nc" id="L842">                        out.print(&quot;classObject.get%s(),&quot;, colClass);</span>
+<span class="nc" id="L843">                        f++;</span>
+                    }else {
+<span class="nc" id="L845">                        out.println(&quot;classObject.get%s());&quot;,colClass);</span>
                     }
                 }
-<span class="nc" id="L779">            }</span>
-            //For Delete COMPOSITE KEYS
-<span class="nc" id="L781">            out.javadoc(&quot;Created custom Delete method &quot;);</span>
-<span class="nc" id="L782">            out.print(&quot;public int deleteRecord(&quot;);</span>
-<span class="nc" id="L783">            int flag5 = 0;</span>
-<span class="nc bnc" id="L784" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="nc" id="L785">                final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="nc" id="L786">                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
-<span class="nc" id="L787">                final String colType1 = out.ref(colTypeFull);</span>
-<span class="nc bnc" id="L788" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
-<span class="nc bnc" id="L789" title="All 2 branches missed.">                    if (flag5 != size - 1) {</span>
-<span class="nc" id="L790">                        out.print(&quot;%s %s,&quot;, colType1, colClass);</span>
-<span class="nc" id="L791">                        flag5++;</span>
-                    } else {
-<span class="nc" id="L793">                        out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
+<span class="nc" id="L848">            }</span>
+<span class="nc bnc" id="L849" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {</span>
+<span class="nc" id="L850">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">                if (key != column.getPrimaryKey()) {</span>
+<span class="nc" id="L852">                    out.println(&quot; if(classObject.get%s()!=null){&quot;, colClass);</span>
+<span class="nc" id="L853">                    out.println(&quot;obj.get(0).set%s(classObject.get%s());&quot;,colClass,colClass);</span>
+<span class="nc" id="L854">                    out.println(&quot;}&quot;);</span>
+                }
+<span class="nc" id="L856">            }</span>
+<span class="nc" id="L857">            out.println(&quot;update(obj);&quot;);</span>
+<span class="nc" id="L858">            out.println(&quot;return obj.get(0);&quot;);</span>
+<span class="nc" id="L859">            out.println(&quot;}&quot;);</span>
+<span class="nc" id="L860">        }else {</span>
+<span class="fc" id="L861">            out.print(&quot;%s obj = fetchRecordBy&quot;, pType);</span>
+<span class="fc bfc" id="L862" title="All 2 branches covered.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="fc" id="L863">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc bfc" id="L864" title="All 2 branches covered.">                if(key==column.getPrimaryKey()) {</span>
+<span class="fc" id="L865">                    out.print(&quot;%s&quot;, colClass);</span>
+                }
+<span class="fc" id="L867">            }</span>
+<span class="fc" id="L868">            out.print(&quot;(&quot;);</span>
+<span class="fc" id="L869">            int f=0;</span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">            for (ColumnDefinition column :table.getColumns()) {</span>
+<span class="fc" id="L871">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">                if(key==column.getPrimaryKey()) {</span>
+<span class="pc bpc" id="L873" title="1 of 2 branches missed.">                    if (f!=size-1) {</span>
+<span class="nc" id="L874">                        out.print(&quot;classObject.get%s(),&quot;, colClass);</span>
+<span class="nc" id="L875">                        f++;</span>
+                    }else {
+<span class="fc" id="L877">                        out.println(&quot;classObject.get%s());&quot;,colClass);</span>
                     }
                 }
-<span class="nc" id="L796">            }</span>
-<span class="nc" id="L797">            out.print(&quot;return this.ctx().deleteFrom(%s).where(&quot;, tableIdentifier);</span>
-<span class="nc" id="L798">            int flag6 = 0;</span>
-<span class="nc bnc" id="L799" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="nc" id="L800">                final String colClass1 = getStrategy().getJavaClassName(column);</span>
-<span class="nc" id="L801">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
-<span class="nc bnc" id="L802" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
-<span class="nc bnc" id="L803" title="All 2 branches missed.">                    if (flag6 != size - 1) {</span>
-<span class="nc bnc" id="L804" title="All 2 branches missed.">                        if (flag6 == 0) {</span>
-<span class="nc" id="L805">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
-                        } else {
-<span class="nc" id="L807">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
-                        }
-<span class="nc" id="L809">                        flag6++;</span>
-                    } else {
-<span class="nc" id="L811">                        out.println(&quot;%s.eq(%s))).execute();&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="nc" id="L812">                        out.println(&quot;}&quot;);</span>
-                    }
+<span class="fc" id="L880">            }</span>
+<span class="fc bfc" id="L881" title="All 2 branches covered.">            for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {</span>
+<span class="fc" id="L882">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc bfc" id="L883" title="All 2 branches covered.">                if (key != column.getPrimaryKey()) {</span>
+<span class="fc" id="L884">                    out.println(&quot; if(classObject.get%s()!=null){&quot;, colClass);</span>
+<span class="fc" id="L885">                    out.println(&quot;obj.set%s(classObject.get%s());&quot;,colClass,colClass);</span>
+<span class="fc" id="L886">                    out.println(&quot;}&quot;);</span>
                 }
-<span class="nc" id="L815">            }</span>
-<span class="nc" id="L816">        } else {</span>
-            //For Delete single primary key
-<span class="fc bfc" id="L818" title="All 2 branches covered.">            for (ColumnDefinition column : table.getColumns()) {</span>
-<span class="fc" id="L819">                final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="fc" id="L820">                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
-<span class="fc" id="L821">                final String colType = out.ref(colTypeFull);</span>
-<span class="fc" id="L822">                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
-<span class="fc bfc" id="L823" title="All 2 branches covered.">                if (key == column.getPrimaryKey()) {</span>
-<span class="fc" id="L824">                    out.javadoc(&quot;Created custom Delete record Method&quot;);</span>
-<span class="fc" id="L825">                    out.println(&quot;public int deleteRecord(%s %s){&quot;, colType, colClass);</span>
-<span class="fc" id="L826">                    out.println(&quot;int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();&quot;, tableIdentifier, colIdentifier, colClass);</span>
-<span class="fc" id="L827">                    out.println(&quot;return result;&quot;);</span>
-<span class="fc" id="L828">                    out.println(&quot;}&quot;);</span>
-                }
-<span class="fc" id="L830">            }</span>
-<span class="fc" id="L831">            ColumnDefinition column = table.getColumns().get(0);</span>
-<span class="fc" id="L832">            final String colClass = getStrategy().getJavaClassName(column);</span>
-<span class="fc" id="L833">            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
-            //For update single primary key
-<span class="fc" id="L835">            out.javadoc(&quot;Created custom Update record Method&quot;);</span>
-<span class="fc" id="L836">            out.println(&quot;public int updateRecord(%s classObject){&quot;, pType);</span>
-<span class="fc" id="L837">            out.println(&quot;int result=this.ctx().update(%s)&quot;, tableIdentifier);</span>
-<span class="fc bfc" id="L838" title="All 2 branches covered.">            for (ColumnDefinition column1 : table.getColumns()) {</span>
-<span class="fc" id="L839">                final String colClass1 = getStrategy().getJavaClassName(column1);</span>
-<span class="fc" id="L840">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
-<span class="fc bfc" id="L841" title="All 2 branches covered.">                if (key != column1.getPrimaryKey()) {</span>
-<span class="fc" id="L842">                    out.println(&quot;.set(%s,classObject.get%s())&quot;, colIdentifier1, colClass1);</span>
-                }
-<span class="fc" id="L844">            }</span>
-<span class="fc" id="L845">            out.println(&quot;.where(%s.eq(classObject.get%s())).execute();&quot;, colIdentifier, colClass);</span>
-<span class="fc" id="L846">            out.println(&quot;return result;&quot;);</span>
-<span class="fc" id="L847">            out.println(&quot;}&quot;);</span>
-
+<span class="fc" id="L888">            }</span>
+<span class="fc" id="L889">            out.println(&quot;update(obj);&quot;);</span>
+<span class="fc" id="L890">            out.println(&quot;return obj;&quot;);</span>
+<span class="fc" id="L891">            out.println(&quot;}&quot;);</span>
         }
-<span class="fc" id="L850">        generateDaoClassFooter(table, out);</span>
-<span class="fc" id="L851">        out.println(&quot;}&quot;);</span>
-<span class="fc" id="L852">    }</span>
+
+
+<span class="pc bpc" id="L895" title="1 of 2 branches missed.">        if (size &gt; 1) {</span>
+            //For Update COMPOSITE KEYS
+<span class="nc" id="L897">            out.javadoc(&quot;Created custom Update record Method&quot;);</span>
+<span class="nc" id="L898">            out.println(&quot;public int updateRecord(%s classObject){&quot;, pType);</span>
+<span class="nc" id="L899">            out.println(&quot;int result=this.ctx().update(%s)&quot;, tableIdentifier);</span>
+<span class="nc bnc" id="L900" title="All 2 branches missed.">            for (ColumnDefinition column1 : table.getColumns()) {</span>
+<span class="nc" id="L901">                final String colClass1 = getStrategy().getJavaClassName(column1);</span>
+<span class="nc" id="L902">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
+<span class="nc bnc" id="L903" title="All 2 branches missed.">                if (key != column1.getPrimaryKey()) {</span>
+<span class="nc" id="L904">                    out.println(&quot;.set(%s,classObject.get%s())&quot;, colIdentifier1, colClass1);</span>
+                }
+<span class="nc" id="L906">            }</span>
+<span class="nc" id="L907">            out.print(&quot;.where(&quot;);</span>
+<span class="nc" id="L908">            int flag1 = 0;</span>
+<span class="nc bnc" id="L909" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="nc" id="L910">                final String colClass1 = getStrategy().getJavaClassName(column);</span>
+<span class="nc" id="L911">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
+
+<span class="nc bnc" id="L913" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
+<span class="nc bnc" id="L914" title="All 2 branches missed.">                    if (flag1 != size - 1) {</span>
+<span class="nc bnc" id="L915" title="All 2 branches missed.">                        if (flag1 == 0) {</span>
+<span class="nc" id="L916">                            out.print(&quot;%s.eq(classObject.get%s()).and(&quot;, colIdentifier1, colClass1);</span>
+                        } else {
+<span class="nc" id="L918">                            out.print(&quot;%s.eq(classObject.get%s())).and(&quot;, colIdentifier1, colClass1);</span>
+                        }
+<span class="nc" id="L920">                        flag1++;</span>
+                    } else {
+<span class="nc" id="L922">                        out.println(&quot;%s.eq(classObject.get%s()))).execute();&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L923">                        out.println(&quot;return result;&quot;);</span>
+<span class="nc" id="L924">                        out.println(&quot;}&quot;);</span>
+                    }
+                }
+<span class="nc" id="L927">            }</span>
+            //For Delete COMPOSITE KEYS
+<span class="nc" id="L929">            out.javadoc(&quot;Created custom Delete method &quot;);</span>
+<span class="nc" id="L930">            out.print(&quot;public int deleteRecord(&quot;);</span>
+<span class="nc" id="L931">            int flag5 = 0;</span>
+<span class="nc bnc" id="L932" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="nc" id="L933">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="nc" id="L934">                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
+<span class="nc" id="L935">                final String colType1 = out.ref(colTypeFull);</span>
+<span class="nc bnc" id="L936" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
+<span class="nc bnc" id="L937" title="All 2 branches missed.">                    if (flag5 != size - 1) {</span>
+<span class="nc" id="L938">                        out.print(&quot;%s %s,&quot;, colType1, colClass);</span>
+<span class="nc" id="L939">                        flag5++;</span>
+                    } else {
+<span class="nc" id="L941">                        out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
+                    }
+                }
+<span class="nc" id="L944">            }</span>
+<span class="nc" id="L945">            out.print(&quot;return this.ctx().deleteFrom(%s).where(&quot;, tableIdentifier);</span>
+<span class="nc" id="L946">            int flag6 = 0;</span>
+<span class="nc bnc" id="L947" title="All 2 branches missed.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="nc" id="L948">                final String colClass1 = getStrategy().getJavaClassName(column);</span>
+<span class="nc" id="L949">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">                if (key == column.getPrimaryKey()) {</span>
+<span class="nc bnc" id="L951" title="All 2 branches missed.">                    if (flag6 != size - 1) {</span>
+<span class="nc bnc" id="L952" title="All 2 branches missed.">                        if (flag6 == 0) {</span>
+<span class="nc" id="L953">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
+                        } else {
+<span class="nc" id="L955">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
+                        }
+<span class="nc" id="L957">                        flag6++;</span>
+                    } else {
+<span class="nc" id="L959">                        out.println(&quot;%s.eq(%s))).execute();&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L960">                        out.println(&quot;}&quot;);</span>
+                    }
+                }
+<span class="nc" id="L963">            }</span>
+<span class="nc" id="L964">        } else {</span>
+            //For Delete single primary key
+<span class="fc bfc" id="L966" title="All 2 branches covered.">            for (ColumnDefinition column : table.getColumns()) {</span>
+<span class="fc" id="L967">                final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc" id="L968">                final String colTypeFull = getJavaType(column.getType(resolver(out)), out);</span>
+<span class="fc" id="L969">                final String colType = out.ref(colTypeFull);</span>
+<span class="fc" id="L970">                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
+<span class="fc bfc" id="L971" title="All 2 branches covered.">                if (key == column.getPrimaryKey()) {</span>
+<span class="fc" id="L972">                    out.javadoc(&quot;Created custom Delete record Method&quot;);</span>
+<span class="fc" id="L973">                    out.println(&quot;public int deleteRecord(%s %s){&quot;, colType, colClass);</span>
+<span class="fc" id="L974">                    out.println(&quot;int result=this.ctx().deleteFrom(%s).where(%s.eq(%s)).execute();&quot;, tableIdentifier, colIdentifier, colClass);</span>
+<span class="fc" id="L975">                    out.println(&quot;return result;&quot;);</span>
+<span class="fc" id="L976">                    out.println(&quot;}&quot;);</span>
+                }
+<span class="fc" id="L978">            }</span>
+<span class="fc" id="L979">            ColumnDefinition column = table.getColumns().get(0);</span>
+<span class="fc" id="L980">            final String colClass = getStrategy().getJavaClassName(column);</span>
+<span class="fc" id="L981">            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));</span>
+            //For update single primary key
+<span class="fc" id="L983">            out.javadoc(&quot;Created custom Update record Method&quot;);</span>
+<span class="fc" id="L984">            out.println(&quot;public int updateRecord(%s classObject){&quot;, pType);</span>
+<span class="fc" id="L985">            out.println(&quot;int result=this.ctx().update(%s)&quot;, tableIdentifier);</span>
+<span class="fc bfc" id="L986" title="All 2 branches covered.">            for (ColumnDefinition column1 : table.getColumns()) {</span>
+<span class="fc" id="L987">                final String colClass1 = getStrategy().getJavaClassName(column1);</span>
+<span class="fc" id="L988">                final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
+<span class="fc bfc" id="L989" title="All 2 branches covered.">                if (key != column1.getPrimaryKey()) {</span>
+<span class="fc" id="L990">                    out.println(&quot;.set(%s,classObject.get%s())&quot;, colIdentifier1, colClass1);</span>
+                }
+<span class="fc" id="L992">            }</span>
+<span class="fc" id="L993">            out.println(&quot;.where(%s.eq(classObject.get%s())).execute();&quot;, colIdentifier, colClass);</span>
+<span class="fc" id="L994">            out.println(&quot;return result;&quot;);</span>
+<span class="fc" id="L995">            out.println(&quot;}&quot;);</span>
+        }
+
+        //Create custom BatchUpdate Method
+<span class="fc" id="L999">        out.javadoc(&quot;Created custom BatchUpdate records Method&quot;);</span>
+<span class="fc" id="L1000">        out.println(&quot;public Map&lt;Integer,List&lt;%s&gt;&gt; updateBatchRecord(List&lt;%s&gt; classObjects) {&quot;, pType, pType);</span>
+<span class="fc" id="L1001">        out.println(&quot;  List&lt;%s&gt; records = classObjects.stream().map(classObject -&gt; {&quot;,tableRecord);</span>
+<span class="fc" id="L1002">        out.println(&quot;%s record = new %s();&quot;,tableRecord,tableRecord);</span>
+<span class="fc" id="L1003">        out.println(&quot;record.from(classObject);&quot;);</span>
+<span class="fc" id="L1004">        out.println(&quot;return record;&quot;);</span>
+<span class="fc" id="L1005">        out.println(&quot;}).collect(Collectors.toList());&quot;);</span>
+<span class="fc" id="L1006">        out.println(&quot; Map&lt;Integer,List&lt;%s&gt;&gt; resultMap= (Map&lt;Integer, List&lt;%s&gt;&gt;) this.ctx().transactionResult((Configuration txr)-&gt;{&quot;,pType,pType);</span>
+<span class="fc" id="L1007">        out.println(&quot;int flag=0;&quot;);</span>
+<span class="fc" id="L1008">        out.println(&quot;Map&lt;Integer, List&lt;%s&gt;&gt; map=new HashMap&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L1009">        out.println(&quot; List&lt;%s&gt; result=new ArrayList&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L1010">        out.println(&quot;try{&quot;);</span>
+<span class="fc" id="L1011">        out.println(&quot;txr.dsl().settings().setBatchSize(batchSize);&quot;);</span>
+<span class="fc" id="L1012">        out.println(&quot;txr.connectionProvider().acquire().setAutoCommit(false);&quot;);</span>
+<span class="fc" id="L1013">        out.println(&quot;int[] affectedCountArr=txr.dsl().batchUpdate(records).execute();&quot;);</span>
+<span class="fc" id="L1014">        out.println(&quot;for (int i=0;i&lt;records.size();i++){&quot;);</span>
+<span class="fc" id="L1015">        out.println(&quot;if(affectedCountArr[i]==0){&quot;);</span>
+<span class="fc" id="L1016">        out.println(&quot;%s a=records.get(i).into(%s.class);&quot;,pType,pType);</span>
+<span class="fc" id="L1017">        out.println(&quot;result.add(a);&quot;);</span>
+<span class="fc" id="L1018">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1019">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1020">        out.println(&quot;}catch (Exception e){&quot;);</span>
+<span class="fc" id="L1021">        out.println(&quot;flag=1;&quot;);</span>
+<span class="fc" id="L1022">        out.println(&quot;try {&quot;);</span>
+<span class="fc" id="L1023">        out.println(&quot;txr.dsl().configuration().connectionProvider().acquire().rollback();&quot;);</span>
+<span class="fc" id="L1024">        out.println(&quot;} catch (SQLException ex) {&quot;);</span>
+<span class="fc" id="L1025">        out.println(&quot;throw new RuntimeException(\&quot;Error in updateBatchRecord() at Dao Layer..\&quot;);&quot;);</span>
+<span class="fc" id="L1026">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1027">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1028">        out.println(&quot;if(flag==0 &amp;&amp; result.size()&gt;=0) {&quot;);</span>
+<span class="fc" id="L1029">        out.println(&quot;map.put(0,result);&quot;);</span>
+<span class="fc" id="L1030">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L1031">        out.println(&quot;}  else {&quot;);</span>
+<span class="fc" id="L1032">        out.println(&quot;map.put(1,result);&quot;);</span>
+<span class="fc" id="L1033">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L1034">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1035">        out.println(&quot;});&quot;);</span>
+<span class="fc" id="L1036">        out.println(&quot;return resultMap;&quot;);</span>
+<span class="fc" id="L1037">        out.println(&quot;}&quot;);</span>
+
+        //Create custom BatchDelete Method
+<span class="fc" id="L1040">        out.javadoc(&quot;Created custom BatchDelete records Method&quot;);</span>
+<span class="fc" id="L1041">        out.println(&quot;public Map&lt;Integer,List&lt;%s&gt;&gt; deleteBatchRecord(List&lt;%s&gt; classObjects) {&quot;, pType, pType);</span>
+<span class="fc" id="L1042">        out.println(&quot;  List&lt;%s&gt; records = classObjects.stream().map(classObject -&gt; {&quot;,tableRecord);</span>
+<span class="fc" id="L1043">        out.println(&quot;%s record = new %s();&quot;,tableRecord,tableRecord);</span>
+<span class="fc" id="L1044">        out.println(&quot;record.from(classObject);&quot;);</span>
+<span class="fc" id="L1045">        out.println(&quot;return record;&quot;);</span>
+<span class="fc" id="L1046">        out.println(&quot;}).collect(Collectors.toList());&quot;);</span>
+<span class="fc" id="L1047">        out.println(&quot; Map&lt;Integer,List&lt;%s&gt;&gt; resultMap= (Map&lt;Integer, List&lt;%s&gt;&gt;) this.ctx().transactionResult((Configuration txr)-&gt;{&quot;,pType,pType);</span>
+<span class="fc" id="L1048">        out.println(&quot;int flag=0;&quot;);</span>
+<span class="fc" id="L1049">        out.println(&quot;Map&lt;Integer, List&lt;%s&gt;&gt; map=new HashMap&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L1050">        out.println(&quot; List&lt;%s&gt; result=new ArrayList&lt;&gt;();&quot;,pType);</span>
+<span class="fc" id="L1051">        out.println(&quot;try{&quot;);</span>
+<span class="fc" id="L1052">        out.println(&quot;txr.dsl().settings().setBatchSize(batchSize);&quot;);</span>
+<span class="fc" id="L1053">        out.println(&quot;txr.connectionProvider().acquire().setAutoCommit(false);&quot;);</span>
+<span class="fc" id="L1054">        out.println(&quot;int[] affectedCountArr=txr.dsl().batchDelete(records).execute();&quot;);</span>
+<span class="fc" id="L1055">        out.println(&quot;for (int i=0;i&lt;records.size();i++){&quot;);</span>
+<span class="fc" id="L1056">        out.println(&quot;if(affectedCountArr[i]==0){&quot;);</span>
+<span class="fc" id="L1057">        out.println(&quot;%s a=records.get(i).into(%s.class);&quot;,pType,pType);</span>
+<span class="fc" id="L1058">        out.println(&quot;result.add(a);&quot;);</span>
+<span class="fc" id="L1059">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1060">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1061">        out.println(&quot;}catch (Exception e){&quot;);</span>
+<span class="fc" id="L1062">        out.println(&quot;flag=1;&quot;);</span>
+<span class="fc" id="L1063">        out.println(&quot;try {&quot;);</span>
+<span class="fc" id="L1064">        out.println(&quot;txr.dsl().configuration().connectionProvider().acquire().rollback();&quot;);</span>
+<span class="fc" id="L1065">        out.println(&quot;} catch (SQLException ex) {&quot;);</span>
+<span class="fc" id="L1066">        out.println(&quot;throw new RuntimeException(\&quot;Error in deleteBatchRecord() at Dao Layer..\&quot;);&quot;);</span>
+<span class="fc" id="L1067">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1068">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1069">        out.println(&quot;if(flag==0 &amp;&amp; result.size()&gt;=0) {&quot;);</span>
+<span class="fc" id="L1070">        out.println(&quot;map.put(0,result);&quot;);</span>
+<span class="fc" id="L1071">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L1072">        out.println(&quot;}  else {&quot;);</span>
+<span class="fc" id="L1073">        out.println(&quot;map.put(1,result);&quot;);</span>
+<span class="fc" id="L1074">        out.println(&quot;return map;&quot;);</span>
+<span class="fc" id="L1075">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1076">        out.println(&quot;});&quot;);</span>
+<span class="fc" id="L1077">        out.println(&quot;return resultMap;&quot;);</span>
+<span class="fc" id="L1078">        out.println(&quot;}&quot;);</span>
+
+        //For GET method for composite primary key.
+<span class="fc" id="L1081">        List&lt;List&lt;ColumnDefinition&gt;&gt; subsequencePrimaryKeysJsonArray = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1082">        getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList&lt;&gt;(), 0);</span>
+<span class="fc" id="L1083">        subsequencePrimaryKeysJsonArray.remove(0);</span>
+<span class="pc bpc" id="L1084" title="1 of 2 branches missed.">        if(subsequencePrimaryKeysJsonArray.size()==1) {</span>
+<span class="fc" id="L1085">            out.javadoc(&quot;Created custom fetchRecord Method&quot;);</span>
+<span class="fc bfc" id="L1086" title="All 2 branches covered.">            for (List&lt;ColumnDefinition&gt; column : subsequencePrimaryKeysJsonArray) {</span>
+<span class="fc" id="L1087">                int flag = 0;</span>
+<span class="fc" id="L1088">                out.print(&quot;public %s fetchRecordBy&quot;, pType);</span>
+<span class="fc bfc" id="L1089" title="All 2 branches covered.">                for (ColumnDefinition column1 : column) {</span>
+<span class="fc" id="L1090">                    final String colClass = getStrategy().getJavaClassName(column1);</span>
+<span class="fc" id="L1091">                    out.print(&quot;%s&quot;, colClass);</span>
+<span class="fc" id="L1092">                }</span>
+<span class="fc" id="L1093">                out.print(&quot;(&quot;);</span>
+<span class="fc bfc" id="L1094" title="All 2 branches covered.">                for (ColumnDefinition column1 : column) {</span>
+<span class="fc" id="L1095">                    final String colClass = getStrategy().getJavaClassName(column1);</span>
+<span class="fc" id="L1096">                    final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);</span>
+<span class="fc" id="L1097">                    final String colType1 = out.ref(colTypeFull);</span>
+<span class="pc bpc" id="L1098" title="1 of 2 branches missed.">                    if (flag != column.size() - 1) {</span>
+<span class="nc" id="L1099">                        out.print(&quot;%s %s,&quot;, colType1, colClass);</span>
+<span class="nc" id="L1100">                        flag++;</span>
+                    } else {
+<span class="fc" id="L1102">                        out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
+                    }
+<span class="fc" id="L1104">                }</span>
+<span class="fc" id="L1105">                out.print(&quot;return this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);</span>
+<span class="fc" id="L1106">                int flag2 = 0;</span>
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">                for (ColumnDefinition column1 : column) {</span>
+<span class="fc" id="L1108">                    final String colClass1 = getStrategy().getJavaClassName(column1);</span>
+<span class="fc" id="L1109">                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
+
+<span class="pc bpc" id="L1111" title="1 of 2 branches missed.">                    if (flag2 != column.size() - 1) {</span>
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">                        if (flag2 == 0) {</span>
+<span class="nc" id="L1113">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
+                        } else {
+<span class="nc" id="L1115">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
+                        }
+<span class="nc" id="L1117">                        flag2++;</span>
+                    } else {
+<span class="pc bpc" id="L1119" title="1 of 2 branches missed.">                        if (column.size() == 1) {</span>
+<span class="fc" id="L1120">                            out.println(&quot;%s.eq(%s)).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="fc" id="L1121">                            out.println(&quot;}&quot;);</span>
+                        } else {
+<span class="nc" id="L1123">                            out.println(&quot;%s.eq(%s))).fetchOneInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L1124">                            out.println(&quot;}&quot;);</span>
+                        }
+                    }
+<span class="fc" id="L1127">                }</span>
+<span class="fc" id="L1128">            }</span>
+        }else{
+<span class="nc" id="L1130">            out.javadoc(&quot;Created custom fetchRecord Method&quot;);</span>
+<span class="nc bnc" id="L1131" title="All 2 branches missed.">            for (List&lt;ColumnDefinition&gt; column : subsequencePrimaryKeysJsonArray) {</span>
+<span class="nc" id="L1132">                int flag = 0;</span>
+<span class="nc" id="L1133">                out.print(&quot;public List&lt;%s&gt; fetchRecordBy&quot;, pType);</span>
+<span class="nc bnc" id="L1134" title="All 2 branches missed.">                for (ColumnDefinition column1 : column) {</span>
+<span class="nc" id="L1135">                    final String colClass = getStrategy().getJavaClassName(column1);</span>
+<span class="nc" id="L1136">                    out.print(&quot;%s&quot;, colClass);</span>
+<span class="nc" id="L1137">                }</span>
+<span class="nc" id="L1138">                out.print(&quot;(&quot;);</span>
+<span class="nc bnc" id="L1139" title="All 2 branches missed.">                for (ColumnDefinition column1 : column) {</span>
+<span class="nc" id="L1140">                    final String colClass = getStrategy().getJavaClassName(column1);</span>
+<span class="nc" id="L1141">                    final String colTypeFull = getJavaType(column1.getType(resolver(out)), out);</span>
+<span class="nc" id="L1142">                    final String colType1 = out.ref(colTypeFull);</span>
+<span class="nc bnc" id="L1143" title="All 2 branches missed.">                    if (flag != column.size() - 1) {</span>
+<span class="nc" id="L1144">                        out.print(&quot;%s %s,&quot;, colType1, colClass);</span>
+<span class="nc" id="L1145">                        flag++;</span>
+                    } else {
+<span class="nc" id="L1147">                        out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
+                    }
+<span class="nc" id="L1149">                }</span>
+<span class="nc" id="L1150">                out.println(&quot;List&lt;%s&gt; result =new ArrayList&lt;&gt;();&quot;, pType);</span>
+<span class="nc" id="L1151">                out.print(&quot;result.add(this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);</span>
+<span class="nc" id="L1152">                int flag2 = 0;</span>
+<span class="nc bnc" id="L1153" title="All 2 branches missed.">                for (ColumnDefinition column1 : column) {</span>
+<span class="nc" id="L1154">                    final String colClass1 = getStrategy().getJavaClassName(column1);</span>
+<span class="nc" id="L1155">                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
+
+<span class="nc bnc" id="L1157" title="All 2 branches missed.">                    if (flag2 != column.size() - 1) {</span>
+<span class="nc bnc" id="L1158" title="All 2 branches missed.">                        if (flag2 == 0) {</span>
+<span class="nc" id="L1159">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
+                        } else {
+<span class="nc" id="L1161">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
+                        }
+<span class="nc" id="L1163">                        flag2++;</span>
+                    } else {
+<span class="nc bnc" id="L1165" title="All 2 branches missed.">                        if (column.size() == 1) {</span>
+<span class="nc" id="L1166">                            out.println(&quot;%s.eq(%s)).fetchOneInto(%s.class));&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L1167">                            out.println(&quot;return result;&quot;);</span>
+<span class="nc" id="L1168">                            out.println(&quot;}&quot;);</span>
+                        } else {
+<span class="nc" id="L1170">                            out.println(&quot;%s.eq(%s))).fetchOneInto(%s.class));&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L1171">                            out.println(&quot;return result;&quot;);</span>
+<span class="nc" id="L1172">                            out.println(&quot;}&quot;);</span>
+                        }
+                    }
+<span class="nc" id="L1175">                }</span>
+<span class="nc" id="L1176">            }</span>
+        }
+
+
+<span class="fc" id="L1180">        generateDaoClassFooter(table, out);</span>
+<span class="fc" id="L1181">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1182">    }</span>
 
     protected String ref(String clazzOrId, int keepSegments) {
-<span class="nc bnc" id="L855" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
+<span class="nc bnc" id="L1185" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
     }
 
 
     protected List&lt;String&gt; ref(List&lt;String&gt; clazzOrId, int keepSegments) {
-<span class="nc bnc" id="L860" title="All 2 branches missed.">        return clazzOrId == null ? Collections.emptyList() : clazzOrId;</span>
+<span class="nc bnc" id="L1190" title="All 2 branches missed.">        return clazzOrId == null ? Collections.emptyList() : clazzOrId;</span>
     }
 
     //
@@ -866,21 +1196,21 @@ import java.util.List;
 //     * constructor annotations, such as DI annotations. [#10801]
 //     */
     protected void printDaoConstructorAnnotations(TableDefinition table, JavaWriter out) {
-<span class="pc bpc" id="L869" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
-<span class="fc" id="L870">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.beans.factory.annotation.Autowired&quot;));</span>
+<span class="pc bpc" id="L1199" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
+<span class="fc" id="L1200">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.beans.factory.annotation.Autowired&quot;));</span>
         }
-<span class="fc" id="L872">    }</span>
+<span class="fc" id="L1202">    }</span>
 
 
     private int colRefSegmentsMethod(Definition column) {
-<span class="pc bpc" id="L876" title="2 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getContainer() instanceof UDTDefinition) {</span>
-<span class="nc" id="L877">            return 2;</span>
+<span class="pc bpc" id="L1206" title="2 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getContainer() instanceof UDTDefinition) {</span>
+<span class="nc" id="L1207">            return 2;</span>
         }
-<span class="pc bpc" id="L879" title="1 of 2 branches missed.">        if (!getStrategy().getInstanceFields()) {</span>
-<span class="nc" id="L880">            return 2;</span>
+<span class="pc bpc" id="L1209" title="1 of 2 branches missed.">        if (!getStrategy().getInstanceFields()) {</span>
+<span class="nc" id="L1210">            return 2;</span>
         }
 
-<span class="fc" id="L883">        return 3;</span>
+<span class="fc" id="L1213">        return 3;</span>
     }
 
 

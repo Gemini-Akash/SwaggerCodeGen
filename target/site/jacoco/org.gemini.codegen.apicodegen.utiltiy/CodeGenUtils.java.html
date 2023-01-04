@@ -35,8 +35,8 @@ import java.util.Map;
      */
     public static void createDirectory(final String directoryPath) {
 <span class="fc" id="L37">        File file = new File(directoryPath);</span>
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (file.isDirectory()) {</span>
-<span class="nc" id="L39">            LOG.info(&quot;Directory already exists&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (file.isDirectory()) {</span>
+<span class="fc" id="L39">            LOG.info(&quot;Directory already exists&quot;);</span>
         } else {
 <span class="fc" id="L41">            file.mkdirs();</span>
 <span class="fc" id="L42">            LOG.info(&quot;Directory created---&gt; {}&quot;, directoryPath);</span>
