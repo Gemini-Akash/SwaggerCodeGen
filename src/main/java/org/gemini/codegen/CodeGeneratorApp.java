@@ -61,7 +61,7 @@ public class CodeGeneratorApp {
         path.append("/tables/pojos/");
         List<String> classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), CodeGenUtils.generateDirectoryPath());
         LOG.info(" ClassNames------>{}", classNames);
-        jsonValidator.validateJsonFiles(classNames);
+//        jsonValidator.validateJsonFiles(classNames);
         dbJsonHandler.createDbJson(new File(CodeGenUtils.generateDirectoryPath() + "/jsonFiles/applicationProperties.json"), CodeGenUtils.createMap().get("url"), CodeGenUtils.createMap().get("dialect"), CodeGenUtils.createMap().get("username"), CodeGenUtils.createMap().get("password"), CodeGenUtils.createMap().get("driverClassName"));
         templateHandler.generateSpringBootProject();
 
@@ -69,10 +69,10 @@ public class CodeGeneratorApp {
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/com");
         directoryHandler.deleteDirectory(path.toString());
-//        path.setLength(0);
-//        path.append(CodeGenUtils.generateDirectoryPath());
-//        path.append("/jsonFiles");
-//        directoryHandler.deleteDirectory(path.toString());
+        path.setLength(0);
+        path.append(CodeGenUtils.generateDirectoryPath());
+        path.append("/jsonFiles");
+        directoryHandler.deleteDirectory(path.toString());
         path.setLength(0);
         path.append(CodeGenUtils.generateDirectoryPath());
         path.append("/entity/");

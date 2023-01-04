@@ -5,9 +5,9 @@ SwaggerCodeGen,org.gemini.codegen.handler,DirectoryHandler,11,98,1,9,3,29,1,9,0,
 SwaggerCodeGen,org.gemini.codegen.handler,TemplateHandler,238,267,2,0,55,71,1,5,0,5
 SwaggerCodeGen,org.gemini.codegen.handler,DbJsonHandler,0,57,0,0,0,15,0,3,0,3
 SwaggerCodeGen,org.gemini.codegen.apicodegen.loader,CustomClassLoader,39,547,4,20,12,124,4,19,0,11
-SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,227,0,0,0,51,0,3,0,3,0
+SwaggerCodeGen,org.gemini.codegen,CodeGeneratorApp,239,0,0,0,54,0,3,0,3,0
 SwaggerCodeGen,org.gemini.codegen.jooqpojogen,EntityClassGenerator,13,112,2,2,3,33,3,1,1,1
-SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,1382,3113,199,149,211,523,140,66,4,28
+SwaggerCodeGen,org.gemini.codegen.jooqpojogen,CustomJooqAutoGenerator,1364,3113,199,149,208,523,140,66,4,28
 SwaggerCodeGen,org.gemini.codegen.jooqpojogen,FileNotFoundException,10,0,0,0,4,0,2,0,2,0
 SwaggerCodeGen,org.jooq.codegen,GeneratorWriter.CloseResult,0,9,0,0,0,4,0,1,0,1
 SwaggerCodeGen,org.jooq.codegen,GeneratorWriter,163,555,31,57,34,111,41,39,15,21

@@ -61,7 +61,7 @@ import java.util.List;
 <span class="nc" id="L61">        path.append(&quot;/tables/pojos/&quot;);</span>
 <span class="nc" id="L62">        List&lt;String&gt; classNames = customClassLoader.loadClass(customClassLoader.getFullyQualifiedClasses(new File(path.toString())), CodeGenUtils.generateDirectoryPath());</span>
 <span class="nc" id="L63">        LOG.info(&quot; ClassNames------&gt;{}&quot;, classNames);</span>
-<span class="nc" id="L64">        jsonValidator.validateJsonFiles(classNames);</span>
+//        jsonValidator.validateJsonFiles(classNames);
 <span class="nc" id="L65">        dbJsonHandler.createDbJson(new File(CodeGenUtils.generateDirectoryPath() + &quot;/jsonFiles/applicationProperties.json&quot;), CodeGenUtils.createMap().get(&quot;url&quot;), CodeGenUtils.createMap().get(&quot;dialect&quot;), CodeGenUtils.createMap().get(&quot;username&quot;), CodeGenUtils.createMap().get(&quot;password&quot;), CodeGenUtils.createMap().get(&quot;driverClassName&quot;));</span>
 <span class="nc" id="L66">        templateHandler.generateSpringBootProject();</span>
 
@@ -69,10 +69,10 @@ import java.util.List;
 <span class="nc" id="L69">        path.append(CodeGenUtils.generateDirectoryPath());</span>
 <span class="nc" id="L70">        path.append(&quot;/com&quot;);</span>
 <span class="nc" id="L71">        directoryHandler.deleteDirectory(path.toString());</span>
-//        path.setLength(0);
-//        path.append(CodeGenUtils.generateDirectoryPath());
-//        path.append(&quot;/jsonFiles&quot;);
-//        directoryHandler.deleteDirectory(path.toString());
+<span class="nc" id="L72">        path.setLength(0);</span>
+<span class="nc" id="L73">        path.append(CodeGenUtils.generateDirectoryPath());</span>
+<span class="nc" id="L74">        path.append(&quot;/jsonFiles&quot;);</span>
+<span class="nc" id="L75">        directoryHandler.deleteDirectory(path.toString());</span>
 <span class="nc" id="L76">        path.setLength(0);</span>
 <span class="nc" id="L77">        path.append(CodeGenUtils.generateDirectoryPath());</span>
 <span class="nc" id="L78">        path.append(&quot;/entity/&quot;);</span>

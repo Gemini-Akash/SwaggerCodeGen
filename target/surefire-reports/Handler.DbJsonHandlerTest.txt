@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Handler.DbJsonHandlerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.619 s - in Handler.DbJsonHandlerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.647 s - in Handler.DbJsonHandlerTest

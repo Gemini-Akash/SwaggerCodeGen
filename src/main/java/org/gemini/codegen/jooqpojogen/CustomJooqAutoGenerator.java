@@ -1147,8 +1147,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                         out.println("%s %s){", colType1, colClass);
                     }
                 }
-                out.println("List<%s> result =new ArrayList<>();", pType);
-                out.print("result.add(this.ctx().selectFrom(%s).where(", tableIdentifier);
+                out.print("return this.ctx().selectFrom(%s).where(", tableIdentifier);
                 int flag2 = 0;
                 for (ColumnDefinition column1 : column) {
                     final String colClass1 = getStrategy().getJavaClassName(column1);
@@ -1163,12 +1162,10 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                         flag2++;
                     } else {
                         if (column.size() == 1) {
-                            out.println("%s.eq(%s)).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
-                            out.println("return result;");
+                            out.println("%s.eq(%s)).fetchInto(%s.class);", colIdentifier1, colClass1, pType);
                             out.println("}");
                         } else {
-                            out.println("%s.eq(%s))).fetchOneInto(%s.class));", colIdentifier1, colClass1, pType);
-                            out.println("return result;");
+                            out.println("%s.eq(%s))).fetchInto(%s.class);", colIdentifier1, colClass1, pType);
                             out.println("}");
                         }
                     }

@@ -1147,47 +1147,44 @@ import java.util.stream.Collectors;
 <span class="nc" id="L1147">                        out.println(&quot;%s %s){&quot;, colType1, colClass);</span>
                     }
 <span class="nc" id="L1149">                }</span>
-<span class="nc" id="L1150">                out.println(&quot;List&lt;%s&gt; result =new ArrayList&lt;&gt;();&quot;, pType);</span>
-<span class="nc" id="L1151">                out.print(&quot;result.add(this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);</span>
-<span class="nc" id="L1152">                int flag2 = 0;</span>
-<span class="nc bnc" id="L1153" title="All 2 branches missed.">                for (ColumnDefinition column1 : column) {</span>
-<span class="nc" id="L1154">                    final String colClass1 = getStrategy().getJavaClassName(column1);</span>
-<span class="nc" id="L1155">                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
+<span class="nc" id="L1150">                out.print(&quot;return this.ctx().selectFrom(%s).where(&quot;, tableIdentifier);</span>
+<span class="nc" id="L1151">                int flag2 = 0;</span>
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">                for (ColumnDefinition column1 : column) {</span>
+<span class="nc" id="L1153">                    final String colClass1 = getStrategy().getJavaClassName(column1);</span>
+<span class="nc" id="L1154">                    final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));</span>
 
-<span class="nc bnc" id="L1157" title="All 2 branches missed.">                    if (flag2 != column.size() - 1) {</span>
-<span class="nc bnc" id="L1158" title="All 2 branches missed.">                        if (flag2 == 0) {</span>
-<span class="nc" id="L1159">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
+<span class="nc bnc" id="L1156" title="All 2 branches missed.">                    if (flag2 != column.size() - 1) {</span>
+<span class="nc bnc" id="L1157" title="All 2 branches missed.">                        if (flag2 == 0) {</span>
+<span class="nc" id="L1158">                            out.print(&quot;%s.eq(%s).and(&quot;, colIdentifier1, colClass1);</span>
                         } else {
-<span class="nc" id="L1161">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
+<span class="nc" id="L1160">                            out.print(&quot;%s.eq(%s)).and(&quot;, colIdentifier1, colClass1);</span>
                         }
-<span class="nc" id="L1163">                        flag2++;</span>
+<span class="nc" id="L1162">                        flag2++;</span>
                     } else {
-<span class="nc bnc" id="L1165" title="All 2 branches missed.">                        if (column.size() == 1) {</span>
-<span class="nc" id="L1166">                            out.println(&quot;%s.eq(%s)).fetchOneInto(%s.class));&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="nc" id="L1167">                            out.println(&quot;return result;&quot;);</span>
-<span class="nc" id="L1168">                            out.println(&quot;}&quot;);</span>
+<span class="nc bnc" id="L1164" title="All 2 branches missed.">                        if (column.size() == 1) {</span>
+<span class="nc" id="L1165">                            out.println(&quot;%s.eq(%s)).fetchInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L1166">                            out.println(&quot;}&quot;);</span>
                         } else {
-<span class="nc" id="L1170">                            out.println(&quot;%s.eq(%s))).fetchOneInto(%s.class));&quot;, colIdentifier1, colClass1, pType);</span>
-<span class="nc" id="L1171">                            out.println(&quot;return result;&quot;);</span>
-<span class="nc" id="L1172">                            out.println(&quot;}&quot;);</span>
+<span class="nc" id="L1168">                            out.println(&quot;%s.eq(%s))).fetchInto(%s.class);&quot;, colIdentifier1, colClass1, pType);</span>
+<span class="nc" id="L1169">                            out.println(&quot;}&quot;);</span>
                         }
                     }
-<span class="nc" id="L1175">                }</span>
-<span class="nc" id="L1176">            }</span>
+<span class="nc" id="L1172">                }</span>
+<span class="nc" id="L1173">            }</span>
         }
 
 
-<span class="fc" id="L1180">        generateDaoClassFooter(table, out);</span>
-<span class="fc" id="L1181">        out.println(&quot;}&quot;);</span>
-<span class="fc" id="L1182">    }</span>
+<span class="fc" id="L1177">        generateDaoClassFooter(table, out);</span>
+<span class="fc" id="L1178">        out.println(&quot;}&quot;);</span>
+<span class="fc" id="L1179">    }</span>
 
     protected String ref(String clazzOrId, int keepSegments) {
-<span class="nc bnc" id="L1185" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);</span>
     }
 
 
     protected List&lt;String&gt; ref(List&lt;String&gt; clazzOrId, int keepSegments) {
-<span class="nc bnc" id="L1190" title="All 2 branches missed.">        return clazzOrId == null ? Collections.emptyList() : clazzOrId;</span>
+<span class="nc bnc" id="L1187" title="All 2 branches missed.">        return clazzOrId == null ? Collections.emptyList() : clazzOrId;</span>
     }
 
     //
@@ -1196,21 +1193,21 @@ import java.util.stream.Collectors;
 //     * constructor annotations, such as DI annotations. [#10801]
 //     */
     protected void printDaoConstructorAnnotations(TableDefinition table, JavaWriter out) {
-<span class="pc bpc" id="L1199" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
-<span class="fc" id="L1200">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.beans.factory.annotation.Autowired&quot;));</span>
+<span class="pc bpc" id="L1196" title="1 of 2 branches missed.">        if (generateSpringAnnotations()) {</span>
+<span class="fc" id="L1197">            out.println(&quot;@%s&quot;, out.ref(&quot;org.springframework.beans.factory.annotation.Autowired&quot;));</span>
         }
-<span class="fc" id="L1202">    }</span>
+<span class="fc" id="L1199">    }</span>
 
 
     private int colRefSegmentsMethod(Definition column) {
-<span class="pc bpc" id="L1206" title="2 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getContainer() instanceof UDTDefinition) {</span>
+<span class="pc bpc" id="L1203" title="2 of 4 branches missed.">        if (column instanceof TypedElementDefinition &amp;&amp; ((TypedElementDefinition&lt;?&gt;) column).getContainer() instanceof UDTDefinition) {</span>
+<span class="nc" id="L1204">            return 2;</span>
+        }
+<span class="pc bpc" id="L1206" title="1 of 2 branches missed.">        if (!getStrategy().getInstanceFields()) {</span>
 <span class="nc" id="L1207">            return 2;</span>
         }
-<span class="pc bpc" id="L1209" title="1 of 2 branches missed.">        if (!getStrategy().getInstanceFields()) {</span>
-<span class="nc" id="L1210">            return 2;</span>
-        }
 
-<span class="fc" id="L1213">        return 3;</span>
+<span class="fc" id="L1210">        return 3;</span>
     }
 
 

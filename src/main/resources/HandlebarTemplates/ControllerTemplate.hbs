@@ -46,7 +46,7 @@ public class {{className}}Controller {
     @GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
        List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
-       objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.DummyScript.model.{{className}}.class));});
+       objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.{{scriptName}}.model.{{className}}.class));});
        List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
            if(result!=null){
                LOG.info("Data fetched successfully.");
