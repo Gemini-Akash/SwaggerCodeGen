@@ -92,11 +92,11 @@ public class {{className}}Controller {
 
     @Timed
     @PatchMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity<List<{{className}}>> patchUpdate{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
-       List<{{className}}> dummyBody = null;
+    public ResponseEntity<{{className}}> patchUpdate{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){
+       {{className}} dummyBody = null;
        {{#each primaryKeys}}body.set{{fieldName}}({{fieldName}});
        {{/each}}
-       List<{{className}}> result=objectService.patchUpdate{{className}}(body);
+       {{className}} result=objectService.patchUpdate{{className}}(body);
        if(result!=null){
                 LOG.info("Updated successfully.");
                 return new ResponseEntity<>(result, HttpStatus.OK);

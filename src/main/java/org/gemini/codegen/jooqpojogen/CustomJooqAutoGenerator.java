@@ -822,6 +822,19 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
 //        out.println("return resultArray;");
 //        out.println("}");
 
+        //custom patch method
+        out.javadoc("Created custom patchUpdate record Method");
+        out.println("public %s updatePatchRecord(%s classObject){", pType,pType);
+        out.println("%s obj = fetchRecordById(classObject.getId());", pType);
+        for (ColumnDefinition column : table.getColumns().stream().skip(0).collect(Collectors.toList())) {
+            final String colClass = getStrategy().getJavaClassName(column);
+                out.println(" if(classObject.get%s!=null){",colClass);
+                out.println("obj.set%s(classObject.get%s());");
+                out.println("}");
+        }
+        out.println("update(obj);");
+        out.println("return obj;");
+        out.println("}");
 
         if (size > 1) {
             //For Update COMPOSITE KEYS

@@ -33,9 +33,8 @@ public class {{className}}Service {
          return objectDao.updateBatchRecord(classObjects);
     }
 
-    public List<{{className}}> patchUpdate{{className}}({{className}} classObject){
-        objectDao.update(classObject);
-        return objectDao.fetchRecordBy{{#each primaryKeys}}{{fieldName}}{{/each}}({{#each primaryKeys}}classObject.get{{fieldName}}(){{#unless @last}},{{/unless}}{{/each}});
+    public {{className}} patchUpdate{{className}}({{className}} classObject){
+        return objectDao.patchUpdateRecord(classObject);
     }
 
     public {{className}} add{{className}}({{className}} classObject){
