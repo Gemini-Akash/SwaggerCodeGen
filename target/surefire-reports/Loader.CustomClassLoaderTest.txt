@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: Loader.CustomClassLoaderTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 25.502 s <<< FAILURE! - in Loader.CustomClassLoaderTest
-negTestCreateApiJson(Loader.CustomClassLoaderTest)  Time elapsed: 0.001 s  <<< FAILURE!
+Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 26.863 s <<< FAILURE! - in Loader.CustomClassLoaderTest
+negTestCreateApiJson(Loader.CustomClassLoaderTest)  Time elapsed: 0.006 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <Exception in  writing JSON file / createApiJson(): /jsonFiles/Author.json (The system cannot find the path specified)> but was: <org.gemini.codegen.apicodegen.loader.CustomClassLoader.createAPIJson(java.lang.String, org.json.JSONArray, org.json.JSONArray, java.lang.String)>
 	at Loader.CustomClassLoaderTest.negTestCreateApiJson(CustomClassLoaderTest.java:91)
 

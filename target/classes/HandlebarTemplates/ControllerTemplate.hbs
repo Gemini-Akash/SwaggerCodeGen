@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDate;
 
 
 @RestController
@@ -26,38 +27,55 @@ public class {{className}}Controller {
 
     @Autowired
     ObjectMapper objectMapper;
-    {{#if primaryKeysFlag}}
-    {{#each subsequencePrimaryKeys}}@Timed
-    @GetMapping({"/{{className}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
-       com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
-       com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
+
+    @Timed
+    @GetMapping({"/{{className}}"})
+    public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}({{#each primaryKeys}}@RequestParam(required = false) {{datatype}} {{fieldName}},{{/each}}{{#each variable}}@RequestParam(required = false) {{datatype}} {{fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+           List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
+           objectService.get{{className}}({{#each primaryKeys}} {{fieldName}},{{/each}}{{#each variable}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.{{scriptName}}.model.{{className}}.class));});
+           List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
            if(result!=null){
-               LOG.info("Data fetched successfully.");
+               LOG.info("Data fetched successfully..");
                return new ResponseEntity<>(result, HttpStatus.OK);
            }else{
-                LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
+                LOG.info("Data not found..");
                 return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
            }
     }
-    {{/each}}
-    {{else}}
-    {{#each subsequencePrimaryKeys}}@Timed
-    @GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
-    public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
-       List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
-       objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.{{scriptName}}.model.{{className}}.class));});
-       List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
-           if(result!=null){
-               LOG.info("Data fetched successfully.");
-               return new ResponseEntity<>(result, HttpStatus.OK);
-           }else{
-                LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
-                return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
-           }
-    }
-    {{/each}}
-    {{/if}}
+//    {{#if primaryKeysFlag}}
+//    {{#each subsequencePrimaryKeys}}@Timed
+//    @GetMapping({"/{{className}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
+//    public ResponseEntity<com.gemini.{{scriptName}}.model.{{className}}> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+//        com.gemini.{{scriptName}}.model.{{className}} result=objectMapper.convertValue(objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}), com.gemini.{{scriptName}}.model.{{className}}.class);
+//        com.gemini.{{scriptName}}.model.{{className}} dummyBody = null;
+//        if(result!=null){
+//            LOG.info("Data fetched successfully.");
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//        }else{
+//            LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
+//            return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+//        }
+//    }
+//    {{/each}}
+//    {{else}}
+//    {{#each subsequencePrimaryKeys}}@Timed
+//    @GetMapping({"/{{className}}-by-{{#each}}{{this.fieldName}}{{#unless @last}}-{{/unless}}{{/each}}/{{#each}}{ {{~this.fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
+//    public ResponseEntity<List<com.gemini.{{scriptName}}.model.{{className}}>> get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}@PathVariable {{this.datatype}} {{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}}) {
+//        List<com.gemini.{{scriptName}}.model.{{className}}> result=new ArrayList<>();
+//        objectService.get{{className}}By{{#each}}{{this.fieldName}}{{/each}}({{#each}}{{this.fieldName}}{{#unless @last}},{{/unless}}{{/each}}).stream().forEach(i->{result.add(objectMapper.convertValue(i, com.gemini.{{scriptName}}.model.{{className}}.class));});
+//        List<com.gemini.{{scriptName}}.model.{{className}}> dummyBody = null;
+//        if(result!=null){
+//            LOG.info("Data fetched successfully.");
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//        }else{
+//            LOG.info("Data not found : {}",{{#each}}{{this.fieldName}}{{#unless @last}}, {{/unless}}{{/each}});
+//            return new ResponseEntity<>(dummyBody, HttpStatus.NOT_FOUND);
+//        }
+//    }
+//    {{/each}}
+//    {{/if}}
+
+
     @Timed
     @PutMapping({"/{{className}}/{{#each primaryKeys}}{ {{~fieldName~}}}{{#unless @last}}/{{/unless}}{{/each}}"})
     public ResponseEntity<{{className}}> update{{className}}(@Valid @RequestBody {{className}} body, {{#each primaryKeys}}@PathVariable {{datatype}} {{fieldName}}{{#unless @last}},{{/unless}}{{/each}}){

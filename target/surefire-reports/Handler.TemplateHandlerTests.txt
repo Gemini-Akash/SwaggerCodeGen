@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: Handler.TemplateHandlerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 13.541 s <<< FAILURE! - in Handler.TemplateHandlerTests
-testGenerateSpringBootProject(Handler.TemplateHandlerTests)  Time elapsed: 13.304 s  <<< FAILURE!
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 16.07 s <<< FAILURE! - in Handler.TemplateHandlerTests
+testGenerateSpringBootProject(Handler.TemplateHandlerTests)  Time elapsed: 15.163 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
 	at Handler.TemplateHandlerTests.testGenerateSpringBootProject(TemplateHandlerTests.java:138)
 
-testGenerateClassFromTemplates(Handler.TemplateHandlerTests)  Time elapsed: 0.084 s  <<< FAILURE!
+testGenerateClassFromTemplates(Handler.TemplateHandlerTests)  Time elapsed: 0.594 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
 	at Handler.TemplateHandlerTests.testGenerateClassFromTemplates(TemplateHandlerTests.java:95)
 

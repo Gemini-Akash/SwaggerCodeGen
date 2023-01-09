@@ -47,7 +47,6 @@ public final class EntityClassGenerator {
                                         new MatchersFieldType()
                                                 .withFieldMember(new MatcherRule()
                                                         .withTransform(MatcherTransformType.PASCAL))
-
                                 )))
                 .withDatabase(new Database()
                         .withName("org.jooq.meta.extensions.ddl.DDLDatabase")
