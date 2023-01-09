@@ -582,6 +582,7 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         out.println("import java.util.stream.Collectors;");
         out.println("import java.sql.SQLException;");
         out.println("import org.springframework.beans.factory.annotation.Value;");
+        out.println("import static org.jooq.impl.DSL.noCondition;");
         generateDaoClassJavadoc(table, out);
         printClassAnnotations(out, table, GeneratorStrategy.Mode.DAO);
 
@@ -1077,6 +1078,111 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
         out.println("return resultMap;");
         out.println("}");
 
+
+        //For GET Method For the Single Condition query
+
+        out.javadoc("Created custom fetchRecord Method");
+        out.print("public List<%s> fetchRecord(",pType);
+        int flag6=0;
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colType1 = out.ref(colTypeFull);
+                if (flag6 != table.getColumns().size() - 1) {
+                    out.print("%s %s,", colType1, colClass);
+                    flag6++;
+                } else {
+                    out.println("%s %s){", colType1, colClass);
+            }
+        }
+        for( ColumnDefinition column : table.getColumns()){
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colType1 = out.ref(colTypeFull);
+            out.println("boolean cond%s = %s != null;",colClass,colClass);
+        }
+        out.print("boolean allColFlag = ");
+        int f=0;
+        for (ColumnDefinition column :table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+                if (f!= table.getColumns().size()-1) {
+                    out.print("%s != null && ", colClass);
+                    f++;
+                }else {
+                    out.println("%s != null;",colClass);
+                }
+        }
+        out.println("if (!allColFlag){");
+        out.print("return this.ctx().selectFrom(%s).where(",tableIdentifier);
+        int flag7=0;
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colType = out.ref(colTypeFull);
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
+            if (flag7!=table.getColumns().size()-1) {
+                if(flag7 ==0) {
+                    out.print("cond%s ? %s.eq(%s) : noCondition())", colClass, colIdentifier, colClass);
+                    flag7++;
+                }else{
+                    out.println(".and(cond%s ? %s.eq(%s) : noCondition())", colClass, colIdentifier, colClass);
+                    flag7++;
+                }
+                }else {
+                out.println(".and(cond%s ? %s.eq(%s) : noCondition()).limit(2)",colClass,colIdentifier,colClass);
+            }
+        }
+        out.println(".fetchInto(%s.class);",pType);
+        out.println("}");
+        out.println("else{");
+        out.print("return this.ctx().selectFrom(%s).where(",tableIdentifier);
+        int flag8=0;
+        for (ColumnDefinition column : table.getColumns()) {
+            final String colClass = getStrategy().getJavaClassName(column);
+            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colType = out.ref(colTypeFull);
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegmentsMethod(column));
+            if (flag8!= table.getColumns().size()-1) {
+                if(flag8 ==0) {
+                    out.print("cond%s ? %s.eq(%s) : noCondition())", colClass, colIdentifier, colClass);
+                    flag8++;
+                }else{
+                    out.println(".and(cond%s ? %s.eq(%s) : noCondition())", colClass, colIdentifier, colClass);
+                    flag8++;
+                }
+            }else {
+                out.println(".and(cond%s ? %s.eq(%s) : noCondition())",colClass,colIdentifier,colClass);
+            }
+        }
+        out.println(".fetchInto(%s.class);",pType);
+        out.println("}");
+        out.println("}");
+
+
+
+
+
+
+//            if(!nocoluflag)
+//            {
+//            return this.ctx().selectFrom(Author.AUTHOR).where(condition1 ? Author.AUTHOR.ID.eq(Id) : noCondition())
+//                    .and(condition2 ? Author.AUTHOR.FIRST_NAME.eq(firstName) : noCondition())
+//                    .and(condition3 ? Author.AUTHOR.LAST_NAME.eq(lastName) : noCondition()).limit(2)
+//                    .fetchInto(com.gemini.DummyScript.entity.myshop.tables.pojos.Author.class); }
+//
+//            else {
+//                return this.ctx().selectFrom(Author.AUTHOR).where(condition1 ? Author.AUTHOR.ID.eq(Id) : noCondition())
+//                        .and(condition2 ? Author.AUTHOR.FIRST_NAME.eq(firstName) : noCondition())
+//                        .and(condition3 ? Author.AUTHOR.LAST_NAME.eq(lastName) : noCondition())
+//                        .fetchInto(com.gemini.DummyScript.entity.myshop.tables.pojos.Author.class);
+//
+//            }
+//        }
+
+
+
+
+
         //For GET method for composite primary key.
         List<List<ColumnDefinition>> subsequencePrimaryKeysJsonArray = new ArrayList<>();
         getSubSequences(subsequencePrimaryKeysJsonArray, keyColumns, new ArrayList<>(), 0);
@@ -1107,7 +1213,6 @@ public class CustomJooqAutoGenerator extends JavaGenerator {
                 for (ColumnDefinition column1 : column) {
                     final String colClass1 = getStrategy().getJavaClassName(column1);
                     final String colIdentifier1 = out.ref(getStrategy().getFullJavaIdentifier(column1), colRefSegmentsMethod(column1));
-
                     if (flag2 != column.size() - 1) {
                         if (flag2 == 0) {
                             out.print("%s.eq(%s).and(", colIdentifier1, colClass1);
